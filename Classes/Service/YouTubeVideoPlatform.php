@@ -38,6 +38,20 @@ class YouTubeVideoPlatform extends AbstractVideoPlatform
     protected $platformHosts = ['https://youtube.com' , 'https://youtu.be'];
 
     /**
+     * Video
+     *
+     * @var Video
+     */
+    protected $video;
+
+    /**
+     * YouTube Video ID
+     *
+     * @var string
+     */
+    protected $videoId = '';
+
+    /**
      * This method must return a video object filled with
      * all given properties like title, description, ...
      * that are related to the $video->link from a video
@@ -49,6 +63,29 @@ class YouTubeVideoPlatform extends AbstractVideoPlatform
      */
     public function getFilledVideoObject(Video $video)
     {
-        // TODO: Implement getFilledVideoObject() method.
+        // todo: add API-Key to ext_conf_template
+        // todo: check if API-Key is set
+        $this->video = $video;
+        if (($videoId = $this->getVideoId()) === false) {
+            return false;
+        }
+        $this->videoId = $videoId;
+        // todo: collect video information from YouTube Data API
+    }
+
+    /**
+     * Returns the if of passed video link if valid.
+     * Otherwise returns false
+     *
+     * @return string|bool false if link is not valid
+     */
+    protected function getVideoId()
+    {
+        $parsedLink = parse_url($this->video->getLink(), PHP_URL_QUERY);
+        parse_str($parsedLink['query'], $parsedQuery);
+        if (isset($parsedQuery['v'])) {
+            return $parsedQuery['v'];
+        }
+        return false;
     }
 }

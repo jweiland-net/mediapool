@@ -24,6 +24,17 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class VideoService
 {
+    const COLLECTION_VIDEO_INFORMATION_FAILED = 1;
+    const NO_VIDEO_PLATFORM_MATCH = 2;
+
+    /**
+     * Returns a video object filled with
+     * all given properties like title, description, ...
+     *
+     * @param Video $video $video->link must be filled with a url!
+     * @return Video|int returns int that equals constants of this class to signal an specified error
+     * @throws \Exception if a registered video platform is not type of AbstractVideoPlatform
+     */
     public function getFilledVideoObject(Video $video)
     {
         $videoPlatforms = $this->getRegisteredVideoPlatforms();
@@ -39,9 +50,16 @@ class VideoService
                     ),
                     1507730887
                 );
-
+            }
+            if ($this->isVideoFromVideoPlatform($video, $videoPlatform)) {
+                if (($video =  $videoPlatform->getFilledVideoObject($video)) !== false) {
+                    return $video;
+                } else {
+                    return self::COLLECTION_VIDEO_INFORMATION_FAILED;
+                }
             }
         }
+        return self::NO_VIDEO_PLATFORM_MATCH;
     }
 
     /**
@@ -65,8 +83,21 @@ class VideoService
         }
     }
 
-    protected function isVideoFromVideoPlatform(Video $video, AbstractVideoPlatform $videoPlatform) : bool
+    /**
+     * Checks if one of the hosts from $videoPlatform matches with
+     * $video->link.
+     *
+     * @param Video $video
+     * @param AbstractVideoPlatform $videoPlatform
+     * @return bool true if true, false if false you know ;)
+     */
+    protected function isVideoFromVideoPlatform(Video $video, AbstractVideoPlatform $videoPlatform): bool
     {
-
+        foreach ($videoPlatform->getPlatformHosts() as $host) {
+            if (strpos($host, $video->getLink()) === 0) {
+                return true;
+            }
+        }
+        return false;
     }
 }
