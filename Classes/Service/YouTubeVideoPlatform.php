@@ -14,7 +14,11 @@ namespace JWeiland\Mediapool\Service;
 * The TYPO3 project - inspiring people to share!
 */
 
+use GuzzleHttp\Client;
 use JWeiland\Mediapool\Domain\Model\Video;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use TYPO3\CMS\Extensionmanager\Utility\ConfigurationUtility;
 
 /**
  * Class YouTubeVideoPlatform
@@ -23,6 +27,13 @@ use JWeiland\Mediapool\Domain\Model\Video;
  */
 class YouTubeVideoPlatform extends AbstractVideoPlatform
 {
+    /**
+     * URL to fetch video information via GET request
+     * player = embedHtml
+     * snippet = channelId, title, description, tags and categoryId
+     */
+    const VIDEO_API_URL = 'https://www.googleapis.com/youtube/v3/videos?id=%s&key=%s&part=player,snippet';
+
     /**
      * Name of the video platform
      *
@@ -52,6 +63,67 @@ class YouTubeVideoPlatform extends AbstractVideoPlatform
     protected $videoId = '';
 
     /**
+     * Youtube Data API v3 key
+     *
+     * @var string
+     */
+    protected $apiKey = '';
+
+    /**
+     * Object Manager
+     *
+     * @var ObjectManager
+     */
+    protected $objectManager;
+
+    /**
+     * Configuration Utility
+     *
+     * @var ConfigurationUtility
+     */
+    protected $configurationUtility;
+
+    /**
+     * Guzzle Client for HTTP requests
+     *
+     * @var Client
+     */
+    protected $client;
+
+    /**
+     * inject objectManager
+     *
+     * @param ObjectManager $objectManager
+     * @return void
+     */
+    public function injectObjectManager(ObjectManager $objectManager)
+    {
+        $this->objectManager = $objectManager;
+    }
+
+    /**
+     * inject configurationUtility
+     *
+     * @param ConfigurationUtility $configurationUtility
+     * @return void
+     */
+    public function injectConfigurationUtility(ConfigurationUtility $configurationUtility)
+    {
+        $this->configurationUtility = $configurationUtility;
+    }
+
+    /**
+     * inject client
+     *
+     * @param Client $client
+     * @return void
+     */
+    public function injectClient(Client $client)
+    {
+        $this->client = $client;
+    }
+
+    /**
      * This method must return a video object filled with
      * all given properties like title, description, ...
      * that are related to the $video->link from a video
@@ -63,14 +135,35 @@ class YouTubeVideoPlatform extends AbstractVideoPlatform
      */
     public function getFilledVideoObject(Video $video)
     {
-        // todo: add API-Key to ext_conf_template
-        // todo: check if API-Key is set
+        $this->apiKey = $this->getApiKey();
         $this->video = $video;
         if (($videoId = $this->getVideoId()) === false) {
             return false;
         }
         $this->videoId = $videoId;
         // todo: collect video information from YouTube Data API
+        $this->fetchVideoInformation();
+    }
+
+    /**
+     * Returns the YouTube Data API v3 key if set.
+     * Otherwise throws exception.
+     *
+     * @return string
+     * @throws \Exception
+     */
+    protected function getApiKey() : string
+    {
+        $extConf = $this->configurationUtility->getCurrentConfiguration('mediapool');
+        if (isset($extConf['youtubeDataApiKey']) && $extConf['youtubeDataApiKey'] != '') {
+            return $extConf['youtubeDataApiKey'];
+        } else {
+            throw new \Exception(
+                'YouTube Data API v3 key is mandatory but not set. Please set an API-Key to get' .
+                ' YouTubeVideoPlatform working (Extension Manager > Mediapool > Configuration).',
+                1507791149
+            );
+        }
     }
 
     /**
@@ -87,5 +180,31 @@ class YouTubeVideoPlatform extends AbstractVideoPlatform
             return $parsedQuery['v'];
         }
         return false;
+    }
+
+    protected function fetchVideoInformation()
+    {
+        $response = $this->client->request(
+            'GET',
+            sprintf(self::VIDEO_API_URL, $this->videoId, $this->apiKey)
+        );
+        // ok
+        if ($response->getStatusCode() == 200) {
+            $result = json_encode($response->getBody());
+            DebuggerUtility::var_dump($result);
+        // invalid api key
+        } elseif ($response->getStatusCode() == 400) {
+            throw new \Exception(
+                sprintf(
+                    'Fetching video information for %s failed! Got the following response from YouTube %s.',
+                    $this->video->getLink(),
+                    $response->getBody()
+                ),
+                1507792488
+            );
+        // other problems
+        } else {
+            // no connection ?
+        }
     }
 }
