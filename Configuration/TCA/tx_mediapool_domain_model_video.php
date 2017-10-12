@@ -61,34 +61,7 @@ return [
                 ]
             ]
         ],
-        'title' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_video.title',
-            'config' => [
-                'type' => 'input',
-                'eval' => 'trim',
-                'renderType' => 'videoHeader',
-            ]
-        ],
-        'description' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_video.description',
-            'config' => [
-                'type' => 'text',
-                'renderType' => 'videoText',
-            ]
-        ],
-        'upload_date' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_video.upload_date',
-            'config' => [
-                'type' => 'input',
-                'eval' => 'datetime',
-                'renderType' => 'videoText',
-            ]
-        ],
         'link' => [
-            'exclude' => true,
             'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_video.link',
             'config' => [
                 'type' => 'input',
@@ -98,18 +71,45 @@ return [
                 'renderType' => 'videoLink',
             ]
         ],
+        'upload_date' => [
+            'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_video.upload_date',
+            'config' => [
+                'type' => 'input',
+                'eval' => 'datetime',
+                'renderType' => 'videoText',
+            ]
+        ],
+        'title' => [
+            'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_video.title',
+            'config' => [
+                'type' => 'input',
+                'eval' => 'trim',
+                'renderType' => 'videoHeader',
+            ]
+        ],
         'player_html' => [
-            'exclude' => true,
             'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_video.player_html',
             'config' => [
                 'type' => 'user',
                 'userFunc' => \JWeiland\Mediapool\Tca\VideoPlayer::class . '->render'
             ]
+        ],
+        'description' => [
+            'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_video.description',
+            'config' => [
+                'type' => 'text',
+                'renderType' => 'videoText',
+            ]
+        ],
+        'video_id' => [
+            'config' => [
+                'type' => 'passthrough'
+            ]
         ]
     ],
     'types' => [
         '0' => [
-            'showitem' => 'link,upload_date,title,player_html,description,'
+            'showitem' => 'link,upload_date,title,player_html,description,video_id'
         ],
     ],
 ];

@@ -69,6 +69,17 @@ class Video extends AbstractEntity
     protected $playerHTML = '';
 
     /**
+     * Video Identifier
+     *
+     * Please use a prefix for a video platform
+     * like <prefix>_<videoIdFromPlatform>
+     * e.g. yt_tNtENjljxVo
+     *
+     * @var string
+     */
+    protected $videoId = '';
+
+    /**
      * Returns Uid
      *
      * @return int
@@ -186,5 +197,29 @@ class Video extends AbstractEntity
     public function setPlayerHTML(string $playerHTML)
     {
         $this->playerHTML = $playerHTML;
+    }
+
+    /**
+     * Returns VideoId
+     *
+     * @return string
+     */
+    public function getVideoId(): string
+    {
+        return $this->videoId;
+    }
+
+    /**
+     * Sets VideoId
+     *
+     * Please use a prefix for a video platform
+     * like <prefix>_<videoIdFromPlatform>
+     * e.g. yt_tNtENjljxVo
+     *
+     * @param string $videoId
+     */
+    public function setVideoId(string $videoId)
+    {
+        $this->videoId = $videoId;
     }
 }

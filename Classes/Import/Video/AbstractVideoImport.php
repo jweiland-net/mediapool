@@ -1,5 +1,5 @@
 <?php
-namespace JWeiland\Mediapool\Service;
+namespace JWeiland\Mediapool\Import\Video;
 
 /*
 * This file is part of the TYPO3 CMS project.
@@ -18,16 +18,16 @@ use JWeiland\Mediapool\Domain\Model\Video;
 
 /**
  * Class AbstractVideoPlatform
- * for use to add video platforms to this extension
- * like YouTubeVideoPlatform
+ * for use to a add video importer to this extension
+ * like YouTubeVideoImport
  *
- * To add a new video platform you must set the new VideoPlatform
- * class inside the ext_localconf.php for the VideoPlatformHook
- * $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['videoPlatforms'][<PlatformName>] = ...
+ * To add a new video platform you must declare your video import class
+ * inside your extensions ext_localconf.php for the video import hook
+ * $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['videoImport'][<PlatformName>] = ...
  *
- * @package JWeiland\Mediapool\Service;
+ * @package JWeiland\Mediapool\Import\Video;
  */
-class AbstractVideoPlatform
+class AbstractVideoImport
 {
     /**
      * Name of the video platform
@@ -38,7 +38,7 @@ class AbstractVideoPlatform
     protected $platformName = '';
 
     /**
-     * Array filled with hosts of this video platform
+     * Array filled with hosts of this video importer
      * e.g. ['https://youtube.com', 'https://youtu.be']
      * this hosts are needed to identify the link of
      * the video object ($video->link)
@@ -64,6 +64,8 @@ class AbstractVideoPlatform
         $video->setDescription('Set a description');
         $video->setPlayerHTML('<iframe>Video embed code</iframe>');
         $video->setUploadDate(new \DateTime());
+        // add a prefix before the platform video id like <prefix>_<videoId>
+        $video->setVideoId('pr_dk35023jfn1');
         // return the modified video object
         return $video;
     }

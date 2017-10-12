@@ -16,6 +16,7 @@ namespace JWeiland\Mediapool\Service;
 
 use JWeiland\Mediapool\Domain\Model\Video;
 use JWeiland\Mediapool\Utility\VideoPlatformUtility;
+use JWeiland\Mediapool\Import\Video\AbstractVideoImport;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
@@ -60,9 +61,9 @@ class VideoService
     {
         $videoPlatforms = VideoPlatformUtility::getRegisteredVideoPlatforms();
         foreach ($videoPlatforms as $videoPlatformNamespace) {
-            /** @var AbstractVideoPlatform $videoPlatform */
+            /** @var AbstractVideoImport $videoPlatform */
             $videoPlatform = $this->objectManager->get($videoPlatformNamespace);
-            VideoPlatformUtility::checkVideoPlatform($videoPlatform);
+            VideoPlatformUtility::checkVideoImportClass($videoPlatform);
             if ($this->isVideoFromVideoPlatform($video, $videoPlatform)) {
                 if (($video =  $videoPlatform->getFilledVideoObject($video)) !== false) {
                     return $video;
@@ -79,10 +80,10 @@ class VideoService
      * $video->link.
      *
      * @param Video $video
-     * @param AbstractVideoPlatform $videoPlatform
+     * @param AbstractVideoImport $videoPlatform
      * @return bool true if true, false if false you know ;)
      */
-    protected function isVideoFromVideoPlatform(Video $video, AbstractVideoPlatform $videoPlatform): bool
+    protected function isVideoFromVideoPlatform(Video $video, AbstractVideoImport $videoPlatform): bool
     {
         foreach ($videoPlatform->getPlatformHosts() as $host) {
             if (strpos($video->getLink(), $host) === 0) {

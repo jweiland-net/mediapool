@@ -1,5 +1,5 @@
 <?php
-namespace JWeiland\Mediapool\Service;
+namespace JWeiland\Mediapool\Import\Video;
 
 /*
 * This file is part of the TYPO3 CMS project.
@@ -20,11 +20,11 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extensionmanager\Utility\ConfigurationUtility;
 
 /**
- * Class YouTubeVideoPlatform
+ * Class YouTubeVideoImport
  *
- * @package JWeiland\Mediapool\Service;
+ * @package JWeiland\Mediapool\Import\Video;
  */
-class YouTubeVideoPlatform extends AbstractVideoPlatform
+class YouTubeVideoImport extends AbstractVideoImport
 {
     /**
      * URL to fetch video information via GET request
@@ -159,7 +159,7 @@ class YouTubeVideoPlatform extends AbstractVideoPlatform
         } else {
             throw new \Exception(
                 'YouTube Data API v3 key is mandatory but not set. Please set an API-Key to get' .
-                ' YouTubeVideoPlatform working (Extension Manager > Mediapool > Configuration).',
+                ' YouTubeVideoImport working (Extension Manager > Mediapool > Configuration).',
                 1507791149
             );
         }
@@ -202,6 +202,7 @@ class YouTubeVideoPlatform extends AbstractVideoPlatform
                 $this->video->setDescription(nl2br($result['items'][0]['snippet']['description']));
                 $this->video->setUploadDate(new \DateTime($result['items'][0]['snippet']['publishedAt']));
                 $this->video->setPlayerHTML($result['items'][0]['player']['embedHtml']);
+                $this->video->setVideoId('yt_' . $this->videoId);
             }
         // invalid api key
         } elseif ($response->getStatusCode() == 400) {

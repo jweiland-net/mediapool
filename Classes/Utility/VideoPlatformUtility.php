@@ -14,7 +14,7 @@ namespace JWeiland\Mediapool\Utility;
 * The TYPO3 project - inspiring people to share!
 */
 
-use JWeiland\Mediapool\Service\AbstractVideoPlatform;
+use JWeiland\Mediapool\Import\Video\AbstractVideoImport;
 
 /**
  * Class VideoPlatformUtility
@@ -32,25 +32,25 @@ class VideoPlatformUtility
      */
     public static function getRegisteredVideoPlatforms(): array
     {
-        if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['videoPlatforms'])) {
-            return $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['videoPlatforms'];
+        if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['videoImport'])) {
+            return $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['videoImport'];
         } else {
             throw new \Exception(
-                'At least one video platform must be registered to get information about a video!' .
-                ' Please check $GLOBALS[\'TYPO3_CONF_VARS\'][\'EXTCONF\'][\'mediapool\'][\'videoPlatforms\'] for' .
-                ' registered video platforms.',
+                'At least one video importer must be registered to get information about a video!' .
+                ' Please check $GLOBALS[\'TYPO3_CONF_VARS\'][\'EXTCONF\'][\'mediapool\'][\'videoImport\'] for' .
+                ' registered video importers.',
                 1507729404
             );
         }
     }
 
     /**
-     * Checks if $videoPlatform is an instance of AbstractVideoPlatform
+     * Checks if $videoImport is an instance of AbstractVideoImport
      *
-     * @param AbstractVideoPlatform $videoPlatform
+     * @param AbstractVideoImport $videoImport
      * @return void if everything is ok
      */
-    public static function checkVideoPlatform(AbstractVideoPlatform $videoPlatform)
+    public static function checkVideoImportClass(AbstractVideoImport $videoImport)
     {
     }
 }

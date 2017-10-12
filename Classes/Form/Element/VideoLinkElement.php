@@ -14,7 +14,7 @@ namespace JWeiland\Mediapool\Form\Element;
 * The TYPO3 project - inspiring people to share!
 */
 
-use JWeiland\Mediapool\Service\AbstractVideoPlatform;
+use JWeiland\Mediapool\Import\Video\AbstractVideoImport;
 use JWeiland\Mediapool\Utility\VideoPlatformUtility;
 use TYPO3\CMS\Backend\Form\Element\InputTextElement;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -22,11 +22,11 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * Class VideoLinkFormElement
+ * Class VideoLinkElement
  *
  * @package JWeiland\Mediapool\Form\Element;
  */
-class VideoLinkFormElement extends InputTextElement
+class VideoLinkElement extends InputTextElement
 {
     /**
      * Render input field
@@ -65,11 +65,11 @@ class VideoLinkFormElement extends InputTextElement
             'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:render_type.' .
             'video_link_element.supported_video_platforms'
         ) . '<br />';
-        /** @var AbstractVideoPlatform $videoPlatform */
+        /** @var AbstractVideoImport $videoPlatform */
         foreach (VideoPlatformUtility::getRegisteredVideoPlatforms() as $videoPlatformNameSpace) {
             // because we just need the platform name we don´t need to call this with object manager
             $videoPlatform = GeneralUtility::makeInstance($videoPlatformNameSpace);
-            VideoPlatformUtility::checkVideoPlatform($videoPlatform);
+            VideoPlatformUtility::checkVideoImportClass($videoPlatform);
             $html .= sprintf('<span class="label label-primary">%s</span>', $videoPlatform->getPlatformName());
         }
         return $html;
