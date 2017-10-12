@@ -15,6 +15,7 @@ namespace JWeiland\Mediapool\Tca;
 */
 
 use TYPO3\CMS\Backend\Form\Element\UserElement;
+use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -25,6 +26,27 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 class VideoPlayer
 {
     /**
+     * Default width value for a couple of elements like text
+     *
+     * @var int
+     */
+    protected $defaultInputWidth = 30;
+
+    /**
+     * Minimum width value for a couple of elements like text
+     *
+     * @var int
+     */
+    protected $minimumInputWidth = 10;
+
+    /**
+     * Maximum width value for a couple of elements like text
+     *
+     * @var int
+     */
+    protected $maxInputWidth = 50;
+
+    /**
      * Render player or a message if player html is not set
      *
      * @param array $parameterArray
@@ -33,16 +55,35 @@ class VideoPlayer
      */
     public function render(array $parameterArray, UserElement $userElement) : string
     {
+        $config = $parameterArray['fieldConf']['config'];
+        $size = MathUtility::forceIntegerInRange($config['size'] ?? $this->defaultInputWidth, $this->minimumInputWidth, $this->maxInputWidth);
+        $width = (int)$this->formMaxWidth($size);
+
         if ($playerHTML = $parameterArray['row']['player_html']) {
             return $playerHTML;
         } else {
             return
-                '<div class="alert alert-info" role="alert">' .
+                '<div class="alert alert-info" role="alert" style="max-width: ' . $width . 'px">' .
                 LocalizationUtility::translate(
                     'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:' .
-                    'tx_mediapool_domain_model_video.player_html.no_video'
+                    'tx_mediapool_domain_model_video.empty_field'
                 ) .
                 '</div>';
         }
+    }
+
+    /**
+     * Returns the max width in pixels for an elements like input and text
+     *
+     * @param int $size The abstract size value (1-48)
+     * @return int Maximum width in pixels
+     */
+    protected function formMaxWidth($size = 48)
+    {
+        $compensationForLargeDocuments = 1.33;
+        $compensationForFormFields = 12;
+
+        $size = round($size * $compensationForLargeDocuments);
+        return ceil($size * $compensationForFormFields);
     }
 }

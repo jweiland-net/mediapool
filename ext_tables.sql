@@ -7,9 +7,10 @@ CREATE TABLE tx_mediapool_domain_model_video (
 	pid int(11) DEFAULT '0' NOT NULL,
 
 	title varchar(100) DEFAULT '' NOT NULL,
-	description varchar(255) DEFAULT '' NOT NULL,
+	description text DEFAULT '' NOT NULL,
 	upload_date int(11) unsigned DEFAULT '0' NOT NULL,
 	link varchar(100) DEFAULT '' NOT NULL,
+	player_html text DEFAULT '' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,

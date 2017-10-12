@@ -14,11 +14,13 @@ namespace JWeiland\Mediapool\Hooks;
 * The TYPO3 project - inspiring people to share!
 */
 
+use JWeiland\Mediapool\Domain\Model\Video;
+use JWeiland\Mediapool\Service\VideoService;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Class to get VideoData from a external video service
@@ -29,6 +31,9 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 class DataHandler
 {
     /**
+     * Using DataHandler hook to fetch and insert video information
+     * for tx_mediapool_domain_model_video
+     *
      * @param array $fieldArray
      * @param string $table
      * @param int|string $id
@@ -41,22 +46,36 @@ class DataHandler
         $id,
         \TYPO3\CMS\Core\DataHandling\DataHandler $parentObject
     ) {
-        DebuggerUtility::var_dump($fieldArray, 'fieldArray');
-        DebuggerUtility::var_dump($table, 'table');
-        $fieldArray = [];
-        /** @var ObjectManager $objectManager */
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        /** @var FlashMessageService $flashMessageService */
-        $flashMessageService = $objectManager->get(FlashMessageService::class);
-        $flashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
-
-        $flashMessage = GeneralUtility::makeInstance(
-            FlashMessage::class,
-            'Test',
-            'Header',
-            FlashMessage::ERROR
-        );
-
-        $flashMessageQueue->addMessage($flashMessage);
+        if ($table === 'tx_mediapool_domain_model_video') {
+            /** @var ObjectManager $objectManager */
+            $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+            /** @var VideoService $videoService */
+            $videoService = $objectManager->get(VideoService::class);
+            /** @var FlashMessageService $flashMessageService */
+            $flashMessageService = $objectManager->get(FlashMessageService::class);
+            $flashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
+            $video = new Video();
+            $video->setLink($fieldArray['link']);
+            $video = $videoService->getFilledVideoObject($video);
+            if (is_object($video)) {
+                $fieldArray['link'] = $video->getLink();
+                $fieldArray['title'] = $video->getTitle();
+                $fieldArray['description'] = $video->getDescription();
+                $fieldArray['upload_date'] = $video->getUploadDate()->getTimestamp();
+                $fieldArray['player_html'] = $video->getPlayerHTML();
+            } else {
+                // Add error message
+                $flashMessage = GeneralUtility::makeInstance(
+                    FlashMessage::class,
+                    LocalizationUtility::translate('video_service.error_message.' . $video . '.body', 'mediapool'),
+                    LocalizationUtility::translate('video_service.error_message.' . $video . '.head', 'mediapool'),
+                    FlashMessage::ERROR
+                );
+                $flashMessageQueue->addMessage($flashMessage);
+                // Prevent from saving because the video object has no video
+                // information
+                $fieldArray = [];
+            }
+        }
     }
 }

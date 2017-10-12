@@ -67,8 +67,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'eval' => 'trim',
-                'default' => '',
-                'readOnly' => true
+                'renderType' => 'videoHeader',
             ]
         ],
         'description' => [
@@ -76,8 +75,7 @@ return [
             'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_video.description',
             'config' => [
                 'type' => 'text',
-                'default' => '',
-                'readOnly' => true
+                'renderType' => 'videoText',
             ]
         ],
         'upload_date' => [
@@ -85,8 +83,8 @@ return [
             'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_video.upload_date',
             'config' => [
                 'type' => 'input',
-                'default' => '',
-                'readOnly' => true
+                'eval' => 'datetime',
+                'renderType' => 'videoText',
             ]
         ],
         'link' => [
@@ -96,7 +94,8 @@ return [
                 'type' => 'input',
                 'eval' => 'trim,required',
                 'default' => '',
-                'placeholder' => 'https://www.youtube.com/watch?v=Fm5SoReSv5M'
+                'placeholder' => 'https://www.youtube.com/watch?v=Fm5SoReSv5M',
+                'renderType' => 'videoLink',
             ]
         ],
         'player_html' => [
@@ -110,7 +109,7 @@ return [
     ],
     'types' => [
         '0' => [
-            'showitem' => 'link,title,player_html,description,upload_date'
+            'showitem' => 'link,upload_date,title,player_html,description,'
         ],
     ],
 ];

@@ -22,8 +22,11 @@
       <trans-unit id="tx_mediapool_domain_model_video.player_html">
         <source>Preview</source>
       </trans-unit>
-      <trans-unit id="tx_mediapool_domain_model_video.player_html.no_video">
-        <source>The player will be shown after the first successful save.</source>
+      <trans-unit id="tx_mediapool_domain_model_video.empty_field">
+        <source>This field will be filled automatically after first successful save.</source>
+      </trans-unit>
+      <trans-unit id="render_type.video_link_element.supported_video_platforms">
+        <source>Supported video platforms:</source>
       </trans-unit>
     </body>
   </file>

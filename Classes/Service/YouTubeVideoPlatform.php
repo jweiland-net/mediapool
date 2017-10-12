@@ -17,7 +17,6 @@ namespace JWeiland\Mediapool\Service;
 use GuzzleHttp\Client;
 use JWeiland\Mediapool\Domain\Model\Video;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extensionmanager\Utility\ConfigurationUtility;
 
 /**
@@ -46,7 +45,7 @@ class YouTubeVideoPlatform extends AbstractVideoPlatform
      *
      * @var array
      */
-    protected $platformHosts = ['https://youtube.com' , 'https://youtu.be'];
+    protected $platformHosts = ['https://youtube.com', 'https://www.youtube.com', 'https://youtu.be'];
 
     /**
      * Video
@@ -141,8 +140,8 @@ class YouTubeVideoPlatform extends AbstractVideoPlatform
             return false;
         }
         $this->videoId = $videoId;
-        // todo: collect video information from YouTube Data API
         $this->fetchVideoInformation();
+        return $this->video;
     }
 
     /**
@@ -155,8 +154,8 @@ class YouTubeVideoPlatform extends AbstractVideoPlatform
     protected function getApiKey() : string
     {
         $extConf = $this->configurationUtility->getCurrentConfiguration('mediapool');
-        if (isset($extConf['youtubeDataApiKey']) && $extConf['youtubeDataApiKey'] != '') {
-            return $extConf['youtubeDataApiKey'];
+        if ($extConf['youtubeDataApiKey']['value'] != '') {
+            return $extConf['youtubeDataApiKey']['value'];
         } else {
             throw new \Exception(
                 'YouTube Data API v3 key is mandatory but not set. Please set an API-Key to get' .
@@ -174,14 +173,21 @@ class YouTubeVideoPlatform extends AbstractVideoPlatform
      */
     protected function getVideoId()
     {
-        $parsedLink = parse_url($this->video->getLink(), PHP_URL_QUERY);
-        parse_str($parsedLink['query'], $parsedQuery);
+        $query = parse_url($this->video->getLink(), PHP_URL_QUERY);
+        parse_str($query, $parsedQuery);
         if (isset($parsedQuery['v'])) {
             return $parsedQuery['v'];
         }
         return false;
     }
 
+    /**
+     * Fetch video information from YouTube Data API v3 and inserts
+     * it into $this->video. Fills title, description, uploadDate and playerHTML.
+     *
+     * @return void
+     * @throws \Exception if fetching information is not successful
+     */
     protected function fetchVideoInformation()
     {
         $response = $this->client->request(
@@ -190,21 +196,36 @@ class YouTubeVideoPlatform extends AbstractVideoPlatform
         );
         // ok
         if ($response->getStatusCode() == 200) {
-            $result = json_encode($response->getBody());
-            DebuggerUtility::var_dump($result);
+            $result = json_decode($response->getBody()->getContents(), true);
+            if (count($result['items']) && isset($result['items'][0]['snippet'], $result['items'][0]['player'])) {
+                $this->video->setTitle($result['items'][0]['snippet']['title']);
+                $this->video->setDescription(nl2br($result['items'][0]['snippet']['description']));
+                $this->video->setUploadDate(new \DateTime($result['items'][0]['snippet']['publishedAt']));
+                $this->video->setPlayerHTML($result['items'][0]['player']['embedHtml']);
+            }
         // invalid api key
         } elseif ($response->getStatusCode() == 400) {
             throw new \Exception(
                 sprintf(
-                    'Fetching video information for %s failed! Got the following response from YouTube %s.',
+                    'Fetching video information for %s failed! Got the following response from YouTube: %s.' .
+                    ' Please check your API-key.',
                     $this->video->getLink(),
-                    $response->getBody()
+                    $response->getBody()->getContents()
                 ),
                 1507792488
             );
         // other problems
         } else {
-            // no connection ?
+            throw new \Exception(
+                sprintf(
+                    'Fetching video information for %s failed! Got status code %d and the' .
+                    ' following response: %s',
+                    $this->video->getLink(),
+                    $response->getStatusCode(),
+                    $response->getBody()->getContents()
+                ),
+                1507794777
+            );
         }
     }
 }

@@ -15,10 +15,13 @@ namespace JWeiland\Mediapool\Service;
 */
 
 use JWeiland\Mediapool\Domain\Model\Video;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use JWeiland\Mediapool\Utility\VideoPlatformUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * Class VideoService
+ *
+ * ! use ObjectManager to get an instance of this class !
  *
  * @package JWeiland\Mediapool\Service;
  */
@@ -26,6 +29,24 @@ class VideoService
 {
     const COLLECTION_VIDEO_INFORMATION_FAILED = 1;
     const NO_VIDEO_PLATFORM_MATCH = 2;
+
+    /**
+     * Object Manager
+     *
+     * @var ObjectManager
+     */
+    protected $objectManager;
+
+    /**
+     * inject objectManager
+     *
+     * @param ObjectManager $objectManager
+     * @return void
+     */
+    public function injectObjectManager(ObjectManager $objectManager)
+    {
+        $this->objectManager = $objectManager;
+    }
 
     /**
      * Returns a video object filled with
@@ -37,20 +58,11 @@ class VideoService
      */
     public function getFilledVideoObject(Video $video)
     {
-        $videoPlatforms = $this->getRegisteredVideoPlatforms();
+        $videoPlatforms = VideoPlatformUtility::getRegisteredVideoPlatforms();
         foreach ($videoPlatforms as $videoPlatformNamespace) {
             /** @var AbstractVideoPlatform $videoPlatform */
-            $videoPlatform = GeneralUtility::makeInstance($videoPlatformNamespace);
-            if (!$videoPlatform instanceof AbstractVideoPlatform) {
-                throw new \Exception(
-                    sprintf(
-                        'The registered video platform %s is not type of %s!',
-                        $videoPlatformNamespace,
-                        AbstractVideoPlatform::class
-                    ),
-                    1507730887
-                );
-            }
+            $videoPlatform = $this->objectManager->get($videoPlatformNamespace);
+            VideoPlatformUtility::checkVideoPlatform($videoPlatform);
             if ($this->isVideoFromVideoPlatform($video, $videoPlatform)) {
                 if (($video =  $videoPlatform->getFilledVideoObject($video)) !== false) {
                     return $video;
@@ -60,27 +72,6 @@ class VideoService
             }
         }
         return self::NO_VIDEO_PLATFORM_MATCH;
-    }
-
-    /**
-     * Returns an array with registered video platforms.
-     * Does not validate if the registered classes are children from AbstractVideoPlatform!
-     *
-     * @return array
-     * @throws \Exception if no video platforms are registered
-     */
-    protected function getRegisteredVideoPlatforms(): array
-    {
-        if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['videoPlatforms'])) {
-            return $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['videoPlatforms'];
-        } else {
-            throw new \Exception(
-                'At least one video platform must be registered to get information about a video!' .
-                ' Please check $GLOBALS[\'TYPO3_CONF_VARS\'][\'EXTCONF\'][\'mediapool\'][\'videoPlatforms\'] for' .
-                ' registered video platforms.',
-                1507729404
-            );
-        }
     }
 
     /**
@@ -94,7 +85,7 @@ class VideoService
     protected function isVideoFromVideoPlatform(Video $video, AbstractVideoPlatform $videoPlatform): bool
     {
         foreach ($videoPlatform->getPlatformHosts() as $host) {
-            if (strpos($host, $video->getLink()) === 0) {
+            if (strpos($video->getLink(), $host) === 0) {
                 return true;
             }
         }
