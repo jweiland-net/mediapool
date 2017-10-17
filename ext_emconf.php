@@ -1,7 +1,8 @@
 <?php
 /**
- * The source of icons used in this extension is https://icomoon.io - IcoMoon - Free
- * License of those icons: https://creativecommons.org/licenses/by/4.0/
+ * The source of icons used in this extension is
+ * https://www.google.com/design/icons/ (License: https://github.com/google/material-design-icons/blob/master/LICENSE)
+ * https://icomoon.io Pack IcoMoon - Free (License: https://creativecommons.org/licenses/by/4.0/)
  */
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Mediapool',

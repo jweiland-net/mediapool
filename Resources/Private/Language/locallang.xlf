@@ -4,18 +4,7 @@
         product-name="mediapool">
     <header/>
     <body>
-      <trans-unit id="video_service.error_message.1.head">
-        <source>Could not collect video information</source>
-      </trans-unit>
-      <trans-unit id="video_service.error_message.1.body">
-        <source>Detected a matching video platform, but could not collect video information. Please check your link and try again!</source>
-      </trans-unit>
-      <trans-unit id="video_service.error_message.2.head">
-        <source>No video platform match</source>
-      </trans-unit>
-      <trans-unit id="video_service.error_message.2.body">
-        <source>I could not find a matching video platform for your video. Maybe check your link or register an additional video platform service.</source>
-      </trans-unit>
+
     </body>
   </file>
 </xliff>

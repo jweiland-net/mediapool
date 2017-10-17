@@ -12,6 +12,7 @@ CREATE TABLE tx_mediapool_domain_model_video (
 	link varchar(100) DEFAULT '' NOT NULL,
 	player_html text DEFAULT '' NOT NULL,
 	video_id varchar(100) DEFAULT '' NOT NULL,
+	thumbnail varchar(100) DEFAULT '' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
@@ -46,7 +47,7 @@ CREATE TABLE tx_mediapool_domain_model_playlist (
 
 	title varchar(100) DEFAULT '' NOT NULL,
 	link varchar(100) DEFAULT '' NOT NULL,
-	video_id varchar(100) DEFAULT '' NOT NULL,
+	playlist_id varchar(100) DEFAULT '' NOT NULL,
 	videos int(11) unsigned DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
@@ -73,9 +74,9 @@ CREATE TABLE tx_mediapool_domain_model_playlist (
 );
 
 #
-# Table structure for table 'tx_predigtvorlageninvoice_playlist_video_mm'
+# Table structure for table 'tx_mediapool_playlist_video_mm'
 #
-CREATE TABLE tx_predigtvorlageninvoice_subscription_fegroups_mm (
+CREATE TABLE tx_mediapool_playlist_video_mm (
 	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
 	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
 	sorting int(11) unsigned DEFAULT '0' NOT NULL,

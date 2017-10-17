@@ -5,8 +5,8 @@
     <header/>
     <body>
       <trans-unit id="tx_mediapool_domain_model_video">
-      <source>Video</source>
-    </trans-unit>
+        <source>Video</source>
+      </trans-unit>
       <trans-unit id="tx_mediapool_domain_model_video.title">
         <source>Title</source>
       </trans-unit>
@@ -25,8 +25,22 @@
       <trans-unit id="tx_mediapool_domain_model_video.empty_field">
         <source>This field will be filled automatically after first successful save.</source>
       </trans-unit>
+
       <trans-unit id="render_type.video_link_element.supported_video_platforms">
         <source>Supported video platforms:</source>
+      </trans-unit>
+
+      <trans-unit id="tx_mediapool_domain_model_playlist">
+        <source>Playlist</source>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_playlist.title">
+        <source>Title</source>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_playlist.link">
+        <source>Playlist URL</source>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_playlist.videos">
+        <source>Videos</source>
       </trans-unit>
     </body>
   </file>

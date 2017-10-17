@@ -23,4 +23,23 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 class VideoRepository extends Repository
 {
+    /**
+     * Find a video by video id
+     *
+     * @param string $videoId
+     * @param int $pid
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findByVideoId(string $videoId, int $pid)
+    {
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setRespectStoragePage(false);
+        $query->matching(
+            $query->logicalAnd(
+                $query->equals('videoId', $videoId),
+                $query->equals('pid', $pid)
+            )
+        );
+        return $query->execute();
+    }
 }

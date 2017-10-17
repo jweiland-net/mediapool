@@ -80,6 +80,16 @@ class Video extends AbstractEntity
     protected $videoId = '';
 
     /**
+     * Path to Thumbnail
+     * this can be local AND external
+     * like: /fileadmin/videos/video.jpg
+     * or: https://domain.tld/thumbs/video.jpg
+     *
+     * @var string
+     */
+    protected $thumbnail = '';
+
+    /**
      * Returns Uid
      *
      * @return int
@@ -221,5 +231,25 @@ class Video extends AbstractEntity
     public function setVideoId(string $videoId)
     {
         $this->videoId = $videoId;
+    }
+
+    /**
+     * Returns Thumbnail
+     *
+     * @return string
+     */
+    public function getThumbnail(): string
+    {
+        return $this->thumbnail;
+    }
+
+    /**
+     * Sets Thumbnail
+     *
+     * @param string $thumbnail
+     */
+    public function setThumbnail(string $thumbnail)
+    {
+        $this->thumbnail = $thumbnail;
     }
 }

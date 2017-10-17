@@ -1,7 +1,7 @@
 <?php
 return [
     'ctrl' => [
-        'title' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_video',
+        'title' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_playlist',
         'label' => 'title',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -16,10 +16,10 @@ return [
             'endtime' => 'endtime'
         ],
         'searchFields' => 'title,link',
-        'iconfile' => 'EXT:mediapool/Resources/Public/Icons/tx_mediapool_domain_model_video.svg'
+        'iconfile' => 'EXT:mediapool/Resources/Public/Icons/tx_mediapool_domain_model_playlist.svg'
     ],
     'interface' => [
-        'showRecordFieldList' => 'hidden,starttime,endtime,title,description,upload_date,link'
+        'showRecordFieldList' => 'hidden,starttime,endtime,title,link'
     ],
     'columns' => [
         't3ver_label' => [
@@ -61,60 +61,49 @@ return [
                 ]
             ]
         ],
+        'pid' => [
+            'config' => [
+                'type' => 'hidden'
+            ]
+        ],
         'link' => [
-            'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_video.link',
+            'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_playlist.link',
             'config' => [
                 'type' => 'input',
                 'eval' => 'trim,required',
                 'default' => '',
                 'placeholder' => 'https://www.youtube.com/watch?v=Fm5SoReSv5M',
                 'renderType' => 'videoLink',
-            ]
-        ],
-        'upload_date' => [
-            'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_video.upload_date',
-            'config' => [
-                'type' => 'input',
-                'eval' => 'datetime',
-                'renderType' => 'videoText',
+                'importType' => 'playlist',
             ]
         ],
         'title' => [
-            'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_video.title',
+            'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_playlist.title',
             'config' => [
                 'type' => 'input',
                 'eval' => 'trim',
                 'renderType' => 'videoHeader',
             ]
         ],
-        'player_html' => [
-            'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_video.player_html',
+        'videos' => [
+            'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_playlist.videos',
             'config' => [
-                'type' => 'user',
-                'userFunc' => \JWeiland\Mediapool\Tca\VideoPlayer::class . '->render'
+                'type' => 'inline',
+                'foreign_table' => 'tx_mediapool_domain_model_video',
+                'MM' => 'tx_mediapool_playlist_video_mm',
+                'minitems' => 0,
+                'maxitems' => 1000,
             ]
         ],
-        'description' => [
-            'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_video.description',
-            'config' => [
-                'type' => 'text',
-                'renderType' => 'videoText',
-            ]
-        ],
-        'video_id' => [
+        'playlist_id' => [
             'config' => [
                 'type' => 'passthrough'
             ]
-        ],
-        'video_thumbnail' => [
-            'config' => [
-                'type' => 'passthrough'
-            ]
-        ],
+        ]
     ],
     'types' => [
         '0' => [
-            'showitem' => 'link,upload_date,title,player_html,description'
+            'showitem' => 'pid,link,title,videos,playlist_id'
         ],
     ],
 ];

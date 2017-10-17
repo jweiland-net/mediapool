@@ -14,7 +14,6 @@ namespace JWeiland\Mediapool\Form\Element;
 * The TYPO3 project - inspiring people to share!
 */
 
-use JWeiland\Mediapool\Import\Video\AbstractVideoImport;
 use JWeiland\Mediapool\Utility\VideoPlatformUtility;
 use TYPO3\CMS\Backend\Form\Element\InputTextElement;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -29,6 +28,13 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 class VideoLinkElement extends InputTextElement
 {
     /**
+     * TCA field config
+     *
+     * @var array
+     */
+    protected $config;
+
+    /**
      * Render input field
      *
      * @return array
@@ -37,8 +43,8 @@ class VideoLinkElement extends InputTextElement
     {
         // get HTML code from input field
         $resultArray = parent::render();
-        $config = $this->data['parameterArray']['fieldConf']['config'];
-        $size = MathUtility::forceIntegerInRange($config['size'] ?? $this->defaultInputWidth, $this->minimumInputWidth,
+        $this->config = $this->data['parameterArray']['fieldConf']['config'];
+        $size = MathUtility::forceIntegerInRange($this->config['size'] ?? $this->defaultInputWidth, $this->minimumInputWidth,
             $this->maxInputWidth);
         $width = $this->formMaxWidth($size);
         $videoPlatformsHTML = [];
@@ -65,11 +71,19 @@ class VideoLinkElement extends InputTextElement
             'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:render_type.' .
             'video_link_element.supported_video_platforms'
         ) . '<br />';
-        /** @var AbstractVideoImport $videoPlatform */
-        foreach (VideoPlatformUtility::getRegisteredVideoPlatforms() as $videoPlatformNameSpace) {
+        if ($this->config['importType'] === 'playlist') {
+            $videoPlatformList = VideoPlatformUtility::getRegisteredPlaylistImporters();
+        } else {
+            $videoPlatformList = VideoPlatformUtility::getRegisteredVideoImporters();
+        }
+        foreach ($videoPlatformList as $videoPlatformNameSpace) {
             // because we just need the platform name we don´t need to call this with object manager
             $videoPlatform = GeneralUtility::makeInstance($videoPlatformNameSpace);
-            VideoPlatformUtility::checkVideoImportClass($videoPlatform);
+            if ($this->config['importType'] === 'playlist') {
+                VideoPlatformUtility::checkPlaylistImportClass($videoPlatform);
+            } else {
+                VideoPlatformUtility::checkVideoImportClass($videoPlatform);
+            }
             $html .= sprintf('<span class="label label-primary">%s</span>', $videoPlatform->getPlatformName());
         }
         return $html;

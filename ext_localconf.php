@@ -6,9 +6,13 @@ defined('TYPO3_MODE') or die();
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['mediapool'] =
     \JWeiland\Mediapool\Hooks\DataHandler::class;
 
-// Add YouTubeVideoImport
+// Register YouTubeVideoImport
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['videoImport']['YouTube'] =
     \JWeiland\Mediapool\Import\Video\YouTubeVideoImport::class;
+
+// Register YouTubePlaylistImport
+$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['playlistImport']['YouTube'] =
+    \JWeiland\Mediapool\Import\Playlist\YoutubePlaylistImport::class;
 
 // Add renderType to display video importers
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1507799836] = [
