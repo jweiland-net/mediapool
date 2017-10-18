@@ -106,7 +106,7 @@ return [
                 'type' => 'passthrough'
             ]
         ],
-        'video_thumbnail' => [
+        'thumbnail' => [
             'config' => [
                 'type' => 'passthrough'
             ]
@@ -114,7 +114,7 @@ return [
     ],
     'types' => [
         '0' => [
-            'showitem' => 'link,upload_date,title,player_html,description'
+            'showitem' => 'link,upload_date,title,player_html,description,thumbnail'
         ],
     ],
 ];

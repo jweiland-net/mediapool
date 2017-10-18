@@ -66,7 +66,7 @@ class Video extends AbstractEntity
      *
      * @var string
      */
-    protected $playerHTML = '';
+    protected $playerHtml = '';
 
     /**
      * Video Identifier
@@ -194,19 +194,19 @@ class Video extends AbstractEntity
      *
      * @return string
      */
-    public function getPlayerHTML(): string
+    public function getPlayerHtml(): string
     {
-        return $this->playerHTML;
+        return $this->playerHtml;
     }
 
     /**
      * Sets PlayerHTML
      *
-     * @param string $playerHTML
+     * @param string $playerHtml
      */
-    public function setPlayerHTML(string $playerHTML)
+    public function setPlayerHtml(string $playerHtml)
     {
-        $this->playerHTML = $playerHTML;
+        $this->playerHtml = $playerHtml;
     }
 
     /**

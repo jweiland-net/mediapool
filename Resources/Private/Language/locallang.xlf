@@ -4,7 +4,12 @@
         product-name="mediapool">
     <header/>
     <body>
-
+      <trans-unit id="scheduler.update_video_information.title">
+        <source>Update video information</source>
+      </trans-unit>
+      <trans-unit id="scheduler.update_video_information.description">
+        <source>This task updates the video information by using the DataHandler Hook.</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

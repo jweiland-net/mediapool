@@ -89,6 +89,7 @@ return [
             'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_playlist.videos',
             'config' => [
                 'type' => 'inline',
+                'renderType' => 'inlineVideo',
                 'foreign_table' => 'tx_mediapool_domain_model_video',
                 'MM' => 'tx_mediapool_playlist_video_mm',
                 'minitems' => 0,

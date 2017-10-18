@@ -20,6 +20,7 @@ use JWeiland\Mediapool\Domain\Repository\VideoRepository;
 use JWeiland\Mediapool\Service\YouTubeService;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extensionmanager\Utility\ConfigurationUtility;
 
 /**
@@ -136,9 +137,9 @@ class YouTubeVideoImport extends AbstractVideoImport
         $items = $this->fetchVideoInformation();
         if ($items && $this->checkVideoPermission($items[0])) {
             $this->video->setTitle($items[0]['snippet']['title']);
-            $this->video->setDescription($items[0]['snippet']['description']);
+            $this->video->setDescription(nl2br($items[0]['snippet']['description']));
             $this->video->setUploadDate(new \DateTime($items[0]['snippet']['publishedAt']));
-            $this->video->setPlayerHTML($items[0]['player']['embedHtml']);
+            $this->video->setPlayerHtml($items[0]['player']['embedHtml']);
             $this->video->setVideoId('yt_' . $this->videoIds);
             $this->video->setThumbnail($items[0]['snippet']['thumbnails']['medium']['url']);
             return $this->video;
@@ -156,10 +157,10 @@ class YouTubeVideoImport extends AbstractVideoImport
      *
      * @param string $videoIds
      * @param int $pid
-     * @param string $recordUids includes all UIDs as a comma separated list
+     * @param string $recordUids reference that includes all UIDs as a comma separated list
      * @return array
      */
-    public function getDataArrayForPlaylist(string $videoIds, int $pid, string &$recordUids = '') : array
+    public function processDataArray(string $videoIds, int $pid, string &$recordUids = '') : array
     {
         /** @var VideoRepository $videoRepository */
         $videoRepository = $this->objectManager->get(VideoRepository::class);
@@ -172,18 +173,20 @@ class YouTubeVideoImport extends AbstractVideoImport
             if ($video = $queryResult->getFirst()) {
                 $recordUidArray[] = $video->getUid();
             } else {
-                $uploadDate = new \DateTime($item['snippet']['publishedAt']);
-                $recordUidArray[] = 'NEW1234' . $i;
-                $data['tx_mediapool_domain_model_video']['NEW1234' . $i] = [
-                    'pid' => $pid,
-                    'link' => 'https://youtu.be/' . (string)$item['id'],
-                    'title' => (string)$item['snippet']['title'],
-                    'description' => (string)$item['snippet']['description'],
-                    'upload_date' => $uploadDate->getTimestamp(),
-                    'player_html' => (string)$item['player']['embedHtml'],
-                    'video_id' => 'yt_' . (string)$item['id'],
-                    'thumbnail' => (string)$item['snippet']['thumbnails']['medium']['url']
-                ];
+                if ($this->checkVideoPermission($item)) {
+                    $uploadDate = new \DateTime($item['snippet']['publishedAt']);
+                    $recordUidArray[] = 'NEW1234' . $i;
+                    $data['tx_mediapool_domain_model_video']['NEW1234' . $i] = [
+                        'pid' => $pid,
+                        'link' => 'https://youtu.be/' . (string)$item['id'],
+                        'title' => (string)$item['snippet']['title'],
+                        'description' => nl2br((string)$item['snippet']['description']),
+                        'upload_date' => $uploadDate->getTimestamp(),
+                        'player_html' => (string)$item['player']['embedHtml'],
+                        'video_id' => 'yt_' . (string)$item['id'],
+                        'thumbnail' => (string)$item['snippet']['thumbnails']['medium']['url']
+                    ];
+                }
             }
         }
         $recordUids = implode(',', $recordUidArray);
@@ -219,7 +222,10 @@ class YouTubeVideoImport extends AbstractVideoImport
     {
         $query = parse_url($this->video->getLink(), PHP_URL_QUERY);
         parse_str($query, $parsedQuery);
-        if (isset($parsedQuery['v'])) {
+        preg_match('/https\:\/\/youtu\.be\/(.+)/', $this->video->getLink(), $matches);
+        if (count($matches) === 2) {
+            return $matches[1];
+        } elseif (isset($parsedQuery['v'])) {
             return $parsedQuery['v'];
         }
         return '';
@@ -230,17 +236,44 @@ class YouTubeVideoImport extends AbstractVideoImport
      * items array from YouTube Data v3 API with parts snippet and player
      * Example on https://developers.google.com/youtube/v3/docs/videos/list
      *
-     * @todo throw error if result items is empty?
-     * @param array $items leave it empty
-     * @param string $additionalRequestParams additional request parameters
+     * @return array
+     */
+    protected function fetchVideoInformation() : array
+    {
+        $videoIds = explode(',', $this->videoIds);
+        $loops = [];
+        $offset = 0;
+        // limit the amount of items per request to 50 (api maximum)
+        while(count($videoIds)) {
+            if (count($videoIds) > 50) {
+                $loops[] = implode(',', array_splice($videoIds, $offset, 50));
+            } else {
+                $loops[] = implode(',', array_splice($videoIds, $offset));
+            }
+        }
+
+        $items = [];
+        foreach ($loops as $videoIds) {
+            $items = array_merge($items, $this->doRequest($videoIds));
+        }
+        return $items;
+    }
+
+    /**
+     * Request video information for $videoIds
+     * recursive call if API provides a nextPageToken
+     *
+     * @param string $videoIds
+     * @param array $items previous items for recursive call - leave it empty
+     * @param string $additionalRequestParams
      * @return array
      * @throws \HttpRequestException
      */
-    protected function fetchVideoInformation(array $items = [], string $additionalRequestParams = '') : array
+    protected function doRequest(string $videoIds, array $items = [], string $additionalRequestParams = '')
     {
         $response = $this->client->request(
             'GET',
-            sprintf(self::VIDEO_API_URL, $this->videoIds, $this->apiKey) . $additionalRequestParams
+            sprintf(self::VIDEO_API_URL, $videoIds, $this->apiKey) . $additionalRequestParams
         );
         // ok
         if ($response->getStatusCode() == 200) {
@@ -254,7 +287,7 @@ class YouTubeVideoImport extends AbstractVideoImport
                 }
                 // call recursive if nextPageToken is set
                 if (isset($result['nextPageToken'])) {
-                    $items = self::fetchVideoInformation($items, '&pageToken=' . $result['nextPageToken']);
+                    $items = self::doRequest($videoIds, $items, '&pageToken=' . $result['nextPageToken']);
                 }
             }
             return $items;

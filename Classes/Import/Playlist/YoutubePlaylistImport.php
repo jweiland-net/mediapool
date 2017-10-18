@@ -132,7 +132,7 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
             foreach ($videos as $item) {
                 $videoIds[] = $item['contentDetails']['videoId'];
             }
-            $data = $this->youTubeVideoImport->getDataArrayForPlaylist(implode(',', $videoIds), $pid, $recordUids);
+            $data = $this->youTubeVideoImport->processDataArray(implode(',', $videoIds), $pid, $recordUids);
             $resultArray = [
                 'fieldArray' => [
                     'pid' => $pid,

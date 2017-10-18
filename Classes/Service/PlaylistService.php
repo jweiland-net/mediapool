@@ -58,7 +58,6 @@ class PlaylistService
      * @param string $playlistLink like https://www.youtube.com/playlist?list=PL-ABvQXa8oyE4zbwSy4V6K5YTD6S_lhu
      * @param int $pid to save video records created by PlaylistImport
      * @return array|int returns int that equals constants of this class to signal an specified error
-     * @throws \Exception if a registered playlist import is not type of AbstractPlaylistImport
      */
     public function getPlaylistData(string $playlistLink, int $pid)
     {

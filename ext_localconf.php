@@ -34,3 +34,17 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1507811779] = [
     'priority' => '70',
     'class' => \JWeiland\Mediapool\Form\Element\VideoTextElement::class,
 ];
+
+// Add renderType to display videos inside a playlist
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1508229522] = [
+    'nodeName' => 'inlineVideo',
+    'priority' => '70',
+    'class' => \JWeiland\Mediapool\Form\Element\InlineVideoElement::class,
+];
+
+// Register task for updating video information
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\JWeiland\Mediapool\Task\UpdateVideoInformation::class] = [
+    'extension' => 'mediapool',
+    'title' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:scheduler.update_video_information.title',
+    'description' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:scheduler.update_video_information.description',
+];

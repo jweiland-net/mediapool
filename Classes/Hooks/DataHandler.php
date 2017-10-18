@@ -94,7 +94,7 @@ class DataHandler
         ) {
             foreach ($dataHandler->datamap[self::TABLE_VIDEO] as &$fields) {
                 // process single video and break on error
-                if ($this->processSingleVideo($fields) === false) {
+                if ($this->_processSingleVideo($fields) === false) {
                     break;
                 }
             }
@@ -109,6 +109,11 @@ class DataHandler
         }
     }
 
+    protected function processSingleVideo(array &$fieldArray): bool
+    {
+        // todo: use new method processDataArray instead of getFilledVideoObject
+    }
+
     /**
      * Process tx_mediapool_domain_model_video object
      *
@@ -116,7 +121,7 @@ class DataHandler
      * @return bool true on success otherwise false
      * @throws \Exception if unknown exception was thrown
      */
-    protected function processSingleVideo(array &$fieldArray): bool
+    protected function _processSingleVideo(array &$fieldArray): bool
     {
         $success = true;
         /** @var VideoService $videoService */
@@ -162,7 +167,8 @@ class DataHandler
             $fieldArray['description'] = $video->getDescription();
             $fieldArray['upload_date'] = $video->getUploadDate()->getTimestamp();
             $fieldArray['video_id'] = $video->getVideoId();
-            $fieldArray['player_html'] = $video->getPlayerHTML();
+            $fieldArray['player_html'] = $video->getPlayerHtml();
+            $fieldArray['thumbnail'] = $video->getThumbnail();
         } else {
             // Add error message
             $flashMessage = GeneralUtility::makeInstance(
