@@ -15,10 +15,68 @@ plugin.tx_mediapool._CSS_DEFAULT_STYLE (
     width: 50%;
     position: relative;
   }
+
   .video-thumbnail {
     background-size: cover;
     background-position: center;
     height: 320px;
     width: 100%;
+  }
+
+  .mediapool-video-container {
+    height: 360px;
+    position: relative;
+  }
+
+  .mediapool-video-container .mediapool-video {
+    height: 100%;
+    width: 66.67%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mediapool-video-container .mediapool-playlist {
+    height: 100%;
+    width: 33.3%;
+    background-color: #f3f4f4;
+    padding: 0;
+    margin: 0;
+    float: right;
+    overflow-y: scroll;
+  }
+
+  .mediapool-video iframe {
+    height: 100%;
+    width: 100%;
+  }
+
+  .mediapool-playlist {
+    padding: .8em;
+  }
+
+  .mediapool-playlist .playlist-item {
+    height: 64px;
+    width: 100%;
+    margin: .2em 0;
+    padding: .2em 0;
+  }
+
+  .mediapool-playlist .playlist-item-active {
+    background: #e0e0e0;
+  }
+
+  .mediapool-playlist .playlist-item-title {
+    float: right;
+    width: 60%;
+  }
+
+  .mediapool-playlist .playlist-item-thumbnail {
+    float: right;
+    width:  30%;
+  }
+
+  .mediapool-playlist .playlist-item-number {
+    float: right;
+    width: 10%;
   }
 )

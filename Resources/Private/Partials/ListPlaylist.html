@@ -1,0 +1,18 @@
+<f:comment>To use this partial: pass your playlist object named playlist and your video object named video.</f:comment>
+<f:for each="{playlist.videos}" as="playlistVideo" iteration="iterator">
+  <div class="playlist-item {f:if(condition: '{video.uid} == {playlistVideo.uid}', then: 'playlist-item-active')}">
+    <f:link.action controller="Video" action="show" arguments="{video: playlistVideo.uid, playlist: playlist.uid}">
+      <div class="playlist-item-inner">
+        <div class="playlist-item-title">
+          {playlistVideo.title}
+        </div>
+        <div class="playlist-item-thumbnail">
+          <img src="{playlistVideo.thumbnail}" alt="{playlistVideo.title}" title="{playlistVideo.title}"/>
+        </div>
+        <div class="playlist-item-number">
+          {iterator.cycle}
+        </div>
+      </div>
+    </f:link.action>
+  </div>
+</f:for>

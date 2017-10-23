@@ -1,10 +1,13 @@
 <h2>{video.title}</h2>
-<f:format.raw>{video.playerHtml}</f:format.raw>
+<div class="mediapool-video-container">
+  <f:if condition="{playlist}">
+    <div class="mediapool-playlist">
+      <f:render partial="ListPlaylist" arguments="{playlist: playlist, video: video}"/>
+    </div>
+  </f:if>
+  <div class="mediapool-video">
+    <f:format.raw>{video.playerHtml}</f:format.raw>
+  </div>
+</div>
 <p><f:format.raw>{video.description}</f:format.raw></p>
 <p><f:translate key="video.upload_date" />: <f:format.date>{video.uploadDate}</f:format.date></p>
-
-<f:comment>If the video was started within a playlist</f:comment>
-<br />
-<f:if condition="{playlist}">
-  <f:render partial="ListPlaylists" arguments="{playlist: playlist}" />
-</f:if>
