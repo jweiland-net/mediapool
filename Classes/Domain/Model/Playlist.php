@@ -14,6 +14,7 @@ namespace JWeiland\Mediapool\Domain\Model;
 * The TYPO3 project - inspiring people to share!
 */
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
@@ -21,22 +22,8 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  *
  * @package JWeiland\Mediapool\Domain\Model;
  */
-class Playlist
+class Playlist extends AbstractEntity
 {
-    /**
-     * UID
-     *
-     * @var int
-     */
-    protected $uid = 0;
-
-    /**
-     * PageID
-     *
-     * @var int
-     */
-    protected $pid = 0;
-
     /**
      * Title
      * imported from video platform
@@ -73,51 +60,21 @@ class Playlist
     protected $videos;
 
     /**
+     * Path to Thumbnail
+     * this can be local AND external
+     * like: /fileadmin/playlists/playlist.jpg
+     * or: https://domain.tld/thumbs/playlist.jpg
+     *
+     * @var string
+     */
+    protected $thumbnail = '';
+
+    /**
      * Playlist constructor.
      */
     public function __construct()
     {
         $this->videos = new ObjectStorage();
-    }
-
-    /**
-     * Returns Uid
-     *
-     * @return int
-     */
-    public function getUid(): int
-    {
-        return $this->uid;
-    }
-
-    /**
-     * Sets Uid
-     *
-     * @param int $uid
-     */
-    public function setUid(int $uid)
-    {
-        $this->uid = $uid;
-    }
-
-    /**
-     * Returns Pid
-     *
-     * @return int
-     */
-    public function getPid(): int
-    {
-        return $this->pid;
-    }
-
-    /**
-     * Sets Pid
-     *
-     * @param int $pid
-     */
-    public function setPid(int $pid)
-    {
-        $this->pid = $pid;
     }
 
     /**
@@ -220,5 +177,25 @@ class Playlist
     public function setVideos(ObjectStorage $videos)
     {
         $this->videos = $videos;
+    }
+
+    /**
+     * Returns Thumbnail
+     *
+     * @return string
+     */
+    public function getThumbnail(): string
+    {
+        return $this->thumbnail;
+    }
+
+    /**
+     * Sets Thumbnail
+     *
+     * @param string $thumbnail
+     */
+    public function setThumbnail(string $thumbnail)
+    {
+        $this->thumbnail = $thumbnail;
     }
 }

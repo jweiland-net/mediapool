@@ -16,6 +16,7 @@ namespace JWeiland\Mediapool\Hooks;
 
 use Codeception\Coverage\Subscriber\Local;
 use JWeiland\Mediapool\Domain\Model\Video;
+use JWeiland\Mediapool\Domain\Repository\PlaylistRepository;
 use JWeiland\Mediapool\Import\NoApiKeyException;
 use JWeiland\Mediapool\Import\Playlist\InvalidPlaylistIdException;
 use JWeiland\Mediapool\Import\Video\InvalidVideoIdException;
@@ -100,9 +101,9 @@ class DataHandler
             }
             // save playlist
         } elseif (array_key_exists(self::TABLE_PLAYLIST, $dataHandler->datamap)) {
-            foreach ($dataHandler->datamap[self::TABLE_PLAYLIST] as &$fields) {
+            foreach ($dataHandler->datamap[self::TABLE_PLAYLIST] as $uid => &$fields) {
                 // process playlist and break on error
-                if ($this->processPlaylist($fields) === false) {
+                if ($this->processPlaylist($uid, $fields) === false) {
                     break;
                 }
             }
@@ -189,19 +190,24 @@ class DataHandler
     /**
      * Process tx_mediapool_domain_model_playlist object
      *
+     * @param int $uid of the playlist
      * @param array $fieldArray
      * @return bool true on success otherwise false
      * @throws \Exception if unknown exception was thrown
      */
-    protected function processPlaylist(array &$fieldArray): bool
+    protected function processPlaylist(int $uid, array &$fieldArray): bool
     {
         $success = true;
         /** @var ObjectManager $objectManager */
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         /** @var PlaylistService $playlistService */
         $playlistService = $objectManager->get(PlaylistService::class);
+        if (!($pid = $fieldArray['pid'])) {
+            $playlistRepository = $objectManager->get(PlaylistRepository::class);
+            $pid = $playlistRepository->findPidByUid($uid);
+        }
         try {
-            $data = $playlistService->getPlaylistData($fieldArray['link'], $fieldArray['pid']);
+            $data = $playlistService->getPlaylistData($fieldArray['link'], $pid);
         } catch (\Exception $exception) {
             // catch exceptions and show create flash messages
             switch (get_class($exception)) {

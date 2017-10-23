@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+  <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z"
+        product-name="mediapool">
+    <header/>
+    <body>
+      <trans-unit id="video_service.video.1.head">
+        <source>Could not collect video information</source>
+        <target>Konnte Videoinformationen nicht beziehen</target>
+      </trans-unit>
+      <trans-unit id="video_service.video.1.body">
+        <source>Detected a matching video platform, but could not collect video information. Please check your link and
+          try again!
+        </source>
+        <target>Die Videoplatform wurde zwar gefunden, jedoch konnten keine Videoinformationen gefunden werden. Bitte
+        Link überprüfen und erneut versuchen.</target>
+      </trans-unit>
+      <trans-unit id="video_service.video.2.head">
+        <source>No video platform match</source>
+      </trans-unit>
+      <target>Keine Videplatform für den angegebenen Link gefunden</target>
+      <trans-unit id="video_service.video.2.body">
+        <source>I could not find a matching video platform for your video. Maybe check your link or register an
+          additional video import service.
+        </source>
+      </trans-unit>
+      <target>Es konnte keine passende Videoplatform zu dem angegeben Link gefunden werden. Bitte Link prüfen
+      oder eine weitere Videoplatform registrieren.</target>
+
+      <trans-unit id="video_service.playlist.1.head">
+        <source>Could not collect playlist information</source>
+        <target>Konnte keine Playlistinformationen beziehen</target>
+      </trans-unit>
+      <trans-unit id="video_service.playlist.1.body">
+        <source>Detected a matching video platform, but could not collect playlist information. Please check your link
+          and try again!
+        </source>
+        <target>Die Videoplatform wurde zwar gefunden, jedoch konnten keine Playlistinformationen gefunden werden.
+        Bitte Link überprüfen und erneut versuchen.</target>
+      </trans-unit>
+      <trans-unit id="video_service.playlist.2.head">
+        <source>No video platform match</source>
+        <target>Keine Videoplatform für den angegeben Link gefunden</target>
+      </trans-unit>
+      <trans-unit id="video_service.playlist.2.body">
+        <source>I could not find a matching video platform for your playlist. Maybe check your link or register an
+          additional playlist import service.
+        </source>
+        <target>Es konnte keine passende Videoplatform zu dem angegeben Link gefunden werden. Bitte Link prüfen
+          oder eine weitere Videoplatform registrieren.</target>
+      </trans-unit>
+
+      <trans-unit id="data_handler.contact_administrator.title">
+        <source>Could not process your request</source>
+        <target>Die Anfrage konnte nicht bearbeitet werden</target>
+      </trans-unit>
+      <trans-unit id="data_handler.contact_administrator.message">
+        <source>There was an error while processing your request. Please contact your administrator. Error code %d
+        </source>
+        <target>Während der Anfrage ist ein Fehler aufgetreten. Bitte Administrator kontaktieren. Fehlercode %d</target>
+      </trans-unit>
+      <trans-unit id="data_handler.invalid_video_exception.title">
+        <source>Invalid video link</source>
+        <target>Ungültiger Videolink</target>
+      </trans-unit>
+      <trans-unit id="data_handler.invalid_video_exception.message">
+        <source>Can not extract a video ID from your link. Please check your link or contact an administrator if this
+          message repeats. Error code %d
+        </source>
+        <target>Es konnte keine Video ID aus dem angegeben Link extrahiert werden. Bitte den Link überprüfen oder
+        einen Administrator kontakieren, falls das Problem erneut auftritt. Fehlercode %d</target>
+      </trans-unit>
+      <trans-unit id="data_handler.invalid_playlist_exception.title">
+        <source>Invalid playlist link</source>
+        <target>Ungültiger Playlistlink</target>
+      </trans-unit>
+      <trans-unit id="data_handler.invalid_playlist_exception.message">
+        <source>Can not extract a playlist ID from your link. Please check your link or contact an administrator if this
+        message repeats. Error code %d</source>
+        <target>Es konnte keine Playlist ID aus dem angegeben Link extrahiert werden. Bitte den Link überprüfen oder
+          einen Administrator kontakieren, falls das Problem erneut auftritt. Fehlercode %d</target>
+      </trans-unit>
+
+    </body>
+  </file>
+</xliff>

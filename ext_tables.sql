@@ -49,6 +49,7 @@ CREATE TABLE tx_mediapool_domain_model_playlist (
 	link varchar(100) DEFAULT '' NOT NULL,
 	playlist_id varchar(100) DEFAULT '' NOT NULL,
 	videos int(11) unsigned DEFAULT '0' NOT NULL,
+	thumbnail varchar(100) DEFAULT '' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,

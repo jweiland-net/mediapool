@@ -138,7 +138,8 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
                     'pid' => $pid,
                     'link' => $playlistLink,
                     'playlist_id' => 'yt_' . $playlistId,
-                    'title' => $information[0]['snippet']['title'],
+                    'title' => (string)$information[0]['snippet']['title'],
+                    'thumbnail' => (string)$information[0]['snippet']['thumbnails']['medium']['url'],
                     'videos' => $recordUids
                 ],
                 'dataHandler' => $data
@@ -225,12 +226,11 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
                     $items = self::fetchPlaylistItems($items, '&pageToken=' . $result['nextPageToken']);
                 }
                 return $items;
-            } else {
-                return [];
             }
         } else {
             $this->checkResponseStatusCode($response);
         }
+        return [];
     }
 
     /**

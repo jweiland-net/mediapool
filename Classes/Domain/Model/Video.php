@@ -24,13 +24,6 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 class Video extends AbstractEntity
 {
     /**
-     * UID
-     *
-     * @var int
-     */
-    protected $uid = 0;
-
-    /**
      * Video title
      * imported from video platform
      *
@@ -88,26 +81,6 @@ class Video extends AbstractEntity
      * @var string
      */
     protected $thumbnail = '';
-
-    /**
-     * Returns Uid
-     *
-     * @return int
-     */
-    public function getUid(): int
-    {
-        return $this->uid;
-    }
-
-    /**
-     * Sets Uid
-     *
-     * @param int $uid
-     */
-    public function setUid(int $uid)
-    {
-        $this->uid = $uid;
-    }
 
     /**
      * Returns Title

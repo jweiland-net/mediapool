@@ -1,46 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.0">
-  <file source-language="en" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z"
+  <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z"
         product-name="mediapool">
     <header/>
     <body>
       <trans-unit id="scheduler.update_video_information.title">
         <source>Update video information</source>
+        <target>Videoinformationen updaten</target>
       </trans-unit>
       <trans-unit id="scheduler.update_video_information.description">
         <source>This task updates the video information by using the DataHandler Hook.</source>
+        <target>Dieser Task updated Videoinformationen.</target>
       </trans-unit>
 
       <trans-unit id="video.upload_date">
         <source>Upload date</source>
+        <target>Hochgeladen am</target>
       </trans-unit>
 
       <trans-unit id="flex_forms.mediapool.view">
         <source>Select view</source>
+        <target>Ansicht wählen</target>
       </trans-unit>
       <trans-unit id="flex_forms.mediapool.recommended_videos">
         <source>Recommended videos</source>
+        <target>Empfohlene Videos</target>
       </trans-unit>
       <trans-unit id="flex_forms.mediapool.detail_view">
         <source>Detail view (Video, Playlist)</source>
+        <target>Detailansicht (Video, Playliste)</target>
       </trans-unit>
       <trans-unit id="flex_forms.mediapool.list_view">
         <source>List view (Playlist)</source>
+        <target>Listenansicht (Playliste)</target>
       </trans-unit>
       <trans-unit id="flex_forms.mediapool.detail_page">
         <source>Select page for detail view</source>
+        <target>Seite für Detailansicht auswählen</target>
       </trans-unit>
       <trans-unit id="flex_forms.mediapool.list_page">
         <source>Select page for list view</source>
+        <target>Seite für Listenansicht auswählen</target>
       </trans-unit>
       <trans-unit id="flex_forms.mediapool.recommended_video_selection">
         <source>Select 3 recommended videos</source>
+        <target>Auswahl von 3 empfohlenen Videos.</target>
       </trans-unit>
       <trans-unit id="flex_forms.mediapool.categories">
-        <source>Display a recent video per selected categorie</source>
+        <source>Display a recent video per selected category</source>
+        <target>Zeige das neuste Video pro ausgewählter Kategorie</target>
       </trans-unit>
       <trans-unit id="flex_forms.mediapool.list_recent_by_category">
         <source>List recent video by category</source>
+        <target>Zeige das neuste Video pro Kategorie</target>
       </trans-unit>
     </body>
   </file>

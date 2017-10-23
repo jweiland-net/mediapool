@@ -14,9 +14,13 @@ namespace JWeiland\Mediapool\Domain\Repository;
 * The TYPO3 project - inspiring people to share!
 */
 
+use Doctrine\DBAL\Query\QueryBuilder;
+use JWeiland\Mediapool\Domain\Model\Playlist;
+use JWeiland\Mediapool\Domain\Model\Video;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
@@ -58,5 +62,71 @@ class VideoRepository extends Repository
             'tx_mediapool_domain_model_video'
         );
         return $connection->select(['uid', 'link'], 'tx_mediapool_domain_model_video')->fetchAll();
+    }
+
+    /**
+     * Find recent videos of playlists by category uids
+     * will return an multidimensional array like
+     * $arr = [
+     *     <categoryUid> => [
+     *         'category' => <instance of category>,
+     *         'playlist' => <instance of playlist>,
+     *         'video' => <instance of video>
+     *     ],
+     *     ...
+     * ];
+     *
+     * @param string $categoryUids comma separated list of uids (e.g. 1,4,6)
+     * @return array
+     */
+    public function findRecentByCategories(string $categoryUids)
+    {
+        $categoryRepository = $this->objectManager->get(CategoryRepository::class);
+        $recentVideos = [];
+        foreach (explode(',', $categoryUids) as $categoryUid) {
+            $category = $categoryRepository->findByUid($categoryUid);
+            $recent = $this->findRecentByCategory($categoryUid);
+            if ($recent) {
+                $recentVideos[$categoryUid] = [
+                    'category' => $category,
+                    'playlist' => $recent['playlist'],
+                    'video' => $recent['video']
+                ];
+            }
+        }
+        return $recentVideos;
+    }
+
+    /**
+     * Find recent videos of playlists by category
+     * will return an array like
+     * $arr = [
+     *     'playlist' => <instance of playlist>,
+     *     'video' => <instance of the newest video in this playlist>
+     * ];
+     *
+     * @param int $categoryUid
+     * @return array
+     */
+    public function findRecentByCategory(int $categoryUid) : array
+    {
+        $playlistRepository = $this->objectManager->get(PlaylistRepository::class);
+        $playlists = $playlistRepository->findByCategory($categoryUid);
+        $uploadDate = 0;
+        $recentVideo = [];
+        /** @var Playlist $playlist */
+        foreach ($playlists as $playlist) {
+            /** @var Video $video */
+            foreach ($playlist->getVideos() as $video) {
+                if ($video->getUploadDate()->getTimestamp() > $uploadDate) {
+                    $uploadDate = $video->getUploadDate();
+                    $recentVideo = [
+                        'playlist' => $playlist,
+                        'video' => $video
+                    ];
+                }
+            }
+        }
+        return $recentVideo;
     }
 }

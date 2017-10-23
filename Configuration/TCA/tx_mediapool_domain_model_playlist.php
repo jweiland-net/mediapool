@@ -63,7 +63,7 @@ return [
         ],
         'pid' => [
             'config' => [
-                'type' => 'hidden'
+                'type' => 'passthrough',
             ]
         ],
         'link' => [
@@ -100,11 +100,16 @@ return [
             'config' => [
                 'type' => 'passthrough'
             ]
-        ]
+        ],
+        'thumbnail' => [
+            'config' => [
+                'type' => 'passthrough'
+            ]
+        ],
     ],
     'types' => [
         '0' => [
-            'showitem' => 'pid,link,title,videos,playlist_id'
+            'showitem' => 'link,title,videos,playlist_id,pid'
         ],
     ],
 ];

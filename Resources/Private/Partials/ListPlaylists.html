@@ -1,0 +1,9 @@
+<ul class="playlist">
+  <f:for each="{playlist.videos}" as="playlistVideo">
+    <li>
+      <f:link.action controller="Video" action="show" arguments="{video: playlistVideo.uid, playlist: playlist.uid}">
+        <img src="{playlistVideo.thumbnail}" alt="{playlistVideo.title}" title="{playlistVideo.title}"/>
+      </f:link.action>
+    </li>
+  </f:for>
+</ul>

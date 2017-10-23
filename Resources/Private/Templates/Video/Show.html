@@ -1,0 +1,10 @@
+<h2>{video.title}</h2>
+<f:format.raw>{video.playerHtml}</f:format.raw>
+<p><f:format.raw>{video.description}</f:format.raw></p>
+<p><f:translate key="video.upload_date" />: <f:format.date>{video.uploadDate}</f:format.date></p>
+
+<f:comment>If the video was started within a playlist</f:comment>
+<br />
+<f:if condition="{playlist}">
+  <f:render partial="ListPlaylists" arguments="{playlist: playlist}" />
+</f:if>

@@ -1,0 +1,24 @@
+plugin.tx_mediapool_mediapool {
+  view {
+    templateRootPath = {$plugin.tx_mediapool_mediapool.view.templateRootPath}
+    partialRootPath = {$plugin.tx_mediapool_mediapool.view.partialRootPath}
+    layoutRootPath = {$plugin.tx_mediapool_mediapool.view.layoutRootPath}
+  }
+
+  persistence {
+    storagePid = {$plugin.tx_mediapool_mediapool.persistence.storagePid}
+  }
+}
+
+plugin.tx_mediapool._CSS_DEFAULT_STYLE (
+  .recent-video {
+    width: 50%;
+    position: relative;
+  }
+  .video-thumbnail {
+    background-size: cover;
+    background-position: center;
+    height: 320px;
+    width: 100%;
+  }
+)
