@@ -190,12 +190,12 @@ class DataHandler
     /**
      * Process tx_mediapool_domain_model_playlist object
      *
-     * @param int $uid of the playlist
+     * @param int|string $uid of the playlist
      * @param array $fieldArray
      * @return bool true on success otherwise false
      * @throws \Exception if unknown exception was thrown
      */
-    protected function processPlaylist(int $uid, array &$fieldArray): bool
+    protected function processPlaylist($uid, array &$fieldArray): bool
     {
         $success = true;
         /** @var ObjectManager $objectManager */
