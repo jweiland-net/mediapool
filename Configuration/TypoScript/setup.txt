@@ -30,6 +30,11 @@ plugin.tx_mediapool._CSS_DEFAULT_STYLE (
   .mediapool-video-preview img,
   .mediapool-playlist-preview img {
     width: 100%;
+    border-radius: 0;
+  }
+
+  .video-embed {
+    border-radius: 0.375rem;
   }
 
   .mediapool-video-preview-title,
