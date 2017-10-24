@@ -64,19 +64,18 @@ class VideoController extends ActionController
     }
 
     /**
-     * Show recommended videos
+     * List recommended videos
      *
      * @return void
-     * @throws \InvalidSelectorException if a selected recommended video could not be found
-     * @todo rename to listRecommendedAction() !!!
+     * @throws \InvalidArgumentException if a selected recommended video could not be found
      */
-    public function showRecommendedAction()
+    public function listRecommendedAction()
     {
         $recommendedVideos = [];
         foreach (explode(',', $this->settings['recommendedVideos']) as $recommendedVideoUid) {
             $recommendedVideo = $this->videoRepository->findByUid($recommendedVideoUid);
             if ($recommendedVideo === null) {
-                throw new \InvalidSelectorException(
+                throw new \InvalidArgumentException(
                     sprintf(
                         'The selected recommended video %d could not be found.',
                         $recommendedVideoUid

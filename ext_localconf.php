@@ -56,7 +56,7 @@ if (TYPO3_MODE === 'BE') {
     'JWeiland.mediapool',
     'Mediapool',
     [
-        'Video' => 'show,showRecommended',
+        'Video' => 'show,listRecommended',
         'Playlist' => 'listByCategory'
     ],
     []

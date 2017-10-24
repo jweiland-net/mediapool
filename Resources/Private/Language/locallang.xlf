@@ -19,7 +19,7 @@
         <source>Select view</source>
       </trans-unit>
       <trans-unit id="flex_forms.mediapool.recommended_videos">
-        <source>Recommended videos</source>
+        <source>List recommended videos</source>
       </trans-unit>
       <trans-unit id="flex_forms.mediapool.detail_view">
         <source>Detail view (Video, Playlist)</source>
@@ -41,6 +41,10 @@
       </trans-unit>
       <trans-unit id="flex_forms.mediapool.list_recent_by_category">
         <source>List recent video by category</source>
+      </trans-unit>
+
+      <trans-unit id="frontend.list_by_category.no_playlists">
+        <source>No playlists found!</source>
       </trans-unit>
     </body>
   </file>

@@ -1,15 +1,10 @@
-<div class="recent-videos">
-  <f:debug>{_all}</f:debug>
+<div class="grid">
   <f:for each="{recentVideos}" key="categoryUid" as="recentVideo">
-    <f:link.action pageUid="{listPage}" controller="Playlist" action="listByCategory" arguments="{category: categoryUid}">
-      <h3>{recentVideo.category.title}</h3>
-    </f:link.action>
-    <f:link.action pageUid="{detailPage}" controller="Video" action="show"
-                   arguments="{video: recentVideo.video.uid, playlist: recentVideo.playlist.uid}">
-      <div class="recent-video">
-        <div class="video-thumbnail" style="background-image:url({recentVideo.video.thumbnail})"></div>
-        <span class="video-title">{recentVideo.video.title}</span>
-      </div>
-    </f:link.action>
+    <div class="col-6_md-6_sm-12">
+      <f:link.action pageUid="{listPage}" controller="Playlist" action="listByCategory" arguments="{category: categoryUid}">
+        <h3>{recentVideo.category.title}</h3>
+      </f:link.action>
+      <f:render partial="VideoPreview" arguments="{video: recentVideo.video, playlist: recentVideo.playlist, detailPage: detailPage}" />
+    </div>
   </f:for>
 </div>

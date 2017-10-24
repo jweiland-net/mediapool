@@ -18,10 +18,6 @@ use GuzzleHttp\Client;
 use JWeiland\Mediapool\Domain\Model\Video;
 use JWeiland\Mediapool\Domain\Repository\VideoRepository;
 use JWeiland\Mediapool\Service\YouTubeService;
-use TYPO3\CMS\Core\Utility\ArrayUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
-use TYPO3\CMS\Extensionmanager\Utility\ConfigurationUtility;
 
 /**
  * Class YouTubeVideoImport
@@ -142,7 +138,10 @@ class YouTubeVideoImport extends AbstractVideoImport
             $this->video->setPlayerHtml($items[0]['player']['embedHtml']);
             $this->video->setVideoId('yt_' . $this->videoIds);
             $this->video->setThumbnail($items[0]['snippet']['thumbnails']['medium']['url']);
-            $this->video->setThumbnailLarge($items[0]['snippet']['thumbnails']['maxres']['url']);
+            $this->video->setThumbnailLarge(
+                $items[0]['snippet']['thumbnails']['maxres']['url'] ?:
+                $items[0]['snippet']['thumbnails']['standard']['url']
+            );
             return $this->video;
         } else {
             throw new VideoPermissionException(
@@ -185,7 +184,9 @@ class YouTubeVideoImport extends AbstractVideoImport
                     'player_html' => (string)$item['player']['embedHtml'],
                     'video_id' => 'yt_' . (string)$item['id'],
                     'thumbnail' => (string)$item['snippet']['thumbnails']['medium']['url'],
-                    'thumbnail_large' => (string)$item['snippet']['thumbnails']['maxres']['url']
+                    'thumbnail_large' =>
+                        (string)$item['snippet']['thumbnails']['maxres']['url'] ?:
+                        $item['snippet']['thumbnails']['high']['url']
                 ];
             }
         }
@@ -237,6 +238,7 @@ class YouTubeVideoImport extends AbstractVideoImport
      * Example on https://developers.google.com/youtube/v3/docs/videos/list
      *
      * @return array
+     * @todo save fetched data in an array like $this->data. Cast all values there
      */
     protected function fetchVideoInformation() : array
     {

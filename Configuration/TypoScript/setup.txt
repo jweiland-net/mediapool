@@ -13,92 +13,48 @@ plugin.tx_mediapool_mediapool {
 }
 
 plugin.tx_mediapool._CSS_DEFAULT_STYLE (
-  .mediapool-recommended-videos-container {
-    height: 480px;
-    position: relative;
+  .preview-icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background-color: #eee; /* ie fallback */
+    background: rgba(238, 238, 238, 0.8);
+    border-radius: 0.375rem;
+    width: 4rem;
+    height: 2.9rem;
+    margin: -1.45rem -2rem;
+    color: #d68605;
+    text-align: center;
   }
 
-  .mediapool-recommended-videos-main-container {
-    height: 100%;
-    width: 66.67%;
-    padding: 0;
-    margin: 0;
-    float: left;
-  }
-
-  .mediapool-recommended-videos-main-container::after,
-  .mediapool-recommended-videos-side-container::after {
-    content: '';
-    display: block;
-    clear: both;
-  }
-
-  .mediapool-recommended-videos-side-container {
-    height: 100%;
-    width: 33.3%;
-    padding: 0;
-    margin: 0;
-    overflow: auto;
-  }
-
-  .mediapool-recommended-video-item,
-  .mediapool-recommended-video {
-    height: 100%;
+  .mediapool-video-preview img,
+  .mediapool-playlist-preview img {
     width: 100%;
   }
 
-  .mediapool-recommended-videos-side-container .mediapool-recommended-video-item {
-    height: 50%;
+  .mediapool-video-preview-title,
+  .mediapool-playlist-preview-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: .5em;
+    color: #333;
+    background-color: #eee; /* ie fallback */
+    background: rgba(238, 238, 238, 0.8);
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
   }
 
-  @media screen and (max-width: 999px) {
-    .mediapool-recommended-videos-main-container {
-      float: none;
-      height: 60%;
-      width: 100%;
-    }
-
-    .mediapool-recommended-videos-side-container {
-      height: 30%;
-      width: 100%;
-    }
-
-    .mediapool-recommended-videos-side-container .mediapool-recommended-video-item {
-      height: 100%;
-      width: 50%;
-      float: left;
-    }
-
-    .mediapool-recommended-videos-container {
-      height: 680px;
-      position: relative;
-    }
-
+  .mediapool-video-preview:hover .mediapool-video-preview-title,
+  .mediapool-playlist-preview:hover .mediapool-playlist-preview-title {
+    background: rgba(238, 238, 238, 1);
   }
 
-
-  .mediapool-video-container {
-    height: 480px;
-    position: relative;
-  }
-
-  .mediapool-video-container:after {
-    content: '';
-    display: block;
-    clear: both;
-  }
-
-  .mediapool-video-container .mediapool-video {
-    height: 100%;
-    width: 66.67%;
-    padding: 0;
-    margin: 0;
-    float: left;
-  }
-
-  .mediapool-video-container .mediapool-playlist {
-    height: 100%;
-    width: 33.3%;
+  .mediapool-playlist {
     background-color: #f3f4f4;
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
@@ -107,63 +63,11 @@ plugin.tx_mediapool._CSS_DEFAULT_STYLE (
     overflow-y: scroll;
   }
 
-  @media screen and (max-width: 999px) {
-    .mediapool-video-container {
-      height: auto;
-    }
-
-    .mediapool-video-container .mediapool-video {
-      height: 480px;
-      width: 100%;
-      float: left;
-    }
-
-    .mediapool-video-container .mediapool-playlist {
-      height: 300px;
-      width: 100%;
-    }
-  }
-
-  .mediapool-video iframe {
-    height: 100%;
-    width: 100%;
-  }
-
-  .mediapool-playlist .playlist-item {
-    height: 80px;
-    width: 100%;
-    margin: .2em 0;
-    padding: .2em 0;
-    position: relative;
-  }
-
-  .mediapool-playlist .playlist-item:after {
-    content: '';
-    display: block;
-    clear: both;
+  .mediapool-playlist .playlist-item-inner {
+    padding: .4em;
   }
 
   .mediapool-playlist .playlist-item-active {
     background: #e0e0e0;
   }
-
-  .mediapool-playlist .playlist-item-title {
-    float: right;
-    width: 65%;
-  }
-
-  .mediapool-playlist .playlist-item p {
-    padding: .4em;
-  }
-
-  .mediapool-playlist .playlist-item-thumbnail {
-    float: right;
-    width:  30%;
-  }
-
-  .mediapool-playlist .playlist-item-number {
-    float: right;
-    width: 5%;
-  }
-
 )

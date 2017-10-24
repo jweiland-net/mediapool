@@ -118,7 +118,7 @@ class VideoRepository extends Repository
         foreach ($playlists as $playlist) {
             /** @var Video $video */
             foreach ($playlist->getVideos() as $video) {
-                if ($video->getUploadDate()->getTimestamp() > $uploadDate) {
+                if ($video->getUploadDate() > $uploadDate) {
                     $uploadDate = $video->getUploadDate();
                     $recentVideo = [
                         'playlist' => $playlist,

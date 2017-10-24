@@ -52,6 +52,7 @@ class PlaylistController extends ActionController
     public function listByCategoryAction(Category $category)
     {
         $playlists = $this->playlistRepository->findByCategory($category->getUid());
+        $this->view->assign('detailPage', $this->settings['detailPage']);
         $this->view->assign('category', $category);
         $this->view->assign('playlists', $playlists);
     }

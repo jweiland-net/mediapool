@@ -23,7 +23,7 @@
         <target>Ansicht wählen</target>
       </trans-unit>
       <trans-unit id="flex_forms.mediapool.recommended_videos">
-        <source>Recommended videos</source>
+        <source>List recommended videos</source>
         <target>Empfohlene Videos</target>
       </trans-unit>
       <trans-unit id="flex_forms.mediapool.detail_view">

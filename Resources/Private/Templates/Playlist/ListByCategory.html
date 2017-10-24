@@ -1,12 +1,15 @@
 <h2>{category.title}</h2>
-<ul>
-  <f:for each="{playlists}" as="playlist">
-    <li>
-      <f:link.action controller="Video" action="show" arguments="{video: playlist.videos.0, playlist: playlist}">
-      <img src="{playlist.thumbnail}" alt="{playlist.title}" title="{playlist.title}" />
-      <br />
-      {playlist.title}
-    </f:link.action>
-    </li>
-  </f:for>
-</ul>
+<f:if condition="{playlists}">
+  <f:then>
+    <div class="grid">
+      <f:for each="{playlists}" as="playlist">
+        <div class="col-4_md-6_sm-12">
+          <f:render partial="PlaylistPreview" arguments="{playlist: playlist, detailPage: detailPage}" />
+        </div>
+      </f:for>
+    </div>
+  </f:then>
+  <f:else>
+    <f:translate key="frontend.list_by_category.no_playlists" />
+  </f:else>
+</f:if>

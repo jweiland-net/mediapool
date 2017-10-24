@@ -1,0 +1,11 @@
+<div class="video-embed">
+  <f:link.action controller="Video" action="show" pageUid="{detailPage}" arguments="{video: video, playlist: playlist}">
+    <div class="mediapool-video-preview">
+      <img src="{video.thumbnailLarge}" alt="{video.title}" title="{video.title}"/>
+      <div class="mediapool-video-preview-title">
+        {video.title}
+      </div>
+      <span class="preview-icon fa fa-2x fa-video-camera" aria-hidden="true"></span>
+    </div>
+  </f:link.action>
+</div>
