@@ -83,6 +83,14 @@ class Video extends AbstractEntity
     protected $thumbnail = '';
 
     /**
+     * Path to the large Thumbnail
+     * same than $thumbnail but larger
+     *
+     * @var string
+     */
+    protected $thumbnailLarge = '';
+
+    /**
      * Returns Title
      *
      * @return string
@@ -224,5 +232,25 @@ class Video extends AbstractEntity
     public function setThumbnail(string $thumbnail)
     {
         $this->thumbnail = $thumbnail;
+    }
+
+    /**
+     * Returns ThumbnailLarge
+     *
+     * @return string
+     */
+    public function getThumbnailLarge(): string
+    {
+        return $this->thumbnailLarge;
+    }
+
+    /**
+     * Sets ThumbnailLarge
+     *
+     * @param string $thumbnailLarge
+     */
+    public function setThumbnailLarge(string $thumbnailLarge)
+    {
+        $this->thumbnailLarge = $thumbnailLarge;
     }
 }

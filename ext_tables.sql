@@ -13,6 +13,7 @@ CREATE TABLE tx_mediapool_domain_model_video (
 	player_html text DEFAULT '' NOT NULL,
 	video_id varchar(100) DEFAULT '' NOT NULL,
 	thumbnail varchar(100) DEFAULT '' NOT NULL,
+	thumbnail_large varchar(100) DEFAULT '' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,

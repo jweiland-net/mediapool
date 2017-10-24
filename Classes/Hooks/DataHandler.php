@@ -170,6 +170,7 @@ class DataHandler
             $fieldArray['video_id'] = $video->getVideoId();
             $fieldArray['player_html'] = $video->getPlayerHtml();
             $fieldArray['thumbnail'] = $video->getThumbnail();
+            $fieldArray['thumbnail_large'] = $video->getThumbnailLarge();
         } else {
             // Add error message
             $flashMessage = GeneralUtility::makeInstance(

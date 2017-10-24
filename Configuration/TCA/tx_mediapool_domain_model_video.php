@@ -8,7 +8,7 @@ return [
         'cruser_id' => 'cruser_id',
         'versioningWS' => true,
         'origUid' => 't3_origuid',
-        'default_sortby' => 'crdate',
+        'default_sortby' => 'upload_date DESC',
         'delete' => 'deleted',
         'enablecolumns' => [
             'disabled' => 'hidden',
@@ -111,10 +111,15 @@ return [
                 'type' => 'passthrough'
             ]
         ],
+        'thumbnail_large' => [
+            'config' => [
+                'type' => 'passthrough'
+            ]
+        ],
     ],
     'types' => [
         '0' => [
-            'showitem' => 'link,upload_date,title,player_html,description,thumbnail'
+            'showitem' => 'link,upload_date,title,player_html,description,thumbnail,thumbnail_large'
         ],
     ],
 ];

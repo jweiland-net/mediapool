@@ -140,6 +140,7 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
                     'playlist_id' => 'yt_' . $playlistId,
                     'title' => (string)$information[0]['snippet']['title'],
                     'thumbnail' => (string)$information[0]['snippet']['thumbnails']['medium']['url'],
+                    'thumbnail_large' => (string)$information[0]['snippet']['thumbnails']['standard']['url'],
                     'videos' => $recordUids
                 ],
                 'dataHandler' => $data

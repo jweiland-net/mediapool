@@ -1,13 +1,14 @@
 <h2>{video.title}</h2>
 <div class="mediapool-video-container">
+  <div class="mediapool-video">
+    <f:format.raw>{video.playerHtml}</f:format.raw>
+  </div>
   <f:if condition="{playlist}">
     <div class="mediapool-playlist">
       <f:render partial="ListPlaylist" arguments="{playlist: playlist, video: video}"/>
     </div>
   </f:if>
-  <div class="mediapool-video">
-    <f:format.raw>{video.playerHtml}</f:format.raw>
-  </div>
 </div>
+<br />
 <p><f:format.raw>{video.description}</f:format.raw></p>
 <p><f:translate key="video.upload_date" />: <f:format.date>{video.uploadDate}</f:format.date></p>

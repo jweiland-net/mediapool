@@ -68,6 +68,7 @@ class VideoController extends ActionController
      *
      * @return void
      * @throws \InvalidSelectorException if a selected recommended video could not be found
+     * @todo rename to listRecommendedAction() !!!
      */
     public function showRecommendedAction()
     {

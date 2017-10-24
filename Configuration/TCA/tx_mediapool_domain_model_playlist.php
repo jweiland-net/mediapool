@@ -91,6 +91,7 @@ return [
                 'type' => 'inline',
                 'renderType' => 'inlineVideo',
                 'foreign_table' => 'tx_mediapool_domain_model_video',
+                'foreign_default_sortby' => 'upload_date DESC',
                 'MM' => 'tx_mediapool_playlist_video_mm',
                 'minitems' => 0,
                 'maxitems' => 1000,

@@ -19,7 +19,9 @@ use TYPO3\CMS\Backend\Form\Element\AbstractFormElement;
 use TYPO3\CMS\Backend\Form\NodeFactory;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
@@ -66,6 +68,22 @@ class InlineVideoElement extends AbstractFormElement
     {
         $resultArray = $this->initializeResultArray();
         $parameterArray = $this->data['parameterArray'];
+        $config = $parameterArray['fieldConf']['config'];
+        $size = MathUtility::forceIntegerInRange($config['size'] ?? $this->defaultInputWidth, $this->minimumInputWidth, $this->maxInputWidth);
+        $width = (int)$this->formMaxWidth($size);
+
+        if (!$parameterArray['itemFormElValue']) {
+            $html = [];
+            $html[] = '<div class="alert alert-info" role="alert" style="max-width: ' . $width . 'px">';
+            $html[] = LocalizationUtility::translate(
+                'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:' .
+                'tx_mediapool_domain_model_video.empty_field'
+            );
+            $html[] = '</div>';
+            $resultArray['html'] = implode(LF, $html);
+            return $resultArray;
+        }
+
         $videos = [];
         foreach (explode(',', $parameterArray['itemFormElValue']) as $uid) {
                 $videos[] = $this->videoRepository->findByUid($uid);

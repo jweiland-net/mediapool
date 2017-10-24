@@ -1,7 +1,9 @@
-<f:link.action controller="Video" action="show" pageUid="{detailPage}" arguments="{video: video}">
-  <div class="top-video" style="background:url({video.thumbnail}); background-size:cover;">
-    <div class="top-video-title">
-      {video.title}
+<div class="mediapool-recommended-video-item">
+  <f:link.action controller="Video" action="show" pageUid="{detailPage}" arguments="{video: video}">
+    <div class="mediapool-recommended-video" style="background:url({video.thumbnailLarge}); background-size:cover;">
+      <div class="mediapool-recommended-video-title">
+        {video.title}
+      </div>
     </div>
-  </div>
-</f:link.action>
+  </f:link.action>
+</div>

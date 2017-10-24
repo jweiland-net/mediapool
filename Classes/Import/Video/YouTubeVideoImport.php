@@ -142,6 +142,7 @@ class YouTubeVideoImport extends AbstractVideoImport
             $this->video->setPlayerHtml($items[0]['player']['embedHtml']);
             $this->video->setVideoId('yt_' . $this->videoIds);
             $this->video->setThumbnail($items[0]['snippet']['thumbnails']['medium']['url']);
+            $this->video->setThumbnailLarge($items[0]['snippet']['thumbnails']['maxres']['url']);
             return $this->video;
         } else {
             throw new VideoPermissionException(
@@ -168,25 +169,24 @@ class YouTubeVideoImport extends AbstractVideoImport
         $data = [];
         $recordUidArray = [];
         foreach ($this->fetchVideoInformation() as $i => $item) {
-            // don´t create a new record, if a video with the same id on current pid already exists
             $queryResult = $videoRepository->findByVideoId('yt_' . (string)$item['id'], $pid);
-            if ($video = $queryResult->getFirst()) {
-                $recordUidArray[] = $video->getUid();
-            } else {
-                if ($this->checkVideoPermission($item)) {
-                    $uploadDate = new \DateTime($item['snippet']['publishedAt']);
-                    $recordUidArray[] = 'NEW1234' . $i;
-                    $data['tx_mediapool_domain_model_video']['NEW1234' . $i] = [
-                        'pid' => $pid,
-                        'link' => 'https://youtu.be/' . (string)$item['id'],
-                        'title' => (string)$item['snippet']['title'],
-                        'description' => nl2br((string)$item['snippet']['description']),
-                        'upload_date' => $uploadDate->getTimestamp(),
-                        'player_html' => (string)$item['player']['embedHtml'],
-                        'video_id' => 'yt_' . (string)$item['id'],
-                        'thumbnail' => (string)$item['snippet']['thumbnails']['medium']['url']
-                    ];
-                }
+            if ($this->checkVideoPermission($item)) {
+                $existingVideo = $queryResult->getFirst();
+                // don´t create a new record, if a video with the same id on current pid already exists
+                $recordUid = $existingVideo ? $existingVideo->getUid() : ('NEW1234' . $i);
+                $uploadDate = new \DateTime($item['snippet']['publishedAt']);
+                $recordUidArray[] = $recordUid;
+                $data['tx_mediapool_domain_model_video'][$recordUid] = [
+                    'pid' => $pid,
+                    'link' => 'https://youtu.be/' . (string)$item['id'],
+                    'title' => (string)$item['snippet']['title'],
+                    'description' => nl2br((string)$item['snippet']['description']),
+                    'upload_date' => $uploadDate->getTimestamp(),
+                    'player_html' => (string)$item['player']['embedHtml'],
+                    'video_id' => 'yt_' . (string)$item['id'],
+                    'thumbnail' => (string)$item['snippet']['thumbnails']['medium']['url'],
+                    'thumbnail_large' => (string)$item['snippet']['thumbnails']['maxres']['url']
+                ];
             }
         }
         $recordUids = implode(',', $recordUidArray);

@@ -4,13 +4,13 @@
     <f:link.action controller="Video" action="show" arguments="{video: playlistVideo.uid, playlist: playlist.uid}">
       <div class="playlist-item-inner">
         <div class="playlist-item-title">
-          {playlistVideo.title}
+          <p><f:format.crop maxCharacters="35">{playlistVideo.title}</f:format.crop></p>
         </div>
         <div class="playlist-item-thumbnail">
           <img src="{playlistVideo.thumbnail}" alt="{playlistVideo.title}" title="{playlistVideo.title}"/>
         </div>
         <div class="playlist-item-number">
-          {iterator.cycle}
+          <p>{iterator.cycle}</p>
         </div>
       </div>
     </f:link.action>

@@ -1,3 +1,5 @@
+page.includeJSFooter.tx_mediapool = EXT:mediapool/Resources/Public/JavaScript/mediapool.js
+
 plugin.tx_mediapool_mediapool {
   view {
     templateRootPath = {$plugin.tx_mediapool_mediapool.view.templateRootPath}
