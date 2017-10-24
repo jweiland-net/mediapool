@@ -13,21 +13,79 @@ plugin.tx_mediapool_mediapool {
 }
 
 plugin.tx_mediapool._CSS_DEFAULT_STYLE (
-  .recent-video {
-    width: 50%;
+  .mediapool-recommended-videos-container {
+    height: 480px;
     position: relative;
   }
 
-  .video-thumbnail {
-    background-size: cover;
-    background-position: center;
-    height: 320px;
+  .mediapool-recommended-videos-main-container {
+    height: 100%;
+    width: 66.67%;
+    padding: 0;
+    margin: 0;
+    float: left;
+  }
+
+  .mediapool-recommended-videos-main-container::after,
+  .mediapool-recommended-videos-side-container::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+
+  .mediapool-recommended-videos-side-container {
+    height: 100%;
+    width: 33.3%;
+    padding: 0;
+    margin: 0;
+    overflow: auto;
+  }
+
+  .mediapool-recommended-video-item,
+  .mediapool-recommended-video {
+    height: 100%;
     width: 100%;
   }
 
+  .mediapool-recommended-videos-side-container .mediapool-recommended-video-item {
+    height: 50%;
+  }
+
+  @media screen and (max-width: 999px) {
+    .mediapool-recommended-videos-main-container {
+      float: none;
+      height: 60%;
+      width: 100%;
+    }
+
+    .mediapool-recommended-videos-side-container {
+      height: 30%;
+      width: 100%;
+    }
+
+    .mediapool-recommended-videos-side-container .mediapool-recommended-video-item {
+      height: 100%;
+      width: 50%;
+      float: left;
+    }
+
+    .mediapool-recommended-videos-container {
+      height: 680px;
+      position: relative;
+    }
+
+  }
+
+
   .mediapool-video-container {
-    height: 360px;
+    height: 480px;
     position: relative;
+  }
+
+  .mediapool-video-container:after {
+    content: '';
+    display: block;
+    clear: both;
   }
 
   .mediapool-video-container .mediapool-video {
@@ -35,16 +93,35 @@ plugin.tx_mediapool._CSS_DEFAULT_STYLE (
     width: 66.67%;
     padding: 0;
     margin: 0;
+    float: left;
   }
 
   .mediapool-video-container .mediapool-playlist {
     height: 100%;
     width: 33.3%;
     background-color: #f3f4f4;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
     padding: 0;
     margin: 0;
-    float: right;
     overflow-y: scroll;
+  }
+
+  @media screen and (max-width: 999px) {
+    .mediapool-video-container {
+      height: auto;
+    }
+
+    .mediapool-video-container .mediapool-video {
+      height: 480px;
+      width: 100%;
+      float: left;
+    }
+
+    .mediapool-video-container .mediapool-playlist {
+      height: 300px;
+      width: 100%;
+    }
   }
 
   .mediapool-video iframe {
@@ -52,15 +129,18 @@ plugin.tx_mediapool._CSS_DEFAULT_STYLE (
     width: 100%;
   }
 
-  .mediapool-playlist {
-    padding: .8em;
-  }
-
   .mediapool-playlist .playlist-item {
-    height: 64px;
+    height: 80px;
     width: 100%;
     margin: .2em 0;
     padding: .2em 0;
+    position: relative;
+  }
+
+  .mediapool-playlist .playlist-item:after {
+    content: '';
+    display: block;
+    clear: both;
   }
 
   .mediapool-playlist .playlist-item-active {
@@ -69,7 +149,11 @@ plugin.tx_mediapool._CSS_DEFAULT_STYLE (
 
   .mediapool-playlist .playlist-item-title {
     float: right;
-    width: 60%;
+    width: 65%;
+  }
+
+  .mediapool-playlist .playlist-item p {
+    padding: .4em;
   }
 
   .mediapool-playlist .playlist-item-thumbnail {
@@ -79,6 +163,7 @@ plugin.tx_mediapool._CSS_DEFAULT_STYLE (
 
   .mediapool-playlist .playlist-item-number {
     float: right;
-    width: 10%;
+    width: 5%;
   }
+
 )
