@@ -87,6 +87,14 @@ class YouTubeVideoImport extends AbstractVideoImport
     protected $youTubeService;
 
     /**
+     * Fetched Items from API
+     * @todo add example
+     *
+     * @var array
+     */
+    protected $fetchedItems = [];
+
+    /**
      * inject youTubeService
      *
      * @param YouTubeService $youTubeService
@@ -317,5 +325,45 @@ class YouTubeVideoImport extends AbstractVideoImport
                 1507794777
             );
         }
+    }
+
+    /**
+     * Get array with casted values for $item
+     *
+     * @param array $item from API
+     * @return array with casted values for passed $item
+     */
+    protected function getArrayForItem(array $item) : array
+    {
+        $uploadDate = new \DateTime($item['snippet']['publishedAt']);
+        return [
+            'link' => 'https://youtu.be/' . (string)$item['id'],
+            'title' => (string)$item['snippet']['title'],
+            'description' => nl2br((string)$item['snippet']['description']),
+            'upload_date' => $uploadDate->getTimestamp(),
+            'player_html' => (string)$item['player']['embedHtml'],
+            'video_id' => 'yt_' . (string)$item['id'],
+            'thumbnail' => (string)$item['snippet']['thumbnails']['medium']['url'],
+            'thumbnail_large' => $this->getLargestThumbnailForVideo($item)
+        ];
+    }
+
+    /**
+     * Get the largest available thumbnail for $item
+     *
+     * @param array $item from API
+     * @return string thumbnail url
+     */
+    protected function getLargestThumbnailForVideo(array $item) : string
+    {
+        // in best case we get the maxres thumbnail otherwise use fallback
+        // as defined in array
+        $keys = ['maxres', 'standard', 'high', 'medium', 'default'];
+        foreach ($keys as $key) {
+            if (isset($item['snippet']['thumbnails'][$key]['url'])) {
+                return $item['snippet']['thumbnails'][$key]['url'];
+            }
+        }
+        return '';
     }
 }
