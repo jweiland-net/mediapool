@@ -62,6 +62,10 @@ plugin.tx_mediapool._CSS_DEFAULT_STYLE (
     transition: all 0.3s ease-in-out;
   }
 
+  .mediapool-playlist-preview h4 {
+    min-height: 2.9rem;
+  }
+
   .mediapool-video-preview:hover .mediapool-video-preview-title {
     background: rgba(238, 238, 238, 1);
   }
