@@ -1,6 +1,6 @@
 <h1>{video.title}</h1>
-<div class="grid">
-  <div class="{f:if(condition: '{playlist}', then: 'mediapool-video-wrap ')}col-12">
+
+  <div class="grid col-12{f:if(condition: '{playlist}', then: ' mediapool-video-wrap')} ">
     <div class="grid col-8_md-12{f:if(condition: '!{playlist}', then: ' mediapool-video-wrap')}">
       <f:render partial="Video" arguments="{video: video}" />
     </div>
@@ -10,9 +10,13 @@
       </div>
     </f:if>
   </div>
-  <br />
-  <div class="col-8_md-12">
+  <div class="grid col-8_md-12">
     <p><f:format.raw>{video.description}</f:format.raw></p>
     <p><f:translate key="video.upload_date" />: <f:format.date>{video.uploadDate}</f:format.date></p>
+    <div class="news-backlink-wrap">
+      <a href="javascript:history.back()">
+        <span class="fa fa-angle-left" aria-hidden="true"></span>
+        Zurück
+      </a>
+    </div>
   </div>
-</div>
