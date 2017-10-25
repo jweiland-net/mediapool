@@ -8,12 +8,14 @@ $(document).ready(function() {
 });
 
 function scrollToActiveVideo() {
-  $(".mediapool-playlist").scrollTop($(".playlist-item-active").position().top);
+  var $mediapoolPlaylistItems = $('.mediapool-playlist-items');
+  var $activeItem = $('.playlist-item-active');
+  $mediapoolPlaylistItems.scrollTop($mediapoolPlaylistItems.scrollTop() + $activeItem.position().top);
 }
 
 function resizePlaylist() {
-  var playerHeight = $('.video-embed').css('height');
-  $(".mediapool-playlist").each(function () {
-    $(this).css('height', playerHeight);
-  });
+  var height = $('.video-embed').outerHeight() - $('.mediapool-playlist-header').outerHeight();
+  $('.mediapool-playlist-items').each(function () {
+    $(this).css('height', height + 'px');
+  }, height);
 }
