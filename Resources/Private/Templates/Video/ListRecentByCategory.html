@@ -1,6 +1,6 @@
 <div class="grid">
   <f:for each="{recentVideos}" key="categoryUid" as="recentVideo">
-    <div class="col-6_md-6_sm-12">
+    <div class="col-6_sm-12">
       <f:link.action pageUid="{listPage}" controller="Playlist" action="listByCategory" arguments="{category: categoryUid}">
         <h3>{recentVideo.category.title}</h3>
       </f:link.action>

@@ -1,17 +1,17 @@
 <h1>{video.title}</h1>
-<div class="col-12_md-12_sm-12">
-  <div class="{f:if(condition: '{playlist}', then: 'mediapool-video-wrap ')}grid col-12_md-12_sm-12">
-    <div class="grid col-8_md-12_sm-12{f:if(condition: '!{playlist}', then: ' mediapool-video-wrap')}">
+<div class="grid">
+  <div class="{f:if(condition: '{playlist}', then: 'mediapool-video-wrap ')}col-12">
+    <div class="grid col-8_md-12{f:if(condition: '!{playlist}', then: ' mediapool-video-wrap')}">
       <f:render partial="Video" arguments="{video: video}" />
     </div>
     <f:if condition="{playlist}">
-      <div class="grid col-4_md-12_sm-12">
+      <div class="grid col-4_md-12">
         <f:render partial="ListPlaylist" arguments="{playlist: playlist, video: video}" />
       </div>
     </f:if>
   </div>
   <br />
-  <div class="grid col-8_md-12_sm-12">
+  <div class="col-8_md-12">
     <p><f:format.raw>{video.description}</f:format.raw></p>
     <p><f:translate key="video.upload_date" />: <f:format.date>{video.uploadDate}</f:format.date></p>
   </div>
