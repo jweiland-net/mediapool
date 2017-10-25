@@ -27,8 +27,7 @@ plugin.tx_mediapool._CSS_DEFAULT_STYLE (
     text-align: center;
   }
 
-  .mediapool-video-preview img,
-  .mediapool-playlist-preview img {
+  .mediapool-video-preview img {
     width: 100%;
     border-radius: 0;
   }
@@ -47,8 +46,7 @@ plugin.tx_mediapool._CSS_DEFAULT_STYLE (
     margin-bottom: 1.5rem;
   }
 
-  .mediapool-video-preview-title,
-  .mediapool-playlist-preview-title {
+  .mediapool-video-preview-title {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -64,9 +62,16 @@ plugin.tx_mediapool._CSS_DEFAULT_STYLE (
     transition: all 0.3s ease-in-out;
   }
 
-  .mediapool-video-preview:hover .mediapool-video-preview-title,
-  .mediapool-playlist-preview:hover .mediapool-playlist-preview-title {
+  .mediapool-video-preview:hover .mediapool-video-preview-title {
     background: rgba(238, 238, 238, 1);
+  }
+
+  .mediapool-video-preview:hover {
+    opacity: 0.9;
+  }
+
+  .mediapool-video-preview:hover .preview-icon {
+    background: rgb(255, 255, 255);
   }
 
   .mediapool-playlist {

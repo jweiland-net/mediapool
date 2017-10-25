@@ -1,12 +1,13 @@
-<div class="mediapool-video-embed video-embed">
+<div class="mediapool-playlist-preview">
   <f:link.action controller="Video" action="show" pageUid="{detailPage}" arguments="{video: playlist.videos.0, playlist: playlist}">
-    <div class="mediapool-playlist-preview-title">
-      {playlist.title}
-    </div>
-    <div class="mediapool-playlist-preview">
-      <img src="{playlist.thumbnail}" alt="{playlist.title}" title="{playlist.title}"/>
-
-      <span class="preview-icon fa fa-2x fa-list" aria-hidden="true"></span>
-    </div>
+    <h4>{playlist.title}</h4>
   </f:link.action>
+    <div class="mediapool-video-embed video-embed">
+        <div class="mediapool-video-preview">
+          <f:link.action controller="Video" action="show" pageUid="{detailPage}" arguments="{video: playlist.videos.0, playlist: playlist}">
+            <img src="{playlist.thumbnail}" alt="{playlist.title}" title="{playlist.title}"/>
+            <span class="preview-icon fa fa-2x fa-list" aria-hidden="true"></span>
+        </div>
+      </f:link.action>
+    </div>
 </div>
