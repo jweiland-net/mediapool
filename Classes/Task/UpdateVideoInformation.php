@@ -30,6 +30,23 @@ use TYPO3\CMS\Scheduler\Task\AbstractTask;
 class UpdateVideoInformation extends AbstractTask
 {
     /**
+     * Task mode
+     * 0 = update all records
+     * 1 = update selected records
+     *
+     * @var int
+     */
+    public $mode = 0;
+
+    /**
+     * Only relevant if $mode == 1
+     * comma separated list of pages/folders selectio0n
+     *
+     * @var string
+     */
+    public $pageSelection = '';
+
+    /**
      * Video Repository
      *
      * @var VideoRepository
@@ -62,7 +79,13 @@ class UpdateVideoInformation extends AbstractTask
     public function execute()
     {
         $this->init();
-        $videos = $this->videoRepository->findAllLinksAndUids();
+        if ($this->mode === 0) {
+            // fetch all
+            $videos = $this->videoRepository->findAllLinksAndUids();
+        } else {
+            // fetch selected
+            $videos = $this->videoRepository->findLinksAndUidsByPid($this->pageSelection);
+        }
         $data = [];
         // create data array for data handler
         // to use the DataHandler Hook
@@ -74,6 +97,7 @@ class UpdateVideoInformation extends AbstractTask
         DebuggerUtility::var_dump($videos);
         $this->dataHandler->start($data, []);
         $this->dataHandler->process_datamap();
+        return true;
     }
 
     /**

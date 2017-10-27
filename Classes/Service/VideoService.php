@@ -53,7 +53,13 @@ class VideoService extends AbstractBase implements SingletonInterface
     /**
      * Get video data
      * $videos array must have to following structure:
-     * e.g. [5 => 'https://youtu.be/yVfw1pAmLlY', 'NEW1234' => 'https://youtu.be/jzTVVocFaVE']
+     *
+     * pid is not mandatory
+     * e.g.
+     * [
+     *     5 => ['pid' => 3, 'video' => 'https://youtu.be/yt_Vfw1pAmLlY'],
+     *     'NEW1234' => ['video' => 'https://youtu.be/jzTVVocFaVE']
+     * ]
      *
      * @param array $videos key = uid, value = video url see example
      * @param int $pid where videos will be saved
@@ -69,9 +75,9 @@ class VideoService extends AbstractBase implements SingletonInterface
             $videoPlatform = $this->objectManager->get($videoPlatformNamespace);
             VideoPlatformUtility::checkVideoImportClass($videoPlatform);
             $videosOfVideoPlatform = [];
-            foreach ($videos as $uid => $videoLink) {
-                if ($this->isVideoFromVideoPlatform($videoLink, $videoPlatform)) {
-                    $videosOfVideoPlatform[$uid] = $videoLink;
+            foreach ($videos as $uid => $video) {
+                if ($this->isVideoFromVideoPlatform($video['video'], $videoPlatform)) {
+                    $videosOfVideoPlatform[$uid] = $video;
                     $videoPlatformMatch++;
                 }
             }

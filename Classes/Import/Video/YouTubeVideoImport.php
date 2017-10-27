@@ -126,13 +126,14 @@ class YouTubeVideoImport extends AbstractVideoImport
     protected function implodeVideoIdsAndUnifyArray(array &$videos): string
     {
         $videoIds = [];
-        foreach ($videos as &$videoId) {
-            if (strpos($videoId, 'http') === 0) {
-                $videoId = $this->getVideoId($videoId);
-            } elseif (strpos(YouTubeService::PLATFORM_PREFIX, $videoId) === 0) {
-                $videoId = substr($videoId, strlen(YouTubeService::PLATFORM_PREFIX));
+        foreach ($videos as &$video) {
+            if (strpos($video['video'], 'http') === 0) {
+                // todo add error if getVideoId returns empty string
+                $video['video'] = $this->getVideoId($video['video']);
+            } elseif (strpos(YouTubeService::PLATFORM_PREFIX, $video['video']) === 0) {
+                $video['video'] = substr($video['video'], strlen(YouTubeService::PLATFORM_PREFIX));
             }
-            $videoIds[] = $videoId;
+            $videoIds[] = $video['video'];
         }
         return implode(',', $videoIds);
     }
@@ -144,10 +145,16 @@ class YouTubeVideoImport extends AbstractVideoImport
      * Creates or updates video records from $videos.
      * Make sure to use
      *  NEW... as array item key for new records OR the record uid for existing records
-     *  video id OR video id with prefix OR video url as array item value.
+     *  An array with an entry 'video' that contains video link OR video id OR video link
+     *  and additionally in the same array an entry 'pid' which contains the pid. The pid
+     *  is not mandatory!
      *
      * e.g.
-     * [4 => 'exi0iht_kLw', 5 => 'yt_Vfw1pAmLlY', 'NEW1234' => 'https://youtu.be/jzTVVocFaVE']
+     * [
+     *     4 => ['pid' => 3, 'video' => 'exi0iht_kLw'],
+     *     5 => ['pid' => 3, 'video' => 'yt_Vfw1pAmLlY'],
+     *     'NEW1234' => ['video' => 'https://youtu.be/jzTVVocFaVE']
+     * ]
      * in this example the records 4 and 5 got updated and a new record
      * for jzTVVocFaVE would be created
      *
@@ -173,7 +180,9 @@ class YouTubeVideoImport extends AbstractVideoImport
         $fetchedVideoInformation = $this->fetchVideoInformation();
         $data = [];
         $recordUidArray = [];
-        foreach ($videos as $uid => $videoId) {
+        foreach ($videos as $uid => $video) {
+            $videoId = $video['video'];
+            $pid = $video['pid'] ?: $pid;
             // check if video information for video is in array
             if (is_array($fetchedVideoInformation[$videoId])) {
                 $videoInformation = $fetchedVideoInformation[$videoId];
@@ -191,7 +200,10 @@ class YouTubeVideoImport extends AbstractVideoImport
                 $recordUidArray[] = $recordUid;
                 // $videoInformation is already unified and casted. Add it to the $data array
                 $data['tx_mediapool_domain_model_video'][$recordUid] = $videoInformation;
-                $data['tx_mediapool_domain_model_video'][$recordUid]['pid'] = $pid;
+                // add pid on new records
+                if (strpos($recordUid, 'NEW') === 0) {
+                    $data['tx_mediapool_domain_model_video'][$recordUid]['pid'] = $pid;
+                }
             } elseif ($fetchedVideoInformation[$videoId] === 'noPermission') {
                 // if the video is private or set as not embeddable
                 $this->addFlashMessageAndLog(

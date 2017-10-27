@@ -45,6 +45,7 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\JWeiland\Mediap
     'extension' => 'mediapool',
     'title' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:scheduler.update_video_information.title',
     'description' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:scheduler.update_video_information.description',
+    'additionalFields' => \JWeiland\Mediapool\Task\UpdateVideoInformationAdditionalFieldProvider::class
 ];
 
 // Configure main plugin

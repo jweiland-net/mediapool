@@ -149,15 +149,18 @@ class DataHandler
     {
         $videos = [];
         foreach ($dataHandlerVideoTable as $uid => $fields) {
-            $videos[$uid] = $fields['link'];
+            $videos[$uid] = ['video' => $fields['link']];
+            if ($fields['pid']) {
+                $videos[$uid]['pid'] = (int)$fields['pid'];
+            }
         }
         /** @var VideoService $videoService */
         $videoService = $this->objectMananger->get(VideoService::class);
         // use current pid as video pid
         $data = $videoService->getVideoData($videos, (int)GeneralUtility::_POST('popViewId'));
         if ($data) {
-            // override pid if declared in original field array
             foreach ($data[self::TABLE_VIDEO] as $uid => &$fields) {
+                // override pid if declared in original field array
                 if (isset($dataHandlerVideoTable[$uid]['pid'])) {
                     $fields['pid'] = (int)$dataHandlerVideoTable[$uid]['pid'];
                 }

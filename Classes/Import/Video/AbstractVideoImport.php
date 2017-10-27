@@ -36,10 +36,16 @@ abstract class AbstractVideoImport extends AbstractImport
      * Creates or updates video records from $videos.
      * Make sure to use
      *  NEW... as array item key for new records OR the record uid for existing records
-     *  video id OR video id with prefix OR video url as array item value.
+     *  An array with an entry 'video' that contains video link OR video id OR video link
+     *  and additionally in the same array an entry 'pid' which contains the pid. The pid
+     *  is not mandatory!
      *
      * e.g.
-     * [4 => 'exi0iht_kLw', 5 => 'yt_Vfw1pAmLlY', 'NEW1234' => 'https://youtu.be/jzTVVocFaVE']
+     * [
+     *     4 => ['pid' => 3, 'video' => 'exi0iht_kLw'],
+     *     5 => ['pid' => 3, 'video' => 'yt_Vfw1pAmLlY'],
+     *     'NEW1234' => ['video' => 'https://youtu.be/jzTVVocFaVE']
+     * ]
      * in this example the records 4 and 5 got updated and a new record
      * for jzTVVocFaVE would be created
      *

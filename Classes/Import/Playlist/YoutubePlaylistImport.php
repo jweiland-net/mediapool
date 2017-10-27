@@ -131,7 +131,7 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
         if ($videoIds !== false && $information !== false) {
             $i = 0;
             foreach ($videos as $item) {
-                $videoIds['NEW' . $i] = $item['contentDetails']['videoId'];
+                $videoIds['NEW' . $i] = ['pid' => $pid, 'video' => trim($item['contentDetails']['videoId'])];
                 $i++;
             }
             $recordUids = '';

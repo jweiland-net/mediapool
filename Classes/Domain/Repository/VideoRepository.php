@@ -53,15 +53,35 @@ class VideoRepository extends Repository
     /**
      * Find all links and uids without respecting pid
      *
-     * @return array
+     * @return array records with fields: uid, pid, link
      */
     public function findAllLinksAndUids()
     {
-        /** @var Connection  $connection */
+        /** @var Connection $connection */
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable(
             'tx_mediapool_domain_model_video'
         );
-        return $connection->select(['uid', 'link'], 'tx_mediapool_domain_model_video')->fetchAll();
+        return $connection->select(['uid', 'pid', 'link'], 'tx_mediapool_domain_model_video')->fetchAll();
+    }
+
+    /**
+     * Find link and uid of records by pid
+     *
+     * @param string $pids comma separated list of pids
+     * @return array records with fields: uid, pid, link
+     */
+    public function findLinksAndUidsByPid(string $pids)
+    {
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(
+            'tx_mediapool_domain_model_video'
+        );
+        $query = $queryBuilder
+            ->select('uid', 'pid', 'link')
+            ->from('tx_mediapool_domain_model_video')
+            ->where(
+                $queryBuilder->expr()->in('pid', $pids)
+            );
+        return $query->execute()->fetchAll();
     }
 
     /**
@@ -108,7 +128,7 @@ class VideoRepository extends Repository
      * @param int $categoryUid
      * @return array
      */
-    public function findRecentByCategory(int $categoryUid) : array
+    public function findRecentByCategory(int $categoryUid): array
     {
         $playlistRepository = $this->objectManager->get(PlaylistRepository::class);
         $playlists = $playlistRepository->findByCategory($categoryUid);
