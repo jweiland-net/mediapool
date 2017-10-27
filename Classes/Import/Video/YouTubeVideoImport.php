@@ -18,6 +18,7 @@ use GuzzleHttp\Client;
 use JWeiland\Mediapool\Domain\Model\Video;
 use JWeiland\Mediapool\Domain\Repository\VideoRepository;
 use JWeiland\Mediapool\Service\YouTubeService;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
 
 /**
  * Class YouTubeVideoImport
@@ -87,14 +88,6 @@ class YouTubeVideoImport extends AbstractVideoImport
     protected $youTubeService;
 
     /**
-     * Fetched Items from API
-     * @todo add example
-     *
-     * @var array
-     */
-    protected $fetchedItems = [];
-
-    /**
      * inject youTubeService
      *
      * @param YouTubeService $youTubeService
@@ -113,89 +106,107 @@ class YouTubeVideoImport extends AbstractVideoImport
      */
     public function initializeObject()
     {
+        parent::initializeObject();
         $this->apiKey = $this->youTubeService->getApiKey();
     }
 
     /**
-     * This method must return a video object filled with
-     * all given properties like title, description, ...
-     * that are related to the $video->link from a video
-     * platform. Otherwise the method must return null or
-     * throw a exception on error.
+     * Implode video ids from videos array and unify the pased array
+     * Can handle pure video ids, video ids with prefix and video urls
+     * e.g.
+     * [4 => 'exi0iht_kLw', 5 => 'yt_Vfw1pAmLlY', 'NEW1234' => 'https://youtu.be/jzTVVocFaVE']
+     * will result:
+     * 'exi0iht_kLw,Vfw1pAmLlY,jzTVVocFaVE'
+     * and a unified array:
+     * [4 => 'exi0iht_kLw', 5 => 'Vfw1pAmLlY', 'NEW1234' => 'jzTVVocFaVE']
      *
-     * @param Video $video an existing or new video object with a link
-     * @return Video
-     * @throws VideoPermissionException
-     * @throws InvalidVideoIdException
+     * @param array $videos
+     * @return string
      */
-    public function getFilledVideoObject(Video $video) : Video
+    protected function implodeVideoIdsAndUnifyArray(array &$videos): string
     {
-        $this->video = $video;
-        if (!($videoId = $this->getVideoId())) {
-            throw new InvalidVideoIdException(
-                'Could not extract a video id from your video link ' . $video->getLink() . '.',
-                1508165920
-            );
+        $videoIds = [];
+        foreach ($videos as &$videoId) {
+            if (strpos($videoId, 'http') === 0) {
+                $videoId = $this->getVideoId($videoId);
+            } elseif (strpos(YouTubeService::PLATFORM_PREFIX, $videoId) === 0) {
+                $videoId = substr($videoId, strlen(YouTubeService::PLATFORM_PREFIX));
+            }
+            $videoIds[] = $videoId;
         }
-        $this->videoIds = $videoId;
-        $items = $this->fetchVideoInformation();
-        if ($items && $this->checkVideoPermission($items[0])) {
-            $this->video->setTitle($items[0]['snippet']['title']);
-            $this->video->setDescription(nl2br($items[0]['snippet']['description']));
-            $this->video->setUploadDate(new \DateTime($items[0]['snippet']['publishedAt']));
-            $this->video->setPlayerHtml($items[0]['player']['embedHtml']);
-            $this->video->setVideoId('yt_' . $this->videoIds);
-            $this->video->setThumbnail($items[0]['snippet']['thumbnails']['medium']['url']);
-            $this->video->setThumbnailLarge(
-                $items[0]['snippet']['thumbnails']['maxres']['url'] ?:
-                $items[0]['snippet']['thumbnails']['standard']['url']
-            );
-            return $this->video;
-        } else {
-            throw new VideoPermissionException(
-                'Either the selected video is a private video or it is marked as not embeddable.',
-                1508165820
-            );
-        }
+        return implode(',', $videoIds);
     }
 
     /**
-     * Fetches information for all given $videoIds and returns the information as an DataHandler
+     * Fetches information for all passed $videos and returns the information as an DataHandler
      * compatible array.
      *
-     * @param string $videoIds
-     * @param int $pid
+     * Creates or updates video records from $videos.
+     * Make sure to use
+     *  NEW... as array item key for new records OR the record uid for existing records
+     *  video id OR video id with prefix OR video url as array item value.
+     *
+     * e.g.
+     * [4 => 'exi0iht_kLw', 5 => 'yt_Vfw1pAmLlY', 'NEW1234' => 'https://youtu.be/jzTVVocFaVE']
+     * in this example the records 4 and 5 got updated and a new record
+     * for jzTVVocFaVE would be created
+     *
+     * @param array $videos
+     * @param int $pid this will be the pid of NEW records
      * @param string $recordUids reference that includes all UIDs as a comma separated list
-     * @return array
+     * @param bool $checkExistingVideos if true the video id in combination with the pid will be checked and no
+     *                                  new record will be created if a record with the same video id already exists.
+     *                                  Existing videos will be added to $recordUids too!
+     * @return array the data array for DataHandler. This is a reference so it will be modified and can be used
+     *               after method call.
      */
-    public function processDataArray(string $videoIds, int $pid, string &$recordUids = '') : array
+    public function processDataArray(
+        array $videos,
+        int $pid,
+        string &$recordUids = '',
+        bool $checkExistingVideos = false
+    ): array
     {
         /** @var VideoRepository $videoRepository */
         $videoRepository = $this->objectManager->get(VideoRepository::class);
-        $this->videoIds = $videoIds;
+        $this->videoIds = $this->implodeVideoIdsAndUnifyArray($videos);
+        $fetchedVideoInformation = $this->fetchVideoInformation();
         $data = [];
         $recordUidArray = [];
-        foreach ($this->fetchVideoInformation() as $i => $item) {
-            $queryResult = $videoRepository->findByVideoId('yt_' . (string)$item['id'], $pid);
-            if ($this->checkVideoPermission($item)) {
-                $existingVideo = $queryResult->getFirst();
-                // don´t create a new record, if a video with the same id on current pid already exists
-                $recordUid = $existingVideo ? $existingVideo->getUid() : ('NEW1234' . $i);
-                $uploadDate = new \DateTime($item['snippet']['publishedAt']);
+        foreach ($videos as $uid => $videoId) {
+            // check if video information for video is in array
+            if (is_array($fetchedVideoInformation[$videoId])) {
+                $videoInformation = $fetchedVideoInformation[$videoId];
+                $existingVideo = null;
+                // if true check for a record with the same video id and use it instead of
+                // creating a new one
+                if ($checkExistingVideos) {
+                    $queryResult = $videoRepository->findByVideoId(
+                        YouTubeService::PLATFORM_PREFIX . $videoId,
+                        $pid
+                    );
+                    $existingVideo = $queryResult->getFirst();
+                }
+                $recordUid = $existingVideo ? $existingVideo->getUid() : $uid;
                 $recordUidArray[] = $recordUid;
-                $data['tx_mediapool_domain_model_video'][$recordUid] = [
-                    'pid' => $pid,
-                    'link' => 'https://youtu.be/' . (string)$item['id'],
-                    'title' => (string)$item['snippet']['title'],
-                    'description' => nl2br((string)$item['snippet']['description']),
-                    'upload_date' => $uploadDate->getTimestamp(),
-                    'player_html' => (string)$item['player']['embedHtml'],
-                    'video_id' => 'yt_' . (string)$item['id'],
-                    'thumbnail' => (string)$item['snippet']['thumbnails']['medium']['url'],
-                    'thumbnail_large' =>
-                        (string)$item['snippet']['thumbnails']['maxres']['url'] ?:
-                        $item['snippet']['thumbnails']['high']['url']
-                ];
+                // $videoInformation is already unified and casted. Add it to the $data array
+                $data['tx_mediapool_domain_model_video'][$recordUid] = $videoInformation;
+                $data['tx_mediapool_domain_model_video'][$recordUid]['pid'] = $pid;
+            } elseif ($fetchedVideoInformation[$videoId] === 'noPermission') {
+                // if the video is private or set as not embeddable
+                $this->addFlashMessageAndLog(
+                    'youTubeVideoImport.missing_youtube_permission.title',
+                    'youTubeVideoImport.missing_youtube_permission.message',
+                    [$videoId]
+                );
+            } else {
+                // never fetched it ?
+                $this->addFlashMessageAndLog(
+                    'youTubeVideoImport.missing_video_information.title',
+                    'youTubeVideoImport.missing_video_information.message',
+                    [$videoId]
+                );
+                $this->hasError = true;
             }
         }
         $recordUids = implode(',', $recordUidArray);
@@ -222,16 +233,17 @@ class YouTubeVideoImport extends AbstractVideoImport
     }
 
     /**
-     * Returns the if of passed video link if valid.
+     * Returns the id of passed video link if valid.
      * Otherwise returns false
      *
+     * @param string $videoLink
      * @return string empty string if link is not valid
      */
-    protected function getVideoId() : string
+    protected function getVideoId(string $videoLink) : string
     {
-        $query = parse_url($this->video->getLink(), PHP_URL_QUERY);
+        $query = parse_url($videoLink, PHP_URL_QUERY);
         parse_str($query, $parsedQuery);
-        preg_match('/https\:\/\/youtu\.be\/(.+)/', $this->video->getLink(), $matches);
+        preg_match('/https\:\/\/youtu\.be\/(.+)/', $videoLink, $matches);
         if (count($matches) === 2) {
             return $matches[1];
         } elseif (isset($parsedQuery['v'])) {
@@ -241,12 +253,12 @@ class YouTubeVideoImport extends AbstractVideoImport
     }
 
     /**
-     * Fetches video information for $this->videoIds and returns the
-     * items array from YouTube Data v3 API with parts snippet and player
+     * Fetches video information for $this->videoIds and returns fetched items
+     * as array with casted values
+     * from YouTube Data v3 API with parts snippet and player
      * Example on https://developers.google.com/youtube/v3/docs/videos/list
      *
-     * @return array
-     * @todo save fetched data in an array like $this->data. Cast all values there
+     * @return array with fetched video information
      */
     protected function fetchVideoInformation() : array
     {
@@ -279,20 +291,22 @@ class YouTubeVideoImport extends AbstractVideoImport
      * @return array
      * @throws \HttpRequestException
      */
-    protected function doRequest(string $videoIds, array $items = [], string $additionalRequestParams = '')
+    protected function doRequest(string $videoIds, array $items = [], string $additionalRequestParams = ''): array
     {
         $response = $this->client->request(
             'GET',
             sprintf(self::VIDEO_API_URL, $videoIds, $this->apiKey) . $additionalRequestParams
         );
         // ok
-        if ($response->getStatusCode() == 200) {
+        if ($response->getStatusCode() === 200) {
             $result = json_decode($response->getBody()->getContents(), true);
             if (count($result['items'])) {
                 foreach ($result['items'] as $item) {
                     // only add video if permissions are ok
                     if ($this->checkVideoPermission($item)) {
-                        $items[] = $item;
+                        $items[(string)$item['id']] = $this->getArrayForItem($item);
+                    } else {
+                        $items[(string)$item['id']] = 'noPermission';
                     }
                 }
                 // call recursive if nextPageToken is set
@@ -302,7 +316,7 @@ class YouTubeVideoImport extends AbstractVideoImport
             }
             return $items;
             // invalid api key
-        } elseif ($response->getStatusCode() == 400) {
+        } elseif ($response->getStatusCode() === 400) {
             throw new \HttpRequestException(
                 sprintf(
                     'Fetching video information for %s failed! Got the following response from YouTube: %s.' .
@@ -312,7 +326,6 @@ class YouTubeVideoImport extends AbstractVideoImport
                 ),
                 1507792488
             );
-            // other problems
         } else {
             throw new \HttpRequestException(
                 sprintf(
@@ -342,7 +355,7 @@ class YouTubeVideoImport extends AbstractVideoImport
             'description' => nl2br((string)$item['snippet']['description']),
             'upload_date' => $uploadDate->getTimestamp(),
             'player_html' => (string)$item['player']['embedHtml'],
-            'video_id' => 'yt_' . (string)$item['id'],
+            'video_id' => YouTubeService::PLATFORM_PREFIX . (string)$item['id'],
             'thumbnail' => (string)$item['snippet']['thumbnails']['medium']['url'],
             'thumbnail_large' => $this->getLargestThumbnailForVideo($item)
         ];
@@ -360,7 +373,7 @@ class YouTubeVideoImport extends AbstractVideoImport
         // as defined in array
         $keys = ['maxres', 'standard', 'high', 'medium', 'default'];
         foreach ($keys as $key) {
-            if (isset($item['snippet']['thumbnails'][$key]['url'])) {
+            if (isset($item['snippet']['thumbnails'][$key])) {
                 return $item['snippet']['thumbnails'][$key]['url'];
             }
         }

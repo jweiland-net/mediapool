@@ -15,14 +15,14 @@ namespace JWeiland\Mediapool\Import;
 */
 
 use GuzzleHttp\Client;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
+use JWeiland\Mediapool\AbstractBase;
 
 /**
  * Class AbstractImport
  *
  * @package JWeiland\Mediapool\Import;
  */
-class AbstractImport
+class AbstractImport extends AbstractBase
 {
     /**
      * Name of the video platform
@@ -41,13 +41,6 @@ class AbstractImport
     protected $platformHosts = [];
 
     /**
-     * Object Manager
-     *
-     * @var ObjectManager
-     */
-    protected $objectManager;
-
-    /**
      * Guzzle Client for HTTP requests
      *
      * @var Client
@@ -55,15 +48,14 @@ class AbstractImport
     protected $client;
 
     /**
-     * inject objectManager
+     * This property is used by VideoService and PlaylistService.
+     * They will only save data if this is false. Otherwise you have
+     * to add your own error messages with $this->addFlashMessageAndLog()
+     * or your own error method.
      *
-     * @param ObjectManager $objectManager
-     * @return void
+     * @var bool
      */
-    public function injectObjectManager(ObjectManager $objectManager)
-    {
-        $this->objectManager = $objectManager;
-    }
+    protected $hasError = false;
 
     /**
      * inject client
@@ -94,5 +86,15 @@ class AbstractImport
     public function getPlatformHosts(): array
     {
         return $this->platformHosts;
+    }
+
+    /**
+     * Will return true if at least one error occurred.
+     *
+     * @return bool
+     */
+    public function hasError(): bool
+    {
+        return $this->hasError;
     }
 }

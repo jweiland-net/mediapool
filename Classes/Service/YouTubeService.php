@@ -26,6 +26,11 @@ use TYPO3\CMS\Extensionmanager\Utility\ConfigurationUtility;
 class YouTubeService
 {
     /**
+     * Platform prefix. Used for video id
+     */
+    const PLATFORM_PREFIX = 'yt_';
+
+    /**
      * Object Manager
      *
      * @var ObjectManager

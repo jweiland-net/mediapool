@@ -4,61 +4,48 @@
         product-name="mediapool">
     <header/>
     <body>
-      <trans-unit id="video_service.video.1.head">
-        <source>Could not collect video information</source>
+      <trans-unit id="video_service.import_mismatch.title">
+        <source>Import mismatch</source>
       </trans-unit>
-      <trans-unit id="video_service.video.1.body">
-        <source>Detected a matching video platform, but could not collect video information. Please check your link and
-          try again!
-        </source>
+      <trans-unit id="video_service.import_mismatch.message">
+        <source>There was an mismatch while importing videos. %d of %d videos were imported!</source>
       </trans-unit>
-      <trans-unit id="video_service.video.2.head">
+      <trans-unit id="video_service.no_match.title">
         <source>No video platform match</source>
       </trans-unit>
-      <trans-unit id="video_service.video.2.body">
-        <source>I could not find a matching video platform for your video. Maybe check your link or register an
-          additional video import service.
+      <trans-unit id="video_service.no_match.message">
+        <source>I could not find a matching video platform for your playlist. Please check your link.
         </source>
       </trans-unit>
 
-      <trans-unit id="video_service.playlist.1.head">
-        <source>Could not collect playlist information</source>
+      <trans-unit id="data_handler.exception.title">
+        <source>Could not finish your request</source>
       </trans-unit>
-      <trans-unit id="video_service.playlist.1.body">
-        <source>Detected a matching video platform, but could not collect playlist information. Please check your link
-          and try again!
-        </source>
-      </trans-unit>
-      <trans-unit id="video_service.playlist.2.head">
-        <source>No video platform match</source>
-      </trans-unit>
-      <trans-unit id="video_service.playlist.2.body">
-        <source>I could not find a matching video platform for your playlist. Maybe check your link or register an
-          additional playlist import service.
-        </source>
-      </trans-unit>
-
-      <trans-unit id="data_handler.contact_administrator.title">
-        <source>Could not process your request</source>
-      </trans-unit>
-      <trans-unit id="data_handler.contact_administrator.message">
+      <trans-unit id="data_handler.exception.message">
         <source>There was an error while processing your request. Please contact your administrator. Error code %d
         </source>
       </trans-unit>
-      <trans-unit id="data_handler.invalid_video_exception.title">
-        <source>Invalid video link</source>
+
+      <trans-unit id="youTubeVideoImport.missing_video_information.title">
+        <source>Missing video information</source>
       </trans-unit>
-      <trans-unit id="data_handler.invalid_video_exception.message">
-        <source>Can not extract a video ID from your link. Please check your link or contact an administrator if this
-          message repeats. Error code %d
+      <trans-unit id="youTubeVideoImport.missing_video_information.message">
+        <source>The video information for %s is missing. Please check if the is video private or deleted.</source>
+      </trans-unit>
+      <trans-unit id="youTubeVideoImport.missing_youtube_permission.title">
+        <source>Missing YouTube permission</source>
+      </trans-unit>
+      <trans-unit id="youTubeVideoImport.missing_youtube_permission.message">
+        <source>
+          Can not fetch information for video %s. Maybe it is marked as private or not embeddable by his owner.
         </source>
       </trans-unit>
-      <trans-unit id="data_handler.invalid_playlist_exception.title">
-        <source>Invalid playlist link</source>
+
+      <trans-unit id="youTubePlaylistImport.invalid_id.title">
+        <source>Invalid video id</source>
       </trans-unit>
-      <trans-unit id="data_handler.invalid_playlist_exception.message">
-        <source>Can not extract a playlist ID from your link. Please check your link or contact an administrator if this
-        message repeats. Error code %d</source>
+      <trans-unit id="youTubePlaylistImport.invalid_id.message">
+        <source>Could not extract playlist id from playlist link %s. Please check your link!</source>
       </trans-unit>
     </body>
   </file>

@@ -117,10 +117,12 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
     {
         $this->apiKey = $this->youTubeService->getApiKey();
         if (!($playlistId = $this->getPlaylistId($playlistLink))) {
-            throw new InvalidPlaylistIdException(
-                'Could not extract playlist id from playlist link ' . $playlistLink . '.',
-                1508221105
+            $this->addFlashMessageAndLog(
+                'youTubePlaylistImport.invalid_id.title',
+                'youTubePlaylistImport.invalid_id.message',
+                [$playlistLink]
             );
+            return [];
         }
         $this->playlistId = $playlistId;
         $information = $this->fetchPlaylistInformation();
@@ -128,11 +130,17 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
         $resultArray = [];
         $videoIds = [];
         if ($videoIds !== false && $information !== false) {
-            $recordUids = '';
+            $i = 0;
             foreach ($videos as $item) {
-                $videoIds[] = $item['contentDetails']['videoId'];
+                $videoIds['NEW' . $i] = $item['contentDetails']['videoId'];
+                $i++;
             }
-            $data = $this->youTubeVideoImport->processDataArray(implode(',', $videoIds), $pid, $recordUids);
+            $recordUids = '';
+            $data = $this->youTubeVideoImport->processDataArray($videoIds, $pid, $recordUids, true);
+            // return empty array on error
+            if ($this->youTubeVideoImport->hasError()) {
+                return [];
+            }
             $resultArray = [
                 'fieldArray' => [
                     'pid' => $pid,

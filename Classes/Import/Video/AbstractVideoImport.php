@@ -30,24 +30,32 @@ use JWeiland\Mediapool\Import\AbstractImport;
 abstract class AbstractVideoImport extends AbstractImport
 {
     /**
-     * This method must return a video object filled with
-     * all given properties like title, description, ...
-     * that are related to the $video->link from a video
-     * platform. Otherwise the method must return null or
-     * throw a exception on error.
+     * Fetches information for all passed $videos and returns the information as an DataHandler
+     * compatible array.
      *
-     * // modify the video object
-     * $video->setTitle('Set a title');
-     * $video->setDescription('Set a description');
-     * $video->setPlayerHTML('<iframe>Video embed code</iframe>');
-     * $video->setUploadDate(new \DateTime());
-     * // add a prefix before the platform video id like <prefix>_<videoId>
-     * $video->setVideoId('pr_dk35023jfn1');
-     * $video->setThumbnail('/path/to/thumbnail.jpg');
-     * otherwise $video->setThumbnail('https://domain.tld/img.jpg');
+     * Creates or updates video records from $videos.
+     * Make sure to use
+     *  NEW... as array item key for new records OR the record uid for existing records
+     *  video id OR video id with prefix OR video url as array item value.
      *
-     * @param Video $video an existing or new video object with a link
-     * @return Video filled video object or null
+     * e.g.
+     * [4 => 'exi0iht_kLw', 5 => 'yt_Vfw1pAmLlY', 'NEW1234' => 'https://youtu.be/jzTVVocFaVE']
+     * in this example the records 4 and 5 got updated and a new record
+     * for jzTVVocFaVE would be created
+     *
+     * @param array $videos
+     * @param int $pid this will be the pid of NEW records
+     * @param string $recordUids reference that includes all UIDs as a comma separated list
+     * @param bool $checkExistingVideos if true the video id in combination with the pid will be checked and no
+     *                                  new record will be created if a record with the same video id already exists.
+     *                                  Existing videos will be added to $recordUids too!
+     * @return array the data array for DataHandler. This is a reference so it will be modified and can be used
+     *               after method call.
      */
-    abstract public function getFilledVideoObject(Video $video) : Video;
+    public abstract function processDataArray(
+        array $videos,
+        int $pid,
+        string &$recordUids = '',
+        bool $checkExistingVideos = false
+    ): array;
 }

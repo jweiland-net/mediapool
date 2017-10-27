@@ -14,9 +14,9 @@ namespace JWeiland\Mediapool\Service;
 * The TYPO3 project - inspiring people to share!
 */
 
-use JWeiland\Mediapool\Domain\Model\Video;
-use JWeiland\Mediapool\Utility\VideoPlatformUtility;
+use JWeiland\Mediapool\AbstractBase;
 use JWeiland\Mediapool\Import\Video\AbstractVideoImport;
+use JWeiland\Mediapool\Utility\VideoPlatformUtility;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
@@ -27,7 +27,7 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
  *
  * @package JWeiland\Mediapool\Service;
  */
-class VideoService implements SingletonInterface
+class VideoService extends AbstractBase implements SingletonInterface
 {
     const COLLECTION_VIDEO_INFORMATION_FAILED = 1;
     const NO_VIDEO_PLATFORM_MATCH = 2;
@@ -51,42 +51,62 @@ class VideoService implements SingletonInterface
     }
 
     /**
-     * Returns a video object filled with
-     * all given properties like title, description, ...
+     * Get video data
+     * $videos array must have to following structure:
+     * e.g. [5 => 'https://youtu.be/yVfw1pAmLlY', 'NEW1234' => 'https://youtu.be/jzTVVocFaVE']
      *
-     * @param Video $video $video->link must be filled with a url!
-     * @return Video|int returns int that equals constants of this class to signal an specified error
+     * @param array $videos key = uid, value = video url see example
+     * @param int $pid where videos will be saved
+     * @return array for DataHandler
      */
-    public function getFilledVideoObject(Video $video)
+    public function getVideoData(array $videos,int $pid): array
     {
         $videoPlatforms = VideoPlatformUtility::getRegisteredVideoImporters();
+        $data = [];
+        $videoPlatformMatch = 0;
         foreach ($videoPlatforms as $videoPlatformNamespace) {
             /** @var AbstractVideoImport $videoPlatform */
             $videoPlatform = $this->objectManager->get($videoPlatformNamespace);
             VideoPlatformUtility::checkVideoImportClass($videoPlatform);
-            if ($this->isVideoFromVideoPlatform($video, $videoPlatform)) {
-                if ($video =  $videoPlatform->getFilledVideoObject($video)) {
-                    return $video;
-                } else {
-                    return self::COLLECTION_VIDEO_INFORMATION_FAILED;
+            $videosOfVideoPlatform = [];
+            foreach ($videos as $uid => $videoLink) {
+                if ($this->isVideoFromVideoPlatform($videoLink, $videoPlatform)) {
+                    $videosOfVideoPlatform[$uid] = $videoLink;
+                    $videoPlatformMatch++;
                 }
             }
+            if ($videosOfVideoPlatform) {
+                $data = array_merge($data, $videoPlatform->processDataArray($videosOfVideoPlatform, $pid));
+            }
         }
-        return self::NO_VIDEO_PLATFORM_MATCH;
+        $imported = count($data['tx_mediapool_domain_model_video']);
+        $total = count($videos);
+        if (!$videoPlatformMatch) {
+            $this->addFlashMessageAndLog(
+                'video_service.no_match.title',
+                'video_service.no_match.message'
+            );
+        } elseif ($imported !== $total) {
+            $this->addFlashMessageAndLog(
+                'video_service.import_mismatch.title',
+                'video_service.import_mismatch.message',
+                [$imported, $total]
+            );
+        }
+        return $data;
     }
 
     /**
-     * Checks if one of the hosts from $videoPlatform matches with
-     * $video->link.
+     * Checks if one of the hosts from $videoPlatform matches with the video link.
      *
-     * @param Video $video
+     * @param string $videoLink
      * @param AbstractVideoImport $videoPlatform
      * @return bool true if true, false if false you know ;)
      */
-    protected function isVideoFromVideoPlatform(Video $video, AbstractVideoImport $videoPlatform): bool
+    protected function isVideoFromVideoPlatform(string $videoLink, AbstractVideoImport $videoPlatform): bool
     {
         foreach ($videoPlatform->getPlatformHosts() as $host) {
-            if (strpos($video->getLink(), $host) === 0) {
+            if (strpos($videoLink, $host) === 0) {
                 return true;
             }
         }

@@ -14,15 +14,12 @@ namespace JWeiland\Mediapool\Hooks;
 * The TYPO3 project - inspiring people to share!
 */
 
-use Codeception\Coverage\Subscriber\Local;
-use JWeiland\Mediapool\Domain\Model\Video;
 use JWeiland\Mediapool\Domain\Repository\PlaylistRepository;
-use JWeiland\Mediapool\Import\NoApiKeyException;
-use JWeiland\Mediapool\Import\Playlist\InvalidPlaylistIdException;
 use JWeiland\Mediapool\Import\Video\InvalidVideoIdException;
-use JWeiland\Mediapool\Import\Video\VideoPermissionException;
 use JWeiland\Mediapool\Service\PlaylistService;
 use JWeiland\Mediapool\Service\VideoService;
+use TYPO3\CMS\Core\Log\Logger;
+use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
@@ -67,6 +64,21 @@ class DataHandler
     protected $flashMessageQueue;
 
     /**
+     * Logger
+     *
+     * @var Logger
+     */
+    protected $logger;
+
+    /**
+     * DataHandler constructor.
+     */
+    public function __construct()
+    {
+        $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
+    }
+
+    /**
      * Using DataHandler hook to fetch and insert video information
      * for tx_mediapool_domain_model_video
      *
@@ -88,117 +100,84 @@ class DataHandler
             $this->flashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
         }
 
-        // save single video
-        if (
-            array_key_exists(self::TABLE_VIDEO, $dataHandler->datamap) &&
-            !array_key_exists(self::TABLE_PLAYLIST, $dataHandler->datamap)
-        ) {
-            foreach ($dataHandler->datamap[self::TABLE_VIDEO] as &$fields) {
-                // process single video and break on error
-                if ($this->_processSingleVideo($fields) === false) {
-                    break;
-                }
-            }
-            // save playlist
-        } elseif (array_key_exists(self::TABLE_PLAYLIST, $dataHandler->datamap)) {
-            foreach ($dataHandler->datamap[self::TABLE_PLAYLIST] as $uid => &$fields) {
-                // process playlist and break on error
-                if ($this->processPlaylist($uid, $fields) === false) {
-                    break;
-                }
-            }
-        }
-    }
-
-    protected function processSingleVideo(array &$fieldArray): bool
-    {
-        // todo: use new method processDataArray instead of getFilledVideoObject
-    }
-
-    /**
-     * Process tx_mediapool_domain_model_video object
-     *
-     * @param array $fieldArray
-     * @return bool true on success otherwise false
-     * @throws \Exception if unknown exception was thrown
-     */
-    protected function _processSingleVideo(array &$fieldArray): bool
-    {
-        $success = true;
-        /** @var VideoService $videoService */
-        $videoService = $this->objectMananger->get(VideoService::class);
-        $video = new Video();
-        $video->setLink($fieldArray['link']);
         try {
-            $video = $videoService->getFilledVideoObject($video);
-        } catch (\Exception $exception) {
-            // catch exceptions and show create flash messages
-            switch (get_class($exception)) {
-                case NoApiKeyException::class:
-                case \HttpRequestException::class:
-                    $translationKey = 'contact_administrator';
-                    break;
-                case InvalidVideoIdException::class:
-                    $translationKey = 'invalid_video_exception';
-                    break;
-                default:
-                    throw $exception;
-                    break;
+            // save single video
+            if (
+                array_key_exists(self::TABLE_VIDEO, $dataHandler->datamap) &&
+                !array_key_exists(self::TABLE_PLAYLIST, $dataHandler->datamap)
+            ) {
+                $this->processVideos($dataHandler->datamap[self::TABLE_VIDEO]);
+                // save playlist
+            } elseif (array_key_exists(self::TABLE_PLAYLIST, $dataHandler->datamap)) {
+                foreach ($dataHandler->datamap[self::TABLE_PLAYLIST] as $uid => &$fields) {
+                    // process playlist and break on error
+                    if ($this->processPlaylist($uid, $fields) === false) {
+                        break;
+                    }
+                }
             }
+        } catch (\Exception $e) {
             /** @var FlashMessage $flashMessage */
             $flashMessage = GeneralUtility::makeInstance(
                 FlashMessage::class,
-                $this->translateError('data_handler.' . $translationKey . '.message', [$exception->getCode()]),
-                $this->translateError('data_handler.' . $translationKey . '.title'),
-                FlashMessage::ERROR
+                LocalizationUtility::translate(
+                    'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:data_handler.exception.message'
+                ),
+                LocalizationUtility::translate(
+                    'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:data_handler.exception.title'
+                ),
+                FlashMessage::ERROR,
+                [$e->getCode()]
             );
             $this->flashMessageQueue->addMessage($flashMessage);
-            GeneralUtility::sysLog(
-                'There was an exception while processing single video: ' . $exception->getMessage() .
-                '(' . $exception->getCode() . ')',
-                'mediapool',
-                GeneralUtility::SYSLOG_SEVERITY_ERROR
+            $this->logger->error(
+                'Exception while running DataHandler hook from ext:mediapool: ' . $e->getMessage() .
+                '(' . $e->getCode() . ') ' . $e->getFile() . ' Line: ' . $e->getLine()
             );
+            // Prevent DataHandler from saving
             $this->dataHandler->datamap = [];
-            return false;
         }
-        if (is_object($video)) {
-            $fieldArray['link'] = $video->getLink();
-            $fieldArray['title'] = $video->getTitle();
-            $fieldArray['description'] = $video->getDescription();
-            $fieldArray['upload_date'] = $video->getUploadDate()->getTimestamp();
-            $fieldArray['video_id'] = $video->getVideoId();
-            $fieldArray['player_html'] = $video->getPlayerHtml();
-            $fieldArray['thumbnail'] = $video->getThumbnail();
-            $fieldArray['thumbnail_large'] = $video->getThumbnailLarge();
-        } else {
-            // Add error message
-            $flashMessage = GeneralUtility::makeInstance(
-                FlashMessage::class,
-                $this->translateError('video_service.video.' . $video . '.body'),
-                $this->translateError('video_service.video.' . $video . '.head'),
-                FlashMessage::ERROR
-            );
-            $this->flashMessageQueue->addMessage($flashMessage);
-            // Prevent from saving because the video object has no video
-            // information
-            $this->dataHandler->datamap = [];
-            $success = false;
-        }
-        return $success;
     }
 
     /**
-     * Process tx_mediapool_domain_model_playlist object
+     * Process videos
+     *
+     * @param array $dataHandlerVideoTable
+     * @return void
+     */
+    protected function processVideos(array $dataHandlerVideoTable)
+    {
+        $videos = [];
+        foreach ($dataHandlerVideoTable as $uid => $fields) {
+            $videos[$uid] = $fields['link'];
+        }
+        /** @var VideoService $videoService */
+        $videoService = $this->objectMananger->get(VideoService::class);
+        // use current pid as video pid
+        $data = $videoService->getVideoData($videos, (int)GeneralUtility::_POST('popViewId'));
+        if ($data) {
+            // override pid if declared in original field array
+            foreach ($data[self::TABLE_VIDEO] as $uid => &$fields) {
+                if (isset($dataHandlerVideoTable[$uid]['pid'])) {
+                    $fields['pid'] = (int)$dataHandlerVideoTable[$uid]['pid'];
+                }
+            }
+            ArrayUtility::mergeRecursiveWithOverrule($this->dataHandler->datamap, $data);
+        } else {
+            // Prevent DataHandler from saving because we don´t have data to save :(
+            $this->dataHandler->datamap = [];
+        }
+    }
+
+    /**
+     * Process playlist
      *
      * @param int|string $uid of the playlist
      * @param array $fieldArray
-     * @return bool true on success otherwise false
-     * @throws \Exception if unknown exception was thrown
+     * @return void
      */
-    protected function processPlaylist($uid, array &$fieldArray): bool
+    protected function processPlaylist($uid, array &$fieldArray)
     {
-        $success = true;
         /** @var ObjectManager $objectManager */
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         /** @var PlaylistService $playlistService */
@@ -207,72 +186,13 @@ class DataHandler
             $playlistRepository = $objectManager->get(PlaylistRepository::class);
             $pid = $playlistRepository->findPidByUid($uid);
         }
-        try {
-            $data = $playlistService->getPlaylistData($fieldArray['link'], $pid);
-        } catch (\Exception $exception) {
-            // catch exceptions and show create flash messages
-            switch (get_class($exception)) {
-                case NoApiKeyException::class:
-                case \HttpRequestException::class:
-                    $translationKey = 'contact_administrator';
-                    break;
-                case InvalidPlaylistIdException::class:
-                    $translationKey = 'invalid_playlist_exception';
-                    break;
-                default:
-                    throw $exception;
-                    break;
-            }
-            /** @var FlashMessage $flashMessage */
-            $flashMessage = GeneralUtility::makeInstance(
-                FlashMessage::class,
-                $this->translateError('data_handler.' . $translationKey . '.message', [$exception->getCode()]),
-                $this->translateError('data_handler.' . $translationKey . '.title'),
-                FlashMessage::ERROR
-            );
-            $this->flashMessageQueue->addMessage($flashMessage);
-            GeneralUtility::sysLog(
-                'There was an exception while processing playlist: ' . $exception->getMessage() .
-                '(' . $exception->getCode() . ')',
-                'mediapool',
-                GeneralUtility::SYSLOG_SEVERITY_ERROR
-            );
-            $this->dataHandler->datamap = [];
-            return false;
-        }
-        if (is_array($data)) {
+        $data = $playlistService->getPlaylistData($fieldArray['link'], $pid);
+        if (is_array($data) && $data) {
             ArrayUtility::mergeRecursiveWithOverrule($fieldArray, $data['fieldArray']);
             ArrayUtility::mergeRecursiveWithOverrule($this->dataHandler->datamap, $data['dataHandler']);
         } else {
-            // Add error message
-            $flashMessage = GeneralUtility::makeInstance(
-                FlashMessage::class,
-                $this->translateError('video_service.playlist.' . $data . '.body'),
-                $this->translateError('video_service.playlist.' . $data . '.head'),
-                FlashMessage::ERROR
-            );
-            $this->flashMessageQueue->addMessage($flashMessage);
-            // Prevent from saving because the video object has no video
-            // information
+            // Prevent from saving because the video object has no video information
             $this->dataHandler->datamap = [];
-            $success = false;
         }
-        return $success;
-    }
-
-    /**
-     * Translate error message
-     *
-     * @param string $key
-     * @param array $arguments
-     * @return NULL|string
-     */
-    protected function translateError(string $key, array $arguments = [])
-    {
-        return LocalizationUtility::translate(
-            'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:' . $key,
-            'mediapool',
-            $arguments
-        );
     }
 }
