@@ -16,6 +16,7 @@ namespace JWeiland\Mediapool\Service;
 
 
 
+use JWeiland\Mediapool\AbstractBase;
 use JWeiland\Mediapool\Import\Playlist\AbstractPlaylistImport;
 use JWeiland\Mediapool\Utility\VideoPlatformUtility;
 
@@ -28,7 +29,7 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
  *
  * @package JWeiland\Mediapool\Service;
  */
-class PlaylistService
+class PlaylistService extends AbstractBase
 {
     const COLLECTION_PLAYLIST_INFORMATION_FAILED = 1;
     const NO_VIDEO_PLATFORM_MATCH = 2;
@@ -57,9 +58,9 @@ class PlaylistService
      *
      * @param string $playlistLink like https://www.youtube.com/playlist?list=PL-ABvQXa8oyE4zbwSy4V6K5YTD6S_lhu
      * @param int $pid to save video records created by PlaylistImport
-     * @return array|int returns int that equals constants of this class to signal an specified error
+     * @return array returns int that equals constants of this class to signal an specified error
      */
-    public function getPlaylistData(string $playlistLink, int $pid)
+    public function getPlaylistData(string $playlistLink, int $pid): array
     {
         $playlistImporters = VideoPlatformUtility::getRegisteredPlaylistImporters();
         foreach ($playlistImporters as $playlistImporterNamespace) {
@@ -67,14 +68,14 @@ class PlaylistService
             $playlistImporter = $this->objectManager->get($playlistImporterNamespace);
             VideoPlatformUtility::checkPlaylistImportClass($playlistImporter);
             if ($this->isPlaylistOfVideoImport($playlistLink, $playlistImporter)) {
-                if ($playlist = $playlistImporter->getPlaylistInformation($playlistLink, $pid)) {
-                    return $playlist;
-                } else {
-                    return self::COLLECTION_PLAYLIST_INFORMATION_FAILED;
-                }
+                return $playlistImporter->getPlaylistInformation($playlistLink, $pid);
             }
         }
-        return self::NO_VIDEO_PLATFORM_MATCH;
+        $this->addFlashMessageAndLog(
+            'playlist_service.no_match.title',
+            'playlist_service.no_match.message'
+        );
+        return [];
     }
 
     /**

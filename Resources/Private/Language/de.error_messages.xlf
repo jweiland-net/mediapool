@@ -17,13 +17,25 @@
 
       <trans-unit id="video_service.no_match.title">
         <source>No video platform match</source>
-        <target>Keine Videoplatform Übereinstimmung</target>
+        <target>Keine Videoplatformübereinstimmung</target>
       </trans-unit>
       <trans-unit id="video_service.no_match.message">
+        <source>
+          I could not find a matching video platform for your video. Please check your link.
+        </source>
+        <target>Es konnte keine passende Videoplatform zum angegebenen Videolik gefunden werden.</target>
+      </trans-unit>
+
+      <trans-unit id="playlist_service.no_match.title">
+        <source>No video platform match</source>
+        <target>Keine Videoplatformübereinstimmung</target>
+      </trans-unit>
+      <trans-unit id="playlist_service.no_match.message">
         <source>
           I could not find a matching video platform for your playlist. Please check your link.
         </source>
         <target>Es konnte keine passende Videoplatform zum angegebenen Playlistlink gefunden werden.</target>
+
       </trans-unit>
 
       <trans-unit id="data_handler.exception.title">

@@ -15,6 +15,14 @@
         <source>No video platform match</source>
       </trans-unit>
       <trans-unit id="video_service.no_match.message">
+        <source>I could not find a matching video platform for your video. Please check your link.
+        </source>
+      </trans-unit>
+
+      <trans-unit id="playlist_service.no_match.title">
+        <source>No video platform match</source>
+      </trans-unit>
+      <trans-unit id="playlist_service.no_match.message">
         <source>I could not find a matching video platform for your playlist. Please check your link.
         </source>
       </trans-unit>

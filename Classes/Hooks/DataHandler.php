@@ -190,7 +190,7 @@ class DataHandler
             $pid = $playlistRepository->findPidByUid($uid);
         }
         $data = $playlistService->getPlaylistData($fieldArray['link'], $pid);
-        if (is_array($data) && $data) {
+        if ($data) {
             ArrayUtility::mergeRecursiveWithOverrule($fieldArray, $data['fieldArray']);
             ArrayUtility::mergeRecursiveWithOverrule($this->dataHandler->datamap, $data['dataHandler']);
         } else {
