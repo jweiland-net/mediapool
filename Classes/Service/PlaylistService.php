@@ -14,11 +14,11 @@ namespace JWeiland\Mediapool\Service;
 * The TYPO3 project - inspiring people to share!
 */
 
-use JWeiland\Mediapool\Domain\Model\Playlist;
-use JWeiland\Mediapool\Domain\Model\Video;
+
+
 use JWeiland\Mediapool\Import\Playlist\AbstractPlaylistImport;
 use JWeiland\Mediapool\Utility\VideoPlatformUtility;
-use JWeiland\Mediapool\Import\Video\AbstractVideoImport;
+
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**

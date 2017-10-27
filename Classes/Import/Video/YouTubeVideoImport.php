@@ -14,11 +14,11 @@ namespace JWeiland\Mediapool\Import\Video;
 * The TYPO3 project - inspiring people to share!
 */
 
-use GuzzleHttp\Client;
+
 use JWeiland\Mediapool\Domain\Model\Video;
 use JWeiland\Mediapool\Domain\Repository\VideoRepository;
 use JWeiland\Mediapool\Service\YouTubeService;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
+
 
 /**
  * Class YouTubeVideoImport

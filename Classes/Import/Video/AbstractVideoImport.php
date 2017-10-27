@@ -14,7 +14,7 @@ namespace JWeiland\Mediapool\Import\Video;
 * The TYPO3 project - inspiring people to share!
 */
 
-use JWeiland\Mediapool\Domain\Model\Video;
+
 use JWeiland\Mediapool\Import\AbstractImport;
 
 /**
