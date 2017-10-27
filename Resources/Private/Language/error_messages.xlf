@@ -4,6 +4,7 @@
         product-name="mediapool">
     <header/>
     <body>
+
       <trans-unit id="video_service.import_mismatch.title">
         <source>Import mismatch</source>
       </trans-unit>
@@ -42,11 +43,12 @@
       </trans-unit>
 
       <trans-unit id="youTubePlaylistImport.invalid_id.title">
-        <source>Invalid video id</source>
+        <source>Invalid playlist id</source>
       </trans-unit>
       <trans-unit id="youTubePlaylistImport.invalid_id.message">
         <source>Could not extract playlist id from playlist link %s. Please check your link!</source>
       </trans-unit>
+
     </body>
   </file>
 </xliff>

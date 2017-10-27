@@ -111,7 +111,6 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
      * @param string $playlistLink like https://www.youtube.com/playlist?list=PL-ABvQXa8oyE4zbwSy4V6K5YTD6S_lhu-
      * @param int $pid to store video records from this playlist
      * @return array as showed above
-     * @throws InvalidPlaylistIdException
      */
     public function getPlaylistInformation(string $playlistLink, int $pid) : array
     {
