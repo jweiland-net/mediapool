@@ -14,18 +14,18 @@ namespace JWeiland\Mediapool\Task;
 * The TYPO3 project - inspiring people to share!
 */
 
-use JWeiland\Mediapool\Domain\Repository\VideoRepository;
+use JWeiland\Mediapool\Domain\Repository\PlaylistRepository;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
 
 /**
- * Class UpdateVideoInformation
+ * Class UpdatePlaylistInformation
  *
- * @package JWeiland\Mediapool\Task;
+ * @package JWeiland\Mediapool\Task
  */
-class UpdateVideoInformation extends AbstractTask
+class UpdatePlaylistInformation extends AbstractTask
 {
     /**
      * Task mode
@@ -45,11 +45,11 @@ class UpdateVideoInformation extends AbstractTask
     public $pageSelection = '';
 
     /**
-     * Video Repository
+     * Playlist repository
      *
-     * @var VideoRepository
+     * @var PlaylistRepository
      */
-    protected $videoRepository;
+    protected $playlistRepository;
 
     /**
      * Data Handler
@@ -72,17 +72,17 @@ class UpdateVideoInformation extends AbstractTask
         $this->init();
         if ($this->mode === 0) {
             // fetch all
-            $videos = $this->videoRepository->findAllLinksAndUids();
+            $playlists = $this->playlistRepository->findAllLinksAndUids();
         } else {
             // fetch selected
-            $videos = $this->videoRepository->findLinksAndUidsByPid($this->pageSelection);
+            $playlists = $this->playlistRepository->findLinksAndUidsByPid($this->pageSelection);
         }
         $data = [];
         // create data array for data handler
         // to use the DataHandler Hook
-        foreach ($videos as $video) {
-            $data['tx_mediapool_domain_model_video'][$video['uid']] = [
-                'link' => $video['link']
+        foreach ($playlists as $playlist) {
+            $data['tx_mediapool_domain_model_playlist'][$playlist['uid']] = [
+                'link' => $playlist['link']
             ];
         }
         $this->dataHandler->start($data, []);
@@ -98,7 +98,7 @@ class UpdateVideoInformation extends AbstractTask
     protected function init()
     {
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $this->videoRepository = $objectManager->get(VideoRepository::class);
+        $this->playlistRepository = $objectManager->get(PlaylistRepository::class);
         $this->dataHandler = $objectManager->get(DataHandler::class);
     }
 

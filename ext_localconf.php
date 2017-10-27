@@ -48,6 +48,14 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\JWeiland\Mediap
     'additionalFields' => \JWeiland\Mediapool\Task\UpdateVideoInformationAdditionalFieldProvider::class
 ];
 
+// Register task for updating video information
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\JWeiland\Mediapool\Task\UpdatePlaylistInformation::class] = [
+    'extension' => 'mediapool',
+    'title' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:scheduler.update_playlist_information.title',
+    'description' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:scheduler.update_playlist_information.description',
+    'additionalFields' => \JWeiland\Mediapool\Task\UpdatePlaylistInformationAdditionalFieldProvider::class
+];
+
 // Configure main plugin
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
     'JWeiland.mediapool',
