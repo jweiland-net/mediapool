@@ -4,7 +4,7 @@
       <f:link.action pageUid="{listPage}" controller="Playlist" action="listByCategory" arguments="{category: categoryUid}">
         <h3>{recentVideo.category.title}</h3>
       </f:link.action>
-      <f:render partial="VideoPreview" arguments="{video: recentVideo.video, playlist: recentVideo.playlist, detailPage: detailPage}" />
+      <f:render partial="VideoPreview" arguments="{video: recentVideo.video, playlist: recentVideo.playlist, detailPage: detailPage, additionalClass: 'hidden-sm'}" />
     </div>
   </f:for>
 </div>
