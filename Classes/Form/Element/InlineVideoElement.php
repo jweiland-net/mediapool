@@ -84,15 +84,15 @@ class InlineVideoElement extends AbstractFormElement
             return $resultArray;
         }
 
-        $videos = [];
-        foreach (explode(',', $parameterArray['itemFormElValue']) as $uid) {
-                $videos[] = $this->videoRepository->findByUid($uid);
-        }
         $this->view->setTemplatePathAndFilename(
             ExtensionManagementUtility::extPath('mediapool') .
             'Resources/Private/Templates/InlineVideoElement/InlineVideoElement.html'
         );
-        $this->view->assignMultiple(['elementId' => $parameterArray['itemFormElID'], 'videos' => $videos]);
+        $this->view->assignMultiple([
+            'elementId' => $parameterArray['itemFormElID'],
+            'videos' => $parameterArray['itemFormElValue'],
+            'amountOfVideos' => count($parameterArray['itemFormElValue'])
+        ]);
         $resultArray['html'] = $this->view->render();
         return $resultArray;
     }

@@ -8,7 +8,7 @@ return [
         'cruser_id' => 'cruser_id',
         'versioningWS' => true,
         'origUid' => 't3_origuid',
-        'default_sortby' => 'upload_date DESC',
+        'default_sortby' => 'crdate',
         'delete' => 'deleted',
         'enablecolumns' => [
             'disabled' => 'hidden',

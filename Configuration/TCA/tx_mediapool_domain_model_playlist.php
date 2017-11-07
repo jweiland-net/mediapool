@@ -88,10 +88,12 @@ return [
         'videos' => [
             'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_playlist.videos',
             'config' => [
-                'type' => 'inline',
+                'type' => 'group',
+                'internal_type' => 'db',
+                'allowed' => 'tx_mediapool_domain_model_video',
+                'multiple' => true,
                 'renderType' => 'inlineVideo',
                 'foreign_table' => 'tx_mediapool_domain_model_video',
-                'foreign_default_sortby' => 'upload_date DESC',
                 'MM' => 'tx_mediapool_playlist_video_mm',
                 'minitems' => 0,
                 'maxitems' => 1000,
