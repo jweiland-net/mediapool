@@ -95,10 +95,10 @@
               <size>10</size>
               <treeConfig>
                 <parentField>parent</parentField>
-                <apprearance>
+                <appearance>
                   <expandAll>true</expandAll>
                   <showHeader>true</showHeader>
-                </apprearance>
+                </appearance>
               </treeConfig>
             </config>
           </settings.categories>
