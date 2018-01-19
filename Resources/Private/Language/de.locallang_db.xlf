@@ -59,6 +59,10 @@
         <source>Mediapool</source>
         <target>Mediathek</target>
       </trans-unit>
+      <trans-unit id="plugin.gallery.title">
+        <source>Gallery</source>
+        <target>Gallerie</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

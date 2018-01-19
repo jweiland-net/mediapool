@@ -87,6 +87,13 @@
       <trans-unit id="frontend.list_by_category.no_playlists">
         <source>No playlists found!</source>
       </trans-unit>
+
+      <trans-unit id="flex_forms.gallery.title">
+        <source>Gallery</source>
+      </trans-unit>
+      <trans-unit id="flex_forms.gallery.file_collections">
+        <source>File collection(s)</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

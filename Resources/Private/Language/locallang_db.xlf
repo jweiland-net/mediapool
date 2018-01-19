@@ -46,6 +46,9 @@
       <trans-unit id="plugin.mediapool.title">
         <source>Mediapool</source>
       </trans-unit>
+      <trans-unit id="plugin.gallery.title">
+        <source>Gallery</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

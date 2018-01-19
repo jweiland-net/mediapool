@@ -63,6 +63,14 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\JWeiland\Mediap
     [
         'Video' => 'show,listRecommended',
         'Playlist' => 'listByCategory'
-    ],
-    []
+    ]
+);
+
+// Configure gallery plugin
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    'JWeiland.mediapool',
+    'Gallery',
+    [
+        'Gallery' => 'preview',
+    ]
 );

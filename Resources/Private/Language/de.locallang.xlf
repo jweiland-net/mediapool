@@ -54,6 +54,15 @@
         <source>List recent video by category</source>
         <target>Zeige das neuste Video pro Kategorie</target>
       </trans-unit>
+
+      <trans-unit id="flex_forms.gallery.title">
+        <source>Gallery</source>
+        <target>Bilderstrecke</target>
+      </trans-unit>
+      <trans-unit id="flex_forms.gallery.file_collections">
+        <source>File collection(s)</source>
+        <target>Dateisammlung(en)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
