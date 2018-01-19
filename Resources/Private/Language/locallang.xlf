@@ -89,7 +89,7 @@
       </trans-unit>
 
       <trans-unit id="flex_forms.gallery.title">
-        <source>Gallery</source>
+        <source>Bilderstrecke</source>
       </trans-unit>
       <trans-unit id="flex_forms.gallery.file_collections">
         <source>File collection(s)</source>
