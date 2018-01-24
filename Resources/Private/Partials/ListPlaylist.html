@@ -8,14 +8,14 @@
       <div class="playlist-item">
         <f:link.action controller="Video" action="show" arguments="{video: playlistVideo.uid, playlist: playlist.uid}">
           <div class="playlist-item-inner{f:if(condition: '{video.uid} == {playlistVideo.uid}', then: ' playlist-item-active')} grid col-12">
-            <div class="playlist-item-number col-1_md-1_sm-1">
-              <p>{iterator.cycle}</p>
+            <div class="playlist-item-number grid col-1">
+              <div class="col-12"><p>{iterator.cycle}</p></div>
             </div>
-            <div class="playlist-item-thumbnail col-4_md-4_sm-4">
+            <div class="playlist-item-thumbnail grid col-4">
               <img src="{playlistVideo.thumbnail}" alt="{playlistVideo.title}" title="{playlistVideo.title}"/>
             </div>
-            <div class="playlist-item-title col-7_md-7_sm-7">
-              <p><f:format.crop maxCharacters="45">{playlistVideo.title}</f:format.crop></p>
+            <div class="playlist-item-title grid col-7">
+              <div class="col-12"><p><f:format.crop maxCharacters="45">{playlistVideo.title}</f:format.crop></p></div>
             </div>
           </div>
         </f:link.action>
