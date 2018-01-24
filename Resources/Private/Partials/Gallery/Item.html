@@ -1,5 +1,10 @@
 <a href="{f:uri.image(src: '{record.properties.uid}')}"
    data-fancybox="{galleryId}"
    data-caption="<h2>{record.properties.title}</h2><p>{record.properties.description}</p>">
-  <img src="{f:uri.image(src: '{record.properties.uid}')}" title="{record.properties.title}" alt="{record.properties.title}"/>
+  <img src="{f:uri.image(src: '{record.properties.uid}')}" title="{record.properties.title}"
+       alt="{record.properties.title}"/>
+  <span class="fa-stack fa-lg">
+    <i class="fa fa-picture-o fa-stack-2x"></i>
+    <i class="fa fa-picture-o fa-stack-2x"></i>
+  </span>
 </a>

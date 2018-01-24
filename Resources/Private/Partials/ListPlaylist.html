@@ -9,7 +9,7 @@
         <f:link.action controller="Video" action="show" arguments="{video: playlistVideo.uid, playlist: playlist.uid}">
           <div class="playlist-item-inner{f:if(condition: '{video.uid} == {playlistVideo.uid}', then: ' playlist-item-active')} grid col-12">
             <div class="playlist-item-thumbnail grid col-4">
-              <img src="{playlistVideo.thumbnail}" alt="{playlistVideo.title}" title="{playlistVideo.title}"/>
+              <div class="col-12"><img src="{playlistVideo.thumbnail}" alt="{playlistVideo.title}" title="{playlistVideo.title}"/></div>
             </div>
             <div class="playlist-item-title grid col-8">
               <div class="col-12"><p><f:format.crop maxCharacters="45">{playlistVideo.title}</f:format.crop></p></div>
