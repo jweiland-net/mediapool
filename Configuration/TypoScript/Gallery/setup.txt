@@ -1,0 +1,16 @@
+plugin.tx_mediapool_gallery {
+  view {
+    templateRootPath = {$plugin.tx_mediapool_gallery.view.templateRootPath}
+    partialRootPath = {$plugin.tx_mediapool_gallery.view.partialRootPath}
+    layoutRootPath = {$plugin.tx_mediapool_gallery.view.layoutRootPath}
+  }
+
+  persistence {
+    storagePid = {$plugin.tx_mediapool_gallery.persistence.storagePid}
+  }
+
+  settings {
+    height = {$plugin.tx_mediapool_gallery.settings.height}
+    width = {$plugin.tx_mediapool_gallery.settings.width}
+  }
+}
