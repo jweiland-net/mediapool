@@ -1,4 +1,4 @@
-<div class="mediapool-gallery-container" data-ce-columns="{f:count(subject: '{fileCollections}')}">
+<div class="mediapool-gallery-container" data-ce-columns="{fileCollections -> f:count()}">
 	<f:for each="{fileCollections}" as="fileCollection">
 		<f:variable name="galleryId" value="mediapool_gallery_{fileCollection.uid}" />
 		<f:for each="{fileCollection}" as="record" iteration="iterator">
