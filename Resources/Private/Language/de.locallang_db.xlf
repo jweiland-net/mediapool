@@ -61,7 +61,7 @@
       </trans-unit>
       <trans-unit id="plugin.gallery.title">
         <source>Gallery</source>
-        <target>Gallerie</target>
+        <target>Galerie</target>
       </trans-unit>
     </body>
   </file>
