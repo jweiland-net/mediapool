@@ -1,7 +1,6 @@
 <div class="mediapool-gallery-container" data-ce-columns="{fileCollections -> f:count()}">
 	<f:for each="{fileCollections}" as="fileCollection">
 		<f:variable name="galleryId" value="mediapool_gallery_{fileCollection.uid}" />
-		<figure class="mediapool-gallery">
 			<f:for each="{fileCollection}" as="record" iteration="iterator">
 				<f:comment>We want wo be sure that we have a File object and not a FileReference</f:comment>
 				<f:if condition="{record.originalFile}">
@@ -23,7 +22,6 @@
 				</f:if>
 			</f:for>
 			<span class="mediapool-gallery-counter"><f:translate key="frontend.gallery.counter" arguments="{0: '{fileCollections -> f:count()}'}" /></span>
-		</figure>
 	</f:for>
 </div>
 
