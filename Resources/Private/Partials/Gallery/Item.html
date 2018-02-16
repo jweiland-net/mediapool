@@ -3,8 +3,11 @@
 	 data-caption="<h2>{record.properties.title}</h2><p>{record.properties.description}</p>">
 	<f:image image="{record}" title="{record.properties.title}" alt="{record.properties.title}"
 					 height="{settings.height}" width="{settings.width}"/>
-	<span class="fa-stack fa-lg">
-		<i class="fa fa-picture-o fa-stack-2x"></i>
-		<i class="fa fa-picture-o fa-stack-2x"></i>
-  </span>
+	<f:if condition="{iterator.isFirst}">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-picture-o fa-stack-2x"></i>
+			<i class="fa fa-picture-o fa-stack-2x"></i>
+  	</span>
+		<figcaption>{fileCollection.title}</figcaption>
+	</f:if>
 </a>

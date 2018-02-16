@@ -1,26 +1,29 @@
 <div class="mediapool-gallery-container" data-ce-columns="{fileCollections -> f:count()}">
 	<f:for each="{fileCollections}" as="fileCollection">
 		<f:variable name="galleryId" value="mediapool_gallery_{fileCollection.uid}" />
-		<f:for each="{fileCollection}" as="record" iteration="iterator">
-			<f:comment>We want wo be sure that we have a File object and not a FileReference</f:comment>
-			<f:if condition="{record.originalFile}">
-				<f:variable name="record" value="{record.originalFile}" />
-			</f:if>
+		<figure class="mediapool-gallery">
+			<f:for each="{fileCollection}" as="record" iteration="iterator">
+				<f:comment>We want wo be sure that we have a File object and not a FileReference</f:comment>
+				<f:if condition="{record.originalFile}">
+					<f:variable name="record" value="{record.originalFile}" />
+				</f:if>
 
-			<f:comment>Render image</f:comment>
-			<f:if condition="{record.properties.extension} == 'jpg' || {record.properties.extension} == 'jpeg' || {record.properties.extension} == 'png' || {record.properties.extension} == 'gif'">
-				<f:render partial="Gallery/Item" arguments="{record: record, galleryId: galleryId}" />
-			</f:if>
+				<f:comment>Render image</f:comment>
+				<f:if condition="{record.properties.extension} == 'jpg' || {record.properties.extension} == 'jpeg' || {record.properties.extension} == 'png' || {record.properties.extension} == 'gif'">
+					<f:render partial="Gallery/Item" arguments="{record: record, galleryId: galleryId, iterator: iterator, fileCollection: fileCollection}" />
+				</f:if>
 
-			<f:if condition="{iterator.isFirst}">
-				<f:comment>open gallery items div</f:comment>
-				<div style="display:none">
-			</f:if>
-			<f:if condition="{iterator.isLast}">
-				<f:comment>close gallery items div</f:comment>
-				</div>
-			</f:if>
-		</f:for>
+				<f:if condition="{iterator.isFirst}">
+					<f:comment>open gallery items div</f:comment>
+					<div style="display:none">
+				</f:if>
+				<f:if condition="{iterator.isLast}">
+					<f:comment>close gallery items div</f:comment>
+					</div>
+				</f:if>
+			</f:for>
+			<span class="mediapool-gallery-counter"><f:translate key="frontend.gallery.counter" arguments="{0: '{fileCollections -> f:count()}'}" /></span>
+		</figure>
 	</f:for>
 </div>
 
