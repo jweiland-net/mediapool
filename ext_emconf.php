@@ -7,17 +7,16 @@
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Mediapool',
     'description' =>
-        'Embed your favorite YouTube Videos and Playlists.' .
-        'Import description, title and more by just pasting the YouTube link.',
+        'Embed your favorite YouTube Videos and Playlists. Import description, title and more by just pasting the YouTube link.',
     'category' => 'plugin',
-    'state' => 'beta',
+    'state' => 'stable',
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 0,
     'author' => 'Pascal Rinker',
     'author_email' => 'projects@jweiland.net',
     'author_company' => 'jweiland.net',
-    'version' => '0.0.1',
+    'version' => '1.0.0',
     'constraints' => [
         'depends' => [
             'typo3' => '8.7.0-8.7.99',

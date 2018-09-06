@@ -1,0 +1,34 @@
+{
+	"name": "jweiland/mediapool",
+	"type": "typo3-cms-extension",
+	"description": "Embed your favorite YouTube Videos and Playlists. Import description, title and more by just pasting the YouTube link.",
+	"license": "GPL-2.0-or-later",
+	"keywords": [
+		"typo3",
+		"TYPO3 CMS",
+		"mediapool",
+		"youtube",
+		"gallery"
+	],
+	"homepage": "https://jweiland.net",
+	"authors": [
+		{
+			"name": "Pascal Rinker",
+			"email": "projects@jweiland.net",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"email": "projects@jweiland.net",
+		"issues": "https://github.com/jweiland-net/mediapool/issues",
+		"source": "https://github.com/jweiland-net/mediapool"
+	},
+	"require": {
+		"typo3/cms-core": "^8.7"
+	},
+	"autoload": {
+		"psr-4": {
+			"JWeiland\\Mediapool\\": "Classes"
+		}
+	}
+}
