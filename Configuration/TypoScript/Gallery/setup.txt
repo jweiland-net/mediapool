@@ -3,9 +3,9 @@ page.includeJSFooter.tx_mediapool_fancybox = EXT:mediapool/Resources/Public/Java
 
 plugin.tx_mediapool_gallery {
   view {
-    templateRootPath = {$plugin.tx_mediapool_gallery.view.templateRootPath}
-    partialRootPath = {$plugin.tx_mediapool_gallery.view.partialRootPath}
-    layoutRootPath = {$plugin.tx_mediapool_gallery.view.layoutRootPath}
+    templateRootPaths.100 = {$plugin.tx_mediapool_gallery.view.templateRootPath}
+    partialRootPaths.100 = {$plugin.tx_mediapool_gallery.view.partialRootPath}
+    layoutRootPath.100 = {$plugin.tx_mediapool_gallery.view.layoutRootPath}
   }
 
   persistence {

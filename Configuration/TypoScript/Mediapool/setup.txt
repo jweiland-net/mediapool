@@ -2,9 +2,9 @@ page.includeJSFooter.tx_mediapool = EXT:mediapool/Resources/Public/JavaScript/me
 
 plugin.tx_mediapool_mediapool {
   view {
-    templateRootPath = {$plugin.tx_mediapool_mediapool.view.templateRootPath}
-    partialRootPath = {$plugin.tx_mediapool_mediapool.view.partialRootPath}
-    layoutRootPath = {$plugin.tx_mediapool_mediapool.view.layoutRootPath}
+    templateRootPaths.100 = {$plugin.tx_mediapool_mediapool.view.templateRootPath}
+    partialRootPaths.100 = {$plugin.tx_mediapool_mediapool.view.partialRootPath}
+    layoutRootPaths.100 = {$plugin.tx_mediapool_mediapool.view.layoutRootPath}
   }
 
   persistence {
