@@ -8,7 +8,7 @@
 				</f:if>
 
 				<f:comment>Render image</f:comment>
-				<f:if condition="{record.properties.extension} == 'jpg' || {record.properties.extension} == 'jpeg' || {record.properties.extension} == 'png' || {record.properties.extension} == 'gif'">
+				<f:if condition="{f:format.case(mode: 'lower', value: '{record.properties.extension}')} == 'jpg' || {f:format.case(mode: 'lower', value: '{record.properties.extension}')} == 'jpeg' || {f:format.case(mode: 'lower', value: '{record.properties.extension}')} == 'png' || {f:format.case(mode: 'lower', value: '{record.properties.extension}')} == 'gif'">
 					<f:render partial="Gallery/Item" arguments="{record: record, galleryId: galleryId, iterator: iterator, fileCollection: fileCollection}" />
 				</f:if>
 
