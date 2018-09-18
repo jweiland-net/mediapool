@@ -74,3 +74,18 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\JWeiland\Mediap
         'Gallery' => 'preview',
     ]
 );
+
+$iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+$iconRegistry->registerIcon(
+    'mediapool-mediapool',
+    \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+    ['source' => 'EXT:mediapool/Resources/Public/Icons/tx_mediapool_domain_model_video.svg']
+);
+$iconRegistry->registerIcon(
+    'mediapool-gallery',
+    \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+    ['source' => 'EXT:mediapool/Resources/Public/Icons/gallery.svg']
+);
+
+// Add ts config for content element wizard
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:mediapool/Configuration/TSconfig/ContentElementWizard.tsconfig">');
