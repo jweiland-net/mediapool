@@ -1,5 +1,13 @@
+<f:if condition="{record.originalFile}">
+	<f:then>
+		<f:variable name="isReference">true</f:variable>
+	</f:then>
+	<f:else>
+		<f:variable name="isReference">false</f:variable>
+	</f:else>
+</f:if>
 <figure class="mediapool-gallery-item">
-	<a href="{f:uri.image(src: '{record.properties.uid}')}"
+	<a href="{f:uri.image(src: '{record.uid}', treatIdAsReference: '{isReference}')}"
 		 data-fancybox="{galleryId}"
 		 data-caption="<h2>{record.properties.title}</h2><p>{record.properties.description}</p>">
 		<f:image image="{record}" title="{record.properties.title}" alt="{record.properties.title}"

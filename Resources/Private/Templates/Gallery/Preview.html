@@ -2,11 +2,6 @@
 	<f:for each="{fileCollections}" as="fileCollection">
 		<f:variable name="galleryId" value="mediapool_gallery_{fileCollection.uid}" />
 			<f:for each="{fileCollection}" as="record" iteration="iterator">
-				<f:comment>We want wo be sure that we have a File object and not a FileReference</f:comment>
-				<f:if condition="{record.originalFile}">
-					<f:variable name="record" value="{record.originalFile}" />
-				</f:if>
-
 				<f:comment>Render image</f:comment>
 				<f:if condition="{f:format.case(mode: 'lower', value: '{record.properties.extension}')} == 'jpg' || {f:format.case(mode: 'lower', value: '{record.properties.extension}')} == 'jpeg' || {f:format.case(mode: 'lower', value: '{record.properties.extension}')} == 'png' || {f:format.case(mode: 'lower', value: '{record.properties.extension}')} == 'gif'">
 					<f:render partial="Gallery/Item" arguments="{record: record, galleryId: galleryId, iterator: iterator, fileCollection: fileCollection}" />
