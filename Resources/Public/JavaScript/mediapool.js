@@ -1,7 +1,7 @@
 $(document).ready(function() {
   resizePlaylist();
   scrollToActiveVideo();
-  
+
   $(window).resize(function() {
     resizePlaylist();
   });
@@ -10,7 +10,10 @@ $(document).ready(function() {
 function scrollToActiveVideo() {
   var $mediapoolPlaylistItems = $('.mediapool-playlist-items');
   var $activeItem = $('.playlist-item-active');
-  $mediapoolPlaylistItems.scrollTop($mediapoolPlaylistItems.scrollTop() + $activeItem.position().top);
+
+  if ($activeItem.length) {
+      $mediapoolPlaylistItems.scrollTop($mediapoolPlaylistItems.scrollTop() + $activeItem.position().top);
+  }
 }
 
 function resizePlaylist() {

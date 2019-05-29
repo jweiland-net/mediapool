@@ -1,4 +1,8 @@
 <?php
+if (!defined('TYPO3_MODE')) {
+    die('Access denied.');
+}
+
 // Add flexform for Mediapool plugin
 $pluginSignature = 'mediapool_mediapool';
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature] = 'select_key,pages,recursive';
