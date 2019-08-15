@@ -62,7 +62,7 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\JWeiland\Mediap
     'Mediapool',
     [
         'Video' => 'show,listRecommended',
-        'Playlist' => 'listByCategory'
+        'Playlist' => 'listByCategory,listLatestVideos,listVideos'
     ]
 );
 

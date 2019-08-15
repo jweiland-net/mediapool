@@ -47,8 +47,8 @@
 				<target>Titel</target>
 			</trans-unit>
 			<trans-unit id="tx_mediapool_domain_model_playlist.link">
-				<source>Playlist URL</source>
-				<target>Playlisten URL</target>
+				<source>Playlist URL or Channel URL</source>
+				<target>Playlisten URL oder Kanal URL</target>
 			</trans-unit>
 			<trans-unit id="tx_mediapool_domain_model_playlist.videos">
 				<source>Videos</source>

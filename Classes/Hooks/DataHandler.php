@@ -15,7 +15,6 @@ namespace JWeiland\Mediapool\Hooks;
 */
 
 use JWeiland\Mediapool\Domain\Repository\PlaylistRepository;
-use JWeiland\Mediapool\Import\Video\InvalidVideoIdException;
 use JWeiland\Mediapool\Service\PlaylistService;
 use JWeiland\Mediapool\Service\VideoService;
 use TYPO3\CMS\Core\Log\Logger;
@@ -121,7 +120,9 @@ class DataHandler
             $flashMessage = GeneralUtility::makeInstance(
                 FlashMessage::class,
                 LocalizationUtility::translate(
-                    'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:data_handler.exception.message'
+                    'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:data_handler.exception.message',
+                    null,
+                    [$e->getCode()]
                 ),
                 LocalizationUtility::translate(
                     'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:data_handler.exception.title'

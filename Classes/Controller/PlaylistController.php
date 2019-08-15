@@ -14,6 +14,7 @@ namespace JWeiland\Mediapool\Controller;
 * The TYPO3 project - inspiring people to share!
 */
 
+use JWeiland\Mediapool\Domain\Model\Playlist;
 use JWeiland\Mediapool\Domain\Repository\PlaylistRepository;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -55,5 +56,26 @@ class PlaylistController extends ActionController
         $this->view->assign('detailPage', $this->settings['detailPage']);
         $this->view->assign('category', $category);
         $this->view->assign('playlists', $playlists);
+    }
+
+    /**
+     * List latest videos of a playlist
+     */
+    public function listLatestVideosAction()
+    {
+        $this->view->assign('playlist', $this->playlistRepository->findByUid($this->settings['playlist']));
+    }
+
+    /**
+     * List all videos of a playlist
+     *
+     * @param Playlist|null $playlist either pass a playlist or use the given from $this->settings
+     */
+    public function listVideosAction(Playlist $playlist = null)
+    {
+        if ($playlist === null) {
+            $playlist = $this->playlistRepository->findByUid($this->settings['playlist']);
+        }
+        $this->view->assign('playlist', $playlist);
     }
 }

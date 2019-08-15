@@ -28,12 +28,17 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
     /**
      * URL to fetch playlist items via GET request
      */
-    const PLAYLIST_ITEMS_API_URL = 'https://www.googleapis.com/youtube/v3/playlistItems?playlistId=%s&key=%s&part=contentDetails&maxResults=50';
+    const PLAYLIST_ITEMS_API_URL = 'https://www.googleapis.com/youtube/v3/playlistItems?playlistId=%s&key=%s&part=contentDetails,status&maxResults=50';
 
     /**
      * URL to fetch playlist title via GET request
      */
     const PLAYLIST_API_URL = 'https://www.googleapis.com/youtube/v3/playlists?id=%s&key=%s&part=snippet';
+
+    /**
+     * URL to fetch channel data (uploads playlist, ...) via GET request
+     */
+    const CHANNELS_LIST_API_URL = 'https://www.googleapis.com/youtube/v3/channels?key=%s&part=contentDetails&%s';
 
     /**
      * Name of the video platform
@@ -131,6 +136,10 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
         if ($videoIds !== false && $information !== false) {
             $i = 0;
             foreach ($videos as $item) {
+                if (isset($item['status']['privacyStatus']) && $item['status']['privacyStatus'] === 'private') {
+                    // skip private videos
+                    continue;
+                }
                 $videoIds['NEW' . $i] = ['pid' => $pid, 'video' => trim($item['contentDetails']['videoId'])];
                 $i++;
             }
@@ -165,12 +174,57 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
      */
     protected function getPlaylistId(string $playlistLink) : string
     {
-        $query = parse_url($playlistLink, PHP_URL_QUERY);
-        parse_str($query, $parsedQuery);
-        if (isset($parsedQuery['list'])) {
-            return $parsedQuery['list'];
+        $playlistId = '';
+        if (
+            preg_match('@https://www\.youtube\.com/channel/(?<id>[^/]*)@', $playlistLink, $matches)
+            && array_key_exists('id', $matches)
+        ) {
+            $playlistId = $this->getUploadsPlaylistIdFromYouTubeChannel($matches['id'], '');
+        } elseif (
+            preg_match('@https://www\.youtube\.com/user/(?<user>[^/]*)@', $playlistLink, $matches)
+            && array_key_exists('user', $matches)
+        ) {
+            $playlistId = $this->getUploadsPlaylistIdFromYouTubeChannel('', $matches['user']);
+        } else {
+            $query = parse_url($playlistLink, PHP_URL_QUERY);
+            parse_str($query, $parsedQuery);
+            if (isset($parsedQuery['list'])) {
+                $playlistId = $parsedQuery['list'];
+            }
         }
-        return '';
+        return $playlistId;
+    }
+
+    /**
+     * Returns the playlist id of the "Uploads" playlist from a YouTube channel.
+     *
+     * @param string $channelId
+     * @param string $user
+     * @return string
+     */
+    protected function getUploadsPlaylistIdFromYouTubeChannel(string $channelId, string $user): string
+    {
+        $playlistId = '';
+        if ($channelId) {
+            // Newer YouTube channels without username like https://www.youtube.com/channel/<id>
+            $channelParam = 'id=' . $channelId;
+        } else {
+            // Old school YouTube channels like https://www.youtube.com/user/<username>
+            $channelParam = 'forUsername=' . $user;
+        }
+        $response = $this->client->request(
+            'GET',
+            sprintf(self::CHANNELS_LIST_API_URL, $this->apiKey, $channelParam)
+        );
+        if ($response->getStatusCode() === 200) {
+            $result = json_decode($response->getBody()->getContents(), true);
+            if (isset($result['items'][0]['contentDetails']['relatedPlaylists']['uploads'])) {
+                $playlistId = $result['items'][0]['contentDetails']['relatedPlaylists']['uploads'];
+            }
+        } else {
+            $this->checkResponseStatusCode($response);
+        }
+        return $playlistId;
     }
 
     /**

@@ -1,109 +1,143 @@
 <T3DataStructure>
-  <meta>
-    <langDisable>1</langDisable>
-  </meta>
-  <sheets>
-    <sDEF>
-      <ROOT>
-        <TCEforms>
-          <sheetTitle>LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.title</sheetTitle>
-        </TCEforms>
-        <type>array</type>
-        <el>
-          <switchableControllerActions>
-            <TCEforms>
-              <label>LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.view</label>
-              <onChange>reload</onChange>
-              <config>
-                <type>select</type>
-                <items>
-                  <numIndex index="1">
-                    <numIndex index="0">LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.recommended_videos</numIndex>
-                    <numIndex index="1">Video->listRecommended</numIndex>
-                  </numIndex>
-                  <numIndex index="2">
-                    <numIndex index="0">LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.detail_view</numIndex>
-                    <numIndex index="1">Video->show</numIndex>
-                  </numIndex>
-                  <numIndex index="3">
-                    <numIndex index="0">LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.list_view</numIndex>
-                    <numIndex index="1">Playlist->listByCategory</numIndex>
-                  </numIndex>
-                  <numIndex index="4">
-                    <numIndex index="0">LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.list_recent_by_category</numIndex>
-                    <numIndex index="1">Video->listRecentByCategory</numIndex>
-                  </numIndex>
-                </items>
-              </config>
-            </TCEforms>
-          </switchableControllerActions>
-          <settings.detailPage>
-            <TCEforms>
-              <label>LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.detail_page</label>
-              <displayCond>
-                <OR>
-                  <numIndex index="0">FIELD:switchableControllerActions:=:Video->listRecommended</numIndex>
-                  <numIndex index="1">FIELD:switchableControllerActions:=:Playlist->listByCategory</numIndex>
-                  <numIndex index="2">FIELD:switchableControllerActions:=:Video->listRecentByCategory</numIndex>
-                </OR>
-              </displayCond>
-              <config>
-                <type>group</type>
-                <internal_type>db</internal_type>
-                <allowed>pages</allowed>
-                <size>1</size>
-                <maxitems>1</maxitems>
-                <minitems>1</minitems>
-              </config>
-            </TCEforms>
-          </settings.detailPage>
-          <settings.listPage>
-            <TCEforms>
-              <label>LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.list_page</label>
-              <displayCond>FIELD:switchableControllerActions:=:Video->listRecentByCategory</displayCond>
-              <config>
-                <type>group</type>
-                <internal_type>db</internal_type>
-                <allowed>pages</allowed>
-                <size>1</size>
-                <maxitems>1</maxitems>
-                <minitems>1</minitems>
-              </config>
-            </TCEforms>
-          </settings.listPage>
-          <settings.recommendedVideos>
-            <TCEforms>
-              <label>LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.recommended_video_selection</label>
-              <displayCond>FIELD:switchableControllerActions:=:Video->listRecommended</displayCond>
-              <config>
-                <type>group</type>
-                <internal_type>db</internal_type>
-                <allowed>tx_mediapool_domain_model_video</allowed>
-                <minitems>3</minitems>
-                <maxitems>3</maxitems>
-              </config>
-            </TCEforms>
-          </settings.recommendedVideos>
-          <settings.categories>
-            <label>LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.categories</label>
-            <displayCond>FIELD:switchableControllerActions:=:Video->listRecentByCategory</displayCond>
-            <config>
-              <type>select</type>
-              <renderType>selectTree</renderType>
-              <foreign_table>sys_category</foreign_table>
-              <foreign_table_where> AND sys_category.sys_language_uid IN (-1, 0) ORDER BY sys_category.sorting ASC</foreign_table_where>
-              <size>10</size>
-              <treeConfig>
-                <parentField>parent</parentField>
-                <appearance>
-                  <expandAll>true</expandAll>
-                  <showHeader>true</showHeader>
-                </appearance>
-              </treeConfig>
-            </config>
-          </settings.categories>
-        </el>
-      </ROOT>
-    </sDEF>
-  </sheets>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.title</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<switchableControllerActions>
+						<TCEforms>
+							<label>LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.view</label>
+							<onChange>reload</onChange>
+							<config>
+								<type>select</type>
+								<items>
+									<numIndex index="1">
+										<numIndex index="0">LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.recommended_videos</numIndex>
+										<numIndex index="1">Video->listRecommended</numIndex>
+									</numIndex>
+									<numIndex index="2">
+										<numIndex index="0">LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.detail_view</numIndex>
+										<numIndex index="1">Video->show</numIndex>
+									</numIndex>
+									<numIndex index="3">
+										<numIndex index="0">LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.list_recent_by_category</numIndex>
+										<numIndex index="1">Video->listRecentByCategory</numIndex>
+									</numIndex>
+									<numIndex index="4">
+										<numIndex index="0">LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.list_view</numIndex>
+										<numIndex index="1">Playlist->listByCategory</numIndex>
+									</numIndex>
+									<numIndex index="5">
+										<numIndex index="0">LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.list_latest_videos</numIndex>
+										<numIndex index="1">Playlist->listLatestVideos;Playlist->listVideos</numIndex>
+									</numIndex>
+									<numIndex index="6">
+										<numIndex index="0">LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.list_videos</numIndex>
+										<numIndex index="1">Playlist->listVideos</numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>
+					</switchableControllerActions>
+					<settings.detailPage>
+						<TCEforms>
+							<label>LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.detail_page</label>
+							<displayCond>
+								<OR>
+									<numIndex index="0">FIELD:switchableControllerActions:=:Video->listRecommended</numIndex>
+									<numIndex index="1">FIELD:switchableControllerActions:=:Playlist->listByCategory</numIndex>
+									<numIndex index="2">FIELD:switchableControllerActions:=:Video->listRecentByCategory</numIndex>
+									<numIndex index="3">FIELD:switchableControllerActions:=:Playlist->listLatestVideos;Playlist->listVideos</numIndex>
+									<numIndex index="4">FIELD:switchableControllerActions:=:Playlist->listVideos</numIndex>
+								</OR>
+							</displayCond>
+							<config>
+								<type>group</type>
+								<internal_type>db</internal_type>
+								<allowed>pages</allowed>
+								<size>1</size>
+								<maxitems>1</maxitems>
+								<minitems>1</minitems>
+							</config>
+						</TCEforms>
+					</settings.detailPage>
+					<settings.listPage>
+						<TCEforms>
+							<label>LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.list_page</label>
+							<displayCond>
+								<OR>
+									<numIndex index="0">FIELD:switchableControllerActions:=:Video->listRecentByCategory</numIndex>
+									<numIndex index="1">FIELD:switchableControllerActions:=:Playlist->listLatestVideos;Playlist->listVideos</numIndex>
+								</OR>
+							</displayCond>
+							<config>
+								<type>group</type>
+								<internal_type>db</internal_type>
+								<allowed>pages</allowed>
+								<size>1</size>
+								<maxitems>1</maxitems>
+								<minitems>1</minitems>
+							</config>
+						</TCEforms>
+					</settings.listPage>
+					<settings.recommendedVideos>
+						<TCEforms>
+							<label>LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.recommended_video_selection</label>
+							<displayCond>FIELD:switchableControllerActions:=:Video->listRecommended</displayCond>
+							<config>
+								<type>group</type>
+								<internal_type>db</internal_type>
+								<allowed>tx_mediapool_domain_model_video</allowed>
+								<minitems>3</minitems>
+								<maxitems>3</maxitems>
+							</config>
+						</TCEforms>
+					</settings.recommendedVideos>
+					<settings.playlist>
+						<TCEforms>
+							<label>LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.playlist_selection</label>
+							<displayCond>
+								<OR>
+									<numIndex index="0">FIELD:switchableControllerActions:=:Playlist->listLatestVideos;Playlist->listVideos</numIndex>
+									<numIndex index="1">FIELD:switchableControllerActions:=:Playlist->listVideos</numIndex>
+								</OR>
+							</displayCond>
+							<config>
+								<type>group</type>
+								<internal_type>db</internal_type>
+								<allowed>tx_mediapool_domain_model_playlist</allowed>
+								<size>1</size>
+								<minitems>1</minitems>
+								<maxitems>1</maxitems>
+							</config>
+						</TCEforms>
+					</settings.playlist>
+					<settings.categories>
+						<label>LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.categories</label>
+						<displayCond>FIELD:switchableControllerActions:=:Video->listRecentByCategory</displayCond>
+						<config>
+							<type>select</type>
+							<renderType>selectTree</renderType>
+							<foreign_table>sys_category</foreign_table>
+							<foreign_table_where> AND sys_category.sys_language_uid IN (-1, 0) ORDER BY sys_category.sorting ASC</foreign_table_where>
+							<size>10</size>
+							<treeConfig>
+								<parentField>parent</parentField>
+								<appearance>
+									<expandAll>true</expandAll>
+									<showHeader>true</showHeader>
+								</appearance>
+							</treeConfig>
+						</config>
+					</settings.categories>
+				</el>
+			</ROOT>
+		</sDEF>
+	</sheets>
 </T3DataStructure>

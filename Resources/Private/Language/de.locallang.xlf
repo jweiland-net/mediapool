@@ -54,6 +54,18 @@
 				<source>List recent video by category</source>
 				<target>Zeige das neuste Video pro Kategorie</target>
 			</trans-unit>
+			<trans-unit id="flex_forms.mediapool.list_latest_videos">
+				<source>List latest videos by playlist</source>
+				<target>Zeige neuste Videos einer Playliste</target>
+			</trans-unit>
+			<trans-unit id="flex_forms.mediapool.list_videos">
+				<source>List all videos by playlist</source>
+				<target>Zeige alle Videos einer Playliste</target>
+			</trans-unit>
+			<trans-unit id="flex_forms.mediapool.playlist_selection">
+				<source>Select a playlist</source>
+				<target>Wähle eine Playliste</target>
+			</trans-unit>
 
 			<trans-unit id="flex_forms.gallery.title">
 				<source>Gallery</source>
@@ -66,6 +78,10 @@
 			<trans-unit id="frontend.gallery.counter">
 				<source>%d images</source>
 				<target>%d Bilder</target>
+			</trans-unit>
+			<trans-unit id="frontend.button.more">
+				<source>More</source>
+				<target>Mehr</target>
 			</trans-unit>
 		</body>
 	</file>
