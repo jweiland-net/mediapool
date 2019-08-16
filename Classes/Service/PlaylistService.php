@@ -14,8 +14,6 @@ namespace JWeiland\Mediapool\Service;
 * The TYPO3 project - inspiring people to share!
 */
 
-
-
 use JWeiland\Mediapool\AbstractBase;
 use JWeiland\Mediapool\Import\Playlist\AbstractPlaylistImport;
 use JWeiland\Mediapool\Utility\VideoPlatformUtility;
@@ -26,8 +24,6 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
  * Class PlaylistService
  *
  * ! use ObjectManager to get an instance of this class !
- *
- * @package JWeiland\Mediapool\Service;
  */
 class PlaylistService extends AbstractBase
 {
@@ -45,7 +41,6 @@ class PlaylistService extends AbstractBase
      * inject objectManager
      *
      * @param ObjectManager $objectManager
-     * @return void
      */
     public function injectObjectManager(ObjectManager $objectManager)
     {

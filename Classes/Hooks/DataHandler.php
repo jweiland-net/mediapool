@@ -30,8 +30,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /**
  * Class to get VideoData from a external video service
  * e.g. YouTube
- *
- * @package JWeiland\Mediapool\Hooks;
  */
 class DataHandler
 {
@@ -82,7 +80,6 @@ class DataHandler
      * for tx_mediapool_domain_model_video
      *
      * @param \TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler
-     * @return void
      */
     public function processDatamap_beforeStart(
         \TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler
@@ -106,7 +103,7 @@ class DataHandler
                 !array_key_exists(self::TABLE_PLAYLIST, $dataHandler->datamap)
             ) {
                 $this->processVideos($dataHandler->datamap[self::TABLE_VIDEO]);
-                // save playlist
+            // save playlist
             } elseif (array_key_exists(self::TABLE_PLAYLIST, $dataHandler->datamap)) {
                 foreach ($dataHandler->datamap[self::TABLE_PLAYLIST] as $uid => &$fields) {
                     // process playlist and break on error
@@ -144,7 +141,6 @@ class DataHandler
      * Process videos
      *
      * @param array $dataHandlerVideoTable
-     * @return void
      */
     protected function processVideos(array $dataHandlerVideoTable)
     {
@@ -178,7 +174,6 @@ class DataHandler
      *
      * @param int|string $uid of the playlist
      * @param array $fieldArray
-     * @return void
      */
     protected function processPlaylist($uid, array &$fieldArray)
     {

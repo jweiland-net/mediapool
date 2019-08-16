@@ -19,8 +19,6 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * Class Playlist
- *
- * @package JWeiland\Mediapool\Domain\Model;
  */
 class Playlist extends AbstractEntity
 {
@@ -141,7 +139,6 @@ class Playlist extends AbstractEntity
      * Adds a Video
      *
      * @param Video $video
-     * @return void
      */
     public function addVideo(Video $video)
     {
@@ -152,7 +149,6 @@ class Playlist extends AbstractEntity
      * Removes a Video
      *
      * @param Video $videoToRemove The Video to be removed
-     * @return void
      */
     public function removeVideo(Video $videoToRemove)
     {

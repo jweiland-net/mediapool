@@ -27,8 +27,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /**
  * Class AbstractBase
  * Base class for AbstractImport, VideoService and PlaylistService
- *
- * @package JWeiland\Mediapool;
  */
 abstract class AbstractBase
 {
@@ -64,7 +62,6 @@ abstract class AbstractBase
      * inject objectManager
      *
      * @param ObjectManager $objectManager
-     * @return void
      */
     public function injectObjectManager(ObjectManager $objectManager)
     {
@@ -73,8 +70,6 @@ abstract class AbstractBase
 
     /**
      * Initialize object
-     *
-     * @return void
      */
     public function initializeObject()
     {
@@ -96,7 +91,6 @@ abstract class AbstractBase
      * @param int $logLevel use LogLevel::<...> constants
      * @param string $logMessage If a custom log message is set, a log entry will be created
      * @param array $logMessageArguments arguments for log message
-     * @return void
      */
     public function addFlashMessageAndLog(
         string $title,
@@ -106,8 +100,7 @@ abstract class AbstractBase
         int $logLevel = LogLevel::ERROR,
         string $logMessage = '',
         array $logMessageArguments = []
-    )
-    {
+    ) {
         $title = LocalizationUtility::translate($this->errorMessagesFile . ':' . $title);
         $message = LocalizationUtility::translate($this->errorMessagesFile . ':' . $message, '', $messageArguments);
         $flashMessage = GeneralUtility::makeInstance(

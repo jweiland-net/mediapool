@@ -20,8 +20,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Class VideoPlayer
- *
- * @package JWeiland\Mediapool\Tca;
  */
 class VideoPlayer
 {
@@ -53,7 +51,7 @@ class VideoPlayer
      * @param UserElement $userElement
      * @return string
      */
-    public function render(array $parameterArray, UserElement $userElement) : string
+    public function render(array $parameterArray, UserElement $userElement): string
     {
         $config = $parameterArray['fieldConf']['config'];
         $size = MathUtility::forceIntegerInRange($config['size'] ?? $this->defaultInputWidth, $this->minimumInputWidth, $this->maxInputWidth);
@@ -61,15 +59,14 @@ class VideoPlayer
 
         if ($playerHTML = $parameterArray['row']['player_html']) {
             return $playerHTML;
-        } else {
-            return
+        }
+        return
                 '<div class="alert alert-info" role="alert" style="max-width: ' . $width . 'px">' .
                 LocalizationUtility::translate(
                     'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:' .
                     'tx_mediapool_domain_model_video.empty_field'
                 ) .
                 '</div>';
-        }
     }
 
     /**

@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 namespace JWeiland\Mediapool\Controller;
 
 /*
@@ -20,8 +20,6 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
  * Class GalleryController
- *
- * @package JWeiland\Mediapool\Controller;
  */
 class GalleryController extends ActionController
 {
@@ -34,7 +32,6 @@ class GalleryController extends ActionController
      * inject fileCollectionRepository
      *
      * @param FileCollectionRepository $fileCollectionRepository
-     * @return void
      */
     public function injectFileCollectionRepository(FileCollectionRepository $fileCollectionRepository)
     {
@@ -44,8 +41,6 @@ class GalleryController extends ActionController
     /**
      * Gallery preview action
      * displays a preview image that contains a fancybox3 gallery
-     *
-     * @return void
      */
     public function previewAction()
     {

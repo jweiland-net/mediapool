@@ -16,8 +16,6 @@ namespace JWeiland\Mediapool\Import;
 
 /**
  * Class MissingImporterException
- *
- * @package JWeiland\Mediapool\Import;
  */
 class MissingImporterException extends \Exception
 {

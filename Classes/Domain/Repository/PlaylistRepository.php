@@ -21,8 +21,6 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * Class PlaylistRepository
- *
- * @package JWeiland\Mediapool\Domain\Repository;
  */
 class PlaylistRepository extends Repository
 {

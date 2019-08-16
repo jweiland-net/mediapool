@@ -21,8 +21,6 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
  * Class VideoController
- *
- * @package JWeiland\Mediapool\Controller
  */
 class VideoController extends ActionController
 {
@@ -37,7 +35,6 @@ class VideoController extends ActionController
      * inject videoRepository
      *
      * @param VideoRepository $videoRepository
-     * @return void
      */
     public function injectVideoRepository(VideoRepository $videoRepository)
     {
@@ -49,7 +46,6 @@ class VideoController extends ActionController
      *
      * @param Video $video
      * @param Playlist|null $playlist
-     * @return void
      */
     public function showAction(Video $video, Playlist $playlist = null)
     {
@@ -66,7 +62,6 @@ class VideoController extends ActionController
     /**
      * List recommended videos
      *
-     * @return void
      * @throws \InvalidArgumentException if a selected recommended video could not be found
      */
     public function listRecommendedAction()
@@ -91,8 +86,6 @@ class VideoController extends ActionController
 
     /**
      * List recent videos sorted by selected categories
-     *
-     * @return void
      */
     public function listRecentByCategoryAction()
     {

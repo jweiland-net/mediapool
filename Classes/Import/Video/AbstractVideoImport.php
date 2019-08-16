@@ -14,7 +14,6 @@ namespace JWeiland\Mediapool\Import\Video;
 * The TYPO3 project - inspiring people to share!
 */
 
-
 use JWeiland\Mediapool\Import\AbstractImport;
 
 /**
@@ -24,8 +23,6 @@ use JWeiland\Mediapool\Import\AbstractImport;
  * To add a new video platform you must declare your video import class
  * inside your extensions ext_localconf.php for the video import hook
  * $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['videoImport'][<PlatformName>] = ...
- *
- * @package JWeiland\Mediapool\Import\Video;
  */
 abstract class AbstractVideoImport extends AbstractImport
 {
@@ -58,7 +55,7 @@ abstract class AbstractVideoImport extends AbstractImport
      * @return array the data array for DataHandler. This is a reference so it will be modified and can be used
      *               after method call.
      */
-    public abstract function processDataArray(
+    abstract public function processDataArray(
         array $videos,
         int $pid,
         string &$recordUids = '',

@@ -20,8 +20,6 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class YoutubePlaylistImport
- *
- * @package JWeiland\Mediapool\Import\Playlist;
  */
 class YoutubePlaylistImport extends AbstractPlaylistImport
 {
@@ -86,7 +84,6 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
      * inject youTubeVideoImport
      *
      * @param YouTubeVideoImport $youTubeVideoImport
-     * @return void
      */
     public function injectYouTubeVideoImport(YouTubeVideoImport $youTubeVideoImport)
     {
@@ -97,7 +94,6 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
      * inject youtubeService
      *
      * @param YouTubeService $youTubeService
-     * @return void
      */
     public function injectYoutubeService(YouTubeService $youTubeService)
     {
@@ -117,7 +113,7 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
      * @param int $pid to store video records from this playlist
      * @return array as showed above
      */
-    public function getPlaylistInformation(string $playlistLink, int $pid) : array
+    public function getPlaylistInformation(string $playlistLink, int $pid): array
     {
         $this->apiKey = $this->youTubeService->getApiKey();
         if (!($playlistId = $this->getPlaylistId($playlistLink))) {
@@ -172,7 +168,7 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
      * @param string $playlistLink
      * @return string empty string if link is not valid
      */
-    protected function getPlaylistId(string $playlistLink) : string
+    protected function getPlaylistId(string $playlistLink): string
     {
         $playlistId = '';
         if (
@@ -231,7 +227,6 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
      * Checks the response status code
      *
      * @param ResponseInterface $response
-     * @return void
      * @throws \HttpRequestException
      */
     protected function checkResponseStatusCode(ResponseInterface $response)
@@ -248,8 +243,8 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
                 1508146718
             );
             // other problems
-        } else {
-            throw new \HttpRequestException(
+        }
+        throw new \HttpRequestException(
                 sprintf(
                     'Fetching playlist information for %s failed! Got status code %d and the' .
                     ' following response: %s',
@@ -259,7 +254,6 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
                 ),
                 1508146719
             );
-        }
     }
 
     /**
@@ -301,7 +295,7 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
      *
      * @return array empty array on error
      */
-    protected function fetchPlaylistInformation() : array
+    protected function fetchPlaylistInformation(): array
     {
         $response = $this->client->request(
             'GET',

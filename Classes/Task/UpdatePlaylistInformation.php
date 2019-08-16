@@ -22,8 +22,6 @@ use TYPO3\CMS\Scheduler\Task\AbstractTask;
 
 /**
  * Class UpdatePlaylistInformation
- *
- * @package JWeiland\Mediapool\Task
  */
 class UpdatePlaylistInformation extends AbstractTask
 {
@@ -92,8 +90,6 @@ class UpdatePlaylistInformation extends AbstractTask
 
     /**
      * Init task
-     *
-     * @return void
      */
     protected function init()
     {
@@ -101,5 +97,4 @@ class UpdatePlaylistInformation extends AbstractTask
         $this->playlistRepository = $objectManager->get(PlaylistRepository::class);
         $this->dataHandler = $objectManager->get(DataHandler::class);
     }
-
 }

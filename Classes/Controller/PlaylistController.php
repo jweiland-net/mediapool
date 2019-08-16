@@ -21,8 +21,6 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
  * Class PlaylistController
- *
- * @package JWeiland\Mediapool\Controller
  */
 class PlaylistController extends ActionController
 {
@@ -37,7 +35,6 @@ class PlaylistController extends ActionController
      * inject playlistRepository
      *
      * @param PlaylistRepository $playlistRepository
-     * @return void
      */
     public function injectPlaylistRepository(PlaylistRepository $playlistRepository)
     {
@@ -48,7 +45,6 @@ class PlaylistController extends ActionController
      * List playlists by category
      *
      * @param Category $category
-     * @return void
      */
     public function listByCategoryAction(Category $category)
     {

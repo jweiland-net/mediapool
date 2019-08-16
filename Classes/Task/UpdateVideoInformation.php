@@ -22,8 +22,6 @@ use TYPO3\CMS\Scheduler\Task\AbstractTask;
 
 /**
  * Class UpdateVideoInformation
- *
- * @package JWeiland\Mediapool\Task;
  */
 class UpdateVideoInformation extends AbstractTask
 {
@@ -92,8 +90,6 @@ class UpdateVideoInformation extends AbstractTask
 
     /**
      * Init task
-     *
-     * @return void
      */
     protected function init()
     {
@@ -101,5 +97,4 @@ class UpdateVideoInformation extends AbstractTask
         $this->videoRepository = $objectManager->get(VideoRepository::class);
         $this->dataHandler = $objectManager->get(DataHandler::class);
     }
-
 }

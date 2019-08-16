@@ -14,7 +14,6 @@ namespace JWeiland\Mediapool\Import\Video;
 * The TYPO3 project - inspiring people to share!
 */
 
-
 use JWeiland\Mediapool\Configuration\ExtConf;
 use JWeiland\Mediapool\Constants;
 use JWeiland\Mediapool\Domain\Model\Video;
@@ -23,8 +22,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class YouTubeVideoImport
- *
- * @package JWeiland\Mediapool\Import\Video;
  */
 class YouTubeVideoImport extends AbstractVideoImport
 {
@@ -153,8 +150,7 @@ class YouTubeVideoImport extends AbstractVideoImport
         int $pid,
         string &$recordUids = '',
         bool $checkExistingVideos = false
-    ): array
-    {
+    ): array {
         /** @var VideoRepository $videoRepository */
         $videoRepository = $this->objectManager->get(VideoRepository::class);
         $this->videoIds = $this->implodeVideoIdsAndUnifyArray($videos);
@@ -212,7 +208,7 @@ class YouTubeVideoImport extends AbstractVideoImport
      * @param array $item
      * @return bool true if permissions are ok otherwise false
      */
-    protected function checkVideoPermission(array $item) : bool
+    protected function checkVideoPermission(array $item): bool
     {
         $hasPermission = true;
         // if we can´t watch or embed the video throw exception
@@ -232,14 +228,15 @@ class YouTubeVideoImport extends AbstractVideoImport
      * @param string $videoLink
      * @return string empty string if link is not valid
      */
-    protected function getVideoId(string $videoLink) : string
+    protected function getVideoId(string $videoLink): string
     {
         $query = parse_url($videoLink, PHP_URL_QUERY);
         parse_str($query, $parsedQuery);
         preg_match('/https\:\/\/youtu\.be\/(.+)/', $videoLink, $matches);
         if (count($matches) === 2) {
             return $matches[1];
-        } elseif (isset($parsedQuery['v'])) {
+        }
+        if (isset($parsedQuery['v'])) {
             return $parsedQuery['v'];
         }
         return '';
@@ -253,13 +250,13 @@ class YouTubeVideoImport extends AbstractVideoImport
      *
      * @return array with fetched video information
      */
-    protected function fetchVideoInformation() : array
+    protected function fetchVideoInformation(): array
     {
         $videoIds = explode(',', $this->videoIds);
         $loops = [];
         $offset = 0;
         // limit the amount of items per request to 50 (api maximum)
-        while(count($videoIds)) {
+        while (count($videoIds)) {
             if (count($videoIds) > 50) {
                 $loops[] = implode(',', array_splice($videoIds, $offset, 50));
             } else {
@@ -309,7 +306,8 @@ class YouTubeVideoImport extends AbstractVideoImport
             }
             return $items;
             // invalid api key
-        } elseif ($response->getStatusCode() === 400) {
+        }
+        if ($response->getStatusCode() === 400) {
             throw new \HttpRequestException(
                 sprintf(
                     'Fetching video information for %s failed! Got the following response from YouTube: %s.' .
@@ -319,8 +317,8 @@ class YouTubeVideoImport extends AbstractVideoImport
                 ),
                 1507792488
             );
-        } else {
-            throw new \HttpRequestException(
+        }
+        throw new \HttpRequestException(
                 sprintf(
                     'Fetching video information for %s failed! Got status code %d and the' .
                     ' following response: %s',
@@ -330,7 +328,6 @@ class YouTubeVideoImport extends AbstractVideoImport
                 ),
                 1507794777
             );
-        }
     }
 
     /**
@@ -339,7 +336,7 @@ class YouTubeVideoImport extends AbstractVideoImport
      * @param array $item from API
      * @return array with casted values for passed $item
      */
-    protected function getArrayForItem(array $item) : array
+    protected function getArrayForItem(array $item): array
     {
         $uploadDate = new \DateTime($item['snippet']['publishedAt']);
         return [
@@ -360,7 +357,7 @@ class YouTubeVideoImport extends AbstractVideoImport
      * @param array $item from API
      * @return string thumbnail url
      */
-    protected function getLargestThumbnailForVideo(array $item) : string
+    protected function getLargestThumbnailForVideo(array $item): string
     {
         // in best case we get the maxres thumbnail otherwise use fallback
         // as defined in array

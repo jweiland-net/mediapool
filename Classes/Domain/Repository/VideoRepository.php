@@ -14,7 +14,6 @@ namespace JWeiland\Mediapool\Domain\Repository;
 * The TYPO3 project - inspiring people to share!
 */
 
-
 use JWeiland\Mediapool\Domain\Model\Playlist;
 use JWeiland\Mediapool\Domain\Model\Video;
 use TYPO3\CMS\Core\Database\Connection;
@@ -25,8 +24,6 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * Class VideoRepository
- *
- * @package JWeiland\Mediapool\Domain\Repository;
  */
 class VideoRepository extends Repository
 {

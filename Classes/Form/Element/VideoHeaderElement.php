@@ -20,8 +20,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Class VideoHeaderElement
- *
- * @package JWeiland\Mediapool\Form\Element
  */
 class VideoHeaderElement extends AbstractFormElement
 {

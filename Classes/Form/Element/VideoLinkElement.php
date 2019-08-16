@@ -22,8 +22,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Class VideoLinkElement
- *
- * @package JWeiland\Mediapool\Form\Element;
  */
 class VideoLinkElement extends InputTextElement
 {
@@ -44,8 +42,11 @@ class VideoLinkElement extends InputTextElement
         // get HTML code from input field
         $resultArray = parent::render();
         $this->config = $this->data['parameterArray']['fieldConf']['config'];
-        $size = MathUtility::forceIntegerInRange($this->config['size'] ?? $this->defaultInputWidth, $this->minimumInputWidth,
-            $this->maxInputWidth);
+        $size = MathUtility::forceIntegerInRange(
+            $this->config['size'] ?? $this->defaultInputWidth,
+            $this->minimumInputWidth,
+            $this->maxInputWidth
+        );
         $width = $this->formMaxWidth($size);
         $videoPlatformsHTML = [];
         $videoPlatformsHTML[] = '<div class="form-control-wrap" style="max-width: ' . $width . 'px">';

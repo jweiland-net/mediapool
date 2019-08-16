@@ -21,8 +21,6 @@ use TYPO3\CMS\Scheduler\AdditionalFieldProviderInterface;
 
 /**
  * Class UpdateVideoInformationAdditionalFieldProvider
- *
- * @package JWeiland\Mediapool\Task;
  */
 class UpdateVideoInformationAdditionalFieldProvider implements AdditionalFieldProviderInterface
 {
@@ -63,7 +61,7 @@ class UpdateVideoInformationAdditionalFieldProvider implements AdditionalFieldPr
         $html[] = '</select>';
         $result['mediapool_video_mode'] = [
             'code' => implode(LF, $html),
-            'label' => $this->ll .'mode'
+            'label' => $this->ll . 'mode'
         ];
 
         // page selection
@@ -114,7 +112,6 @@ class UpdateVideoInformationAdditionalFieldProvider implements AdditionalFieldPr
      *
      * @param array $submittedData An array containing the data submitted by the add/edit task form
      * @param \TYPO3\CMS\Scheduler\Task\AbstractTask $task Reference to the scheduler backend module
-     * @return void
      */
     public function saveAdditionalFields(array $submittedData, \TYPO3\CMS\Scheduler\Task\AbstractTask $task)
     {

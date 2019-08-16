@@ -19,8 +19,6 @@ use JWeiland\Mediapool\AbstractBase;
 
 /**
  * Class AbstractImport
- *
- * @package JWeiland\Mediapool\Import;
  */
 class AbstractImport extends AbstractBase
 {
@@ -61,7 +59,6 @@ class AbstractImport extends AbstractBase
      * inject client
      *
      * @param Client $client
-     * @return void
      */
     public function injectClient(Client $client)
     {

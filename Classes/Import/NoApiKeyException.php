@@ -16,8 +16,6 @@ namespace JWeiland\Mediapool\Import;
 
 /**
  * Class NoApiKeyException
- *
- * @package JWeiland\Mediapool\Import;
  */
 class NoApiKeyException extends \Exception
 {

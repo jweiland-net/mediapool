@@ -24,8 +24,6 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
  * Class VideoService
  *
  * ! use ObjectManager to get an instance of this class !
- *
- * @package JWeiland\Mediapool\Service;
  */
 class VideoService extends AbstractBase implements SingletonInterface
 {
@@ -43,7 +41,6 @@ class VideoService extends AbstractBase implements SingletonInterface
      * inject objectManager
      *
      * @param ObjectManager $objectManager
-     * @return void
      */
     public function injectObjectManager(ObjectManager $objectManager)
     {
@@ -65,7 +62,7 @@ class VideoService extends AbstractBase implements SingletonInterface
      * @param int $pid where videos will be saved
      * @return array for DataHandler
      */
-    public function getVideoData(array $videos,int $pid): array
+    public function getVideoData(array $videos, int $pid): array
     {
         $videoPlatforms = VideoPlatformUtility::getRegisteredVideoImporters();
         $data = [];

@@ -22,8 +22,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Class VideoTextElement
- *
- * @package JWeiland\Mediapool\Form\Element
  */
 class VideoTextElement extends AbstractFormElement
 {

@@ -21,8 +21,6 @@ use TYPO3\CMS\Scheduler\AdditionalFieldProviderInterface;
 
 /**
  * Class UpdatePlaylistInformationAdditionalFieldProvider
- *
- * @package JWeiland\Mediapool\Task
  */
 class UpdatePlaylistInformationAdditionalFieldProvider implements AdditionalFieldProviderInterface
 {
@@ -63,7 +61,7 @@ class UpdatePlaylistInformationAdditionalFieldProvider implements AdditionalFiel
         $html[] = '</select>';
         $result['mediapool_playlist_mode'] = [
             'code' => implode(LF, $html),
-            'label' => $this->ll .'mode'
+            'label' => $this->ll . 'mode'
         ];
 
         // page selection
@@ -114,7 +112,6 @@ class UpdatePlaylistInformationAdditionalFieldProvider implements AdditionalFiel
      *
      * @param array $submittedData An array containing the data submitted by the add/edit task form
      * @param \TYPO3\CMS\Scheduler\Task\AbstractTask $task Reference to the scheduler backend module
-     * @return void
      */
     public function saveAdditionalFields(array $submittedData, \TYPO3\CMS\Scheduler\Task\AbstractTask $task)
     {

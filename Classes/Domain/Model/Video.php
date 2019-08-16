@@ -18,8 +18,6 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
  * Class Video
- *
- * @package JWeiland\Mediapool\Domain\Model;
  */
 class Video extends AbstractEntity
 {

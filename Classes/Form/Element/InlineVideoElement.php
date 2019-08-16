@@ -26,8 +26,6 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
  * Class InlineVideoElement
- *
- * @package JWeiland\Mediapool\Form\Element;
  */
 class InlineVideoElement extends AbstractFormElement
 {
