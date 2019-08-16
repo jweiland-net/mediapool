@@ -15,10 +15,11 @@ namespace JWeiland\Mediapool\Import\Video;
 */
 
 
+use JWeiland\Mediapool\Configuration\ExtConf;
+use JWeiland\Mediapool\Constants;
 use JWeiland\Mediapool\Domain\Model\Video;
 use JWeiland\Mediapool\Domain\Repository\VideoRepository;
-use JWeiland\Mediapool\Service\YouTubeService;
-
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class YouTubeVideoImport
@@ -81,33 +82,13 @@ class YouTubeVideoImport extends AbstractVideoImport
     protected $apiKey = '';
 
     /**
-     * YouTube Service
-     *
-     * @var YouTubeService
-     */
-    protected $youTubeService;
-
-    /**
-     * inject youTubeService
-     *
-     * @param YouTubeService $youTubeService
-     * @return void
-     */
-    public function injectYouTubeService(YouTubeService $youTubeService)
-    {
-        $this->youTubeService = $youTubeService;
-    }
-
-    /**
      * Initialize Object
      * get and set api key
-     *
-     * @return void
      */
     public function initializeObject()
     {
         parent::initializeObject();
-        $this->apiKey = $this->youTubeService->getApiKey();
+        $this->apiKey = GeneralUtility::makeInstance(ExtConf::class)->getYoutubeDataApiKey();
     }
 
     /**
@@ -130,8 +111,8 @@ class YouTubeVideoImport extends AbstractVideoImport
             if (strpos($video['video'], 'http') === 0) {
                 // todo add error if getVideoId returns empty string
                 $video['video'] = $this->getVideoId($video['video']);
-            } elseif (strpos(YouTubeService::PLATFORM_PREFIX, $video['video']) === 0) {
-                $video['video'] = substr($video['video'], strlen(YouTubeService::PLATFORM_PREFIX));
+            } elseif (strpos(Constants::YOUTUBE_PLATFORM_PREFIX, $video['video']) === 0) {
+                $video['video'] = substr($video['video'], strlen(Constants::YOUTUBE_PLATFORM_PREFIX));
             }
             $videoIds[] = $video['video'];
         }
@@ -191,7 +172,7 @@ class YouTubeVideoImport extends AbstractVideoImport
                 // creating a new one
                 if ($checkExistingVideos) {
                     $queryResult = $videoRepository->findByVideoId(
-                        YouTubeService::PLATFORM_PREFIX . $videoId,
+                        Constants::YOUTUBE_PLATFORM_PREFIX . $videoId,
                         $pid
                     );
                     $existingVideo = $queryResult->getFirst();
@@ -367,7 +348,7 @@ class YouTubeVideoImport extends AbstractVideoImport
             'description' => nl2br((string)$item['snippet']['description']),
             'upload_date' => $uploadDate->getTimestamp(),
             'player_html' => (string)$item['player']['embedHtml'],
-            'video_id' => YouTubeService::PLATFORM_PREFIX . (string)$item['id'],
+            'video_id' => Constants::YOUTUBE_PLATFORM_PREFIX . (string)$item['id'],
             'thumbnail' => (string)$item['snippet']['thumbnails']['medium']['url'],
             'thumbnail_large' => $this->getLargestThumbnailForVideo($item)
         ];
