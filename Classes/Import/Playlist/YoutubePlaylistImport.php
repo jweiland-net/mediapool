@@ -14,9 +14,10 @@ namespace JWeiland\Mediapool\Import\Playlist;
 * The TYPO3 project - inspiring people to share!
 */
 
+use JWeiland\Mediapool\Configuration\ExtConf;
 use JWeiland\Mediapool\Import\Video\YouTubeVideoImport;
-use JWeiland\Mediapool\Service\YouTubeService;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class YoutubePlaylistImport
@@ -60,13 +61,6 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
     protected $youTubeVideoImport;
 
     /**
-     * YouTube Service
-     *
-     * @var YouTubeService
-     */
-    protected $youTubeService;
-
-    /**
      * Youtube Data API v3 key
      *
      * @var string
@@ -91,16 +85,6 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
     }
 
     /**
-     * inject youtubeService
-     *
-     * @param YouTubeService $youTubeService
-     */
-    public function injectYoutubeService(YouTubeService $youTubeService)
-    {
-        $this->youTubeService = $youTubeService;
-    }
-
-    /**
      * This method must return an array with the following structure
      * [
      *     'fieldArray' => [
@@ -115,7 +99,7 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
      */
     public function getPlaylistInformation(string $playlistLink, int $pid): array
     {
-        $this->apiKey = $this->youTubeService->getApiKey();
+        $this->apiKey = GeneralUtility::makeInstance(ExtConf::class)->getYoutubeDataApiKey();
         if (!($playlistId = $this->getPlaylistId($playlistLink))) {
             $this->addFlashMessageAndLog(
                 'youTubePlaylistImport.invalid_id.title',
