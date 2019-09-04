@@ -92,6 +92,12 @@
 			<trans-unit id="flex_forms.mediapool.playlist_selection">
 				<source>Select a playlist</source>
 			</trans-unit>
+			<trans-unit id="flex_forms.mediapool.preview_view">
+				<source>Show clickable previews of galleries</source>
+			</trans-unit>
+			<trans-unit id="flex_forms.mediapool.teaser_view">
+				<source>Show clickable previews of galleries with more button</source>
+			</trans-unit>
 
 			<trans-unit id="frontend.list_by_category.no_playlists">
 				<source>No playlists found!</source>
@@ -103,11 +109,17 @@
 			<trans-unit id="flex_forms.gallery.file_collections">
 				<source>File collection(s)</source>
 			</trans-unit>
+			<trans-unit id="flex_forms.gallery.list_page">
+				<source>Page to the list view</source>
+			</trans-unit>
 			<trans-unit id="frontend.gallery.counter">
 				<source>%d images</source>
 			</trans-unit>
 			<trans-unit id="frontend.button.more">
 				<source>More</source>
+			</trans-unit>
+			<trans-unit id="frontend.button.gallery.more">
+				<source>Show more galleries</source>
 			</trans-unit>
 		</body>
 	</file>

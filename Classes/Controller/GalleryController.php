@@ -48,6 +48,16 @@ class GalleryController extends ActionController
     }
 
     /**
+     * Gallery teaser action
+     * displays three galleries and a more button with configurable
+     * target page
+     */
+    public function teaserAction()
+    {
+        $this->view->assign('fileCollections', $this->getFileCollections());
+    }
+
+    /**
      * Get file collections from settings
      *
      * @return array

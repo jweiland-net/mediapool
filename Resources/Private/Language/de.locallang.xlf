@@ -66,6 +66,14 @@
 				<source>Select a playlist</source>
 				<target>Wähle eine Playliste</target>
 			</trans-unit>
+			<trans-unit id="flex_forms.mediapool.preview_view">
+				<source>Show clickable previews of galleries</source>
+				<target>Zeige anklickbare Galerien an</target>
+			</trans-unit>
+			<trans-unit id="flex_forms.mediapool.teaser_view">
+				<source>Show clickable previews of galleries with more button</source>
+				<target>Zeige anklickbare Galerien mit "mehr" Button an</target>
+			</trans-unit>
 
 			<trans-unit id="flex_forms.gallery.title">
 				<source>Gallery</source>
@@ -75,6 +83,10 @@
 				<source>File collection(s)</source>
 				<target>Dateisammlung(en)</target>
 			</trans-unit>
+			<trans-unit id="flex_forms.gallery.list_page">
+				<source>Page to the list view</source>
+				<target>Seite für Listenansicht auswählen</target>
+			</trans-unit>
 			<trans-unit id="frontend.gallery.counter">
 				<source>%d images</source>
 				<target>%d Bilder</target>
@@ -82,6 +94,10 @@
 			<trans-unit id="frontend.button.more">
 				<source>More</source>
 				<target>Mehr</target>
+			</trans-unit>
+			<trans-unit id="frontend.button.gallery.more">
+				<source>Show more galleries</source>
+				<target>Zeige weitere Bilderstrecken</target>
 			</trans-unit>
 		</body>
 	</file>
