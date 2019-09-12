@@ -17,27 +17,23 @@
 							<config>
 								<type>select</type>
 								<items>
-									<numIndex index="1">
+									<numIndex index="0">
 										<numIndex index="0">LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.recommended_videos</numIndex>
 										<numIndex index="1">Video->listRecommended</numIndex>
 									</numIndex>
-									<numIndex index="2">
+									<numIndex index="1">
 										<numIndex index="0">LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.detail_view</numIndex>
 										<numIndex index="1">Video->show</numIndex>
 									</numIndex>
-									<numIndex index="3">
+									<numIndex index="2">
 										<numIndex index="0">LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.list_recent_by_category</numIndex>
 										<numIndex index="1">Video->listRecentByCategory</numIndex>
 									</numIndex>
-									<numIndex index="4">
-										<numIndex index="0">LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.list_view</numIndex>
-										<numIndex index="1">Playlist->listByCategory</numIndex>
-									</numIndex>
-									<numIndex index="5">
+									<numIndex index="3">
 										<numIndex index="0">LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.list_latest_videos</numIndex>
 										<numIndex index="1">Playlist->listLatestVideos;Playlist->listVideos</numIndex>
 									</numIndex>
-									<numIndex index="6">
+									<numIndex index="4">
 										<numIndex index="0">LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.list_videos</numIndex>
 										<numIndex index="1">Playlist->listVideos</numIndex>
 									</numIndex>
@@ -51,10 +47,9 @@
 							<displayCond>
 								<OR>
 									<numIndex index="0">FIELD:switchableControllerActions:=:Video->listRecommended</numIndex>
-									<numIndex index="1">FIELD:switchableControllerActions:=:Playlist->listByCategory</numIndex>
-									<numIndex index="2">FIELD:switchableControllerActions:=:Video->listRecentByCategory</numIndex>
-									<numIndex index="3">FIELD:switchableControllerActions:=:Playlist->listLatestVideos;Playlist->listVideos</numIndex>
-									<numIndex index="4">FIELD:switchableControllerActions:=:Playlist->listVideos</numIndex>
+									<numIndex index="1">FIELD:switchableControllerActions:=:Video->listRecentByCategory</numIndex>
+									<numIndex index="2">FIELD:switchableControllerActions:=:Playlist->listLatestVideos;Playlist->listVideos</numIndex>
+									<numIndex index="3">FIELD:switchableControllerActions:=:Playlist->listVideos</numIndex>
 								</OR>
 							</displayCond>
 							<config>
@@ -136,6 +131,29 @@
 							</treeConfig>
 						</config>
 					</settings.categories>
+					<settings.videosPerPage>
+						<label>LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.videos_per_page</label>
+						<displayCond>
+							<OR>
+								<numIndex index="0">FIELD:switchableControllerActions:=:Playlist->listLatestVideos;Playlist->listVideos</numIndex>
+								<numIndex index="1">FIELD:switchableControllerActions:=:Playlist->listVideos</numIndex>
+							</OR>
+						</displayCond>
+						<displayCond>FIELD:switchableControllerActions:=:Playlist->listLatestVideos;Playlist->listVideos</displayCond>
+						<config>
+							<type>input</type>
+							<eval>num</eval>
+							<default>5</default>
+							<range>
+								<lower>1</lower>
+								<upper>90</upper>
+							</range>
+							<slider>
+								<step>1</step>
+								<width>200</width>
+							</slider>
+						</config>
+					</settings.videosPerPage>
 				</el>
 			</ROOT>
 		</sDEF>

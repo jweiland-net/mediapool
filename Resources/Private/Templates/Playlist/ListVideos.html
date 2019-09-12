@@ -1,6 +1,6 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <div class="grid">
-	<f:widget.paginate objects="{playlist.videos}" as="videos" configuration="{itemsPerPage: 5, insertAbove: 1, insertBelow: 1, maximumNumberOfLinks: 10}">
+	<f:widget.paginate objects="{playlist.videos}" as="videos" configuration="{itemsPerPage: settings.videosPerPage, insertAbove: 1, insertBelow: 1, maximumNumberOfLinks: 10}">
 		<div class="mediapool-playlist-list">
 			<f:for each="{videos}" as="video">
 				<f:render partial="VideoPreview" arguments="{video: video, playlist: playlist, detailPage: settings.detailPage}"/>

@@ -65,9 +65,6 @@
 			<trans-unit id="flex_forms.mediapool.detail_view">
 				<source>Detail view (Video, Playlist)</source>
 			</trans-unit>
-			<trans-unit id="flex_forms.mediapool.list_view">
-				<source>List view (Playlist)</source>
-			</trans-unit>
 			<trans-unit id="flex_forms.mediapool.detail_page">
 				<source>Select page for detail view</source>
 			</trans-unit>
@@ -81,7 +78,7 @@
 				<source>Display a recent video per selected categorie</source>
 			</trans-unit>
 			<trans-unit id="flex_forms.mediapool.list_recent_by_category">
-				<source>List recent video by category</source>
+				<source>List recent video of playlist (category)</source>
 			</trans-unit>
 			<trans-unit id="flex_forms.mediapool.list_latest_videos">
 				<source>List latest videos by playlist</source>
@@ -97,6 +94,9 @@
 			</trans-unit>
 			<trans-unit id="flex_forms.mediapool.teaser_view">
 				<source>Show clickable previews of galleries with more button</source>
+			</trans-unit>
+			<trans-unit id="flex_forms.mediapool.videos_per_page">
+				<source>Videos per page</source>
 			</trans-unit>
 
 			<trans-unit id="frontend.list_by_category.no_playlists">

@@ -30,10 +30,6 @@
 				<source>Detail view (Video, Playlist)</source>
 				<target>Detailansicht (Video, Playliste)</target>
 			</trans-unit>
-			<trans-unit id="flex_forms.mediapool.list_view">
-				<source>List view (Playlist)</source>
-				<target>Listenansicht (Playliste)</target>
-			</trans-unit>
 			<trans-unit id="flex_forms.mediapool.detail_page">
 				<source>Select page for detail view</source>
 				<target>Seite für Detailansicht auswählen</target>
@@ -51,8 +47,8 @@
 				<target>Zeige das neuste Video pro ausgewählter Kategorie</target>
 			</trans-unit>
 			<trans-unit id="flex_forms.mediapool.list_recent_by_category">
-				<source>List recent video by category</source>
-				<target>Zeige das neuste Video pro Kategorie</target>
+				<source>List recent video of playlist (category)</source>
+				<target>Zeige das neuste Video einer Playliste (Kategorie)</target>
 			</trans-unit>
 			<trans-unit id="flex_forms.mediapool.list_latest_videos">
 				<source>List latest videos by playlist</source>
@@ -73,6 +69,10 @@
 			<trans-unit id="flex_forms.mediapool.teaser_view">
 				<source>Show clickable previews of galleries with more button</source>
 				<target>Zeige anklickbare Galerien mit "mehr" Button an</target>
+			</trans-unit>
+			<trans-unit id="flex_forms.mediapool.videos_per_page">
+				<source>Videos per page</source>
+				<target>Videos pro Seite</target>
 			</trans-unit>
 
 			<trans-unit id="flex_forms.gallery.title">
