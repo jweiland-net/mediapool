@@ -23,7 +23,7 @@
 									</numIndex>
 									<numIndex index="1">
 										<numIndex index="0">LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.detail_view</numIndex>
-										<numIndex index="1">Video->show</numIndex>
+										<numIndex index="1">Video->show;Playlist->listByCategory</numIndex>
 									</numIndex>
 									<numIndex index="2">
 										<numIndex index="0">LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.list_recent_by_category</numIndex>
