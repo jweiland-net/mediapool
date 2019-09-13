@@ -65,12 +65,7 @@
 					<settings.listPage>
 						<TCEforms>
 							<label>LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.list_page</label>
-							<displayCond>
-								<OR>
-									<numIndex index="0">FIELD:switchableControllerActions:=:Video->listRecentByCategory</numIndex>
-									<numIndex index="1">FIELD:switchableControllerActions:=:Playlist->listLatestVideos;Playlist->listVideos</numIndex>
-								</OR>
-							</displayCond>
+							<displayCond>FIELD:switchableControllerActions:=:Playlist->listLatestVideos;Playlist->listVideos</displayCond>
 							<config>
 								<type>group</type>
 								<internal_type>db</internal_type>

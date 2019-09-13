@@ -89,8 +89,6 @@ class VideoController extends ActionController
      */
     public function listRecentByCategoryAction()
     {
-        $this->view->assign('detailPage', $this->settings['detailPage']);
-        $this->view->assign('listPage', $this->settings['listPage']);
         $this->view->assign(
             'recentVideos',
             $this->videoRepository->findRecentByCategories($this->settings['categories'])
