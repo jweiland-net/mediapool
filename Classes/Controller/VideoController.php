@@ -22,18 +22,11 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 class VideoController extends ActionController
 {
     /**
-     * Video Repository
-     *
      * @var VideoRepository
      */
     protected $videoRepository;
 
-    /**
-     * inject videoRepository
-     *
-     * @param VideoRepository $videoRepository
-     */
-    public function injectVideoRepository(VideoRepository $videoRepository)
+    public function injectVideoRepository(VideoRepository $videoRepository): void
     {
         $this->videoRepository = $videoRepository;
     }
@@ -44,7 +37,7 @@ class VideoController extends ActionController
      * @param Video $video
      * @param Playlist|null $playlist
      */
-    public function showAction(Video $video, Playlist $playlist = null)
+    public function showAction(Video $video, Playlist $playlist = null): void
     {
         if ($playlist !== null && !$playlist->getVideos()->contains($video)) {
             throw new \InvalidArgumentException(
@@ -61,7 +54,7 @@ class VideoController extends ActionController
      *
      * @throws \InvalidArgumentException if a selected recommended video could not be found
      */
-    public function listRecommendedAction()
+    public function listRecommendedAction(): void
     {
         $recommendedVideos = [];
         foreach (explode(',', $this->settings['recommendedVideos']) as $recommendedVideoUid) {
@@ -84,7 +77,7 @@ class VideoController extends ActionController
     /**
      * List recent videos sorted by selected categories
      */
-    public function listRecentByCategoryAction()
+    public function listRecentByCategoryAction(): void
     {
         $this->view->assign(
             'recentVideos',

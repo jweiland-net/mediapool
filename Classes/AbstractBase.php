@@ -28,47 +28,31 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 abstract class AbstractBase
 {
     /**
-     * Object Manager
-     *
      * @var ObjectManager
      */
     protected $objectManager;
 
     /**
-     * Language file for error messages
-     *
      * @var string
      */
     protected $errorMessagesFile = 'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf';
 
     /**
-     * FlashMessage Queue
-     *
      * @var FlashMessageQueue
      */
     protected $flashMessageQueue;
 
     /**
-     * Logger
-     *
      * @var Logger
      */
     protected $logger;
 
-    /**
-     * inject objectManager
-     *
-     * @param ObjectManager $objectManager
-     */
     public function injectObjectManager(ObjectManager $objectManager)
     {
         $this->objectManager = $objectManager;
     }
 
-    /**
-     * Initialize object
-     */
-    public function initializeObject()
+    public function initializeObject(): void
     {
         $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
         $flashMessageService = $this->objectManager->get(FlashMessageService::class);

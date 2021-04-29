@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the package jweiland/mediapool.
@@ -19,5 +19,5 @@ class Constants
     /**
      * Platform prefix. Used for YouTube video id
      */
-    const YOUTUBE_PLATFORM_PREFIX = 'yt_';
+    public const YOUTUBE_PLATFORM_PREFIX = 'yt_';
 }

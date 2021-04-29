@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the package jweiland/mediapool.
@@ -30,8 +30,13 @@ class ExtConf implements SingletonInterface
     public function __construct()
     {
         // get global configuration
-        $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mediapool'], ['allowed_classes' => false]);
-        if (is_array($extConf) && count($extConf)) {
+        $extConf = unserialize(
+            $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mediapool'] ?? [],
+            [
+                'allowed_classes' => false
+            ]
+        );
+        if (is_array($extConf)) {
             // call setter method foreach configuration entry
             foreach ($extConf as $key => $value) {
                 $methodName = 'set' . ucfirst($key);
@@ -42,18 +47,12 @@ class ExtConf implements SingletonInterface
         }
     }
 
-    /**
-     * @return string
-     */
     public function getYoutubeDataApiKey(): string
     {
         return $this->youtubeDataApiKey;
     }
 
-    /**
-     * @param string $youtubeDataApiKey
-     */
-    public function setYoutubeDataApiKey(string $youtubeDataApiKey)
+    public function setYoutubeDataApiKey(string $youtubeDataApiKey): void
     {
         $this->youtubeDataApiKey = $youtubeDataApiKey;
     }

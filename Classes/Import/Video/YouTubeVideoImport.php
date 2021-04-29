@@ -28,32 +28,28 @@ class YouTubeVideoImport extends AbstractVideoImport
      * snippet = channelId, title, description, tags and categoryId
      * status = uploadStatus, privacyStatus, ...
      */
-    const VIDEO_API_URL = 'https://www.googleapis.com/youtube/v3/videos?id=%s&key=%s&part=player,snippet,status';
+    public const VIDEO_API_URL = 'https://www.googleapis.com/youtube/v3/videos?id=%s&key=%s&part=player,snippet,status';
 
     /**
-     * Name of the video platform
-     *
      * @var string
      */
     protected $platformName = 'YouTube';
 
     /**
-     * Platform hosts
-     *
      * @var array
      */
-    protected $platformHosts = ['https://youtube.com', 'https://www.youtube.com', 'https://youtu.be'];
+    protected $platformHosts = [
+        'https://youtube.com',
+        'https://www.youtube.com',
+        'https://youtu.be'
+    ];
 
     /**
-     * Video
-     *
      * @var Video
      */
     protected $video;
 
     /**
-     * YouTube Video ID
-     *
      * @var string
      * @deprecated remove
      */
@@ -75,13 +71,10 @@ class YouTubeVideoImport extends AbstractVideoImport
      */
     protected $apiKey = '';
 
-    /**
-     * Initialize Object
-     * get and set api key
-     */
-    public function initializeObject()
+    public function initializeObject(): void
     {
         parent::initializeObject();
+
         $this->apiKey = GeneralUtility::makeInstance(ExtConf::class)->getYoutubeDataApiKey();
     }
 
@@ -148,7 +141,6 @@ class YouTubeVideoImport extends AbstractVideoImport
         string &$recordUids = '',
         bool $checkExistingVideos = false
     ): array {
-        /** @var VideoRepository $videoRepository */
         $videoRepository = $this->objectManager->get(VideoRepository::class);
         $this->videoIds = $this->implodeVideoIdsAndUnifyArray($videos);
         $fetchedVideoInformation = $this->fetchVideoInformation();
@@ -210,8 +202,8 @@ class YouTubeVideoImport extends AbstractVideoImport
         $hasPermission = true;
         // if we can´t watch or embed the video throw exception
         if (
-            $item['status']['privacyStatus'] === 'private' ||
-            $item['status']['embeddable'] == false
+            $item['status']['privacyStatus'] === 'private'
+            || $item['status']['embeddable'] == false
         ) {
             $hasPermission = false;
         }
@@ -233,10 +225,7 @@ class YouTubeVideoImport extends AbstractVideoImport
         if (count($matches) === 2) {
             return $matches[1];
         }
-        if (isset($parsedQuery['v'])) {
-            return $parsedQuery['v'];
-        }
-        return '';
+        return $parsedQuery['v'] ?? '';
     }
 
     /**
@@ -263,9 +252,10 @@ class YouTubeVideoImport extends AbstractVideoImport
 
         $items = [];
         foreach ($loops as $videoIds) {
-            $items = array_merge($items, $this->doRequest($videoIds));
+            $items[] = $this->doRequest($videoIds);
         }
-        return $items;
+
+        return array_merge(...$items);
     }
 
     /**
@@ -287,7 +277,7 @@ class YouTubeVideoImport extends AbstractVideoImport
         // ok
         if ($response->getStatusCode() === 200) {
             $result = json_decode($response->getBody()->getContents(), true);
-            if (count($result['items'])) {
+            if (is_array($result['items'])) {
                 foreach ($result['items'] as $item) {
                     // only add video if permissions are ok
                     if ($this->checkVideoPermission($item)) {
@@ -316,15 +306,14 @@ class YouTubeVideoImport extends AbstractVideoImport
             );
         }
         throw new \HttpRequestException(
-                sprintf(
-                    'Fetching video information for %s failed! Got status code %d and the' .
-                    ' following response: %s',
-                    $this->video->getLink(),
-                    $response->getStatusCode(),
-                    $response->getBody()->getContents()
-                ),
-                1507794777
-            );
+            sprintf(
+                'Fetching video information for %s failed! Got status code %d and the following response: %s',
+                $this->video->getLink(),
+                $response->getStatusCode(),
+                $response->getBody()->getContents()
+            ),
+            1507794777
+        );
     }
 
     /**

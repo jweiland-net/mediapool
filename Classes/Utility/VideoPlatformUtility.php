@@ -32,12 +32,13 @@ class VideoPlatformUtility
         if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['videoImport'])) {
             return $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['videoImport'];
         }
+
         throw new MissingImporterException(
-                'At least one video importer must be registered to get information about a video!' .
-                ' Please check $GLOBALS[\'TYPO3_CONF_VARS\'][\'EXTCONF\'][\'mediapool\'][\'videoImport\'] for' .
-                ' registered video importers.',
-                1507729404
-            );
+            'At least one video importer must be registered to get information about a video!' .
+            ' Please check $GLOBALS[\'TYPO3_CONF_VARS\'][\'EXTCONF\'][\'mediapool\'][\'videoImport\'] for' .
+            ' registered video importers.',
+            1507729404
+        );
     }
 
     /**
@@ -52,12 +53,13 @@ class VideoPlatformUtility
         if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['playlistImport'])) {
             return $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['playlistImport'];
         }
+
         throw new MissingImporterException(
-                'At least one playlist importer must be registered to get information about a playlist!' .
-                ' Please check $GLOBALS[\'TYPO3_CONF_VARS\'][\'EXTCONF\'][\'mediapool\'][\'playlistImport\'] for' .
-                ' registered playlist importers.',
-                1507881065
-            );
+            'At least one playlist importer must be registered to get information about a playlist!' .
+            ' Please check $GLOBALS[\'TYPO3_CONF_VARS\'][\'EXTCONF\'][\'mediapool\'][\'playlistImport\'] for' .
+            ' registered playlist importers.',
+            1507881065
+        );
     }
 
     /**
@@ -65,7 +67,7 @@ class VideoPlatformUtility
      *
      * @param AbstractVideoImport $videoImport
      */
-    public static function checkVideoImportClass(AbstractVideoImport $videoImport)
+    public static function checkVideoImportClass(AbstractVideoImport $videoImport): void
     {
     }
 
@@ -74,7 +76,7 @@ class VideoPlatformUtility
      *
      * @param AbstractPlaylistImport $playlistImport
      */
-    public static function checkPlaylistImportClass(AbstractPlaylistImport $playlistImport)
+    public static function checkPlaylistImportClass(AbstractPlaylistImport $playlistImport): void
     {
     }
 }

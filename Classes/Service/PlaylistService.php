@@ -24,26 +24,6 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
  */
 class PlaylistService extends AbstractBase
 {
-    const COLLECTION_PLAYLIST_INFORMATION_FAILED = 1;
-    const NO_VIDEO_PLATFORM_MATCH = 2;
-
-    /**
-     * Object Manager
-     *
-     * @var ObjectManager
-     */
-    protected $objectManager;
-
-    /**
-     * inject objectManager
-     *
-     * @param ObjectManager $objectManager
-     */
-    public function injectObjectManager(ObjectManager $objectManager)
-    {
-        $this->objectManager = $objectManager;
-    }
-
     /**
      * Returns an array that includes a prepared fieldArray for DataHandler
      * as an array with new records for DataHandler

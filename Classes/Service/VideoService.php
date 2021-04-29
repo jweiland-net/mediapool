@@ -24,26 +24,6 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
  */
 class VideoService extends AbstractBase implements SingletonInterface
 {
-    const COLLECTION_VIDEO_INFORMATION_FAILED = 1;
-    const NO_VIDEO_PLATFORM_MATCH = 2;
-
-    /**
-     * Object Manager
-     *
-     * @var ObjectManager
-     */
-    protected $objectManager;
-
-    /**
-     * inject objectManager
-     *
-     * @param ObjectManager $objectManager
-     */
-    public function injectObjectManager(ObjectManager $objectManager)
-    {
-        $this->objectManager = $objectManager;
-    }
-
     /**
      * Get video data
      * $videos array must have to following structure:

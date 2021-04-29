@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the package jweiland/mediapool.
@@ -25,12 +25,7 @@ class GalleryController extends ActionController
      */
     protected $fileCollectionRepository;
 
-    /**
-     * inject fileCollectionRepository
-     *
-     * @param FileCollectionRepository $fileCollectionRepository
-     */
-    public function injectFileCollectionRepository(FileCollectionRepository $fileCollectionRepository)
+    public function injectFileCollectionRepository(FileCollectionRepository $fileCollectionRepository): void
     {
         $this->fileCollectionRepository = $fileCollectionRepository;
     }
@@ -39,7 +34,7 @@ class GalleryController extends ActionController
      * Gallery preview action
      * displays a preview image that contains a fancybox3 gallery
      */
-    public function previewAction()
+    public function previewAction(): void
     {
         $this->view->assign('fileCollections', $this->getFileCollections());
     }
@@ -49,7 +44,7 @@ class GalleryController extends ActionController
      * displays three galleries and a more button with configurable
      * target page
      */
-    public function teaserAction()
+    public function teaserAction(): void
     {
         $this->view->assign('fileCollections', $this->getFileCollections());
     }

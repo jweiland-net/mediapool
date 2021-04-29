@@ -52,12 +52,7 @@ class AbstractImport extends AbstractBase
      */
     protected $hasError = false;
 
-    /**
-     * inject client
-     *
-     * @param Client $client
-     */
-    public function injectClient(Client $client)
+    public function injectClient(Client $client): void
     {
         $this->client = $client;
     }
