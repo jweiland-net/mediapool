@@ -64,130 +64,67 @@ class Playlist extends AbstractEntity
      */
     protected $thumbnail = '';
 
-    /**
-     * Playlist constructor.
-     */
     public function __construct()
     {
         $this->videos = new ObjectStorage();
     }
 
-    /**
-     * Returns Title
-     *
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * Sets Title
-     *
-     * @param string $title
-     */
-    public function setTitle(string $title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * Returns Link
-     *
-     * @return string
-     */
     public function getLink(): string
     {
         return $this->link;
     }
 
-    /**
-     * Sets Link
-     *
-     * @param string $link
-     */
-    public function setLink(string $link)
+    public function setLink(string $link): void
     {
         $this->link = $link;
     }
 
-    /**
-     * Returns PlaylistId
-     *
-     * @return string
-     */
     public function getPlaylistId(): string
     {
         return $this->playlist_id;
     }
 
-    /**
-     * Sets PlaylistId
-     *
-     * @param string $playlist_id
-     */
-    public function setPlaylistId(string $playlist_id)
+    public function setPlaylistId(string $playlist_id): void
     {
         $this->playlist_id = $playlist_id;
     }
 
-    /**
-     * Adds a Video
-     *
-     * @param Video $video
-     */
-    public function addVideo(Video $video)
+    public function addVideo(Video $video): void
     {
         $this->videos->attach($video);
     }
 
-    /**
-     * Removes a Video
-     *
-     * @param Video $videoToRemove The Video to be removed
-     */
-    public function removeVideo(Video $videoToRemove)
+    public function removeVideo(Video $videoToRemove): void
     {
         $this->videos->detach($videoToRemove);
     }
 
-    /**
-     * Returns Videos
-     *
-     * @return ObjectStorage
-     */
     public function getVideos(): ObjectStorage
     {
         return $this->videos;
     }
 
-    /**
-     * Sets Videos
-     *
-     * @param ObjectStorage $videos
-     */
-    public function setVideos(ObjectStorage $videos)
+    public function setVideos(ObjectStorage $videos): void
     {
         $this->videos = $videos;
     }
 
-    /**
-     * Returns Thumbnail
-     *
-     * @return string
-     */
     public function getThumbnail(): string
     {
         return $this->thumbnail;
     }
 
-    /**
-     * Sets Thumbnail
-     *
-     * @param string $thumbnail
-     */
-    public function setThumbnail(string $thumbnail)
+    public function setThumbnail(string $thumbnail): void
     {
         $this->thumbnail = $thumbnail;
     }

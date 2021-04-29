@@ -101,37 +101,36 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
         $this->playlistId = $playlistId;
         $information = $this->fetchPlaylistInformation();
         $videos = $this->fetchPlaylistItems();
-        $resultArray = [];
         $videoIds = [];
-        if ($videoIds !== false && $information !== false) {
-            $i = 0;
-            foreach ($videos as $item) {
-                if (isset($item['status']['privacyStatus']) && $item['status']['privacyStatus'] === 'private') {
-                    // skip private videos
-                    continue;
-                }
-                $videoIds['NEW' . $i] = ['pid' => $pid, 'video' => trim($item['contentDetails']['videoId'])];
-                $i++;
+
+        $i = 0;
+        foreach ($videos as $item) {
+            if (isset($item['status']['privacyStatus']) && $item['status']['privacyStatus'] === 'private') {
+                // skip private videos
+                continue;
             }
-            $recordUids = '';
-            $data = $this->youTubeVideoImport->processDataArray($videoIds, $pid, $recordUids, true);
-            // return empty array on error
-            if ($this->youTubeVideoImport->hasError()) {
-                return [];
-            }
-            $resultArray = [
-                'fieldArray' => [
-                    'pid' => $pid,
-                    'link' => $playlistLink,
-                    'playlist_id' => 'yt_' . $playlistId,
-                    'title' => (string)$information[0]['snippet']['title'],
-                    'thumbnail' => (string)$information[0]['snippet']['thumbnails']['medium']['url'],
-                    'thumbnail_large' => (string)$information[0]['snippet']['thumbnails']['standard']['url'],
-                    'videos' => $recordUids
-                ],
-                'dataHandler' => $data
-            ];
+            $videoIds['NEW' . $i] = ['pid' => $pid, 'video' => trim($item['contentDetails']['videoId'])];
+            $i++;
         }
+        $recordUids = '';
+        $data = $this->youTubeVideoImport->processDataArray($videoIds, $pid, $recordUids, true);
+        // return empty array on error
+        if ($this->youTubeVideoImport->hasError()) {
+            return [];
+        }
+        $resultArray = [
+            'fieldArray' => [
+                'pid' => $pid,
+                'link' => $playlistLink,
+                'playlist_id' => 'yt_' . $playlistId,
+                'title' => (string)$information[0]['snippet']['title'],
+                'thumbnail' => (string)$information[0]['snippet']['thumbnails']['medium']['url'],
+                'thumbnail_large' => (string)$information[0]['snippet']['thumbnails']['standard']['url'],
+                'videos' => $recordUids
+            ],
+            'dataHandler' => $data
+        ];
+
         return $resultArray;
     }
 
@@ -238,14 +237,14 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
      * @param string $additionalRequestParams additional request parameters
      * @return array empty array on error
      */
-    protected function fetchPlaylistItems(array $items = [], string $additionalRequestParams = '')
+    protected function fetchPlaylistItems(array $items = [], string $additionalRequestParams = ''): array
     {
         $response = $this->client->request(
             'GET',
             sprintf(self::PLAYLIST_ITEMS_API_URL, $this->playlistId, $this->apiKey) . $additionalRequestParams
         );
-        // ok
-        if ($response->getStatusCode() == 200) {
+
+        if ($response->getStatusCode() === 200) {
             $result = json_decode($response->getBody()->getContents(), true);
             if (count($result['items'])) {
                 foreach ($result['items'] as $item) {
@@ -275,10 +274,10 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
             'GET',
             sprintf(self::PLAYLIST_API_URL, $this->playlistId, $this->apiKey)
         );
-        // ok
-        if ($response->getStatusCode() == 200) {
+
+        if ($response->getStatusCode() === 200) {
             $result = json_decode($response->getBody()->getContents(), true);
-            if (count($result['items'])) {
+            if (!empty($result['items'])) {
                 return $result['items'];
             }
         } else {

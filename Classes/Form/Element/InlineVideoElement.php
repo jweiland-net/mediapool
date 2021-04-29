@@ -40,12 +40,6 @@ class InlineVideoElement extends AbstractFormElement
      */
     protected $videoRepository;
 
-    /**
-     * InlineVideoElement constructor.
-     *
-     * @param NodeFactory $nodeFactory
-     * @param array $data
-     */
     public function __construct(NodeFactory $nodeFactory, array $data)
     {
         parent::__construct($nodeFactory, $data);
@@ -59,13 +53,13 @@ class InlineVideoElement extends AbstractFormElement
      *
      * @return array As defined in initializeResultArray() of AbstractNode
      */
-    public function render()
+    public function render(): array
     {
         $resultArray = $this->initializeResultArray();
         $parameterArray = $this->data['parameterArray'];
         $config = $parameterArray['fieldConf']['config'];
         $size = MathUtility::forceIntegerInRange($config['size'] ?? $this->defaultInputWidth, $this->minimumInputWidth, $this->maxInputWidth);
-        $width = (int)$this->formMaxWidth($size);
+        $width = $this->formMaxWidth($size);
 
         if (!$parameterArray['itemFormElValue']) {
             $html = [];

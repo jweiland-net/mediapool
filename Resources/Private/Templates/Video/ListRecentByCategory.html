@@ -1,10 +1,15 @@
+<html lang="en"
+			xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+			data-namespace-typo3-fluid="true">
+
 <div class="grid">
-  <f:for each="{recentVideos}" key="categoryUid" as="recentVideo">
-    <div class="col-6_sm-12">
-      <f:link.action pageUid="{settings.detailPage}" controller="Playlist" action="listByCategory" arguments="{category: categoryUid}">
-        <h3>{recentVideo.category.title}</h3>
-      </f:link.action>
-      <f:render partial="VideoPreview" arguments="{video: recentVideo.video, playlist: recentVideo.playlist, detailPage: settings.detailPage, additionalClass: 'hidden-sm'}" />
-    </div>
-  </f:for>
+	<f:for each="{recentVideos}" key="categoryUid" as="recentVideo">
+		<div class="col-6_sm-12">
+			<f:link.action pageUid="{settings.detailPage}" controller="Playlist" action="listByCategory" arguments="{category: categoryUid}">
+				<h3>{recentVideo.category.title}</h3>
+			</f:link.action>
+			<f:render partial="VideoPreview" arguments="{video: recentVideo.video, playlist: recentVideo.playlist, detailPage: settings.detailPage, additionalClass: 'hidden-sm'}" />
+		</div>
+	</f:for>
 </div>
+</html>

@@ -25,14 +25,14 @@ class VideoHeaderElement extends AbstractFormElement
      *
      * @return array As defined in initializeResultArray() of AbstractNode
      */
-    public function render()
+    public function render(): array
     {
         $parameterArray = $this->data['parameterArray'];
         $resultArray = $this->initializeResultArray();
         $itemValue = $parameterArray['itemFormElValue'];
         $config = $parameterArray['fieldConf']['config'];
         $size = MathUtility::forceIntegerInRange($config['size'] ?? $this->defaultInputWidth, $this->minimumInputWidth, $this->maxInputWidth);
-        $width = (int)$this->formMaxWidth($size);
+        $width = $this->formMaxWidth($size);
 
         // display alert if item value is empty
         if (!$itemValue) {

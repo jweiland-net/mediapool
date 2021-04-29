@@ -15,7 +15,6 @@ use JWeiland\Mediapool\AbstractBase;
 use JWeiland\Mediapool\Import\Video\AbstractVideoImport;
 use JWeiland\Mediapool\Utility\VideoPlatformUtility;
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * Class VideoService
@@ -56,9 +55,10 @@ class VideoService extends AbstractBase implements SingletonInterface
                 }
             }
             if ($videosOfVideoPlatform) {
-                $data = array_merge($data, $videoPlatform->processDataArray($videosOfVideoPlatform, $pid));
+                $data[] = $videoPlatform->processDataArray($videosOfVideoPlatform, $pid);
             }
         }
+        $data = array_merge(...$data);
         $imported = count($data['tx_mediapool_domain_model_video']);
         $total = count($videos);
         if (!$videoPlatformMatch) {

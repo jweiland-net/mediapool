@@ -52,7 +52,7 @@ class VideoPlayer
     {
         $config = $parameterArray['fieldConf']['config'];
         $size = MathUtility::forceIntegerInRange($config['size'] ?? $this->defaultInputWidth, $this->minimumInputWidth, $this->maxInputWidth);
-        $width = (int)$this->formMaxWidth($size);
+        $width = $this->formMaxWidth($size);
 
         if ($playerHTML = $parameterArray['row']['player_html']) {
             return $playerHTML;
@@ -72,12 +72,11 @@ class VideoPlayer
      * @param int $size The abstract size value (1-48)
      * @return int Maximum width in pixels
      */
-    protected function formMaxWidth($size = 48)
+    protected function formMaxWidth($size = 48): int
     {
         $compensationForLargeDocuments = 1.33;
         $compensationForFormFields = 12;
 
-        $size = round($size * $compensationForLargeDocuments);
-        return ceil($size * $compensationForFormFields);
+        return (int)ceil(round($size * $compensationForLargeDocuments) * $compensationForFormFields);
     }
 }

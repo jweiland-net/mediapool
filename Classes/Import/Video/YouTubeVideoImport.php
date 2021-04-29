@@ -326,12 +326,12 @@ class YouTubeVideoImport extends AbstractVideoImport
     {
         $uploadDate = new \DateTime($item['snippet']['publishedAt']);
         return [
-            'link' => 'https://youtu.be/' . (string)$item['id'],
+            'link' => 'https://youtu.be/' . $item['id'],
             'title' => (string)$item['snippet']['title'],
             'description' => nl2br((string)$item['snippet']['description']),
             'upload_date' => $uploadDate->getTimestamp(),
             'player_html' => (string)$item['player']['embedHtml'],
-            'video_id' => Constants::YOUTUBE_PLATFORM_PREFIX . (string)$item['id'],
+            'video_id' => Constants::YOUTUBE_PLATFORM_PREFIX . $item['id'],
             'thumbnail' => (string)$item['snippet']['thumbnails']['medium']['url'],
             'thumbnail_large' => $this->getLargestThumbnailForVideo($item)
         ];

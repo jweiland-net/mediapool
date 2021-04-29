@@ -11,9 +11,10 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Domain\Repository;
 
-use TYPO3\CMS\Core\Database\Connection;
+use JWeiland\Mediapool\Domain\Model\Playlist;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
@@ -26,13 +27,16 @@ class PlaylistRepository extends Repository
      *
      * @return array records with fields: uid, link
      */
-    public function findAllLinksAndUids()
+    public function findAllLinksAndUids(): array
     {
-        /** @var Connection $connection */
-        $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable(
-            'tx_mediapool_domain_model_playlist'
-        );
-        return $connection->select(['uid', 'link'], 'tx_mediapool_domain_model_playlist')->fetchAll();
+        $connection = $this->getConnectionPool()->getConnectionForTable('tx_mediapool_domain_model_playlist');
+
+        return $connection
+            ->select(
+                ['uid', 'link'],
+                'tx_mediapool_domain_model_playlist'
+            )
+            ->fetchAll();
     }
 
     /**
@@ -41,17 +45,16 @@ class PlaylistRepository extends Repository
      * @param string $pids comma separated list of pids
      * @return array records with fields: uid, link
      */
-    public function findLinksAndUidsByPid(string $pids)
+    public function findLinksAndUidsByPid(string $pids): array
     {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(
-            'tx_mediapool_domain_model_playlist'
-        );
+        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('tx_mediapool_domain_model_playlist');
         $query = $queryBuilder
             ->select('uid', 'link')
             ->from('tx_mediapool_domain_model_playlist')
             ->where(
                 $queryBuilder->expr()->in('pid', $pids)
             );
+
         return $query->execute()->fetchAll();
     }
 
@@ -59,15 +62,16 @@ class PlaylistRepository extends Repository
      * Find playlists by category
      *
      * @param int $categoryUid
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @return QueryResultInterface|Playlist[]
      */
-    public function findByCategory(int $categoryUid)
+    public function findByCategory(int $categoryUid): QueryResultInterface
     {
         $query = $this->createQuery();
         $query->getQuerySettings()->setRespectStoragePage(false);
         $query->matching(
             $query->contains('categories', $categoryUid)
         );
+
         return $query->execute();
     }
 
@@ -75,14 +79,23 @@ class PlaylistRepository extends Repository
      * Find pid of a playlist by uid
      *
      * @param int $playlistUid
-     * @return mixed
+     * @return int
      */
-    public function findPidByUid(int $playlistUid)
+    public function findPidByUid(int $playlistUid): int
     {
-        $connection = GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getConnectionForTable('tx_mediapool_domain_model_playlist');
+        $connection = $this->getConnectionPool()->getConnectionForTable('tx_mediapool_domain_model_playlist');
+
         return $connection
-            ->select(['pid'], 'tx_mediapool_domain_model_playlist', ['uid' => $playlistUid])
+            ->select(
+                ['pid'],
+                'tx_mediapool_domain_model_playlist',
+                ['uid' => $playlistUid]
+            )
             ->fetch()['pid'];
+    }
+
+    protected function getConnectionPool(): ConnectionPool
+    {
+        return GeneralUtility::makeInstance(ConnectionPool::class);
     }
 }

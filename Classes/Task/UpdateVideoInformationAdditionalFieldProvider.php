@@ -12,18 +12,19 @@ declare(strict_types=1);
 namespace JWeiland\Mediapool\Task;
 
 use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Scheduler\AdditionalFieldProviderInterface;
+use TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider;
+use TYPO3\CMS\Scheduler\Controller\SchedulerModuleController;
+use TYPO3\CMS\Scheduler\Task\AbstractTask;
 
 /**
  * Class UpdateVideoInformationAdditionalFieldProvider
  */
-class UpdateVideoInformationAdditionalFieldProvider implements AdditionalFieldProviderInterface
+class UpdateVideoInformationAdditionalFieldProvider extends AbstractAdditionalFieldProvider
 {
     /**
-     * Language label
-     *
      * @var string
      */
     protected $ll = 'LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:scheduler.update_video_information.';
@@ -32,14 +33,14 @@ class UpdateVideoInformationAdditionalFieldProvider implements AdditionalFieldPr
      * Gets additional fields to render in the form to add/edit a task
      *
      * @param array $taskInfo Values of the fields from the add/edit task form
-     * @param \TYPO3\CMS\Scheduler\Task\AbstractTask $task The task object being edited. Null when adding a task!
-     * @param \TYPO3\CMS\Scheduler\Controller\SchedulerModuleController $schedulerModule Reference to the scheduler backend module
+     * @param AbstractTask $task The task object being edited. Null when adding a task!
+     * @param SchedulerModuleController $schedulerModule Reference to the scheduler backend module
      * @return array A two dimensional array, array('Identifier' => array('fieldId' => array('code' => '', 'label' => '', 'cshKey' => '', 'cshLabel' => ''))
      */
     public function getAdditionalFields(
         array &$taskInfo,
         $task,
-        \TYPO3\CMS\Scheduler\Controller\SchedulerModuleController $schedulerModule
+        SchedulerModuleController $schedulerModule
     ): array {
         $result = [];
 
@@ -76,26 +77,21 @@ class UpdateVideoInformationAdditionalFieldProvider implements AdditionalFieldPr
      * Validates the additional fields' values
      *
      * @param array $submittedData An array containing the data submitted by the add/edit task form
-     * @param \TYPO3\CMS\Scheduler\Controller\SchedulerModuleController $schedulerModule Reference to the scheduler backend module
+     * @param SchedulerModuleController $schedulerModule Reference to the scheduler backend module
      * @return bool TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
      */
-    public function validateAdditionalFields(
-        array &$submittedData,
-        \TYPO3\CMS\Scheduler\Controller\SchedulerModuleController $schedulerModule
-    ): bool {
+    public function validateAdditionalFields(array &$submittedData, SchedulerModuleController $schedulerModule): bool {
         $submittedData['mediapool_video_mode'] = (int)$submittedData['mediapool_video_mode'];
         if ($submittedData['mediapool_video_mode'] === 0) {
             $submittedData['mediapool_video_page_selection'] = '';
         } else {
-            // cast values inside the array
-            $pageSelection = explode(',', $submittedData['mediapool_video_page_selection']);
-            foreach ($pageSelection as &$uid) {
-                $uid = (int)$uid;
-            }
-            $submittedData['mediapool_video_page_selection'] = implode(',', $pageSelection);
+            $submittedData['mediapool_video_page_selection'] = implode(
+                ',',
+                GeneralUtility::intExplode(',', $submittedData['mediapool_video_page_selection'])
+            );
         }
         if (!MathUtility::isIntegerInRange($submittedData['mediapool_video_mode'], 0, 1)) {
-            $schedulerModule->addMessage(
+            $this->addMessage(
                 LocalizationUtility::translate($this->ll . 'scheduler.update_video_information.unknown_mode'),
                 FlashMessage::ERROR
             );
@@ -108,9 +104,9 @@ class UpdateVideoInformationAdditionalFieldProvider implements AdditionalFieldPr
      * Takes care of saving the additional fields' values in the task's object
      *
      * @param array $submittedData An array containing the data submitted by the add/edit task form
-     * @param \TYPO3\CMS\Scheduler\Task\AbstractTask $task Reference to the scheduler backend module
+     * @param AbstractTask $task Reference to the scheduler backend module
      */
-    public function saveAdditionalFields(array $submittedData, \TYPO3\CMS\Scheduler\Task\AbstractTask $task)
+    public function saveAdditionalFields(array $submittedData, AbstractTask $task): void
     {
         $task->mode = $submittedData['mediapool_video_mode'];
         $task->pageSelection = $submittedData['mediapool_video_page_selection'];

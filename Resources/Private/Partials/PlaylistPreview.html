@@ -1,13 +1,18 @@
+<html lang="en"
+			xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+			data-namespace-typo3-fluid="true">
+
 <div class="mediapool-playlist-preview">
-  <f:link.action controller="Video" action="show" pageUid="{detailPage}" arguments="{video: playlist.videos.0, playlist: playlist}">
-    <h4>{playlist.title}</h4>
-  </f:link.action>
-    <div class="mediapool-video-embed video-embed">
-        <div class="mediapool-video-preview">
-          <f:link.action controller="Video" action="show" pageUid="{detailPage}" arguments="{video: playlist.videos.0, playlist: playlist}">
-            <img src="{playlist.thumbnail}" alt="{playlist.title}" title="{playlist.title}"/>
-            <span class="preview-icon fa fa-2x fa-list" aria-hidden="true"></span>
-          </f:link.action>
-        </div>
-    </div>
+	<f:link.action controller="Video" action="show" pageUid="{detailPage}" arguments="{video: playlist.videos.0, playlist: playlist}">
+		<h4>{playlist.title}</h4>
+	</f:link.action>
+	<div class="mediapool-video-embed video-embed">
+		<div class="mediapool-video-preview">
+			<f:link.action controller="Video" action="show" pageUid="{detailPage}" arguments="{video: playlist.videos.0, playlist: playlist}">
+				<img src="{playlist.thumbnail}" alt="{playlist.title}" title="{playlist.title}"/>
+				<span class="preview-icon fa fa-2x fa-list" aria-hidden="true"></span>
+			</f:link.action>
+		</div>
+	</div>
 </div>
+</html>

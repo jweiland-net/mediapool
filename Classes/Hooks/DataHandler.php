@@ -30,43 +30,29 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class DataHandler
 {
-    /**
-     * Table names
-     */
-    const TABLE_VIDEO = 'tx_mediapool_domain_model_video';
-    const TABLE_PLAYLIST = 'tx_mediapool_domain_model_playlist';
+    public const TABLE_VIDEO = 'tx_mediapool_domain_model_video';
+    public const TABLE_PLAYLIST = 'tx_mediapool_domain_model_playlist';
 
     /**
-     * Data Handler
-     *
      * @var \TYPO3\CMS\Core\DataHandling\DataHandler
      */
     protected $dataHandler;
 
     /**
-     * Object Manager
-     *
      * @var ObjectManager
      */
     protected $objectMananger;
 
     /**
-     * Flash Message Queue
-     *
      * @var FlashMessageQueue
      */
     protected $flashMessageQueue;
 
     /**
-     * Logger
-     *
      * @var Logger
      */
     protected $logger;
 
-    /**
-     * DataHandler constructor.
-     */
     public function __construct()
     {
         $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
@@ -78,39 +64,31 @@ class DataHandler
      *
      * @param \TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler
      */
-    public function processDatamap_beforeStart(
-        \TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler
-    ) {
-        // initialize
+    public function processDatamap_beforeStart(\TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler): void {
         if (
-            array_key_exists(self::TABLE_VIDEO, $dataHandler->datamap) ||
-            array_key_exists(self::TABLE_PLAYLIST, $dataHandler->datamap)
+            array_key_exists(self::TABLE_VIDEO, $dataHandler->datamap)
+            || array_key_exists(self::TABLE_PLAYLIST, $dataHandler->datamap)
         ) {
             $this->dataHandler = $dataHandler;
             $this->objectMananger = GeneralUtility::makeInstance(ObjectManager::class);
-            /** @var FlashMessageService $flashMessageService */
-            $flashMessageService = $this->objectMananger->get(FlashMessageService::class);
+            $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
             $this->flashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
         }
 
         try {
-            // save single video
             if (
                 array_key_exists(self::TABLE_VIDEO, $dataHandler->datamap) &&
                 !array_key_exists(self::TABLE_PLAYLIST, $dataHandler->datamap)
             ) {
+                // save single video
                 $this->processVideos($dataHandler->datamap[self::TABLE_VIDEO]);
-            // save playlist
             } elseif (array_key_exists(self::TABLE_PLAYLIST, $dataHandler->datamap)) {
+                // save playlist
                 foreach ($dataHandler->datamap[self::TABLE_PLAYLIST] as $uid => &$fields) {
-                    // process playlist and break on error
-                    if ($this->processPlaylist($uid, $fields) === false) {
-                        break;
-                    }
+                    $this->processPlaylist($uid, $fields);
                 }
             }
         } catch (\Exception $e) {
-            /** @var FlashMessage $flashMessage */
             $flashMessage = GeneralUtility::makeInstance(
                 FlashMessage::class,
                 LocalizationUtility::translate(
@@ -148,7 +126,6 @@ class DataHandler
                 $videos[$uid]['pid'] = (int)$fields['pid'];
             }
         }
-        /** @var VideoService $videoService */
         $videoService = $this->objectMananger->get(VideoService::class);
         // use current pid as video pid
         $data = $videoService->getVideoData($videos, (int)GeneralUtility::_POST('popViewId'));
@@ -159,6 +136,7 @@ class DataHandler
                     $fields['pid'] = (int)$dataHandlerVideoTable[$uid]['pid'];
                 }
             }
+            unset($fields);
             ArrayUtility::mergeRecursiveWithOverrule($this->dataHandler->datamap, $data);
         } else {
             // Prevent DataHandler from saving because we don´t have data to save :(
@@ -172,11 +150,9 @@ class DataHandler
      * @param int|string $uid of the playlist
      * @param array $fieldArray
      */
-    protected function processPlaylist($uid, array &$fieldArray)
+    protected function processPlaylist($uid, array &$fieldArray): void
     {
-        /** @var ObjectManager $objectManager */
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        /** @var PlaylistService $playlistService */
         $playlistService = $objectManager->get(PlaylistService::class);
         if (!($pid = $fieldArray['pid'])) {
             $playlistRepository = $objectManager->get(PlaylistRepository::class);
