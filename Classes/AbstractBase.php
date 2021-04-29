@@ -47,7 +47,7 @@ abstract class AbstractBase
      */
     protected $logger;
 
-    public function injectObjectManager(ObjectManager $objectManager)
+    public function injectObjectManager(ObjectManager $objectManager): void
     {
         $this->objectManager = $objectManager;
     }
@@ -55,7 +55,7 @@ abstract class AbstractBase
     public function initializeObject(): void
     {
         $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
-        $flashMessageService = $this->objectManager->get(FlashMessageService::class);
+        $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
         $this->flashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
     }
 
@@ -69,7 +69,7 @@ abstract class AbstractBase
      * @param string $message trans-unit id for title
      * @param array $messageArguments arguments for message trans-unit
      * @param int $flashMessageSeverity FlashMessage::<ERROR|OK|...>
-     * @param int $logLevel use LogLevel::<...> constants
+     * @param string $logLevel use LogLevel::<...> constants
      * @param string $logMessage If a custom log message is set, a log entry will be created
      * @param array $logMessageArguments arguments for log message
      */
@@ -78,12 +78,12 @@ abstract class AbstractBase
         string $message,
         array $messageArguments = [],
         int $flashMessageSeverity = FlashMessage::ERROR,
-        int $logLevel = LogLevel::ERROR,
+        string $logLevel = LogLevel::ERROR,
         string $logMessage = '',
         array $logMessageArguments = []
-    ) {
-        $title = LocalizationUtility::translate($this->errorMessagesFile . ':' . $title);
-        $message = LocalizationUtility::translate($this->errorMessagesFile . ':' . $message, '', $messageArguments);
+    ): void {
+        $title = LocalizationUtility::translate($this->errorMessagesFile . ':' . $title) ?? '[no-title]';
+        $message = LocalizationUtility::translate($this->errorMessagesFile . ':' . $message, '', $messageArguments) ?? '[no-message]';
         $flashMessage = GeneralUtility::makeInstance(
             FlashMessage::class,
             $message,

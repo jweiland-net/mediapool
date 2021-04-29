@@ -27,14 +27,14 @@ class VideoTextElement extends AbstractFormElement
      *
      * @return array As defined in initializeResultArray() of AbstractNode
      */
-    public function render()
+    public function render(): array
     {
         $parameterArray = $this->data['parameterArray'];
         $resultArray = $this->initializeResultArray();
         $itemValue = $parameterArray['itemFormElValue'];
         $config = $parameterArray['fieldConf']['config'];
         $size = MathUtility::forceIntegerInRange($config['size'] ?? $this->defaultInputWidth, $this->minimumInputWidth, $this->maxInputWidth);
-        $width = (int)$this->formMaxWidth($size);
+        $width = $this->formMaxWidth($size);
         $evalList = GeneralUtility::trimExplode(',', $config['eval'], true);
 
         // display alert if item value is empty

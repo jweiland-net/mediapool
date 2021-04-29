@@ -85,111 +85,56 @@ class Video extends AbstractEntity
      */
     protected $thumbnailLarge = '';
 
-    /**
-     * Returns Title
-     *
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * Sets Title
-     *
-     * @param string $title
-     */
-    public function setTitle(string $title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * Returns Description
-     *
-     * @return string
-     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * Sets Description
-     *
-     * @param string $description
-     */
-    public function setDescription(string $description)
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * Returns UploadDate
-     *
-     * @return \DateTime
-     */
     public function getUploadDate(): \DateTime
     {
         return $this->uploadDate;
     }
 
-    /**
-     * Sets UploadDate
-     *
-     * @param \DateTime $uploadDate
-     */
-    public function setUploadDate(\DateTime $uploadDate)
+    public function setUploadDate(\DateTime $uploadDate): void
     {
         $this->uploadDate = $uploadDate;
     }
 
-    /**
-     * Returns Link
-     *
-     * @return string
-     */
     public function getLink(): string
     {
         return $this->link;
     }
 
-    /**
-     * Sets Link
-     *
-     * @param string $link
-     */
-    public function setLink(string $link)
+    public function setLink(string $link): void
     {
         $this->link = $link;
     }
 
-    /**
-     * Returns PlayerHTML
-     *
-     * @return string
-     */
     public function getPlayerHtml(): string
     {
         return $this->playerHtml;
     }
 
-    /**
-     * Sets PlayerHTML
-     *
-     * @param string $playerHtml
-     */
-    public function setPlayerHtml(string $playerHtml)
+    public function setPlayerHtml(string $playerHtml): void
     {
         $this->playerHtml = $playerHtml;
     }
 
-    /**
-     * Returns VideoId
-     *
-     * @return string
-     */
     public function getVideoId(): string
     {
         return $this->videoId;
@@ -204,47 +149,27 @@ class Video extends AbstractEntity
      *
      * @param string $videoId
      */
-    public function setVideoId(string $videoId)
+    public function setVideoId(string $videoId): void
     {
         $this->videoId = $videoId;
     }
 
-    /**
-     * Returns Thumbnail
-     *
-     * @return string
-     */
     public function getThumbnail(): string
     {
         return $this->thumbnail;
     }
 
-    /**
-     * Sets Thumbnail
-     *
-     * @param string $thumbnail
-     */
-    public function setThumbnail(string $thumbnail)
+    public function setThumbnail(string $thumbnail): void
     {
         $this->thumbnail = $thumbnail;
     }
 
-    /**
-     * Returns ThumbnailLarge
-     *
-     * @return string
-     */
     public function getThumbnailLarge(): string
     {
         return $this->thumbnailLarge;
     }
 
-    /**
-     * Sets ThumbnailLarge
-     *
-     * @param string $thumbnailLarge
-     */
-    public function setThumbnailLarge(string $thumbnailLarge)
+    public function setThumbnailLarge(string $thumbnailLarge): void
     {
         $this->thumbnailLarge = $thumbnailLarge;
     }

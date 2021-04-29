@@ -62,7 +62,7 @@ class UpdatePlaylistInformation extends AbstractTask
      *
      * @return bool Returns TRUE on successful execution, FALSE on error
      */
-    public function execute()
+    public function execute(): bool
     {
         $this->init();
         if ($this->mode === 0) {
@@ -82,13 +82,11 @@ class UpdatePlaylistInformation extends AbstractTask
         }
         $this->dataHandler->start($data, []);
         $this->dataHandler->process_datamap();
+
         return true;
     }
 
-    /**
-     * Init task
-     */
-    protected function init()
+    protected function init(): void
     {
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $this->playlistRepository = $objectManager->get(PlaylistRepository::class);

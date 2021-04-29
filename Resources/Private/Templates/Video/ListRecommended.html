@@ -1,10 +1,15 @@
+<html lang="en"
+			xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+			data-namespace-typo3-fluid="true">
+
 <div class="grid">
-  <div class="col-8_sm-12">
-    <f:render partial="VideoPreview" arguments="{video: recommendedVideos.0, detailPage: detailPage}" />
-  </div>
-  <div class="col-4_sm-12">
-    <f:render partial="VideoPreview" arguments="{video: recommendedVideos.1, detailPage: detailPage}" />
-    <f:render partial="VideoPreview" arguments="{video: recommendedVideos.2, detailPage: detailPage}" />
-  </div>
-  <!-- todo: add category list ! -->
+	<div class="col-8_sm-12">
+		<f:render partial="VideoPreview" arguments="{video: recommendedVideos.0, detailPage: detailPage}" />
+	</div>
+	<div class="col-4_sm-12">
+		<f:render partial="VideoPreview" arguments="{video: recommendedVideos.1, detailPage: detailPage}" />
+		<f:render partial="VideoPreview" arguments="{video: recommendedVideos.2, detailPage: detailPage}" />
+	</div>
+	<f:comment><!-- todo: add category list ! --></f:comment>
 </div>
+</html>

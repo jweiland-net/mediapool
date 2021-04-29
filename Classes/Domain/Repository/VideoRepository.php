@@ -11,12 +11,10 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Domain\Repository;
 
-use JWeiland\Mediapool\Domain\Model\Playlist;
-use JWeiland\Mediapool\Domain\Model\Video;
-use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
@@ -24,22 +22,16 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 class VideoRepository extends Repository
 {
-    /**
-     * Find a video by video id
-     *
-     * @param string $videoId
-     * @param int $pid
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-     */
-    public function findByVideoId(string $videoId, int $pid)
+    public function findByVideoId(string $videoId, int $pid): QueryResultInterface
     {
         $query = $this->createQuery();
         $query->getQuerySettings()->setRespectStoragePage(false);
+
         $query->matching(
-            $query->logicalAnd(
+            $query->logicalAnd([
                 $query->equals('videoId', $videoId),
                 $query->equals('pid', $pid)
-            )
+            ])
         );
         return $query->execute();
     }
@@ -49,12 +41,12 @@ class VideoRepository extends Repository
      *
      * @return array records with fields: uid, link
      */
-    public function findAllLinksAndUids()
+    public function findAllLinksAndUids(): array
     {
-        /** @var Connection $connection */
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable(
             'tx_mediapool_domain_model_video'
         );
+
         return $connection->select(['uid', 'link'], 'tx_mediapool_domain_model_video')->fetchAll();
     }
 
@@ -64,7 +56,7 @@ class VideoRepository extends Repository
      * @param string $pids comma separated list of pids
      * @return array records with fields: uid, link
      */
-    public function findLinksAndUidsByPid(string $pids)
+    public function findLinksAndUidsByPid(string $pids): array
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(
             'tx_mediapool_domain_model_video'
@@ -75,6 +67,7 @@ class VideoRepository extends Repository
             ->where(
                 $queryBuilder->expr()->in('pid', $pids)
             );
+
         return $query->execute()->fetchAll();
     }
 
@@ -93,7 +86,7 @@ class VideoRepository extends Repository
      * @param string $categoryUids comma separated list of uids (e.g. 1,4,6)
      * @return array
      */
-    public function findRecentByCategories(string $categoryUids)
+    public function findRecentByCategories(string $categoryUids): array
     {
         $categoryRepository = $this->objectManager->get(CategoryRepository::class);
         $recentVideos = [];
@@ -128,9 +121,7 @@ class VideoRepository extends Repository
         $playlists = $playlistRepository->findByCategory($categoryUid);
         $uploadDate = 0;
         $recentVideo = [];
-        /** @var Playlist $playlist */
         foreach ($playlists as $playlist) {
-            /** @var Video $video */
             foreach ($playlist->getVideos() as $video) {
                 if ($video->getUploadDate() > $uploadDate) {
                     $uploadDate = $video->getUploadDate();

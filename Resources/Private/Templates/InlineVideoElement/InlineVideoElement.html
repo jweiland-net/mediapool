@@ -1,22 +1,27 @@
+<html lang="en"
+			xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+			data-namespace-typo3-fluid="true">
+
 <p>({amountOfVideos})</p>
 <div class="panel-group" id="{elementId}" role="tablist" aria-multiselectable="true">
-  <f:for each="{videos}" as="video">
-    <div class="panel panel-default">
-      <div class="panel-heading" role="tab" id="heading_{elementId}_{video.uid}">
-        <h4 class="panel-title">
-          <a class="collapsed" role="button" data-toggle="collapse" data-parent="#{elementId}" href="#collapse_{elementId}_{video.uid}" aria-expanded="false" aria-controls="collapse_{elementId}_{video.uid}">
-            {video.title}
-          </a>
-        </h4>
-      </div>
-      <div id="collapse_{elementId}_{video.uid}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_{elementId}_{video.uid}">
-        <div class="panel-body">
-          <h2>{video.title}</h2>
-          <p><f:format.date>{video.row.upload_date}</f:format.date></p>
-          <p><a href="{video.row.link}" target="_blank"><img src="{video.row.thumbnail}" alt="{video.title}" title="{video.title}" /></a></p>
-          <p><f:format.raw>{video.row.description}</f:format.raw></p>
-        </div>
-      </div>
-    </div>
-  </f:for>
+	<f:for each="{videos}" as="video">
+		<div class="panel panel-default">
+			<div class="panel-heading" role="tab" id="heading_{elementId}_{video.uid}">
+				<h4 class="panel-title">
+					<a class="collapsed" role="button" data-toggle="collapse" data-parent="#{elementId}" href="#collapse_{elementId}_{video.uid}" aria-expanded="false" aria-controls="collapse_{elementId}_{video.uid}">
+						{video.title}
+					</a>
+				</h4>
+			</div>
+			<div id="collapse_{elementId}_{video.uid}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_{elementId}_{video.uid}">
+				<div class="panel-body">
+					<h2>{video.title}</h2>
+					<p><f:format.date>{video.row.upload_date}</f:format.date></p>
+					<p><a href="{video.row.link}" target="_blank"><img src="{video.row.thumbnail}" alt="{video.title}" title="{video.title}" /></a></p>
+					<p><f:format.raw>{video.row.description}</f:format.raw></p>
+				</div>
+			</div>
+		</div>
+	</f:for>
 </div>
+</html>

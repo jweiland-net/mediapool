@@ -15,8 +15,6 @@ use JWeiland\Mediapool\AbstractBase;
 use JWeiland\Mediapool\Import\Playlist\AbstractPlaylistImport;
 use JWeiland\Mediapool\Utility\VideoPlatformUtility;
 
-use TYPO3\CMS\Extbase\Object\ObjectManager;
-
 /**
  * Class PlaylistService
  *
