@@ -1,18 +1,15 @@
-<?php declare(strict_types = 1);
-namespace JWeiland\Mediapool\Controller;
+<?php
+
+declare(strict_types=1);
 
 /*
-* This file is part of the TYPO3 CMS project.
-*
-* It is free software; you can redistribute it and/or modify it under
-* the terms of the GNU General Public License, either version 2
-* of the License, or any later version.
-*
-* For the full copyright and license information, please read the
-* LICENSE.txt file that was distributed with this source code.
-*
-* The TYPO3 project - inspiring people to share!
-*/
+ * This file is part of the package jweiland/mediapool.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
+namespace JWeiland\Mediapool\Controller;
 
 use TYPO3\CMS\Core\Resource\Collection\AbstractFileCollection;
 use TYPO3\CMS\Core\Resource\FileCollectionRepository;
@@ -28,12 +25,7 @@ class GalleryController extends ActionController
      */
     protected $fileCollectionRepository;
 
-    /**
-     * inject fileCollectionRepository
-     *
-     * @param FileCollectionRepository $fileCollectionRepository
-     */
-    public function injectFileCollectionRepository(FileCollectionRepository $fileCollectionRepository)
+    public function injectFileCollectionRepository(FileCollectionRepository $fileCollectionRepository): void
     {
         $this->fileCollectionRepository = $fileCollectionRepository;
     }
@@ -42,7 +34,7 @@ class GalleryController extends ActionController
      * Gallery preview action
      * displays a preview image that contains a fancybox3 gallery
      */
-    public function previewAction()
+    public function previewAction(): void
     {
         $this->view->assign('fileCollections', $this->getFileCollections());
     }
@@ -52,7 +44,7 @@ class GalleryController extends ActionController
      * displays three galleries and a more button with configurable
      * target page
      */
-    public function teaserAction()
+    public function teaserAction(): void
     {
         $this->view->assign('fileCollections', $this->getFileCollections());
     }

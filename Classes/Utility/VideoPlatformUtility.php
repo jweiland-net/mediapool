@@ -1,18 +1,15 @@
 <?php
-namespace JWeiland\Mediapool\Utility;
+
+declare(strict_types=1);
 
 /*
-* This file is part of the TYPO3 CMS project.
-*
-* It is free software; you can redistribute it and/or modify it under
-* the terms of the GNU General Public License, either version 2
-* of the License, or any later version.
-*
-* For the full copyright and license information, please read the
-* LICENSE.txt file that was distributed with this source code.
-*
-* The TYPO3 project - inspiring people to share!
-*/
+ * This file is part of the package jweiland/mediapool.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
+namespace JWeiland\Mediapool\Utility;
 
 use JWeiland\Mediapool\Import\MissingImporterException;
 use JWeiland\Mediapool\Import\Playlist\AbstractPlaylistImport;
@@ -35,12 +32,13 @@ class VideoPlatformUtility
         if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['videoImport'])) {
             return $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['videoImport'];
         }
+
         throw new MissingImporterException(
-                'At least one video importer must be registered to get information about a video!' .
-                ' Please check $GLOBALS[\'TYPO3_CONF_VARS\'][\'EXTCONF\'][\'mediapool\'][\'videoImport\'] for' .
-                ' registered video importers.',
-                1507729404
-            );
+            'At least one video importer must be registered to get information about a video!' .
+            ' Please check $GLOBALS[\'TYPO3_CONF_VARS\'][\'EXTCONF\'][\'mediapool\'][\'videoImport\'] for' .
+            ' registered video importers.',
+            1507729404
+        );
     }
 
     /**
@@ -55,12 +53,13 @@ class VideoPlatformUtility
         if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['playlistImport'])) {
             return $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['playlistImport'];
         }
+
         throw new MissingImporterException(
-                'At least one playlist importer must be registered to get information about a playlist!' .
-                ' Please check $GLOBALS[\'TYPO3_CONF_VARS\'][\'EXTCONF\'][\'mediapool\'][\'playlistImport\'] for' .
-                ' registered playlist importers.',
-                1507881065
-            );
+            'At least one playlist importer must be registered to get information about a playlist!' .
+            ' Please check $GLOBALS[\'TYPO3_CONF_VARS\'][\'EXTCONF\'][\'mediapool\'][\'playlistImport\'] for' .
+            ' registered playlist importers.',
+            1507881065
+        );
     }
 
     /**
@@ -68,7 +67,7 @@ class VideoPlatformUtility
      *
      * @param AbstractVideoImport $videoImport
      */
-    public static function checkVideoImportClass(AbstractVideoImport $videoImport)
+    public static function checkVideoImportClass(AbstractVideoImport $videoImport): void
     {
     }
 
@@ -77,7 +76,7 @@ class VideoPlatformUtility
      *
      * @param AbstractPlaylistImport $playlistImport
      */
-    public static function checkPlaylistImportClass(AbstractPlaylistImport $playlistImport)
+    public static function checkPlaylistImportClass(AbstractPlaylistImport $playlistImport): void
     {
     }
 }

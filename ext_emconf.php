@@ -10,16 +10,13 @@ $EM_CONF[$_EXTKEY] = [
         'Embed your favorite YouTube Videos and Playlists. Import description, title and more by just pasting the YouTube link.',
     'category' => 'plugin',
     'state' => 'stable',
-    'uploadfolder' => 0,
-    'createDirs' => '',
-    'clearCacheOnLoad' => 0,
     'author' => 'Pascal Rinker',
     'author_email' => 'projects@jweiland.net',
     'author_company' => 'jweiland.net',
-    'version' => '1.4.1',
+    'version' => '2.0.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '8.7.0-9.5.99',
+            'typo3' => '9.5.99-10.4.0',
         ],
         'conflicts' => [],
         'suggests' => [],

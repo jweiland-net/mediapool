@@ -1,18 +1,15 @@
 <?php
-namespace JWeiland\Mediapool\Import\Playlist;
+
+declare(strict_types=1);
 
 /*
-* This file is part of the TYPO3 CMS project.
-*
-* It is free software; you can redistribute it and/or modify it under
-* the terms of the GNU General Public License, either version 2
-* of the License, or any later version.
-*
-* For the full copyright and license information, please read the
-* LICENSE.txt file that was distributed with this source code.
-*
-* The TYPO3 project - inspiring people to share!
-*/
+ * This file is part of the package jweiland/mediapool.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
+namespace JWeiland\Mediapool\Import\Playlist;
 
 use JWeiland\Mediapool\Configuration\ExtConf;
 use JWeiland\Mediapool\Import\Video\YouTubeVideoImport;
@@ -27,17 +24,17 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
     /**
      * URL to fetch playlist items via GET request
      */
-    const PLAYLIST_ITEMS_API_URL = 'https://www.googleapis.com/youtube/v3/playlistItems?playlistId=%s&key=%s&part=contentDetails,status&maxResults=50';
+    public const PLAYLIST_ITEMS_API_URL = 'https://www.googleapis.com/youtube/v3/playlistItems?playlistId=%s&key=%s&part=contentDetails,status&maxResults=50';
 
     /**
      * URL to fetch playlist title via GET request
      */
-    const PLAYLIST_API_URL = 'https://www.googleapis.com/youtube/v3/playlists?id=%s&key=%s&part=snippet';
+    public const PLAYLIST_API_URL = 'https://www.googleapis.com/youtube/v3/playlists?id=%s&key=%s&part=snippet';
 
     /**
      * URL to fetch channel data (uploads playlist, ...) via GET request
      */
-    const CHANNELS_LIST_API_URL = 'https://www.googleapis.com/youtube/v3/channels?key=%s&part=contentDetails&%s';
+    public const CHANNELS_LIST_API_URL = 'https://www.googleapis.com/youtube/v3/channels?key=%s&part=contentDetails&%s';
 
     /**
      * Name of the video platform
@@ -47,15 +44,15 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
     protected $platformName = 'YouTube';
 
     /**
-     * Platform hosts
-     *
      * @var array
      */
-    protected $platformHosts = ['https://youtube.com', 'https://www.youtube.com', 'https://youtu.be'];
+    protected $platformHosts = [
+        'https://youtube.com',
+        'https://www.youtube.com',
+        'https://youtu.be'
+    ];
 
     /**
-     * YouTube Video Import
-     *
      * @var YouTubeVideoImport
      */
     protected $youTubeVideoImport;
@@ -68,18 +65,11 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
     protected $apiKey = '';
 
     /**
-     * Playlist ID
-     *
      * @var string
      */
     protected $playlistId = '';
 
-    /**
-     * inject youTubeVideoImport
-     *
-     * @param YouTubeVideoImport $youTubeVideoImport
-     */
-    public function injectYouTubeVideoImport(YouTubeVideoImport $youTubeVideoImport)
+    public function injectYouTubeVideoImport(YouTubeVideoImport $youTubeVideoImport): void
     {
         $this->youTubeVideoImport = $youTubeVideoImport;
     }
@@ -216,7 +206,7 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
     protected function checkResponseStatusCode(ResponseInterface $response)
     {
         // invalid api key
-        if ($response->getStatusCode() == 400) {
+        if ($response->getStatusCode() === 400) {
             throw new \HttpRequestException(
                 sprintf(
                     'Fetching playlist information for %s failed! Got the following response from YouTube: %s.' .
@@ -229,15 +219,15 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
             // other problems
         }
         throw new \HttpRequestException(
-                sprintf(
-                    'Fetching playlist information for %s failed! Got status code %d and the' .
-                    ' following response: %s',
-                    $this->playlistId,
-                    $response->getStatusCode(),
-                    $response->getBody()->getContents()
-                ),
-                1508146719
-            );
+            sprintf(
+                'Fetching playlist information for %s failed! Got status code %d and the' .
+                ' following response: %s',
+                $this->playlistId,
+                $response->getStatusCode(),
+                $response->getBody()->getContents()
+            ),
+            1508146719
+        );
     }
 
     /**

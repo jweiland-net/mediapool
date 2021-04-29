@@ -1,19 +1,15 @@
 <?php
-declare(strict_types = 1);
-namespace JWeiland\Mediapool\Configuration;
+
+declare(strict_types=1);
 
 /*
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * This file is part of the package jweiland/mediapool.
  *
  * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
+ * LICENSE file that was distributed with this source code.
  */
+
+namespace JWeiland\Mediapool\Configuration;
 
 use TYPO3\CMS\Core\SingletonInterface;
 
@@ -34,8 +30,13 @@ class ExtConf implements SingletonInterface
     public function __construct()
     {
         // get global configuration
-        $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mediapool'], ['allowed_classes' => false]);
-        if (is_array($extConf) && count($extConf)) {
+        $extConf = unserialize(
+            $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mediapool'] ?? [],
+            [
+                'allowed_classes' => false
+            ]
+        );
+        if (is_array($extConf)) {
             // call setter method foreach configuration entry
             foreach ($extConf as $key => $value) {
                 $methodName = 'set' . ucfirst($key);
@@ -46,18 +47,12 @@ class ExtConf implements SingletonInterface
         }
     }
 
-    /**
-     * @return string
-     */
     public function getYoutubeDataApiKey(): string
     {
         return $this->youtubeDataApiKey;
     }
 
-    /**
-     * @param string $youtubeDataApiKey
-     */
-    public function setYoutubeDataApiKey(string $youtubeDataApiKey)
+    public function setYoutubeDataApiKey(string $youtubeDataApiKey): void
     {
         $this->youtubeDataApiKey = $youtubeDataApiKey;
     }

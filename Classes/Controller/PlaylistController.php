@@ -1,18 +1,15 @@
 <?php
-namespace JWeiland\Mediapool\Controller;
+
+declare(strict_types=1);
 
 /*
-* This file is part of the TYPO3 CMS project.
-*
-* It is free software; you can redistribute it and/or modify it under
-* the terms of the GNU General Public License, either version 2
-* of the License, or any later version.
-*
-* For the full copyright and license information, please read the
-* LICENSE.txt file that was distributed with this source code.
-*
-* The TYPO3 project - inspiring people to share!
-*/
+ * This file is part of the package jweiland/mediapool.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
+namespace JWeiland\Mediapool\Controller;
 
 use JWeiland\Mediapool\Domain\Model\Playlist;
 use JWeiland\Mediapool\Domain\Repository\PlaylistRepository;
@@ -25,18 +22,11 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 class PlaylistController extends ActionController
 {
     /**
-     * Playlist Repository
-     *
      * @var PlaylistRepository
      */
     protected $playlistRepository;
 
-    /**
-     * inject playlistRepository
-     *
-     * @param PlaylistRepository $playlistRepository
-     */
-    public function injectPlaylistRepository(PlaylistRepository $playlistRepository)
+    public function injectPlaylistRepository(PlaylistRepository $playlistRepository): void
     {
         $this->playlistRepository = $playlistRepository;
     }
@@ -46,7 +36,7 @@ class PlaylistController extends ActionController
      *
      * @param Category $category
      */
-    public function listByCategoryAction(Category $category)
+    public function listByCategoryAction(Category $category): void
     {
         $playlists = $this->playlistRepository->findByCategory($category->getUid());
         $this->view->assign('detailPage', $this->settings['detailPage']);
@@ -57,7 +47,7 @@ class PlaylistController extends ActionController
     /**
      * List latest videos of a playlist
      */
-    public function listLatestVideosAction()
+    public function listLatestVideosAction(): void
     {
         $this->view->assign('playlist', $this->playlistRepository->findByUid($this->settings['playlist']));
     }
@@ -67,7 +57,7 @@ class PlaylistController extends ActionController
      *
      * @param Playlist|null $playlist either pass a playlist or use the given from $this->settings
      */
-    public function listVideosAction(Playlist $playlist = null)
+    public function listVideosAction(Playlist $playlist = null): void
     {
         if ($playlist === null) {
             $playlist = $this->playlistRepository->findByUid($this->settings['playlist']);

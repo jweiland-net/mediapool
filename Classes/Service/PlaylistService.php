@@ -1,18 +1,15 @@
 <?php
-namespace JWeiland\Mediapool\Service;
+
+declare(strict_types=1);
 
 /*
-* This file is part of the TYPO3 CMS project.
-*
-* It is free software; you can redistribute it and/or modify it under
-* the terms of the GNU General Public License, either version 2
-* of the License, or any later version.
-*
-* For the full copyright and license information, please read the
-* LICENSE.txt file that was distributed with this source code.
-*
-* The TYPO3 project - inspiring people to share!
-*/
+ * This file is part of the package jweiland/mediapool.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
+namespace JWeiland\Mediapool\Service;
 
 use JWeiland\Mediapool\AbstractBase;
 use JWeiland\Mediapool\Import\Playlist\AbstractPlaylistImport;
@@ -27,26 +24,6 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
  */
 class PlaylistService extends AbstractBase
 {
-    const COLLECTION_PLAYLIST_INFORMATION_FAILED = 1;
-    const NO_VIDEO_PLATFORM_MATCH = 2;
-
-    /**
-     * Object Manager
-     *
-     * @var ObjectManager
-     */
-    protected $objectManager;
-
-    /**
-     * inject objectManager
-     *
-     * @param ObjectManager $objectManager
-     */
-    public function injectObjectManager(ObjectManager $objectManager)
-    {
-        $this->objectManager = $objectManager;
-    }
-
     /**
      * Returns an array that includes a prepared fieldArray for DataHandler
      * as an array with new records for DataHandler

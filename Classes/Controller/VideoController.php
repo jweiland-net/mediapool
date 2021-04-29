@@ -1,18 +1,15 @@
 <?php
-namespace JWeiland\Mediapool\Controller;
+
+declare(strict_types=1);
 
 /*
-* This file is part of the TYPO3 CMS project.
-*
-* It is free software; you can redistribute it and/or modify it under
-* the terms of the GNU General Public License, either version 2
-* of the License, or any later version.
-*
-* For the full copyright and license information, please read the
-* LICENSE.txt file that was distributed with this source code.
-*
-* The TYPO3 project - inspiring people to share!
-*/
+ * This file is part of the package jweiland/mediapool.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
+namespace JWeiland\Mediapool\Controller;
 
 use JWeiland\Mediapool\Domain\Model\Playlist;
 use JWeiland\Mediapool\Domain\Model\Video;
@@ -25,18 +22,11 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 class VideoController extends ActionController
 {
     /**
-     * Video Repository
-     *
      * @var VideoRepository
      */
     protected $videoRepository;
 
-    /**
-     * inject videoRepository
-     *
-     * @param VideoRepository $videoRepository
-     */
-    public function injectVideoRepository(VideoRepository $videoRepository)
+    public function injectVideoRepository(VideoRepository $videoRepository): void
     {
         $this->videoRepository = $videoRepository;
     }
@@ -47,7 +37,7 @@ class VideoController extends ActionController
      * @param Video $video
      * @param Playlist|null $playlist
      */
-    public function showAction(Video $video, Playlist $playlist = null)
+    public function showAction(Video $video, Playlist $playlist = null): void
     {
         if ($playlist !== null && !$playlist->getVideos()->contains($video)) {
             throw new \InvalidArgumentException(
@@ -64,7 +54,7 @@ class VideoController extends ActionController
      *
      * @throws \InvalidArgumentException if a selected recommended video could not be found
      */
-    public function listRecommendedAction()
+    public function listRecommendedAction(): void
     {
         $recommendedVideos = [];
         foreach (explode(',', $this->settings['recommendedVideos']) as $recommendedVideoUid) {
@@ -87,7 +77,7 @@ class VideoController extends ActionController
     /**
      * List recent videos sorted by selected categories
      */
-    public function listRecentByCategoryAction()
+    public function listRecentByCategoryAction(): void
     {
         $this->view->assign(
             'recentVideos',
