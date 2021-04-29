@@ -64,7 +64,8 @@ class DataHandler
      *
      * @param \TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler
      */
-    public function processDatamap_beforeStart(\TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler): void {
+    public function processDatamap_beforeStart(\TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler): void
+    {
         if (
             array_key_exists(self::TABLE_VIDEO, $dataHandler->datamap)
             || array_key_exists(self::TABLE_PLAYLIST, $dataHandler->datamap)

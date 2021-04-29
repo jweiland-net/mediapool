@@ -80,7 +80,8 @@ class UpdatePlaylistInformationAdditionalFieldProvider extends AbstractAdditiona
      * @param SchedulerModuleController $schedulerModule Reference to the scheduler backend module
      * @return bool true if validation was ok (or selected class is not relevant), FALSE otherwise
      */
-    public function validateAdditionalFields(array &$submittedData, SchedulerModuleController $schedulerModule): bool {
+    public function validateAdditionalFields(array &$submittedData, SchedulerModuleController $schedulerModule): bool
+    {
         $submittedData['mediapool_playlist_mode'] = (int)$submittedData['mediapool_playlist_mode'];
         if ($submittedData['mediapool_playlist_mode'] === 0) {
             $submittedData['mediapool_playlist_page_selection'] = '';
