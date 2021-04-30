@@ -14,6 +14,7 @@ namespace JWeiland\Mediapool\Import\Playlist;
 use JWeiland\Mediapool\Configuration\ExtConf;
 use JWeiland\Mediapool\Import\Video\YouTubeVideoImport;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Error\Http\StatusException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -200,13 +201,13 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
      * Checks the response status code
      *
      * @param ResponseInterface $response
-     * @throws \HttpRequestException
+     * @throws StatusException
      */
-    protected function checkResponseStatusCode(ResponseInterface $response)
+    protected function checkResponseStatusCode(ResponseInterface $response): void
     {
         // invalid api key
         if ($response->getStatusCode() === 400) {
-            throw new \HttpRequestException(
+            throw new StatusException(
                 sprintf(
                     'Fetching playlist information for %s failed! Got the following response from YouTube: %s.' .
                     ' Please check your API-key.',
@@ -217,7 +218,7 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
             );
             // other problems
         }
-        throw new \HttpRequestException(
+        throw new StatusException(
             sprintf(
                 'Fetching playlist information for %s failed! Got status code %d and the' .
                 ' following response: %s',
