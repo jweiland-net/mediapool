@@ -24,7 +24,6 @@
 		"source": "https://github.com/jweiland-net/mediapool"
 	},
 	"require": {
-		"ext-http": "*",
 		"typo3/cms-core": "^9.5 || ^10.4"
 	},
 	"require-dev": {

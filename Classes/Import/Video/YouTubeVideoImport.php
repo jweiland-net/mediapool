@@ -15,6 +15,7 @@ use JWeiland\Mediapool\Configuration\ExtConf;
 use JWeiland\Mediapool\Constants;
 use JWeiland\Mediapool\Domain\Model\Video;
 use JWeiland\Mediapool\Domain\Repository\VideoRepository;
+use TYPO3\CMS\Core\Error\Http\StatusException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -266,7 +267,7 @@ class YouTubeVideoImport extends AbstractVideoImport
      * @param array $items previous items for recursive call - leave it empty
      * @param string $additionalRequestParams
      * @return array
-     * @throws \HttpRequestException
+     * @throws StatusException
      */
     protected function doRequest(string $videoIds, array $items = [], string $additionalRequestParams = ''): array
     {
@@ -295,7 +296,7 @@ class YouTubeVideoImport extends AbstractVideoImport
             // invalid api key
         }
         if ($response->getStatusCode() === 400) {
-            throw new \HttpRequestException(
+            throw new StatusException(
                 sprintf(
                     'Fetching video information for %s failed! Got the following response from YouTube: %s.' .
                     ' Please check your API-key.',
@@ -305,7 +306,7 @@ class YouTubeVideoImport extends AbstractVideoImport
                 1507792488
             );
         }
-        throw new \HttpRequestException(
+        throw new StatusException(
             sprintf(
                 'Fetching video information for %s failed! Got status code %d and the following response: %s',
                 $this->video->getLink(),
