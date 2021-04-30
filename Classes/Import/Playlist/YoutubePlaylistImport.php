@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Import\Playlist;
 
-use GuzzleHttp\Exception\RequestException;
 use JWeiland\Mediapool\Configuration\ExtConf;
 use JWeiland\Mediapool\Import\Video\YouTubeVideoImport;
 use Psr\Http\Message\ResponseInterface;
