@@ -16,6 +16,7 @@
 							<onChange>reload</onChange>
 							<config>
 								<type>select</type>
+								<type>selectSingle</type>
 								<items>
 									<numIndex index="0">
 										<numIndex index="0">LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.recommended_videos</numIndex>

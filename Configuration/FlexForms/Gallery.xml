@@ -16,17 +16,14 @@
 							<onChange>reload</onChange>
 							<config>
 								<type>select</type>
+								<type>selectSingle</type>
 								<items>
 									<numIndex index="1">
-										<numIndex index="0">
-											LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.preview_view
-										</numIndex>
+										<numIndex index="0">LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.preview_view</numIndex>
 										<numIndex index="1">Gallery->preview</numIndex>
 									</numIndex>
 									<numIndex index="2">
-										<numIndex index="0">
-											LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.teaser_view
-										</numIndex>
+										<numIndex index="0">LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:flex_forms.mediapool.teaser_view</numIndex>
 										<numIndex index="1">Gallery->teaser</numIndex>
 									</numIndex>
 								</items>

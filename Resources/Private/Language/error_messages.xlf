@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z"
-				product-name="mediapool">
+	<file source-language="en" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z" product-name="mediapool">
 		<header/>
 		<body>
-
 			<trans-unit id="video_service.import_mismatch.title">
 				<source>Import mismatch</source>
 			</trans-unit>
@@ -15,24 +13,21 @@
 				<source>No video platform match</source>
 			</trans-unit>
 			<trans-unit id="video_service.no_match.message">
-				<source>I could not find a matching video platform for your video. Please check your link.
-				</source>
+				<source>I could not find a matching video platform for your video. Please check your link.</source>
 			</trans-unit>
 
 			<trans-unit id="playlist_service.no_match.title">
 				<source>No video platform match</source>
 			</trans-unit>
 			<trans-unit id="playlist_service.no_match.message">
-				<source>I could not find a matching video platform for your playlist. Please check your link.
-				</source>
+				<source>I could not find a matching video platform for your playlist. Please check your link.</source>
 			</trans-unit>
 
 			<trans-unit id="data_handler.exception.title">
 				<source>Could not finish your request</source>
 			</trans-unit>
 			<trans-unit id="data_handler.exception.message">
-				<source>There was an error while processing your request. Please contact your administrator. Error code %d
-				</source>
+				<source>There was an error while processing your request. Please contact your administrator. Error code %d</source>
 			</trans-unit>
 
 			<trans-unit id="youTubeVideoImport.missing_video_information.title">
@@ -45,9 +40,7 @@
 				<source>Missing YouTube permission</source>
 			</trans-unit>
 			<trans-unit id="youTubeVideoImport.missing_youtube_permission.message">
-				<source>
-					Can not fetch information for video %s. Maybe it is marked as private or not embeddable by his owner.
-				</source>
+				<source>Can not fetch information for video %s. Maybe it is marked as private or not embeddable by his owner.</source>
 			</trans-unit>
 
 			<trans-unit id="youTubePlaylistImport.invalid_id.title">
@@ -56,7 +49,6 @@
 			<trans-unit id="youTubePlaylistImport.invalid_id.message">
 				<source>Could not extract playlist id from playlist link %s. Please check your link!</source>
 			</trans-unit>
-
 		</body>
 	</file>
 </xliff>

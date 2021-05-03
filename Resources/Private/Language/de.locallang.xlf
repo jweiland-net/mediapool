@@ -12,6 +12,55 @@
 				<source>This task updates the video information by using the DataHandler Hook.</source>
 				<target>Dieser Task updated Videoinformationen.</target>
 			</trans-unit>
+			<trans-unit id="scheduler.update_video_information.mode">
+				<source>Select which videos should be updated</source>
+				<target>Auswählen, welche Videos aktualisiert werden sollen</target>
+			</trans-unit>
+			<trans-unit id="scheduler.update_video_information.unknown_mode">
+				<source>You selected an unknown mode.</source>
+				<target>Sie haben einen unbekannten Modus gewählt.</target>
+			</trans-unit>
+			<trans-unit id="scheduler.update_video_information.page_selection">
+				<source>Comma separated list of pages/folders where video records should be updated. (Depends on your choice above)</source>
+				<target>Komma getrennte Liste von Seiten/Ordnern, auf denen Video Datensätze aktualisiert werden sollen. (Abhängig von Ihrer Wahl oben)</target>
+			</trans-unit>
+			<trans-unit id="scheduler.update_video_information.page_selection.0">
+				<source>Update all video records</source>
+				<target>Alle Video Datensätze aktualisieren</target>
+			</trans-unit>
+			<trans-unit id="scheduler.update_video_information.page_selection.1">
+				<source>Update video records from selected pages/folders</source>
+				<target>Aktualisieren von Video Datensätzen aus ausgewählten Seiten/Ordnern</target>
+			</trans-unit>
+
+			<trans-unit id="scheduler.update_playlist_information.title">
+				<source>Update playlist information</source>
+				<target>Playlist-Informationen aktualisieren</target>
+			</trans-unit>
+			<trans-unit id="scheduler.update_playlist_information.description">
+				<source>This task updates the playlist information by using the DataHandler Hook.</source>
+				<target>Dieser Task aktualisiert die Playlist-Informationen mit Hilfe des DataHandler-Hooks.</target>
+			</trans-unit>
+			<trans-unit id="scheduler.update_playlist_information.mode">
+				<source>Select which playlists should be updated</source>
+				<target>Auswählen, welche Playlisten aktualisiert werden sollen</target>
+			</trans-unit>
+			<trans-unit id="scheduler.update_playlist_information.unknown_mode">
+				<source>You selected an unknown mode.</source>
+				<target>Sie haben einen unbekannten Modus gewählt.</target>
+			</trans-unit>
+			<trans-unit id="scheduler.update_playlist_information.page_selection">
+				<source>Comma separated list of pages/folders where playlist records should be updated. (Depends on your choice above)</source>
+				<target>Komma getrennte Liste von Seiten/Ordnern, in denen Playlist-Datensätze aktualisiert werden sollen. (Hängt von Ihrer Wahl oben ab)</target>
+			</trans-unit>
+			<trans-unit id="scheduler.update_playlist_information.page_selection.0">
+				<source>Update all playlist records</source>
+				<target>Alle Playlist-Datensätze aktualisieren</target>
+			</trans-unit>
+			<trans-unit id="scheduler.update_playlist_information.page_selection.1">
+				<source>Update playlist records from selected pages/folders</source>
+				<target>Aktualisieren von Playlist-Datensätzen aus ausgewählten Seiten/Ordnern</target>
+			</trans-unit>
 
 			<trans-unit id="video.upload_date">
 				<source>Upload date</source>
@@ -75,8 +124,13 @@
 				<target>Videos pro Seite</target>
 			</trans-unit>
 
+			<trans-unit id="frontend.list_by_category.no_playlists">
+				<source>No playlists found!</source>
+				<target>Keine Playlisten gefunden</target>
+			</trans-unit>
+
 			<trans-unit id="flex_forms.gallery.title">
-				<source>Gallery</source>
+				<source>Image gallery</source>
 				<target>Bilderstrecke</target>
 			</trans-unit>
 			<trans-unit id="flex_forms.gallery.file_collections">
@@ -96,7 +150,7 @@
 				<target>Mehr</target>
 			</trans-unit>
 			<trans-unit id="frontend.button.gallery.more">
-				<source>Show more galleries</source>
+				<source>Show more image galleries</source>
 				<target>Zeige weitere Bilderstrecken</target>
 			</trans-unit>
 		</body>
