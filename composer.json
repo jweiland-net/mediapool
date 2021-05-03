@@ -27,6 +27,7 @@
 		"typo3/cms-core": "^9.5 || ^10.4"
 	},
 	"require-dev": {
+		"roave/security-advisories": "dev-latest",
 		"friendsofphp/php-cs-fixer": "^2.16"
 	},
 	"autoload": {
