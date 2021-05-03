@@ -11,7 +11,9 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Configuration;
 
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * This class streamlines all settings from extension manager
@@ -23,26 +25,15 @@ class ExtConf implements SingletonInterface
      */
     protected $youtubeDataApiKey = '';
 
-    /**
-     * constructor of this class
-     * This method reads the global configuration and calls the setter methods.
-     */
     public function __construct()
     {
         // get global configuration
-        $extConf = unserialize(
-            $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mediapool'] ?? [],
-            [
-                'allowed_classes' => false
-            ]
-        );
-        if (is_array($extConf)) {
-            // call setter method foreach configuration entry
-            foreach ($extConf as $key => $value) {
-                $methodName = 'set' . ucfirst($key);
-                if (method_exists($this, $methodName)) {
-                    $this->$methodName($value);
-                }
+        $extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('mediapool') ?? [];
+        // call setter method foreach configuration entry
+        foreach ($extConf as $key => $value) {
+            $methodName = 'set' . ucfirst($key);
+            if (method_exists($this, $methodName)) {
+                $this->$methodName($value);
             }
         }
     }
