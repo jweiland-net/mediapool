@@ -5,8 +5,8 @@
 		<header/>
 		<body>
 			<trans-unit id="youtubeDataApiKey">
-				<source>Enter your Youtube Data API v3 Key:You can receive a key from https://console.developers.google.com/</source>
-				<target>Youtube Data API v3 Key eingeben:Ein API-Key kann von https://console.developers.google.com/ bezogen werden.</target>
+				<source>Enter your Youtube Data API v3 Key: You can receive a key from https://console.developers.google.com/</source>
+				<target>Youtube Data API v3 Key eingeben: Ein API-Key kann von https://console.developers.google.com/ bezogen werden.</target>
 			</trans-unit>
 		</body>
 	</file>
