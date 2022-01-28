@@ -85,6 +85,11 @@ class Video extends AbstractEntity
      */
     protected $thumbnailLarge = '';
 
+    /**
+     * @var string
+     */
+    protected $slug = '';
+
     public function getTitle(): string
     {
         return $this->title;
@@ -172,5 +177,15 @@ class Video extends AbstractEntity
     public function setThumbnailLarge(string $thumbnailLarge): void
     {
         $this->thumbnailLarge = $thumbnailLarge;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
     }
 }

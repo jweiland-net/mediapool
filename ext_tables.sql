@@ -14,6 +14,7 @@ CREATE TABLE tx_mediapool_domain_model_video (
 	video_id varchar(100) DEFAULT '' NOT NULL,
 	thumbnail varchar(100) DEFAULT '' NOT NULL,
 	thumbnail_large varchar(100) DEFAULT '' NOT NULL,
+	slug varchar(2048),
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
@@ -35,7 +36,7 @@ CREATE TABLE tx_mediapool_domain_model_video (
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
+	KEY t3ver_oid (t3ver_oid,t3ver_wsid)
 );
 
 #
@@ -59,6 +60,7 @@ CREATE TABLE tx_mediapool_domain_model_playlist (
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	starttime int(11) unsigned DEFAULT '0' NOT NULL,
 	endtime int(11) unsigned DEFAULT '0' NOT NULL,
+	slug varchar(2048),
 
 	t3ver_oid int(11) DEFAULT '0' NOT NULL,
 	t3ver_id int(11) DEFAULT '0' NOT NULL,
@@ -72,7 +74,7 @@ CREATE TABLE tx_mediapool_domain_model_playlist (
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
+	KEY t3ver_oid (t3ver_oid,t3ver_wsid)
 );
 
 #

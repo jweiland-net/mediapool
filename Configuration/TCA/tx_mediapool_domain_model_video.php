@@ -88,7 +88,7 @@ return [
             'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_video.player_html',
             'config' => [
                 'type' => 'user',
-                'userFunc' => \JWeiland\Mediapool\Tca\VideoPlayer::class . '->render'
+                'renderType' => 'videoPlayer'
             ]
         ],
         'description' => [
@@ -96,6 +96,23 @@ return [
             'config' => [
                 'type' => 'text',
                 'renderType' => 'videoText',
+            ]
+        ],
+        'slug' => [
+            'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:slug',
+            'config' => [
+                'type' => 'slug',
+                'generatorOptions' => [
+                    'fields' => ['title'],
+                    'fieldSeparator' => '/',
+                    'prefixParentPageSlug' => false,
+                    'replacements' => [
+                        '/' => ''
+                    ],
+                    'fallbackCharacter' => '-',
+                    'eval' => 'uniqueInSite',
+                    'default' => ''
+                ]
             ]
         ],
         'video_id' => [
@@ -116,7 +133,7 @@ return [
     ],
     'types' => [
         '0' => [
-            'showitem' => 'link,upload_date,title,player_html,description,thumbnail,thumbnail_large'
+            'showitem' => 'link,upload_date,title,player_html,description,slug,thumbnail,thumbnail_large'
         ],
     ],
 ];

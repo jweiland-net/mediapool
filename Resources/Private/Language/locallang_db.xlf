@@ -56,6 +56,10 @@
 			<trans-unit id="plugin.gallery.description">
 				<source>This plugins adds a gallery using file collections to your website.</source>
 			</trans-unit>
+
+			<trans-unit id="slug">
+				<source>Path segment</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

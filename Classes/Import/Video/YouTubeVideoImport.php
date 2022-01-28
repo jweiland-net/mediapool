@@ -168,7 +168,7 @@ class YouTubeVideoImport extends AbstractVideoImport
                 // $videoInformation is already unified and casted. Add it to the $data array
                 $data['tx_mediapool_domain_model_video'][$recordUid] = $videoInformation;
                 // add pid on new records
-                if (strpos($recordUid, 'NEW') === 0) {
+                if (is_string($recordUid) && strpos($recordUid, 'NEW') === 0) {
                     $data['tx_mediapool_domain_model_video'][$recordUid]['pid'] = $pid;
                 }
             } elseif ($fetchedVideoInformation[$videoId] === 'noPermission') {
@@ -220,13 +220,14 @@ class YouTubeVideoImport extends AbstractVideoImport
      */
     protected function getVideoId(string $videoLink): string
     {
-        $query = parse_url($videoLink, PHP_URL_QUERY);
-        parse_str($query, $parsedQuery);
-        preg_match('/https\:\/\/youtu\.be\/(.+)/', $videoLink, $matches);
-        if (count($matches) === 2) {
-            return $matches[1];
+        $parsedUrl = parse_url($videoLink);
+        $videoId = '';
+        if (array_key_exists('query', $parsedUrl)) {
+            parse_str($parsedUrl['query'], $parsedQuery);
+            $videoId = $parsedQuery['v'] ?? '';
         }
-        return $parsedQuery['v'] ?? '';
+
+        return $videoId ?: substr($parsedUrl['path'] ?? '/', 1);
     }
 
     /**

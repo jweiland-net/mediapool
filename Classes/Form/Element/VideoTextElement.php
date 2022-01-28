@@ -14,7 +14,6 @@ namespace JWeiland\Mediapool\Form\Element;
 use TYPO3\CMS\Backend\Form\Element\AbstractFormElement;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
-
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -59,7 +58,7 @@ class VideoTextElement extends AbstractFormElement
         $html = [];
         $html[] =
             '<input type="hidden" name="' . $parameterArray['itemFormElName'] . '" value="' .
-            htmlspecialchars($parameterArray['itemFormElValue']) . '" />';
+            htmlspecialchars((string)$parameterArray['itemFormElValue']) . '" />';
         $html[] = '<div class="formengine-field-item t3js-formengine-field-item">';
         $html[] =   '<div class="form-wizards-wrap">';
         $html[] =       '<div class="form-wizards-element">';
