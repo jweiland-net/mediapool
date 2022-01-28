@@ -96,6 +96,23 @@ return [
                 'maxitems' => 1000,
             ]
         ],
+        'slug' => [
+            'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:slug',
+            'config' => [
+                'type' => 'slug',
+                'generatorOptions' => [
+                    'fields' => ['title'],
+                    'fieldSeparator' => '/',
+                    'prefixParentPageSlug' => false,
+                    'replacements' => [
+                        '/' => ''
+                    ],
+                    'fallbackCharacter' => '-',
+                    'eval' => 'uniqueInSite',
+                    'default' => ''
+                ]
+            ],
+        ],
         'playlist_id' => [
             'config' => [
                 'type' => 'passthrough'
@@ -109,7 +126,7 @@ return [
     ],
     'types' => [
         '0' => [
-            'showitem' => 'link,title,videos,playlist_id,pid'
+            'showitem' => 'link,title,videos,slug,playlist_id,pid'
         ],
     ],
 ];

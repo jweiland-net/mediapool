@@ -40,6 +40,12 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1508229522] = [
     'class' => \JWeiland\Mediapool\Form\Element\InlineVideoElement::class,
 ];
 
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1643272486] = [
+    'nodeName' => 'videoPlayer',
+    'priority' => 70,
+    'class' => \JWeiland\Mediapool\Form\Element\VideoPlayerElement::class,
+];
+
 // Register task for updating video information
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\JWeiland\Mediapool\Task\UpdateVideoInformation::class] = [
     'extension' => 'mediapool',
@@ -89,3 +95,8 @@ $iconRegistry->registerIcon(
 
 // Add ts config for content element wizard
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:mediapool/Configuration/TSconfig/ContentElementWizard.tsconfig">');
+
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['mediapoolVideoSlug']
+    = \JWeiland\Mediapool\Updates\VideoSlugUpdate::class;
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['mediapoolPlaylistSlug']
+    = \JWeiland\Mediapool\Updates\PlaylistSlugUpdate::class;

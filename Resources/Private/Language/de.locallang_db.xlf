@@ -72,6 +72,11 @@
 				<source>This plugins adds a gallery using file collections to your website.</source>
 				<target>Dieses Plugin ermöglicht es, eine Galerie aus einer Dateisammlung einzubinden.</target>
 			</trans-unit>
+
+			<trans-unit id="slug">
+				<source>Path segment</source>
+				<target>Segment für Sprechende URL</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

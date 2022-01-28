@@ -64,6 +64,11 @@ class Playlist extends AbstractEntity
      */
     protected $thumbnail = '';
 
+    /**
+     * @var string
+     */
+    protected $slug = '';
+
     public function __construct()
     {
         $this->videos = new ObjectStorage();
@@ -127,5 +132,15 @@ class Playlist extends AbstractEntity
     public function setThumbnail(string $thumbnail): void
     {
         $this->thumbnail = $thumbnail;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
     }
 }
