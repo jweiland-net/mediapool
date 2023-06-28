@@ -6,7 +6,7 @@ if (!defined('TYPO3_MODE')) {
 call_user_func(static function () {
     // Register main plugin
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-        'mediapool',
+        'Mediapool',
         'Mediapool',
         'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.mediapool.title',
         'EXT:mediapool/Resources/Public/Icons/video_play.svg'
@@ -14,7 +14,7 @@ call_user_func(static function () {
 
     // Register gallery plugin
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-        'mediapool',
+        'Mediapool',
         'Gallery',
         'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.gallery.title',
         'EXT:mediapool/Resources/Public/Icons/gallery.svg'

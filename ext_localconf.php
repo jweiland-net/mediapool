@@ -56,7 +56,7 @@ call_user_func(static function () {
         'extension' => 'mediapool',
         'title' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:scheduler.update_video_information.title',
         'description' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:scheduler.update_video_information.description',
-        'additionalFields' => \JWeiland\Mediapool\Task\UpdateVideoInformationAdditionalFieldProvider::class
+        'additionalFields' => \JWeiland\Mediapool\Task\UpdateVideoInformationAdditionalFieldProvider::class,
     ];
 
     // Register task for updating video information
@@ -64,25 +64,25 @@ call_user_func(static function () {
         'extension' => 'mediapool',
         'title' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:scheduler.update_playlist_information.title',
         'description' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:scheduler.update_playlist_information.description',
-        'additionalFields' => \JWeiland\Mediapool\Task\UpdatePlaylistInformationAdditionalFieldProvider::class
+        'additionalFields' => \JWeiland\Mediapool\Task\UpdatePlaylistInformationAdditionalFieldProvider::class,
     ];
 
     // Configure main plugin
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'JWeiland.mediapool',
+        'Mediapool',
         'Mediapool',
         [
-            'Video' => 'show,listRecommended',
-            'Playlist' => 'listByCategory,listLatestVideos,listVideos'
+            \JWeiland\Mediapool\Controller\VideoController::class => 'show,listRecommended',
+            \JWeiland\Mediapool\Controller\PlaylistController::class => 'listByCategory,listLatestVideos,listVideos',
         ]
     );
 
     // Configure gallery plugin
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'JWeiland.mediapool',
+        'Mediapool',
         'Gallery',
         [
-            'Gallery' => 'preview',
+            \JWeiland\Mediapool\Controller\GalleryController::class => 'preview',
         ]
     );
 
