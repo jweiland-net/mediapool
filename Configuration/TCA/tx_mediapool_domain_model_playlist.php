@@ -99,7 +99,7 @@ return [
                 'type' => 'input',
                 'eval' => 'trim,required',
                 'default' => '',
-                'placeholder' => 'https://www.youtube.com/watch?v=Fm5SoReSv5M',
+                'placeholder' => 'https://www.youtube.com/playlist?list=PLbDO1duet8JWl9BJeCxM5z4Zi3nMcwEIE',
                 'renderType' => 'videoLink',
                 'importType' => 'playlist',
             ]
