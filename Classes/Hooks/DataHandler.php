@@ -160,7 +160,7 @@ class DataHandler
             $playlistRepository = $objectManager->get(PlaylistRepository::class);
             $pid = $playlistRepository->findPidByUid($uid);
         }
-        $data = $playlistService->getPlaylistData($fieldArray['link'], $pid);
+        $data = $playlistService->getPlaylistData($fieldArray['link'], (int)$pid);
         if ($data) {
             ArrayUtility::mergeRecursiveWithOverrule($fieldArray, $data['fieldArray']);
             ArrayUtility::mergeRecursiveWithOverrule($this->dataHandler->datamap, $data['dataHandler']);

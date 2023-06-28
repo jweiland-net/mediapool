@@ -77,9 +77,6 @@ class PlaylistRepository extends Repository
 
     /**
      * Find pid of a playlist by uid
-     *
-     * @param int $playlistUid
-     * @return int
      */
     public function findPidByUid(int $playlistUid): int
     {
