@@ -1,0 +1,21 @@
+
+plugin.tx_mediapool_gallery {
+  view {
+    # cat=plugin.tx_mediapool_gallery/file; type=string; label=Path to template root (FE)
+    templateRootPath = EXT:contributory_calculator/Resources/Private/Templates/
+    # cat=plugin.tx_mediapool_gallery/file; type=string; label=Path to template partials (FE)
+    partialRootPath = EXT:contributory_calculator/Resources/Private/Partials/
+    # cat=plugin.tx_mediapool_gallery/file; type=string; label=Path to template layouts (FE)
+    layoutRootPath = EXT:contributory_calculator/Resources/Private/Layouts/
+  }
+  persistence {
+    # cat=plugin.tx_mediapool_gallery//a; type=string; label=Default storage PID
+    storagePid =
+  }
+  settings {
+    # cat=plugin.tx_mediapool_gallery/dims/a; type=string; label=Height of the preview image (e.g. 600 or 600c to crop the image)
+    height = 600c
+    # cat=plugin.tx_mediapool_gallery/dims/b; type=string; label=Width of the preview image (e.g. 600 or 600c to crop the image)
+    width = 600
+  }
+}
