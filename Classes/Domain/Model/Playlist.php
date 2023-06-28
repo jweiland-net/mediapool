@@ -50,7 +50,7 @@ class Playlist extends AbstractEntity
      * Videos of this playlist
      * imported from video platform
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWeiland\Mediapool\Domain\Model\Video>
+     * @var ObjectStorage<Video>
      */
     protected $videos;
 
@@ -72,6 +72,14 @@ class Playlist extends AbstractEntity
     public function __construct()
     {
         $this->videos = new ObjectStorage();
+    }
+
+    /**
+     * Called again with initialize object, as fetching an entity from the DB does not use the constructor
+     */
+    public function initializeObject()
+    {
+        $this->videos = $this->videos ?? new ObjectStorage();
     }
 
     public function getTitle(): string
