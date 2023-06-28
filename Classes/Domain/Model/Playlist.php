@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Domain\Model;
 
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
@@ -55,6 +56,12 @@ class Playlist extends AbstractEntity
     protected $videos;
 
     /**
+     * @var ObjectStorage<Category>
+     * @Extbase\ORM\Lazy
+     */
+    protected $categories;
+
+    /**
      * Path to Thumbnail
      * this can be local AND external
      * like: /fileadmin/playlists/playlist.jpg
@@ -72,6 +79,7 @@ class Playlist extends AbstractEntity
     public function __construct()
     {
         $this->videos = new ObjectStorage();
+        $this->categories = new ObjectStorage();
     }
 
     /**
@@ -80,6 +88,7 @@ class Playlist extends AbstractEntity
     public function initializeObject()
     {
         $this->videos = $this->videos ?? new ObjectStorage();
+        $this->categories = $this->categories ?? new ObjectStorage();
     }
 
     public function getTitle(): string
@@ -130,6 +139,16 @@ class Playlist extends AbstractEntity
     public function setVideos(ObjectStorage $videos): void
     {
         $this->videos = $videos;
+    }
+
+    public  function getCategories(): ObjectStorage
+    {
+        return $this->categories;
+    }
+
+    public  function setCategories(ObjectStorage $categories): void
+    {
+        $this->categories = $categories;
     }
 
     public function getThumbnail(): string
