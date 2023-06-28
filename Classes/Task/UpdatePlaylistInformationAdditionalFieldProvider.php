@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Task;
 
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -94,7 +95,7 @@ class UpdatePlaylistInformationAdditionalFieldProvider extends AbstractAdditiona
         if (!MathUtility::isIntegerInRange($submittedData['mediapool_playlist_mode'], 0, 1)) {
             $this->addMessage(
                 LocalizationUtility::translate($this->ll . 'scheduler.update_video_information.unknown_mode'),
-                FlashMessage::ERROR
+                AbstractMessage::ERROR
             );
             return false;
         }

@@ -16,6 +16,7 @@ use JWeiland\Mediapool\Service\PlaylistService;
 use JWeiland\Mediapool\Service\VideoService;
 use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
@@ -100,7 +101,7 @@ class DataHandler
                 LocalizationUtility::translate(
                     'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:data_handler.exception.title'
                 ),
-                FlashMessage::ERROR,
+                AbstractMessage::ERROR,
                 [$e->getCode()]
             );
             $this->flashMessageQueue->addMessage($flashMessage);

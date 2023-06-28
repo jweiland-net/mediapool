@@ -14,6 +14,7 @@ namespace JWeiland\Mediapool;
 use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogLevel;
 use TYPO3\CMS\Core\Log\LogManager;
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
@@ -68,7 +69,7 @@ abstract class AbstractBase
      * @param string $title trans-unit id for title
      * @param string $message trans-unit id for title
      * @param array $messageArguments arguments for message trans-unit
-     * @param int $flashMessageSeverity FlashMessage::<ERROR|OK|...>
+     * @param int $flashMessageSeverity AbstractMessage::<ERROR|OK|...>
      * @param string $logLevel use LogLevel::<...> constants
      * @param string $logMessage If a custom log message is set, a log entry will be created
      * @param array $logMessageArguments arguments for log message
@@ -77,7 +78,7 @@ abstract class AbstractBase
         string $title,
         string $message,
         array $messageArguments = [],
-        int $flashMessageSeverity = FlashMessage::ERROR,
+        int $flashMessageSeverity = AbstractMessage::ERROR,
         string $logLevel = LogLevel::ERROR,
         string $logMessage = '',
         array $logMessageArguments = []
