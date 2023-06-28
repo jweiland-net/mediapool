@@ -15,8 +15,13 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime'
         ],
-        'searchFields' => 'title,link',
+        'searchFields' => 'title',
         'iconfile' => 'EXT:mediapool/Resources/Public/Icons/tx_mediapool_domain_model_playlist.svg'
+    ],
+    'types' => [
+        '0' => [
+            'showitem' => 'title,slug,link,videos,categories',
+        ],
     ],
     'columns' => [
         't3ver_label' => [
@@ -63,37 +68,12 @@ return [
                 'type' => 'passthrough',
             ]
         ],
-        'link' => [
-            'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_playlist.link',
-            'config' => [
-                'type' => 'input',
-                'eval' => 'trim,required',
-                'default' => '',
-                'placeholder' => 'https://www.youtube.com/watch?v=Fm5SoReSv5M',
-                'renderType' => 'videoLink',
-                'importType' => 'playlist',
-            ]
-        ],
         'title' => [
             'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_playlist.title',
             'config' => [
                 'type' => 'input',
                 'eval' => 'trim',
                 'renderType' => 'videoHeader',
-            ]
-        ],
-        'videos' => [
-            'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_playlist.videos',
-            'config' => [
-                'type' => 'group',
-                'internal_type' => 'db',
-                'allowed' => 'tx_mediapool_domain_model_video',
-                'multiple' => true,
-                'renderType' => 'inlineVideo',
-                'foreign_table' => 'tx_mediapool_domain_model_video',
-                'MM' => 'tx_mediapool_playlist_video_mm',
-                'minitems' => 0,
-                'maxitems' => 1000,
             ]
         ],
         'slug' => [
@@ -113,6 +93,61 @@ return [
                 ]
             ],
         ],
+        'link' => [
+            'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_playlist.link',
+            'config' => [
+                'type' => 'input',
+                'eval' => 'trim,required',
+                'default' => '',
+                'placeholder' => 'https://www.youtube.com/watch?v=Fm5SoReSv5M',
+                'renderType' => 'videoLink',
+                'importType' => 'playlist',
+            ]
+        ],
+        'videos' => [
+            'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_playlist.videos',
+            'config' => [
+                'type' => 'group',
+                'internal_type' => 'db',
+                'allowed' => 'tx_mediapool_domain_model_video',
+                'multiple' => true,
+                'renderType' => 'inlineVideo',
+                'foreign_table' => 'tx_mediapool_domain_model_video',
+                'MM' => 'tx_mediapool_playlist_video_mm',
+                'minitems' => 0,
+                'maxitems' => 1000,
+            ]
+        ],
+        'categories' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_tca.xlf:sys_category.categories',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectTree',
+                'treeConfig' => [
+                    'parentField' => 'parent',
+                    'appearance' => [
+                        'showHeader' => true,
+                        'expandAll' => true,
+                        'maxLevels' => 99,
+                    ],
+                ],
+                'MM' => 'sys_category_record_mm',
+                'MM_match_fields' => [
+                    'fieldname' => 'categories',
+                    'tablenames' => 'tx_mediapool_domain_model_playlist',
+                ],
+                'MM_opposite_field' => 'items',
+                'foreign_table' => 'sys_category',
+                'foreign_table_where' => ' AND (sys_category.sys_language_uid = 0 OR sys_category.l10n_parent = 0) ORDER BY sys_category.sorting',
+                'size' => 10,
+                'minitems' => 0,
+                'maxitems' => 99,
+                'behaviour' => [
+                    'allowLanguageSynchronization' => true,
+                ],
+            ],
+        ],
         'playlist_id' => [
             'config' => [
                 'type' => 'passthrough'
@@ -122,11 +157,6 @@ return [
             'config' => [
                 'type' => 'passthrough'
             ]
-        ],
-    ],
-    'types' => [
-        '0' => [
-            'showitem' => 'link,title,videos,slug,playlist_id,pid'
         ],
     ],
 ];
