@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Task;
 
-use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -35,7 +35,7 @@ class UpdateVideoInformationAdditionalFieldProvider extends AbstractAdditionalFi
      * @param array $taskInfo Values of the fields from the add/edit task form
      * @param AbstractTask $task The task object being edited. Null when adding a task!
      * @param SchedulerModuleController $schedulerModule Reference to the scheduler backend module
-     * @return array A two dimensional array, array('Identifier' => array('fieldId' => array('code' => '', 'label' => '', 'cshKey' => '', 'cshLabel' => ''))
+     * @return array A two-dimensional array, array('Identifier' => array('fieldId' => array('code' => '', 'label' => '', 'cshKey' => '', 'cshLabel' => ''))
      */
     public function getAdditionalFields(
         array &$taskInfo,
@@ -47,7 +47,7 @@ class UpdateVideoInformationAdditionalFieldProvider extends AbstractAdditionalFi
         // mode
         $modes = [
             0 => LocalizationUtility::translate($this->ll . 'page_selection.0'),
-            1 => LocalizationUtility::translate($this->ll . 'page_selection.1')
+            1 => LocalizationUtility::translate($this->ll . 'page_selection.1'),
         ];
         $html = [];
         $html[] = '<select class="form-control" name="tx_scheduler[mediapool_video_mode]">';
@@ -59,7 +59,7 @@ class UpdateVideoInformationAdditionalFieldProvider extends AbstractAdditionalFi
         $html[] = '</select>';
         $result['mediapool_video_mode'] = [
             'code' => implode(LF, $html),
-            'label' => $this->ll . 'mode'
+            'label' => $this->ll . 'mode',
         ];
 
         // page selection
@@ -67,7 +67,7 @@ class UpdateVideoInformationAdditionalFieldProvider extends AbstractAdditionalFi
             'code' =>
                 '<input class="form-control" name="tx_scheduler[mediapool_video_page_selection]" value="' .
                 $task->pageSelection . '" />',
-            'label' => $this->ll . 'page_selection'
+            'label' => $this->ll . 'page_selection',
         ];
 
         return $result;
@@ -94,7 +94,7 @@ class UpdateVideoInformationAdditionalFieldProvider extends AbstractAdditionalFi
         if (!MathUtility::isIntegerInRange($submittedData['mediapool_video_mode'], 0, 1)) {
             $this->addMessage(
                 LocalizationUtility::translate($this->ll . 'scheduler.update_video_information.unknown_mode'),
-                FlashMessage::ERROR
+                AbstractMessage::ERROR
             );
             return false;
         }

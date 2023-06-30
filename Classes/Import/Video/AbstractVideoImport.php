@@ -43,7 +43,6 @@ abstract class AbstractVideoImport extends AbstractImport
      * in this example the records 4 and 5 got updated and a new record
      * for jzTVVocFaVE would be created
      *
-     * @param array $videos
      * @param int $pid this will be the pid of NEW records
      * @param string $recordUids reference that includes all UIDs as a comma separated list
      * @param bool $checkExistingVideos if true the video id in combination with the pid will be checked and no

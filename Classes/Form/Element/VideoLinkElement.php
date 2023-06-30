@@ -13,7 +13,6 @@ namespace JWeiland\Mediapool\Form\Element;
 
 use JWeiland\Mediapool\Utility\VideoPlatformUtility;
 use TYPO3\CMS\Backend\Form\Element\InputTextElement;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
@@ -55,13 +54,12 @@ class VideoLinkElement extends InputTextElement
         $videoPlatformsHTML[] = '</div>';
         $videoPlatformsHTML = implode(LF, $videoPlatformsHTML);
         $resultArray['html'] .= $videoPlatformsHTML;
+
         return $resultArray;
     }
 
     /**
      * Get HTML for supported video platforms
-     *
-     * @return string
      */
     protected function getSupportedVideoPlatformsHTML(): string
     {
@@ -69,21 +67,23 @@ class VideoLinkElement extends InputTextElement
             'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:render_type.' .
             'video_link_element.supported_video_platforms'
         ) . '<br />';
-        if ($this->config['importType'] === 'playlist') {
-            $videoPlatformList = VideoPlatformUtility::getRegisteredPlaylistImporters();
-        } else {
-            $videoPlatformList = VideoPlatformUtility::getRegisteredVideoImporters();
-        }
-        foreach ($videoPlatformList as $videoPlatformNameSpace) {
-            // because we just need the platform name we don´t need to call this with object manager
-            $videoPlatform = GeneralUtility::makeInstance($videoPlatformNameSpace);
+
+        try {
             if ($this->config['importType'] === 'playlist') {
-                VideoPlatformUtility::checkPlaylistImportClass($videoPlatform);
+                $registeredImporters = VideoPlatformUtility::getRegisteredPlaylistImporters();
             } else {
-                VideoPlatformUtility::checkVideoImportClass($videoPlatform);
+                $registeredImporters = VideoPlatformUtility::getRegisteredVideoImporters();
             }
-            $html .= sprintf('<span class="label label-primary">%s</span>', $videoPlatform->getPlatformName());
+
+            foreach ($registeredImporters as $registeredImporter) {
+                $html .= sprintf(
+                    '<span class="label label-primary">%s</span>',
+                    $registeredImporter->getPlatformName()
+                );
+            }
+        } catch (\Exception $e) {
         }
+
         return $html;
     }
 }

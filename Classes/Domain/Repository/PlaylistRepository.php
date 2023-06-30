@@ -18,7 +18,7 @@ use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
- * Class PlaylistRepository
+ * Repository to get records from table: tx_mediapool_domain_model_playlist
  */
 class PlaylistRepository extends Repository
 {
@@ -61,7 +61,6 @@ class PlaylistRepository extends Repository
     /**
      * Find playlists by category
      *
-     * @param int $categoryUid
      * @return QueryResultInterface|Playlist[]
      */
     public function findByCategory(int $categoryUid): QueryResultInterface
@@ -77,9 +76,6 @@ class PlaylistRepository extends Repository
 
     /**
      * Find pid of a playlist by uid
-     *
-     * @param int $playlistUid
-     * @return int
      */
     public function findPidByUid(int $playlistUid): int
     {

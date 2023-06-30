@@ -19,24 +19,21 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 class Video extends AbstractEntity
 {
     /**
-     * Video title
-     * imported from video platform
+     * Video title imported from video platform
      *
      * @var string
      */
     protected $title = '';
 
     /**
-     * Video description
-     * imported from video platform
+     * Video description imported from video platform
      *
      * @var string
      */
     protected $description = '';
 
     /**
-     * Upload date
-     * imported from video platform
+     * Upload date imported from video platform
      *
      * @var \DateTime
      */

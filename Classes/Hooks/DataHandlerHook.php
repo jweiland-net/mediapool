@@ -11,69 +11,64 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Hooks;
 
-use JWeiland\Mediapool\Domain\Repository\PlaylistRepository;
 use JWeiland\Mediapool\Service\PlaylistService;
 use JWeiland\Mediapool\Service\VideoService;
-use TYPO3\CMS\Core\Log\Logger;
-use TYPO3\CMS\Core\Log\LogManager;
+use JWeiland\Mediapool\Traits\GetFlashMessageQueueTrait;
+use JWeiland\Mediapool\Traits\GetPlaylistRepositoryTrait;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
+use TYPO3\CMS\Core\DataHandling\DataHandler;
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
-use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Class to get VideoData from a external video service
  * e.g. YouTube
  */
-class DataHandler
+class DataHandlerHook implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+    use GetFlashMessageQueueTrait;
+    use GetPlaylistRepositoryTrait;
+
     public const TABLE_VIDEO = 'tx_mediapool_domain_model_video';
     public const TABLE_PLAYLIST = 'tx_mediapool_domain_model_playlist';
 
     /**
-     * @var \TYPO3\CMS\Core\DataHandling\DataHandler
+     * @var DataHandler
      */
     protected $dataHandler;
 
     /**
-     * @var ObjectManager
+     * @var PlaylistService
      */
-    protected $objectMananger;
+    private $playlistService;
 
     /**
-     * @var FlashMessageQueue
+     * @var VideoService
      */
-    protected $flashMessageQueue;
+    private $videoService;
 
-    /**
-     * @var Logger
-     */
-    protected $logger;
-
-    public function __construct()
+    public function __construct(PlaylistService $playlistService, VideoService $videoService)
     {
-        $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
+        $this->playlistService = $playlistService;
+        $this->videoService = $videoService;
     }
 
     /**
      * Using DataHandler hook to fetch and insert video information
      * for tx_mediapool_domain_model_video
-     *
-     * @param \TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler
      */
-    public function processDatamap_beforeStart(\TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler): void
+    public function processDatamap_beforeStart(DataHandler $dataHandler): void
     {
         if (
             array_key_exists(self::TABLE_VIDEO, $dataHandler->datamap)
             || array_key_exists(self::TABLE_PLAYLIST, $dataHandler->datamap)
         ) {
             $this->dataHandler = $dataHandler;
-            $this->objectMananger = GeneralUtility::makeInstance(ObjectManager::class);
-            $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
-            $this->flashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
         }
 
         try {
@@ -100,24 +95,22 @@ class DataHandler
                 LocalizationUtility::translate(
                     'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:data_handler.exception.title'
                 ),
-                FlashMessage::ERROR,
+                AbstractMessage::ERROR,
                 [$e->getCode()]
             );
-            $this->flashMessageQueue->addMessage($flashMessage);
+
+            $this->getFlashMessageQueue()->addMessage($flashMessage);
+
             $this->logger->error(
                 'Exception while running DataHandler hook from ext:mediapool: ' . $e->getMessage() .
                 '(' . $e->getCode() . ') ' . $e->getFile() . ' Line: ' . $e->getLine()
             );
+
             // Prevent DataHandler from saving
             $this->dataHandler->datamap = [];
         }
     }
 
-    /**
-     * Process videos
-     *
-     * @param array $dataHandlerVideoTable
-     */
     protected function processVideos(array $dataHandlerVideoTable)
     {
         $videos = [];
@@ -127,9 +120,9 @@ class DataHandler
                 $videos[$uid]['pid'] = (int)$fields['pid'];
             }
         }
-        $videoService = $this->objectMananger->get(VideoService::class);
+
         // use current pid as video pid
-        $data = $videoService->getVideoData($videos, (int)GeneralUtility::_POST('popViewId'));
+        $data = $this->videoService->getVideoData($videos, (int)GeneralUtility::_POST('popViewId'));
         if ($data) {
             foreach ($data[self::TABLE_VIDEO] as $uid => &$fields) {
                 // override pid if declared in original field array
@@ -146,20 +139,16 @@ class DataHandler
     }
 
     /**
-     * Process playlist
-     *
      * @param int|string $uid of the playlist
-     * @param array $fieldArray
      */
     protected function processPlaylist($uid, array &$fieldArray): void
     {
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $playlistService = $objectManager->get(PlaylistService::class);
         if (!($pid = $fieldArray['pid'])) {
-            $playlistRepository = $objectManager->get(PlaylistRepository::class);
-            $pid = $playlistRepository->findPidByUid($uid);
+            $pid = $this->getPlaylistRepository()->findPidByUid($uid);
         }
-        $data = $playlistService->getPlaylistData($fieldArray['link'], $pid);
+
+        $data = $this->playlistService->getPlaylistData($fieldArray['link'], (int)$pid);
+
         if ($data) {
             ArrayUtility::mergeRecursiveWithOverrule($fieldArray, $data['fieldArray']);
             ArrayUtility::mergeRecursiveWithOverrule($this->dataHandler->datamap, $data['dataHandler']);

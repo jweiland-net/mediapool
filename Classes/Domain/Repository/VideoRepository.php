@@ -11,27 +11,29 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Domain\Repository;
 
+use JWeiland\Mediapool\Traits\GetObjectManagerTrait;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
- * Class VideoRepository
+ * Repository to get records from table: tx_mediapool_domain_model_video
  */
 class VideoRepository extends Repository
 {
+    use GetObjectManagerTrait;
+
     public function findByVideoId(string $videoId, int $pid): QueryResultInterface
     {
         $query = $this->createQuery();
         $query->getQuerySettings()->setRespectStoragePage(false);
 
         $query->matching(
-            $query->logicalAnd([
+            $query->logicalAnd(
                 $query->equals('videoId', $videoId),
                 $query->equals('pid', $pid)
-            ])
+            )
         );
         return $query->execute();
     }
@@ -84,11 +86,10 @@ class VideoRepository extends Repository
      * ];
      *
      * @param string $categoryUids comma separated list of uids (e.g. 1,4,6)
-     * @return array
      */
     public function findRecentByCategories(string $categoryUids): array
     {
-        $categoryRepository = $this->objectManager->get(CategoryRepository::class);
+        $categoryRepository = $this->getObjectManager()->get(CategoryRepository::class);
         $recentVideos = [];
         foreach (explode(',', $categoryUids) as $categoryUid) {
             $category = $categoryRepository->findByUid($categoryUid);
@@ -97,7 +98,7 @@ class VideoRepository extends Repository
                 $recentVideos[$categoryUid] = [
                     'category' => $category,
                     'playlist' => $recent['playlist'],
-                    'video' => $recent['video']
+                    'video' => $recent['video'],
                 ];
             }
         }
@@ -111,13 +112,10 @@ class VideoRepository extends Repository
      *     'playlist' => <instance of playlist>,
      *     'video' => <instance of the newest video in this playlist>
      * ];
-     *
-     * @param int $categoryUid
-     * @return array
      */
     public function findRecentByCategory(int $categoryUid): array
     {
-        $playlistRepository = $this->objectManager->get(PlaylistRepository::class);
+        $playlistRepository = $this->getObjectManager()->get(PlaylistRepository::class);
         $playlists = $playlistRepository->findByCategory($categoryUid);
         $uploadDate = 0;
         $recentVideo = [];
@@ -127,11 +125,12 @@ class VideoRepository extends Repository
                     $uploadDate = $video->getUploadDate();
                     $recentVideo = [
                         'playlist' => $playlist,
-                        'video' => $video
+                        'video' => $video,
                     ];
                 }
             }
         }
+
         return $recentVideo;
     }
 }

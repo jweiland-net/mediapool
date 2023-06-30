@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Domain\Model;
 
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
@@ -20,16 +21,14 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 class Playlist extends AbstractEntity
 {
     /**
-     * Title
-     * imported from video platform
+     * Title imported from video platform
      *
      * @var string
      */
     protected $title = '';
 
     /**
-     * Playlist link
-     * imported from video platform
+     * Playlist link imported from video platform
      *
      * @var string
      */
@@ -47,12 +46,17 @@ class Playlist extends AbstractEntity
     protected $playlist_id = '';
 
     /**
-     * Videos of this playlist
-     * imported from video platform
+     * Videos of this playlist imported from video platform
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWeiland\Mediapool\Domain\Model\Video>
+     * @var ObjectStorage<Video>
      */
     protected $videos;
+
+    /**
+     * @var ObjectStorage<Category>
+     * @Extbase\ORM\Lazy
+     */
+    protected $categories;
 
     /**
      * Path to Thumbnail
@@ -72,6 +76,16 @@ class Playlist extends AbstractEntity
     public function __construct()
     {
         $this->videos = new ObjectStorage();
+        $this->categories = new ObjectStorage();
+    }
+
+    /**
+     * Called again with initialize object, as fetching an entity from the DB does not use the constructor
+     */
+    public function initializeObject()
+    {
+        $this->videos = $this->videos ?? new ObjectStorage();
+        $this->categories = $this->categories ?? new ObjectStorage();
     }
 
     public function getTitle(): string
@@ -122,6 +136,16 @@ class Playlist extends AbstractEntity
     public function setVideos(ObjectStorage $videos): void
     {
         $this->videos = $videos;
+    }
+
+    public function getCategories(): ObjectStorage
+    {
+        return $this->categories;
+    }
+
+    public function setCategories(ObjectStorage $categories): void
+    {
+        $this->categories = $categories;
     }
 
     public function getThumbnail(): string

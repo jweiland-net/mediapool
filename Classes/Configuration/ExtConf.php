@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Configuration;
 
+use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
+use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -28,13 +30,16 @@ class ExtConf implements SingletonInterface
     public function __construct()
     {
         // get global configuration
-        $extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('mediapool') ?? [];
-        // call setter method foreach configuration entry
-        foreach ($extConf as $key => $value) {
-            $methodName = 'set' . ucfirst($key);
-            if (method_exists($this, $methodName)) {
-                $this->$methodName($value);
+        try {
+            $extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('mediapool') ?? [];
+            // call setter method foreach configuration entry
+            foreach ($extConf as $key => $value) {
+                $methodName = 'set' . ucfirst($key);
+                if (method_exists($this, $methodName)) {
+                    $this->$methodName($value);
+                }
             }
+        } catch (ExtensionConfigurationExtensionNotConfiguredException | ExtensionConfigurationPathDoesNotExistException $e) {
         }
     }
 

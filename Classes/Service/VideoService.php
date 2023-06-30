@@ -18,8 +18,6 @@ use TYPO3\CMS\Core\SingletonInterface;
 
 /**
  * Class VideoService
- *
- * ! use ObjectManager to get an instance of this class !
  */
 class VideoService extends AbstractBase implements SingletonInterface
 {
@@ -40,48 +38,47 @@ class VideoService extends AbstractBase implements SingletonInterface
      */
     public function getVideoData(array $videos, int $pid): array
     {
-        $videoPlatforms = VideoPlatformUtility::getRegisteredVideoImporters();
         $data = [];
         $videoPlatformMatch = 0;
-        foreach ($videoPlatforms as $videoPlatformNamespace) {
-            /** @var AbstractVideoImport $videoPlatform */
-            $videoPlatform = $this->objectManager->get($videoPlatformNamespace);
-            VideoPlatformUtility::checkVideoImportClass($videoPlatform);
-            $videosOfVideoPlatform = [];
-            foreach ($videos as $uid => $video) {
-                if ($this->isVideoFromVideoPlatform($video['video'], $videoPlatform)) {
-                    $videosOfVideoPlatform[$uid] = $video;
-                    $videoPlatformMatch++;
+
+        try {
+            foreach (VideoPlatformUtility::getRegisteredVideoImporters() as $registeredVideoImporter) {
+                $videosOfVideoPlatform = [];
+                foreach ($videos as $uid => $video) {
+                    if ($this->isVideoFromVideoPlatform($video['video'], $registeredVideoImporter)) {
+                        $videosOfVideoPlatform[$uid] = $video;
+                        $videoPlatformMatch++;
+                    }
+                }
+                if ($videosOfVideoPlatform) {
+                    $data[] = $registeredVideoImporter->processDataArray($videosOfVideoPlatform, $pid);
                 }
             }
-            if ($videosOfVideoPlatform) {
-                $data[] = $videoPlatform->processDataArray($videosOfVideoPlatform, $pid);
+
+            $data = array_merge(...$data);
+            $imported = count($data['tx_mediapool_domain_model_video']);
+            $total = count($videos);
+
+            if (!$videoPlatformMatch) {
+                $this->addFlashMessage(
+                    'video_service.no_match.title',
+                    'video_service.no_match.message'
+                );
+            } elseif ($imported !== $total) {
+                $this->addFlashMessage(
+                    'video_service.import_mismatch.title',
+                    'video_service.import_mismatch.message',
+                    [$imported, $total]
+                );
             }
+        } catch (\Exception $e) {
         }
-        $data = array_merge(...$data);
-        $imported = count($data['tx_mediapool_domain_model_video']);
-        $total = count($videos);
-        if (!$videoPlatformMatch) {
-            $this->addFlashMessageAndLog(
-                'video_service.no_match.title',
-                'video_service.no_match.message'
-            );
-        } elseif ($imported !== $total) {
-            $this->addFlashMessageAndLog(
-                'video_service.import_mismatch.title',
-                'video_service.import_mismatch.message',
-                [$imported, $total]
-            );
-        }
+
         return $data;
     }
 
     /**
      * Checks if one of the hosts from $videoPlatform matches with the video link.
-     *
-     * @param string $videoLink
-     * @param AbstractVideoImport $videoPlatform
-     * @return bool true if true, false if false you know ;)
      */
     protected function isVideoFromVideoPlatform(string $videoLink, AbstractVideoImport $videoPlatform): bool
     {
@@ -90,6 +87,7 @@ class VideoService extends AbstractBase implements SingletonInterface
                 return true;
             }
         }
+
         return false;
     }
 }

@@ -50,7 +50,7 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
     protected $platformHosts = [
         'https://youtube.com',
         'https://www.youtube.com',
-        'https://youtu.be'
+        'https://youtu.be',
     ];
 
     /**
@@ -70,7 +70,7 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
      */
     protected $playlistId = '';
 
-    public function injectYouTubeVideoImport(YouTubeVideoImport $youTubeVideoImport): void
+    public function __construct(YouTubeVideoImport $youTubeVideoImport)
     {
         $this->youTubeVideoImport = $youTubeVideoImport;
     }
@@ -92,13 +92,14 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
     {
         $this->apiKey = GeneralUtility::makeInstance(ExtConf::class)->getYoutubeDataApiKey();
         if (!($playlistId = $this->getPlaylistId($playlistLink))) {
-            $this->addFlashMessageAndLog(
+            $this->addFlashMessage(
                 'youTubePlaylistImport.invalid_id.title',
                 'youTubePlaylistImport.invalid_id.message',
                 [$playlistLink]
             );
             return [];
         }
+
         $this->playlistId = $playlistId;
         $information = $this->fetchPlaylistInformation();
         $videos = $this->fetchPlaylistItems();
@@ -113,12 +114,15 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
             $videoIds['NEW' . $i] = ['pid' => $pid, 'video' => trim($item['contentDetails']['videoId'])];
             $i++;
         }
+
         $recordUids = '';
         $data = $this->youTubeVideoImport->processDataArray($videoIds, $pid, $recordUids, true);
+
         // return empty array on error
         if ($this->youTubeVideoImport->hasError()) {
             return [];
         }
+
         $resultArray = [
             'fieldArray' => [
                 'pid' => $pid,
@@ -127,9 +131,9 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
                 'title' => (string)$information[0]['snippet']['title'],
                 'thumbnail' => (string)$information[0]['snippet']['thumbnails']['medium']['url'],
                 'thumbnail_large' => (string)$information[0]['snippet']['thumbnails']['standard']['url'],
-                'videos' => $recordUids
+                'videos' => $recordUids,
             ],
-            'dataHandler' => $data
+            'dataHandler' => $data,
         ];
 
         return $resultArray;
@@ -137,10 +141,7 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
 
     /**
      * Returns the id of playlist link.
-     * Otherwise returns false
-     *
-     * @param string $playlistLink
-     * @return string empty string if link is not valid
+     * Otherwise, returns false
      */
     protected function getPlaylistId(string $playlistLink): string
     {
@@ -162,15 +163,12 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
                 $playlistId = $parsedQuery['list'];
             }
         }
+
         return $playlistId;
     }
 
     /**
      * Returns the playlist id of the "Uploads" playlist from a YouTube channel.
-     *
-     * @param string $channelId
-     * @param string $user
-     * @return string
      */
     protected function getUploadsPlaylistIdFromYouTubeChannel(string $channelId, string $user): string
     {
@@ -182,10 +180,12 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
             // Old school YouTube channels like https://www.youtube.com/user/<username>
             $channelParam = 'forUsername=' . $user;
         }
+
         $response = $this->client->request(
             'GET',
             sprintf(self::CHANNELS_LIST_API_URL, $this->apiKey, $channelParam)
         );
+
         if ($response->getStatusCode() === 200) {
             $result = json_decode($response->getBody()->getContents(), true);
             if (isset($result['items'][0]['contentDetails']['relatedPlaylists']['uploads'])) {
@@ -194,13 +194,13 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
         } else {
             $this->checkResponseStatusCode($response);
         }
+
         return $playlistId;
     }
 
     /**
      * Checks the response status code
      *
-     * @param ResponseInterface $response
      * @throws StatusException
      */
     protected function checkResponseStatusCode(ResponseInterface $response): void

@@ -14,6 +14,7 @@ namespace JWeiland\Mediapool\Utility;
 use JWeiland\Mediapool\Import\MissingImporterException;
 use JWeiland\Mediapool\Import\Playlist\AbstractPlaylistImport;
 use JWeiland\Mediapool\Import\Video\AbstractVideoImport;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class VideoPlatformUtility
@@ -24,13 +25,25 @@ class VideoPlatformUtility
      * Returns an array with registered video importers.
      * Does not validate if the registered classes are children from AbstractVideoImport!
      *
-     * @return array
+     * @return AbstractVideoImport[]
      * @throws \Exception if no video importers are registered
      */
     public static function getRegisteredVideoImporters(): array
     {
-        if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['videoImport'])) {
-            return $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['videoImport'];
+        if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['videoImport'] ?? false)) {
+            $registeredVideoImporters = [];
+            foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['videoImport'] as $className) {
+                if (!class_exists($className)) {
+                    continue;
+                }
+
+                $registeredVideoImporter = GeneralUtility::makeInstance($className);
+                if ($registeredVideoImporter instanceof AbstractVideoImport) {
+                    $registeredVideoImporters[] = $registeredVideoImporter;
+                }
+            }
+
+            return $registeredVideoImporters;
         }
 
         throw new MissingImporterException(
@@ -43,15 +56,26 @@ class VideoPlatformUtility
 
     /**
      * Returns an array with registered playlist importers.
-     * Does not validate if the registered classes are children from AbstractPlaylistImport!
      *
-     * @return array
+     * @return AbstractPlaylistImport[]
      * @throws \Exception if no playlist importers are registered
      */
     public static function getRegisteredPlaylistImporters(): array
     {
-        if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['playlistImport'])) {
-            return $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['playlistImport'];
+        if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['playlistImport'] ?? false)) {
+            $registeredPlaylistImporters = [];
+            foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['playlistImport'] as $className) {
+                if (!class_exists($className)) {
+                    continue;
+                }
+
+                $registeredPlaylistImporter = GeneralUtility::makeInstance($className);
+                if ($registeredPlaylistImporter instanceof AbstractPlaylistImport) {
+                    $registeredPlaylistImporters[] = $registeredPlaylistImporter;
+                }
+            }
+
+            return $registeredPlaylistImporters;
         }
 
         throw new MissingImporterException(
@@ -60,23 +84,5 @@ class VideoPlatformUtility
             ' registered playlist importers.',
             1507881065
         );
-    }
-
-    /**
-     * Checks if $videoImport is an instance of AbstractVideoImport
-     *
-     * @param AbstractVideoImport $videoImport
-     */
-    public static function checkVideoImportClass(AbstractVideoImport $videoImport): void
-    {
-    }
-
-    /**
-     * Checks if $playlistImport is an instance of AbstractPlaylistImport
-     *
-     * @param AbstractPlaylistImport $playlistImport
-     */
-    public static function checkPlaylistImportClass(AbstractPlaylistImport $playlistImport): void
-    {
     }
 }

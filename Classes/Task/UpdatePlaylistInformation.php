@@ -11,17 +11,18 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Task;
 
-use JWeiland\Mediapool\Domain\Repository\PlaylistRepository;
+use JWeiland\Mediapool\Traits\GetPlaylistRepositoryTrait;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
 
 /**
- * Class UpdatePlaylistInformation
+ * Task to update the playlist information with fresh data from YouTube
  */
 class UpdatePlaylistInformation extends AbstractTask
 {
+    use GetPlaylistRepositoryTrait;
+
     /**
      * Task mode
      * 0 = update all records
@@ -39,57 +40,34 @@ class UpdatePlaylistInformation extends AbstractTask
      */
     public $pageSelection = '';
 
-    /**
-     * Playlist repository
-     *
-     * @var PlaylistRepository
-     */
-    protected $playlistRepository;
-
-    /**
-     * Data Handler
-     *
-     * @var DataHandler
-     */
-    protected $dataHandler;
-
-    /**
-     * This is the main method that is called when a task is executed
-     * It MUST be implemented by all classes inheriting from this one
-     * Note that there is no error handling, errors and failures are expected
-     * to be handled and logged by the client implementations.
-     * Should return TRUE on successful execution, FALSE on error.
-     *
-     * @return bool Returns TRUE on successful execution, FALSE on error
-     */
     public function execute(): bool
     {
-        $this->init();
         if ($this->mode === 0) {
             // fetch all
-            $playlists = $this->playlistRepository->findAllLinksAndUids();
+            $playlists = $this->getPlaylistRepository()->findAllLinksAndUids();
         } else {
             // fetch selected
-            $playlists = $this->playlistRepository->findLinksAndUidsByPid($this->pageSelection);
+            $playlists = $this->getPlaylistRepository()->findLinksAndUidsByPid($this->pageSelection);
         }
-        $data = [];
+
         // create data array for data handler
         // to use the DataHandler Hook
+        $data = [];
         foreach ($playlists as $playlist) {
             $data['tx_mediapool_domain_model_playlist'][$playlist['uid']] = [
-                'link' => $playlist['link']
+                'link' => $playlist['link'],
             ];
         }
-        $this->dataHandler->start($data, []);
-        $this->dataHandler->process_datamap();
+
+        $dataHandler = $this->getDataHandler();
+        $dataHandler->start($data, []);
+        $dataHandler->process_datamap();
 
         return true;
     }
 
-    protected function init(): void
+    private function getDataHandler(): DataHandler
     {
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $this->playlistRepository = $objectManager->get(PlaylistRepository::class);
-        $this->dataHandler = $objectManager->get(DataHandler::class);
+        return GeneralUtility::makeInstance(DataHandler::class);
     }
 }

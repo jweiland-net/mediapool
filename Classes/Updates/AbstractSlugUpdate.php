@@ -20,8 +20,6 @@ use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 
 /**
  * Abstract update for slug fields inside ext:mediapool
- *
- * @internal do not use this class outside ext:mediapool
  */
 abstract class AbstractSlugUpdate implements UpgradeWizardInterface
 {
@@ -35,19 +33,9 @@ abstract class AbstractSlugUpdate implements UpgradeWizardInterface
      */
     protected $fieldName = 'slug';
 
-    /**
-     * Checks whether updates are required.
-     *
-     * @return bool Whether an update is required (TRUE) or not (FALSE)
-     */
     public function updateNecessary(): bool
     {
-        $updateNeeded = false;
-        // Check if the database table even exists
-        if ($this->checkIfWizardIsRequired()) {
-            $updateNeeded = true;
-        }
-        return $updateNeeded;
+        return $this->checkIfWizardIsRequired();
     }
 
     /**
@@ -56,18 +44,14 @@ abstract class AbstractSlugUpdate implements UpgradeWizardInterface
     public function getPrerequisites(): array
     {
         return [
-            DatabaseUpdatedPrerequisite::class
+            DatabaseUpdatedPrerequisite::class,
         ];
     }
 
-    /**
-     * Performs the accordant updates.
-     *
-     * @return bool Whether everything went smoothly or not
-     */
     public function executeUpdate(): bool
     {
         $this->populateSlugs();
+
         return true;
     }
 
@@ -90,12 +74,15 @@ abstract class AbstractSlugUpdate implements UpgradeWizardInterface
                 )
             )
             ->execute();
+
         $fieldConfig = $GLOBALS['TCA'][$this->table]['columns'][$this->fieldName]['config'];
         $slugHelper = GeneralUtility::makeInstance(SlugHelper::class, $this->table, $this->fieldName, $fieldConfig);
+
         while ($record = $statement->fetchAssociative()) {
             if ($record['title'] === '') {
                 continue;
             }
+
             $connection->update(
                 $this->table,
                 [$this->fieldName => $slugHelper->generate($record, (int)$record['pid'])],
@@ -107,14 +94,15 @@ abstract class AbstractSlugUpdate implements UpgradeWizardInterface
     /**
      * Check if there are record within "pages" database table with an empty "slug" field.
      *
-     * @return bool
      * @throws \InvalidArgumentException
+     * @throws \Doctrine\DBAL\Driver\Exception
      */
     protected function checkIfWizardIsRequired(): bool
     {
         $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
         $queryBuilder = $connectionPool->getQueryBuilderForTable($this->table);
-        $queryBuilder->getRestrictions()->removeAll()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+        $queryBuilder->getRestrictions()->removeAll();
+        $queryBuilder->getRestrictions()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
 
         $numberOfEntries = $queryBuilder
             ->count('uid')
@@ -127,6 +115,7 @@ abstract class AbstractSlugUpdate implements UpgradeWizardInterface
             )
             ->execute()
             ->fetchOne();
+
         return $numberOfEntries > 0;
     }
 }

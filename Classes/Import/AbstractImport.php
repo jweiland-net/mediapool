@@ -44,11 +44,9 @@ class AbstractImport extends AbstractBase
 
     /**
      * This property is used by VideoService and PlaylistService.
-     * They will only save data if this is false. Otherwise you have
-     * to add your own error messages with $this->addFlashMessageAndLog()
+     * They will only save data if this is false. Otherwise, you have
+     * to add your own error messages with $this->addFlashMessage()
      * or your own error method.
-     *
-     * @var bool
      */
     protected $hasError = false;
 
@@ -59,8 +57,6 @@ class AbstractImport extends AbstractBase
 
     /**
      * Returns PlatformName
-     *
-     * @return string
      */
     public function getPlatformName(): string
     {
@@ -69,8 +65,6 @@ class AbstractImport extends AbstractBase
 
     /**
      * Returns PlatformHosts
-     *
-     * @return array
      */
     public function getPlatformHosts(): array
     {
@@ -79,8 +73,6 @@ class AbstractImport extends AbstractBase
 
     /**
      * Will return true if at least one error occurred.
-     *
-     * @return bool
      */
     public function hasError(): bool
     {

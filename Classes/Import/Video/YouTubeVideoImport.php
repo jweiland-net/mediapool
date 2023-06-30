@@ -14,15 +14,16 @@ namespace JWeiland\Mediapool\Import\Video;
 use JWeiland\Mediapool\Configuration\ExtConf;
 use JWeiland\Mediapool\Constants;
 use JWeiland\Mediapool\Domain\Model\Video;
-use JWeiland\Mediapool\Domain\Repository\VideoRepository;
+use JWeiland\Mediapool\Traits\GetVideoRepositoryTrait;
 use TYPO3\CMS\Core\Error\Http\StatusException;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class YouTubeVideoImport
  */
 class YouTubeVideoImport extends AbstractVideoImport
 {
+    use GetVideoRepositoryTrait;
+
     /**
      * URL to fetch video information via GET request
      * player = embedHtml
@@ -42,19 +43,13 @@ class YouTubeVideoImport extends AbstractVideoImport
     protected $platformHosts = [
         'https://youtube.com',
         'https://www.youtube.com',
-        'https://youtu.be'
+        'https://youtu.be',
     ];
 
     /**
      * @var Video
      */
     protected $video;
-
-    /**
-     * @var string
-     * @deprecated remove
-     */
-    protected $videoId = '';
 
     /**
      * YouTube Video IDs
@@ -72,11 +67,9 @@ class YouTubeVideoImport extends AbstractVideoImport
      */
     protected $apiKey = '';
 
-    public function initializeObject(): void
+    public function __construct(ExtConf $extConf)
     {
-        parent::initializeObject();
-
-        $this->apiKey = GeneralUtility::makeInstance(ExtConf::class)->getYoutubeDataApiKey();
+        $this->apiKey = $extConf->getYoutubeDataApiKey();
     }
 
     /**
@@ -88,16 +81,13 @@ class YouTubeVideoImport extends AbstractVideoImport
      * 'exi0iht_kLw,Vfw1pAmLlY,jzTVVocFaVE'
      * and a unified array:
      * [4 => 'exi0iht_kLw', 5 => 'Vfw1pAmLlY', 'NEW1234' => 'jzTVVocFaVE']
-     *
-     * @param array $videos
-     * @return string
      */
     protected function implodeVideoIdsAndUnifyArray(array &$videos): string
     {
         $videoIds = [];
         foreach ($videos as &$video) {
             if (strpos($video['video'], 'http') === 0) {
-                // todo add error if getVideoId returns empty string
+                // ToDo: add error if getVideoId returns empty string
                 $video['video'] = $this->getVideoId($video['video']);
             } elseif (strpos(Constants::YOUTUBE_PLATFORM_PREFIX, $video['video']) === 0) {
                 $video['video'] = substr($video['video'], strlen(Constants::YOUTUBE_PLATFORM_PREFIX));
@@ -127,7 +117,6 @@ class YouTubeVideoImport extends AbstractVideoImport
      * in this example the records 4 and 5 got updated and a new record
      * for jzTVVocFaVE would be created
      *
-     * @param array $videos
      * @param int $pid this will be the pid of NEW records
      * @param string $recordUids reference that includes all UIDs as a comma separated list
      * @param bool $checkExistingVideos if true the video id in combination with the pid will be checked and no
@@ -142,7 +131,7 @@ class YouTubeVideoImport extends AbstractVideoImport
         string &$recordUids = '',
         bool $checkExistingVideos = false
     ): array {
-        $videoRepository = $this->objectManager->get(VideoRepository::class);
+        $videoRepository = $this->getVideoRepository();
         $this->videoIds = $this->implodeVideoIdsAndUnifyArray($videos);
         $fetchedVideoInformation = $this->fetchVideoInformation();
         $data = [];
@@ -150,6 +139,7 @@ class YouTubeVideoImport extends AbstractVideoImport
         foreach ($videos as $uid => $video) {
             $videoId = $video['video'];
             $pid = $video['pid'] ?: $pid;
+
             // check if video information for video is in array
             if (is_array($fetchedVideoInformation[$videoId])) {
                 $videoInformation = $fetchedVideoInformation[$videoId];
@@ -163,24 +153,26 @@ class YouTubeVideoImport extends AbstractVideoImport
                     );
                     $existingVideo = $queryResult->getFirst();
                 }
+
                 $recordUid = $existingVideo ? $existingVideo->getUid() : $uid;
                 $recordUidArray[] = $recordUid;
                 // $videoInformation is already unified and casted. Add it to the $data array
                 $data['tx_mediapool_domain_model_video'][$recordUid] = $videoInformation;
+
                 // add pid on new records
                 if (is_string($recordUid) && strpos($recordUid, 'NEW') === 0) {
                     $data['tx_mediapool_domain_model_video'][$recordUid]['pid'] = $pid;
                 }
             } elseif ($fetchedVideoInformation[$videoId] === 'noPermission') {
                 // if the video is private or set as not embeddable
-                $this->addFlashMessageAndLog(
+                $this->addFlashMessage(
                     'youTubeVideoImport.missing_youtube_permission.title',
                     'youTubeVideoImport.missing_youtube_permission.message',
                     [$videoId]
                 );
             } else {
                 // never fetched it ?
-                $this->addFlashMessageAndLog(
+                $this->addFlashMessage(
                     'youTubeVideoImport.missing_video_information.title',
                     'youTubeVideoImport.missing_video_information.message',
                     [$videoId]
@@ -188,14 +180,15 @@ class YouTubeVideoImport extends AbstractVideoImport
                 $this->hasError = true;
             }
         }
+
         $recordUids = implode(',', $recordUidArray);
+
         return $data;
     }
 
     /**
      * Checks a video for privacy status and embeddable
      *
-     * @param array $item
      * @return bool true if permissions are ok otherwise false
      */
     protected function checkVideoPermission(array $item): bool
@@ -213,9 +206,8 @@ class YouTubeVideoImport extends AbstractVideoImport
 
     /**
      * Returns the id of passed video link if valid.
-     * Otherwise returns false
+     * Otherwise, returns false
      *
-     * @param string $videoLink
      * @return string empty string if link is not valid
      */
     protected function getVideoId(string $videoLink): string
@@ -264,10 +256,7 @@ class YouTubeVideoImport extends AbstractVideoImport
      * Request video information for $videoIds
      * recursive call if API provides a nextPageToken
      *
-     * @param string $videoIds
      * @param array $items previous items for recursive call - leave it empty
-     * @param string $additionalRequestParams
-     * @return array
      * @throws StatusException
      */
     protected function doRequest(string $videoIds, array $items = [], string $additionalRequestParams = ''): array
@@ -307,6 +296,7 @@ class YouTubeVideoImport extends AbstractVideoImport
                 1507792488
             );
         }
+
         throw new StatusException(
             sprintf(
                 'Fetching video information for %s failed! Got status code %d and the following response: %s',
@@ -335,7 +325,7 @@ class YouTubeVideoImport extends AbstractVideoImport
             'player_html' => (string)$item['player']['embedHtml'],
             'video_id' => Constants::YOUTUBE_PLATFORM_PREFIX . $item['id'],
             'thumbnail' => (string)$item['snippet']['thumbnails']['medium']['url'],
-            'thumbnail_large' => $this->getLargestThumbnailForVideo($item)
+            'thumbnail_large' => $this->getLargestThumbnailForVideo($item),
         ];
     }
 
@@ -355,6 +345,7 @@ class YouTubeVideoImport extends AbstractVideoImport
                 return $item['snippet']['thumbnails'][$key]['url'];
             }
         }
+
         return '';
     }
 }
