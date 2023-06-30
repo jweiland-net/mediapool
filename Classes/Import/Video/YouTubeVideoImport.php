@@ -14,10 +14,8 @@ namespace JWeiland\Mediapool\Import\Video;
 use JWeiland\Mediapool\Configuration\ExtConf;
 use JWeiland\Mediapool\Constants;
 use JWeiland\Mediapool\Domain\Model\Video;
-use JWeiland\Mediapool\Domain\Repository\VideoRepository;
 use JWeiland\Mediapool\Traits\GetVideoRepositoryTrait;
 use TYPO3\CMS\Core\Error\Http\StatusException;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class YouTubeVideoImport

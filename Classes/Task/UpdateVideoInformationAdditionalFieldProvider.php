@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace JWeiland\Mediapool\Task;
 
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -36,7 +35,7 @@ class UpdateVideoInformationAdditionalFieldProvider extends AbstractAdditionalFi
      * @param array $taskInfo Values of the fields from the add/edit task form
      * @param AbstractTask $task The task object being edited. Null when adding a task!
      * @param SchedulerModuleController $schedulerModule Reference to the scheduler backend module
-     * @return array A two dimensional array, array('Identifier' => array('fieldId' => array('code' => '', 'label' => '', 'cshKey' => '', 'cshLabel' => ''))
+     * @return array A two-dimensional array, array('Identifier' => array('fieldId' => array('code' => '', 'label' => '', 'cshKey' => '', 'cshLabel' => ''))
      */
     public function getAdditionalFields(
         array &$taskInfo,

@@ -138,12 +138,12 @@ class Playlist extends AbstractEntity
         $this->videos = $videos;
     }
 
-    public  function getCategories(): ObjectStorage
+    public function getCategories(): ObjectStorage
     {
         return $this->categories;
     }
 
-    public  function setCategories(ObjectStorage $categories): void
+    public function setCategories(ObjectStorage $categories): void
     {
         $this->categories = $categories;
     }

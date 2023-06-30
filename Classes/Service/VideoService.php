@@ -15,7 +15,6 @@ use JWeiland\Mediapool\AbstractBase;
 use JWeiland\Mediapool\Import\Video\AbstractVideoImport;
 use JWeiland\Mediapool\Utility\VideoPlatformUtility;
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class VideoService

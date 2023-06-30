@@ -43,7 +43,8 @@ abstract class AbstractBase
     ): void {
         $title = LocalizationUtility::translate($this->errorMessagesFile . ':' . $title);
         $message = LocalizationUtility::translate(
-            $this->errorMessagesFile . ':' . $message, '',
+            $this->errorMessagesFile . ':' . $message,
+            '',
             $messageArguments
         );
 

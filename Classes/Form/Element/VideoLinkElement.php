@@ -13,7 +13,6 @@ namespace JWeiland\Mediapool\Form\Element;
 
 use JWeiland\Mediapool\Utility\VideoPlatformUtility;
 use TYPO3\CMS\Backend\Form\Element\InputTextElement;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
