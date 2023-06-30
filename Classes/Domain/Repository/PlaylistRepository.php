@@ -61,7 +61,6 @@ class PlaylistRepository extends Repository
     /**
      * Find playlists by category
      *
-     * @param int $categoryUid
      * @return QueryResultInterface|Playlist[]
      */
     public function findByCategory(int $categoryUid): QueryResultInterface

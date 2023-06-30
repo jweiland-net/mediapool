@@ -83,7 +83,6 @@ class VideoRepository extends Repository
      * ];
      *
      * @param string $categoryUids comma separated list of uids (e.g. 1,4,6)
-     * @return array
      */
     public function findRecentByCategories(string $categoryUids): array
     {
@@ -110,9 +109,6 @@ class VideoRepository extends Repository
      *     'playlist' => <instance of playlist>,
      *     'video' => <instance of the newest video in this playlist>
      * ];
-     *
-     * @param int $categoryUid
-     * @return array
      */
     public function findRecentByCategory(int $categoryUid): array
     {
