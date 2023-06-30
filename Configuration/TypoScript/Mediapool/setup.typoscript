@@ -1,0 +1,115 @@
+page.includeJSFooter.tx_mediapool = EXT:mediapool/Resources/Public/JavaScript/mediapool.js
+
+plugin.tx_mediapool_mediapool {
+  view {
+    templateRootPaths.100 = {$plugin.tx_mediapool_mediapool.view.templateRootPath}
+    partialRootPaths.100 = {$plugin.tx_mediapool_mediapool.view.partialRootPath}
+    layoutRootPaths.100 = {$plugin.tx_mediapool_mediapool.view.layoutRootPath}
+  }
+
+  persistence {
+    storagePid = {$plugin.tx_mediapool_mediapool.persistence.storagePid}
+  }
+}
+
+plugin.tx_mediapool._CSS_DEFAULT_STYLE (
+  .preview-icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background-color: #eee; /* ie fallback */
+    background: rgba(238, 238, 238, 0.8);
+    border-radius: 0.375rem;
+    width: 4rem;
+    height: 2.9rem;
+    margin: -1.45rem -2rem;
+    color: #d68605;
+    text-align: center;
+  }
+
+  .mediapool-video-preview img {
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .mediapool-video-embed.video-embed,
+  .mediapool-video-wrap {
+    border-radius: 0.375rem;
+    overflow: hidden;
+  }
+
+  .mediapool-video.video-embed {
+    margin-bottom: 0;
+  }
+
+  .mediapool-video-wrap {
+    margin-bottom: 1.5rem;
+  }
+
+  .mediapool-video-preview-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: .5em;
+    color: #333;
+    background-color: #eee; /* ie fallback */
+    background: rgba(238, 238, 238, 0.8);
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .mediapool-playlist-preview h4 {
+    height: 2.9rem;
+    display: table-cell;
+    vertical-align: bottom;
+  }
+
+  .mediapool-video-preview:hover .mediapool-video-preview-title {
+    background: rgba(238, 238, 238, 1);
+  }
+
+  .mediapool-video-preview:hover {
+    opacity: 0.9;
+  }
+
+  .mediapool-video-preview:hover .preview-icon {
+    background: rgb(255, 255, 255);
+  }
+
+  .mediapool-playlist {
+    background-color: #f3f4f4;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mediapool-playlist .mediapool-playlist-items {
+    overflow-y: scroll;
+    position: relative;
+  }
+
+  .mediapool-playlist .mediapool-playlist-header {
+    background: #ccc;
+    padding: .8em;
+  }
+
+  .mediapool-playlist .mediapool-playlist-header h4 {
+    margin: 0;
+  }
+
+  .mediapool-playlist .playlist-item-inner {
+    padding: .4em;
+  }
+
+  .mediapool-playlist .playlist-item-inner p {
+    padding: 0;
+    margin: 0;
+  }
+
+  .mediapool-playlist .playlist-item-active {
+    background: #e0e0e0;
+  }
+)

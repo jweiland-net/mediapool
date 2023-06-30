@@ -1,0 +1,15 @@
+
+plugin.tx_mediapool_mediapool {
+  view {
+    # cat=plugin.tx_mediapool_mediapool/file; type=string; label=Path to template root (FE)
+    templateRootPath = EXT:contributory_calculator/Resources/Private/Templates/
+    # cat=plugin.tx_mediapool_mediapool/file; type=string; label=Path to template partials (FE)
+    partialRootPath = EXT:contributory_calculator/Resources/Private/Partials/
+    # cat=plugin.tx_mediapool_mediapool/file; type=string; label=Path to template layouts (FE)
+    layoutRootPath = EXT:contributory_calculator/Resources/Private/Layouts/
+  }
+  persistence {
+    # cat=plugin.tx_mediapool_mediapool//a; type=string; label=Default storage PID
+    storagePid =
+  }
+}
