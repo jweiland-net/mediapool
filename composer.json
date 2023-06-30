@@ -13,7 +13,7 @@
 	"homepage": "https://jweiland.net",
 	"authors": [
 		{
-			"name": "Pascal Rinker",
+			"name": "Stefan Froemken",
 			"email": "projects@jweiland.net",
 			"role": "Developer"
 		}
@@ -36,7 +36,11 @@
 		}
 	},
 	"config": {
-		"vendor-dir": ".build/vendor"
+		"vendor-dir": ".build/vendor",
+		"allow-plugins": {
+			"typo3/cms-composer-installers": true,
+			"typo3/class-alias-loader": true
+		}
 	},
 	"extra": {
 		"typo3/cms": {
