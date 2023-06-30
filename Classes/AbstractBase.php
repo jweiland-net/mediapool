@@ -11,10 +11,9 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool;
 
+use JWeiland\Mediapool\Traits\GetFlashMessageQueueTrait;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
-use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -25,6 +24,8 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 abstract class AbstractBase
 {
+    use GetFlashMessageQueueTrait;
+
     /**
      * @var ObjectManager
      */
@@ -35,20 +36,9 @@ abstract class AbstractBase
      */
     protected $errorMessagesFile = 'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf';
 
-    /**
-     * @var FlashMessageQueue
-     */
-    protected $flashMessageQueue;
-
     public function injectObjectManager(ObjectManager $objectManager): void
     {
         $this->objectManager = $objectManager;
-    }
-
-    public function initializeObject(): void
-    {
-        $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
-        $this->flashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
     }
 
     /**
@@ -62,14 +52,17 @@ abstract class AbstractBase
         string $message,
         array $messageArguments = []
     ): void {
-        $title = LocalizationUtility::translate($this->errorMessagesFile . ':' . $title) ?? '[no-title]';
-        $message = LocalizationUtility::translate($this->errorMessagesFile . ':' . $message, '', $messageArguments) ?? '[no-message]';
-        $flashMessage = GeneralUtility::makeInstance(
-            FlashMessage::class,
-            $message,
-            $title,
-            AbstractMessage::ERROR
+        $title = LocalizationUtility::translate($this->errorMessagesFile . ':' . $title);
+        $message = LocalizationUtility::translate(
+            $this->errorMessagesFile . ':' . $message, '',
+            $messageArguments
         );
-        $this->flashMessageQueue->addMessage($flashMessage);
+
+        $this->getFlashMessageQueue()->addMessage(GeneralUtility::makeInstance(
+            FlashMessage::class,
+            $message ?? '[no-message]',
+            $title ?? '[no-title]',
+            AbstractMessage::ERROR
+        ));
     }
 }

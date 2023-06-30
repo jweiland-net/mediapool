@@ -14,12 +14,11 @@ namespace JWeiland\Mediapool\Hooks;
 use JWeiland\Mediapool\Domain\Repository\PlaylistRepository;
 use JWeiland\Mediapool\Service\PlaylistService;
 use JWeiland\Mediapool\Service\VideoService;
+use JWeiland\Mediapool\Traits\GetFlashMessageQueueTrait;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
-use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -32,6 +31,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 class DataHandler implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
+    use GetFlashMessageQueueTrait;
 
     public const TABLE_VIDEO = 'tx_mediapool_domain_model_video';
     public const TABLE_PLAYLIST = 'tx_mediapool_domain_model_playlist';
@@ -47,11 +47,6 @@ class DataHandler implements LoggerAwareInterface
     protected $objectMananger;
 
     /**
-     * @var FlashMessageQueue
-     */
-    protected $flashMessageQueue;
-
-    /**
      * Using DataHandler hook to fetch and insert video information
      * for tx_mediapool_domain_model_video
      */
@@ -63,8 +58,6 @@ class DataHandler implements LoggerAwareInterface
         ) {
             $this->dataHandler = $dataHandler;
             $this->objectMananger = GeneralUtility::makeInstance(ObjectManager::class);
-            $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
-            $this->flashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
         }
 
         try {
@@ -95,7 +88,7 @@ class DataHandler implements LoggerAwareInterface
                 [$e->getCode()]
             );
 
-            $this->flashMessageQueue->addMessage($flashMessage);
+            $this->getFlashMessageQueue()->addMessage($flashMessage);
 
             $this->logger->error(
                 'Exception while running DataHandler hook from ext:mediapool: ' . $e->getMessage() .
