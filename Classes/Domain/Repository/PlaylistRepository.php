@@ -18,7 +18,7 @@ use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
- * Class PlaylistRepository
+ * Repository to get records from table: tx_mediapool_domain_model_playlist
  */
 class PlaylistRepository extends Repository
 {

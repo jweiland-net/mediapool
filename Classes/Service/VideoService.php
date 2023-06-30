@@ -15,11 +15,10 @@ use JWeiland\Mediapool\AbstractBase;
 use JWeiland\Mediapool\Import\Video\AbstractVideoImport;
 use JWeiland\Mediapool\Utility\VideoPlatformUtility;
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class VideoService
- *
- * ! use ObjectManager to get an instance of this class !
  */
 class VideoService extends AbstractBase implements SingletonInterface
 {
@@ -40,40 +39,40 @@ class VideoService extends AbstractBase implements SingletonInterface
      */
     public function getVideoData(array $videos, int $pid): array
     {
-        $videoPlatforms = VideoPlatformUtility::getRegisteredVideoImporters();
         $data = [];
         $videoPlatformMatch = 0;
-        foreach ($videoPlatforms as $videoPlatformNamespace) {
-            /** @var AbstractVideoImport $videoPlatform */
-            $videoPlatform = $this->objectManager->get($videoPlatformNamespace);
-            VideoPlatformUtility::checkVideoImportClass($videoPlatform);
-            $videosOfVideoPlatform = [];
-            foreach ($videos as $uid => $video) {
-                if ($this->isVideoFromVideoPlatform($video['video'], $videoPlatform)) {
-                    $videosOfVideoPlatform[$uid] = $video;
-                    $videoPlatformMatch++;
+
+        try {
+            foreach (VideoPlatformUtility::getRegisteredVideoImporters() as $registeredVideoImporter) {
+                $videosOfVideoPlatform = [];
+                foreach ($videos as $uid => $video) {
+                    if ($this->isVideoFromVideoPlatform($video['video'], $registeredVideoImporter)) {
+                        $videosOfVideoPlatform[$uid] = $video;
+                        $videoPlatformMatch++;
+                    }
+                }
+                if ($videosOfVideoPlatform) {
+                    $data[] = $registeredVideoImporter->processDataArray($videosOfVideoPlatform, $pid);
                 }
             }
-            if ($videosOfVideoPlatform) {
-                $data[] = $videoPlatform->processDataArray($videosOfVideoPlatform, $pid);
+
+            $data = array_merge(...$data);
+            $imported = count($data['tx_mediapool_domain_model_video']);
+            $total = count($videos);
+
+            if (!$videoPlatformMatch) {
+                $this->addFlashMessage(
+                    'video_service.no_match.title',
+                    'video_service.no_match.message'
+                );
+            } elseif ($imported !== $total) {
+                $this->addFlashMessage(
+                    'video_service.import_mismatch.title',
+                    'video_service.import_mismatch.message',
+                    [$imported, $total]
+                );
             }
-        }
-
-        $data = array_merge(...$data);
-        $imported = count($data['tx_mediapool_domain_model_video']);
-        $total = count($videos);
-
-        if (!$videoPlatformMatch) {
-            $this->addFlashMessage(
-                'video_service.no_match.title',
-                'video_service.no_match.message'
-            );
-        } elseif ($imported !== $total) {
-            $this->addFlashMessage(
-                'video_service.import_mismatch.title',
-                'video_service.import_mismatch.message',
-                [$imported, $total]
-            );
+        } catch (\Exception $e) {
         }
 
         return $data;

@@ -15,6 +15,7 @@ use JWeiland\Mediapool\Configuration\ExtConf;
 use JWeiland\Mediapool\Constants;
 use JWeiland\Mediapool\Domain\Model\Video;
 use JWeiland\Mediapool\Domain\Repository\VideoRepository;
+use JWeiland\Mediapool\Traits\GetVideoRepositoryTrait;
 use TYPO3\CMS\Core\Error\Http\StatusException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -23,6 +24,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class YouTubeVideoImport extends AbstractVideoImport
 {
+    use GetVideoRepositoryTrait;
+
     /**
      * URL to fetch video information via GET request
      * player = embedHtml
@@ -66,11 +69,9 @@ class YouTubeVideoImport extends AbstractVideoImport
      */
     protected $apiKey = '';
 
-    public function initializeObject(): void
+    public function __construct(ExtConf $extConf)
     {
-        parent::initializeObject();
-
-        $this->apiKey = GeneralUtility::makeInstance(ExtConf::class)->getYoutubeDataApiKey();
+        $this->apiKey = $extConf->getYoutubeDataApiKey();
     }
 
     /**
@@ -88,7 +89,7 @@ class YouTubeVideoImport extends AbstractVideoImport
         $videoIds = [];
         foreach ($videos as &$video) {
             if (strpos($video['video'], 'http') === 0) {
-                // todo add error if getVideoId returns empty string
+                // ToDo: add error if getVideoId returns empty string
                 $video['video'] = $this->getVideoId($video['video']);
             } elseif (strpos(Constants::YOUTUBE_PLATFORM_PREFIX, $video['video']) === 0) {
                 $video['video'] = substr($video['video'], strlen(Constants::YOUTUBE_PLATFORM_PREFIX));
@@ -132,7 +133,7 @@ class YouTubeVideoImport extends AbstractVideoImport
         string &$recordUids = '',
         bool $checkExistingVideos = false
     ): array {
-        $videoRepository = $this->objectManager->get(VideoRepository::class);
+        $videoRepository = $this->getVideoRepository();
         $this->videoIds = $this->implodeVideoIdsAndUnifyArray($videos);
         $fetchedVideoInformation = $this->fetchVideoInformation();
         $data = [];
@@ -190,7 +191,6 @@ class YouTubeVideoImport extends AbstractVideoImport
     /**
      * Checks a video for privacy status and embeddable
      *
-     * @param array $item
      * @return bool true if permissions are ok otherwise false
      */
     protected function checkVideoPermission(array $item): bool
@@ -208,9 +208,8 @@ class YouTubeVideoImport extends AbstractVideoImport
 
     /**
      * Returns the id of passed video link if valid.
-     * Otherwise returns false
+     * Otherwise, returns false
      *
-     * @param string $videoLink
      * @return string empty string if link is not valid
      */
     protected function getVideoId(string $videoLink): string
@@ -259,10 +258,7 @@ class YouTubeVideoImport extends AbstractVideoImport
      * Request video information for $videoIds
      * recursive call if API provides a nextPageToken
      *
-     * @param string $videoIds
      * @param array $items previous items for recursive call - leave it empty
-     * @param string $additionalRequestParams
-     * @return array
      * @throws StatusException
      */
     protected function doRequest(string $videoIds, array $items = [], string $additionalRequestParams = ''): array
@@ -302,6 +298,7 @@ class YouTubeVideoImport extends AbstractVideoImport
                 1507792488
             );
         }
+
         throw new StatusException(
             sprintf(
                 'Fetching video information for %s failed! Got status code %d and the following response: %s',
@@ -350,6 +347,7 @@ class YouTubeVideoImport extends AbstractVideoImport
                 return $item['snippet']['thumbnails'][$key]['url'];
             }
         }
+
         return '';
     }
 }

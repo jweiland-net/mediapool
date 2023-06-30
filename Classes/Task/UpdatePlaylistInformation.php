@@ -11,10 +11,9 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Task;
 
-use JWeiland\Mediapool\Domain\Repository\PlaylistRepository;
+use JWeiland\Mediapool\Traits\GetPlaylistRepositoryTrait;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
 
 /**
@@ -22,6 +21,8 @@ use TYPO3\CMS\Scheduler\Task\AbstractTask;
  */
 class UpdatePlaylistInformation extends AbstractTask
 {
+    use GetPlaylistRepositoryTrait;
+
     /**
      * Task mode
      * 0 = update all records
@@ -39,26 +40,14 @@ class UpdatePlaylistInformation extends AbstractTask
      */
     public $pageSelection = '';
 
-    /**
-     * @var PlaylistRepository
-     */
-    protected $playlistRepository;
-
-    /**
-     * @var DataHandler
-     */
-    protected $dataHandler;
-
     public function execute(): bool
     {
-        $this->init();
-
         if ($this->mode === 0) {
             // fetch all
-            $playlists = $this->playlistRepository->findAllLinksAndUids();
+            $playlists = $this->getPlaylistRepository()->findAllLinksAndUids();
         } else {
             // fetch selected
-            $playlists = $this->playlistRepository->findLinksAndUidsByPid($this->pageSelection);
+            $playlists = $this->getPlaylistRepository()->findLinksAndUidsByPid($this->pageSelection);
         }
 
         // create data array for data handler
@@ -70,16 +59,15 @@ class UpdatePlaylistInformation extends AbstractTask
             ];
         }
 
-        $this->dataHandler->start($data, []);
-        $this->dataHandler->process_datamap();
+        $dataHandler = $this->getDataHandler();
+        $dataHandler->start($data, []);
+        $dataHandler->process_datamap();
 
         return true;
     }
 
-    protected function init(): void
+    private function getDataHandler(): DataHandler
     {
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $this->playlistRepository = $objectManager->get(PlaylistRepository::class);
-        $this->dataHandler = $objectManager->get(DataHandler::class);
+        return GeneralUtility::makeInstance(DataHandler::class);
     }
 }

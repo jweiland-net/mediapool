@@ -16,7 +16,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
- * Repository for Category models.
+ * Repository to get records from table: sys_category
  */
 class CategoryRepository extends Repository
 {

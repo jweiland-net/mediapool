@@ -11,10 +11,9 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Task;
 
-use JWeiland\Mediapool\Domain\Repository\VideoRepository;
+use JWeiland\Mediapool\Traits\GetVideoRepositoryTrait;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
 
 /**
@@ -22,6 +21,8 @@ use TYPO3\CMS\Scheduler\Task\AbstractTask;
  */
 class UpdateVideoInformation extends AbstractTask
 {
+    use GetVideoRepositoryTrait;
+
     /**
      * Task mode
      * 0 = update all records
@@ -40,20 +41,6 @@ class UpdateVideoInformation extends AbstractTask
     public $pageSelection = '';
 
     /**
-     * Video Repository
-     *
-     * @var VideoRepository
-     */
-    protected $videoRepository;
-
-    /**
-     * Data Handler
-     *
-     * @var DataHandler
-     */
-    protected $dataHandler;
-
-    /**
      * This is the main method that is called when a task is executed
      * It MUST be implemented by all classes inheriting from this one
      * Note that there is no error handling, errors and failures are expected
@@ -64,15 +51,16 @@ class UpdateVideoInformation extends AbstractTask
      */
     public function execute(): bool
     {
-        $this->init();
         if ($this->mode === 0) {
             // fetch all
-            $videos = $this->videoRepository->findAllLinksAndUids();
+            $videos = $this->getVideoRepository()->findAllLinksAndUids();
         } else {
             // fetch selected
-            $videos = $this->videoRepository->findLinksAndUidsByPid($this->pageSelection);
+            $videos = $this->getVideoRepository()->findLinksAndUidsByPid($this->pageSelection);
         }
+
         $data = [];
+
         // create data array for data handler
         // to use the DataHandler Hook
         foreach ($videos as $video) {
@@ -80,16 +68,16 @@ class UpdateVideoInformation extends AbstractTask
                 'link' => $video['link']
             ];
         }
-        $this->dataHandler->start($data, []);
-        $this->dataHandler->process_datamap();
+
+        $dataHandler = $this->getDataHandler();
+        $dataHandler->start($data, []);
+        $dataHandler->process_datamap();
 
         return true;
     }
 
-    protected function init(): void
+    private function getDataHandler(): DataHandler
     {
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $this->videoRepository = $objectManager->get(VideoRepository::class);
-        $this->dataHandler = $objectManager->get(DataHandler::class);
+        return GeneralUtility::makeInstance(DataHandler::class);
     }
 }

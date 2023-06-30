@@ -11,16 +11,19 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Domain\Repository;
 
+use JWeiland\Mediapool\Traits\GetObjectManagerTrait;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
- * Class VideoRepository
+ * Repository to get records from table: tx_mediapool_domain_model_video
  */
 class VideoRepository extends Repository
 {
+    use GetObjectManagerTrait;
+
     public function findByVideoId(string $videoId, int $pid): QueryResultInterface
     {
         $query = $this->createQuery();
@@ -86,7 +89,7 @@ class VideoRepository extends Repository
      */
     public function findRecentByCategories(string $categoryUids): array
     {
-        $categoryRepository = $this->objectManager->get(CategoryRepository::class);
+        $categoryRepository = $this->getObjectManager()->get(CategoryRepository::class);
         $recentVideos = [];
         foreach (explode(',', $categoryUids) as $categoryUid) {
             $category = $categoryRepository->findByUid($categoryUid);
@@ -112,7 +115,7 @@ class VideoRepository extends Repository
      */
     public function findRecentByCategory(int $categoryUid): array
     {
-        $playlistRepository = $this->objectManager->get(PlaylistRepository::class);
+        $playlistRepository = $this->getObjectManager()->get(PlaylistRepository::class);
         $playlists = $playlistRepository->findByCategory($categoryUid);
         $uploadDate = 0;
         $recentVideo = [];

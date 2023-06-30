@@ -70,7 +70,7 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
      */
     protected $playlistId = '';
 
-    public function injectYouTubeVideoImport(YouTubeVideoImport $youTubeVideoImport): void
+    public function __construct(YouTubeVideoImport $youTubeVideoImport)
     {
         $this->youTubeVideoImport = $youTubeVideoImport;
     }

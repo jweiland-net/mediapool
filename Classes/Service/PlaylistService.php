@@ -17,8 +17,6 @@ use JWeiland\Mediapool\Utility\VideoPlatformUtility;
 
 /**
  * Class PlaylistService
- *
- * ! use ObjectManager to get an instance of this class !
  */
 class PlaylistService extends AbstractBase
 {
@@ -32,19 +30,20 @@ class PlaylistService extends AbstractBase
      */
     public function getPlaylistData(string $playlistLink, int $pid): array
     {
-        $playlistImporters = VideoPlatformUtility::getRegisteredPlaylistImporters();
-        foreach ($playlistImporters as $playlistImporterNamespace) {
-            /** @var AbstractPlaylistImport $playlistImporter */
-            $playlistImporter = $this->objectManager->get($playlistImporterNamespace);
-            VideoPlatformUtility::checkPlaylistImportClass($playlistImporter);
-            if ($this->isPlaylistOfVideoImport($playlistLink, $playlistImporter)) {
-                return $playlistImporter->getPlaylistInformation($playlistLink, $pid);
+        try {
+            foreach (VideoPlatformUtility::getRegisteredPlaylistImporters() as $registeredPlaylistImporter) {
+                if ($this->isPlaylistOfVideoImport($playlistLink, $registeredPlaylistImporter)) {
+                    return $registeredPlaylistImporter->getPlaylistInformation($playlistLink, $pid);
+                }
             }
+
+            $this->addFlashMessage(
+                'playlist_service.no_match.title',
+                'playlist_service.no_match.message'
+            );
+        } catch (\Exception $e) {
         }
-        $this->addFlashMessage(
-            'playlist_service.no_match.title',
-            'playlist_service.no_match.message'
-        );
+
         return [];
     }
 
