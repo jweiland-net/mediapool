@@ -58,9 +58,11 @@ class VideoService extends AbstractBase implements SingletonInterface
                 $data[] = $videoPlatform->processDataArray($videosOfVideoPlatform, $pid);
             }
         }
+
         $data = array_merge(...$data);
         $imported = count($data['tx_mediapool_domain_model_video']);
         $total = count($videos);
+
         if (!$videoPlatformMatch) {
             $this->addFlashMessageAndLog(
                 'video_service.no_match.title',
@@ -73,15 +75,12 @@ class VideoService extends AbstractBase implements SingletonInterface
                 [$imported, $total]
             );
         }
+
         return $data;
     }
 
     /**
      * Checks if one of the hosts from $videoPlatform matches with the video link.
-     *
-     * @param string $videoLink
-     * @param AbstractVideoImport $videoPlatform
-     * @return bool true if true, false if false you know ;)
      */
     protected function isVideoFromVideoPlatform(string $videoLink, AbstractVideoImport $videoPlatform): bool
     {
@@ -90,6 +89,7 @@ class VideoService extends AbstractBase implements SingletonInterface
                 return true;
             }
         }
+
         return false;
     }
 }

@@ -51,12 +51,6 @@ class YouTubeVideoImport extends AbstractVideoImport
     protected $video;
 
     /**
-     * @var string
-     * @deprecated remove
-     */
-    protected $videoId = '';
-
-    /**
      * YouTube Video IDs
      * single video: 'exi0iht_kLw'
      * multiple videos: 'exi0iht_kLw,Vfw1pAmLlY,jzTVVocFaVE'
@@ -88,9 +82,6 @@ class YouTubeVideoImport extends AbstractVideoImport
      * 'exi0iht_kLw,Vfw1pAmLlY,jzTVVocFaVE'
      * and a unified array:
      * [4 => 'exi0iht_kLw', 5 => 'Vfw1pAmLlY', 'NEW1234' => 'jzTVVocFaVE']
-     *
-     * @param array $videos
-     * @return string
      */
     protected function implodeVideoIdsAndUnifyArray(array &$videos): string
     {
@@ -127,7 +118,6 @@ class YouTubeVideoImport extends AbstractVideoImport
      * in this example the records 4 and 5 got updated and a new record
      * for jzTVVocFaVE would be created
      *
-     * @param array $videos
      * @param int $pid this will be the pid of NEW records
      * @param string $recordUids reference that includes all UIDs as a comma separated list
      * @param bool $checkExistingVideos if true the video id in combination with the pid will be checked and no
@@ -150,6 +140,7 @@ class YouTubeVideoImport extends AbstractVideoImport
         foreach ($videos as $uid => $video) {
             $videoId = $video['video'];
             $pid = $video['pid'] ?: $pid;
+
             // check if video information for video is in array
             if (is_array($fetchedVideoInformation[$videoId])) {
                 $videoInformation = $fetchedVideoInformation[$videoId];
@@ -163,10 +154,12 @@ class YouTubeVideoImport extends AbstractVideoImport
                     );
                     $existingVideo = $queryResult->getFirst();
                 }
+
                 $recordUid = $existingVideo ? $existingVideo->getUid() : $uid;
                 $recordUidArray[] = $recordUid;
                 // $videoInformation is already unified and casted. Add it to the $data array
                 $data['tx_mediapool_domain_model_video'][$recordUid] = $videoInformation;
+
                 // add pid on new records
                 if (is_string($recordUid) && strpos($recordUid, 'NEW') === 0) {
                     $data['tx_mediapool_domain_model_video'][$recordUid]['pid'] = $pid;
@@ -188,7 +181,9 @@ class YouTubeVideoImport extends AbstractVideoImport
                 $this->hasError = true;
             }
         }
+
         $recordUids = implode(',', $recordUidArray);
+
         return $data;
     }
 

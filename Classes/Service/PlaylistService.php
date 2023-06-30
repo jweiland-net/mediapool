@@ -51,10 +51,6 @@ class PlaylistService extends AbstractBase
     /**
      * Checks if one of the hosts from $playlistImport matches with
      * $playlistLink.
-     *
-     * @param string $playlistLink
-     * @param AbstractPlaylistImport $playlistImport
-     * @return bool true if true, false if false you know ;)
      */
     protected function isPlaylistOfVideoImport(string $playlistLink, AbstractPlaylistImport $playlistImport): bool
     {
@@ -63,6 +59,7 @@ class PlaylistService extends AbstractBase
                 return true;
             }
         }
+
         return false;
     }
 }

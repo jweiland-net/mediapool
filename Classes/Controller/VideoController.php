@@ -33,9 +33,6 @@ class VideoController extends ActionController
 
     /**
      * Shows a single video and additionally a playlist if $playlist is set
-     *
-     * @param Video $video
-     * @param Playlist|null $playlist
      */
     public function showAction(Video $video, Playlist $playlist = null): void
     {

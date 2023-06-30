@@ -65,14 +65,6 @@ abstract class AbstractBase
      * Please notice: $title and $message are trans-unit ids and can not be used without language file.
      * You can override the language file with $this->errorMessagesFile = '<EXT:your_ext/...>'.
      * A log entry only will be created if $logMessage is filled with text!
-     *
-     * @param string $title trans-unit id for title
-     * @param string $message trans-unit id for title
-     * @param array $messageArguments arguments for message trans-unit
-     * @param int $flashMessageSeverity AbstractMessage::<ERROR|OK|...>
-     * @param string $logLevel use LogLevel::<...> constants
-     * @param string $logMessage If a custom log message is set, a log entry will be created
-     * @param array $logMessageArguments arguments for log message
      */
     public function addFlashMessageAndLog(
         string $title,
@@ -92,6 +84,7 @@ abstract class AbstractBase
             $flashMessageSeverity
         );
         $this->flashMessageQueue->addMessage($flashMessage);
+
         if ($logMessage) {
             $this->logger->log($logLevel, $logMessage, $logMessageArguments);
         }

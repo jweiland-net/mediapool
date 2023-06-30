@@ -51,8 +51,6 @@ class GalleryController extends ActionController
 
     /**
      * Get file collections from settings
-     *
-     * @return array
      */
     protected function getFileCollections(): array
     {
@@ -66,6 +64,7 @@ class GalleryController extends ActionController
                 }
             }
         }
+
         return $fileCollections;
     }
 }

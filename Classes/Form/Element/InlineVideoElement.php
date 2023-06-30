@@ -27,15 +27,11 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 class InlineVideoElement extends AbstractFormElement
 {
     /**
-     * Fluid Standalone View
-     *
      * @var StandaloneView
      */
     protected $view;
 
     /**
-     * Video Repository
-     *
      * @var VideoRepository
      */
     protected $videoRepository;
@@ -43,6 +39,7 @@ class InlineVideoElement extends AbstractFormElement
     public function __construct(NodeFactory $nodeFactory, array $data)
     {
         parent::__construct($nodeFactory, $data);
+
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $this->view = $objectManager->get(StandaloneView::class);
         $this->videoRepository = $objectManager->get(VideoRepository::class);
@@ -82,7 +79,9 @@ class InlineVideoElement extends AbstractFormElement
             'videos' => $parameterArray['itemFormElValue'],
             'amountOfVideos' => count($parameterArray['itemFormElValue'])
         ]);
+
         $resultArray['html'] = $this->view->render();
+
         return $resultArray;
     }
 }

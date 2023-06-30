@@ -22,8 +22,6 @@ class VideoPlayerElement extends AbstractFormElement
 {
     /**
      * Render player or a message if player html is not set
-     *
-     * @return array
      */
     public function render(): array
     {
@@ -42,6 +40,7 @@ class VideoPlayerElement extends AbstractFormElement
                 ) .
                 '</div>';
         }
+
         return $resultArray;
     }
 }

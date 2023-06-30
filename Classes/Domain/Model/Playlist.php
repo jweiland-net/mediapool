@@ -21,16 +21,14 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 class Playlist extends AbstractEntity
 {
     /**
-     * Title
-     * imported from video platform
+     * Title imported from video platform
      *
      * @var string
      */
     protected $title = '';
 
     /**
-     * Playlist link
-     * imported from video platform
+     * Playlist link imported from video platform
      *
      * @var string
      */
@@ -48,8 +46,7 @@ class Playlist extends AbstractEntity
     protected $playlist_id = '';
 
     /**
-     * Videos of this playlist
-     * imported from video platform
+     * Videos of this playlist imported from video platform
      *
      * @var ObjectStorage<Video>
      */

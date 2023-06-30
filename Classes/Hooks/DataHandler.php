@@ -62,8 +62,6 @@ class DataHandler
     /**
      * Using DataHandler hook to fetch and insert video information
      * for tx_mediapool_domain_model_video
-     *
-     * @param \TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler
      */
     public function processDatamap_beforeStart(\TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler): void
     {
@@ -104,21 +102,19 @@ class DataHandler
                 AbstractMessage::ERROR,
                 [$e->getCode()]
             );
+
             $this->flashMessageQueue->addMessage($flashMessage);
+
             $this->logger->error(
                 'Exception while running DataHandler hook from ext:mediapool: ' . $e->getMessage() .
                 '(' . $e->getCode() . ') ' . $e->getFile() . ' Line: ' . $e->getLine()
             );
+
             // Prevent DataHandler from saving
             $this->dataHandler->datamap = [];
         }
     }
 
-    /**
-     * Process videos
-     *
-     * @param array $dataHandlerVideoTable
-     */
     protected function processVideos(array $dataHandlerVideoTable)
     {
         $videos = [];
@@ -128,7 +124,9 @@ class DataHandler
                 $videos[$uid]['pid'] = (int)$fields['pid'];
             }
         }
+
         $videoService = $this->objectMananger->get(VideoService::class);
+
         // use current pid as video pid
         $data = $videoService->getVideoData($videos, (int)GeneralUtility::_POST('popViewId'));
         if ($data) {
@@ -147,10 +145,7 @@ class DataHandler
     }
 
     /**
-     * Process playlist
-     *
      * @param int|string $uid of the playlist
-     * @param array $fieldArray
      */
     protected function processPlaylist($uid, array &$fieldArray): void
     {
@@ -160,7 +155,9 @@ class DataHandler
             $playlistRepository = $objectManager->get(PlaylistRepository::class);
             $pid = $playlistRepository->findPidByUid($uid);
         }
+
         $data = $playlistService->getPlaylistData($fieldArray['link'], (int)$pid);
+
         if ($data) {
             ArrayUtility::mergeRecursiveWithOverrule($fieldArray, $data['fieldArray']);
             ArrayUtility::mergeRecursiveWithOverrule($this->dataHandler->datamap, $data['dataHandler']);

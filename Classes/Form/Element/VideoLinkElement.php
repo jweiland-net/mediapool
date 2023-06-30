@@ -55,13 +55,12 @@ class VideoLinkElement extends InputTextElement
         $videoPlatformsHTML[] = '</div>';
         $videoPlatformsHTML = implode(LF, $videoPlatformsHTML);
         $resultArray['html'] .= $videoPlatformsHTML;
+
         return $resultArray;
     }
 
     /**
      * Get HTML for supported video platforms
-     *
-     * @return string
      */
     protected function getSupportedVideoPlatformsHTML(): string
     {
@@ -74,6 +73,7 @@ class VideoLinkElement extends InputTextElement
         } else {
             $videoPlatformList = VideoPlatformUtility::getRegisteredVideoImporters();
         }
+
         foreach ($videoPlatformList as $videoPlatformNameSpace) {
             // because we just need the platform name we don´t need to call this with object manager
             $videoPlatform = GeneralUtility::makeInstance($videoPlatformNameSpace);
@@ -84,6 +84,7 @@ class VideoLinkElement extends InputTextElement
             }
             $html .= sprintf('<span class="label label-primary">%s</span>', $videoPlatform->getPlatformName());
         }
+
         return $html;
     }
 }

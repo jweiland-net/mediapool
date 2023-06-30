@@ -18,7 +18,7 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
 
 /**
- * Class UpdatePlaylistInformation
+ * Task to update the playlist information with fresh data from YouTube
  */
 class UpdatePlaylistInformation extends AbstractTask
 {
@@ -40,31 +40,19 @@ class UpdatePlaylistInformation extends AbstractTask
     public $pageSelection = '';
 
     /**
-     * Playlist repository
-     *
      * @var PlaylistRepository
      */
     protected $playlistRepository;
 
     /**
-     * Data Handler
-     *
      * @var DataHandler
      */
     protected $dataHandler;
 
-    /**
-     * This is the main method that is called when a task is executed
-     * It MUST be implemented by all classes inheriting from this one
-     * Note that there is no error handling, errors and failures are expected
-     * to be handled and logged by the client implementations.
-     * Should return TRUE on successful execution, FALSE on error.
-     *
-     * @return bool Returns TRUE on successful execution, FALSE on error
-     */
     public function execute(): bool
     {
         $this->init();
+
         if ($this->mode === 0) {
             // fetch all
             $playlists = $this->playlistRepository->findAllLinksAndUids();
@@ -72,14 +60,16 @@ class UpdatePlaylistInformation extends AbstractTask
             // fetch selected
             $playlists = $this->playlistRepository->findLinksAndUidsByPid($this->pageSelection);
         }
-        $data = [];
+
         // create data array for data handler
         // to use the DataHandler Hook
+        $data = [];
         foreach ($playlists as $playlist) {
             $data['tx_mediapool_domain_model_playlist'][$playlist['uid']] = [
                 'link' => $playlist['link']
             ];
         }
+
         $this->dataHandler->start($data, []);
         $this->dataHandler->process_datamap();
 
