@@ -17,6 +17,7 @@ use JWeiland\Mediapool\Service\VideoService;
 use JWeiland\Mediapool\Traits\GetFlashMessageQueueTrait;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
+use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
@@ -28,7 +29,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  * Class to get VideoData from a external video service
  * e.g. YouTube
  */
-class DataHandler implements LoggerAwareInterface
+class DataHandlerHook implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
     use GetFlashMessageQueueTrait;
@@ -37,7 +38,7 @@ class DataHandler implements LoggerAwareInterface
     public const TABLE_PLAYLIST = 'tx_mediapool_domain_model_playlist';
 
     /**
-     * @var \TYPO3\CMS\Core\DataHandling\DataHandler
+     * @var DataHandler
      */
     protected $dataHandler;
 
@@ -50,7 +51,7 @@ class DataHandler implements LoggerAwareInterface
      * Using DataHandler hook to fetch and insert video information
      * for tx_mediapool_domain_model_video
      */
-    public function processDatamap_beforeStart(\TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler): void
+    public function processDatamap_beforeStart(DataHandler $dataHandler): void
     {
         if (
             array_key_exists(self::TABLE_VIDEO, $dataHandler->datamap)

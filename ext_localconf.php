@@ -85,7 +85,7 @@ call_user_func(static function () {
 
     // Hook into DataHandler to get video information into fieldArray and abort if a wrong video url was submitted
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['mediapool'] =
-        \JWeiland\Mediapool\Hooks\DataHandler::class;
+        \JWeiland\Mediapool\Hooks\DataHandlerHook::class;
 
     // Register YouTubeVideoImport
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['videoImport']['YouTube'] =
