@@ -92,7 +92,7 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
     {
         $this->apiKey = GeneralUtility::makeInstance(ExtConf::class)->getYoutubeDataApiKey();
         if (!($playlistId = $this->getPlaylistId($playlistLink))) {
-            $this->addFlashMessageAndLog(
+            $this->addFlashMessage(
                 'youTubePlaylistImport.invalid_id.title',
                 'youTubePlaylistImport.invalid_id.message',
                 [$playlistLink]

@@ -64,12 +64,12 @@ class VideoService extends AbstractBase implements SingletonInterface
         $total = count($videos);
 
         if (!$videoPlatformMatch) {
-            $this->addFlashMessageAndLog(
+            $this->addFlashMessage(
                 'video_service.no_match.title',
                 'video_service.no_match.message'
             );
         } elseif ($imported !== $total) {
-            $this->addFlashMessageAndLog(
+            $this->addFlashMessage(
                 'video_service.import_mismatch.title',
                 'video_service.import_mismatch.message',
                 [$imported, $total]

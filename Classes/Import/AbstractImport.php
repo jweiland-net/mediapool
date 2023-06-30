@@ -44,8 +44,8 @@ class AbstractImport extends AbstractBase
 
     /**
      * This property is used by VideoService and PlaylistService.
-     * They will only save data if this is false. Otherwise you have
-     * to add your own error messages with $this->addFlashMessageAndLog()
+     * They will only save data if this is false. Otherwise, you have
+     * to add your own error messages with $this->addFlashMessage()
      * or your own error method.
      */
     protected $hasError = false;

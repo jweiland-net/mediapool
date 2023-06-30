@@ -166,14 +166,14 @@ class YouTubeVideoImport extends AbstractVideoImport
                 }
             } elseif ($fetchedVideoInformation[$videoId] === 'noPermission') {
                 // if the video is private or set as not embeddable
-                $this->addFlashMessageAndLog(
+                $this->addFlashMessage(
                     'youTubeVideoImport.missing_youtube_permission.title',
                     'youTubeVideoImport.missing_youtube_permission.message',
                     [$videoId]
                 );
             } else {
                 // never fetched it ?
-                $this->addFlashMessageAndLog(
+                $this->addFlashMessage(
                     'youTubeVideoImport.missing_video_information.title',
                     'youTubeVideoImport.missing_video_information.message',
                     [$videoId]

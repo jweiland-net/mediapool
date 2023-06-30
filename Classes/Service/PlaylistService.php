@@ -41,7 +41,7 @@ class PlaylistService extends AbstractBase
                 return $playlistImporter->getPlaylistInformation($playlistLink, $pid);
             }
         }
-        $this->addFlashMessageAndLog(
+        $this->addFlashMessage(
             'playlist_service.no_match.title',
             'playlist_service.no_match.message'
         );

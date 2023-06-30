@@ -47,7 +47,7 @@ abstract class AbstractBase
      * Please notice: $title and $message are trans-unit ids and can not be used without language file.
      * You can override the language file with $this->errorMessagesFile = '<EXT:your_ext/...>'.
      */
-    public function addFlashMessageAndLog(
+    public function addFlashMessage(
         string $title,
         string $message,
         array $messageArguments = []
