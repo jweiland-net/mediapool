@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Import;
 
-use GuzzleHttp\Client;
 use JWeiland\Mediapool\AbstractBase;
 
 /**
@@ -36,24 +35,12 @@ class AbstractImport extends AbstractBase
     protected $platformHosts = [];
 
     /**
-     * Guzzle Client for HTTP requests
-     *
-     * @var Client
-     */
-    protected $client;
-
-    /**
      * This property is used by VideoService and PlaylistService.
      * They will only save data if this is false. Otherwise, you have
      * to add your own error messages with $this->addFlashMessage()
      * or your own error method.
      */
     protected $hasError = false;
-
-    public function injectClient(Client $client): void
-    {
-        $this->client = $client;
-    }
 
     /**
      * Returns PlatformName

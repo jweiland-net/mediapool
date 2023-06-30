@@ -16,6 +16,7 @@ use JWeiland\Mediapool\Constants;
 use JWeiland\Mediapool\Domain\Model\Video;
 use JWeiland\Mediapool\Traits\GetVideoRepositoryTrait;
 use TYPO3\CMS\Core\Error\Http\StatusException;
+use TYPO3\CMS\Core\Http\RequestFactory;
 
 /**
  * Class YouTubeVideoImport
@@ -23,6 +24,11 @@ use TYPO3\CMS\Core\Error\Http\StatusException;
 class YouTubeVideoImport extends AbstractVideoImport
 {
     use GetVideoRepositoryTrait;
+
+    /**
+     * @var RequestFactory
+     */
+    protected $requestFactory;
 
     /**
      * URL to fetch video information via GET request
@@ -67,8 +73,9 @@ class YouTubeVideoImport extends AbstractVideoImport
      */
     protected $apiKey = '';
 
-    public function __construct(ExtConf $extConf)
+    public function __construct(RequestFactory $requestFactory, ExtConf $extConf)
     {
+        $this->requestFactory = $requestFactory;
         $this->apiKey = $extConf->getYoutubeDataApiKey();
     }
 
@@ -261,13 +268,17 @@ class YouTubeVideoImport extends AbstractVideoImport
      */
     protected function doRequest(string $videoIds, array $items = [], string $additionalRequestParams = ''): array
     {
-        $response = $this->client->request(
+        $response = $this->requestFactory->request(
             'GET',
-            sprintf(self::VIDEO_API_URL, $videoIds, $this->apiKey) . $additionalRequestParams
+            sprintf(
+                self::VIDEO_API_URL . $additionalRequestParams,
+                $videoIds,
+                $this->apiKey
+            )
         );
-        // ok
+
         if ($response->getStatusCode() === 200) {
-            $result = json_decode($response->getBody()->getContents(), true);
+            $result = json_decode((string)$response->getBody(), true);
             if (is_array($result['items'])) {
                 foreach ($result['items'] as $item) {
                     // only add video if permissions are ok
@@ -291,7 +302,7 @@ class YouTubeVideoImport extends AbstractVideoImport
                     'Fetching video information for %s failed! Got the following response from YouTube: %s.' .
                     ' Please check your API-key.',
                     $this->video->getLink(),
-                    $response->getBody()->getContents()
+                    $response->getBody()
                 ),
                 1507792488
             );
@@ -302,7 +313,7 @@ class YouTubeVideoImport extends AbstractVideoImport
                 'Fetching video information for %s failed! Got status code %d and the following response: %s',
                 $this->video->getLink(),
                 $response->getStatusCode(),
-                $response->getBody()->getContents()
+                $response->getBody()
             ),
             1507794777
         );
