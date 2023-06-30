@@ -55,7 +55,7 @@ class UpdatePlaylistInformation extends AbstractTask
         $data = [];
         foreach ($playlists as $playlist) {
             $data['tx_mediapool_domain_model_playlist'][$playlist['uid']] = [
-                'link' => $playlist['link']
+                'link' => $playlist['link'],
             ];
         }
 

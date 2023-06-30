@@ -47,7 +47,7 @@ class UpdatePlaylistInformationAdditionalFieldProvider extends AbstractAdditiona
         // mode
         $modes = [
             0 => LocalizationUtility::translate($this->ll . 'page_selection.0'),
-            1 => LocalizationUtility::translate($this->ll . 'page_selection.1')
+            1 => LocalizationUtility::translate($this->ll . 'page_selection.1'),
         ];
         $html = [];
         $html[] = '<select class="form-control" name="tx_scheduler[mediapool_playlist_mode]">';
@@ -59,7 +59,7 @@ class UpdatePlaylistInformationAdditionalFieldProvider extends AbstractAdditiona
         $html[] = '</select>';
         $result['mediapool_playlist_mode'] = [
             'code' => implode(LF, $html),
-            'label' => $this->ll . 'mode'
+            'label' => $this->ll . 'mode',
         ];
 
         // page selection
@@ -67,7 +67,7 @@ class UpdatePlaylistInformationAdditionalFieldProvider extends AbstractAdditiona
             'code' =>
                 '<input class="form-control" name="tx_scheduler[mediapool_playlist_page_selection]" value="' .
                 $task->pageSelection . '" />',
-            'label' => $this->ll . 'page_selection'
+            'label' => $this->ll . 'page_selection',
         ];
 
         return $result;

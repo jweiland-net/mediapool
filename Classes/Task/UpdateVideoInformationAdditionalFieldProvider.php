@@ -47,7 +47,7 @@ class UpdateVideoInformationAdditionalFieldProvider extends AbstractAdditionalFi
         // mode
         $modes = [
             0 => LocalizationUtility::translate($this->ll . 'page_selection.0'),
-            1 => LocalizationUtility::translate($this->ll . 'page_selection.1')
+            1 => LocalizationUtility::translate($this->ll . 'page_selection.1'),
         ];
         $html = [];
         $html[] = '<select class="form-control" name="tx_scheduler[mediapool_video_mode]">';
@@ -59,7 +59,7 @@ class UpdateVideoInformationAdditionalFieldProvider extends AbstractAdditionalFi
         $html[] = '</select>';
         $result['mediapool_video_mode'] = [
             'code' => implode(LF, $html),
-            'label' => $this->ll . 'mode'
+            'label' => $this->ll . 'mode',
         ];
 
         // page selection
@@ -67,7 +67,7 @@ class UpdateVideoInformationAdditionalFieldProvider extends AbstractAdditionalFi
             'code' =>
                 '<input class="form-control" name="tx_scheduler[mediapool_video_page_selection]" value="' .
                 $task->pageSelection . '" />',
-            'label' => $this->ll . 'page_selection'
+            'label' => $this->ll . 'page_selection',
         ];
 
         return $result;

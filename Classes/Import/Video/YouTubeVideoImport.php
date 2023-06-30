@@ -43,7 +43,7 @@ class YouTubeVideoImport extends AbstractVideoImport
     protected $platformHosts = [
         'https://youtube.com',
         'https://www.youtube.com',
-        'https://youtu.be'
+        'https://youtu.be',
     ];
 
     /**
@@ -325,7 +325,7 @@ class YouTubeVideoImport extends AbstractVideoImport
             'player_html' => (string)$item['player']['embedHtml'],
             'video_id' => Constants::YOUTUBE_PLATFORM_PREFIX . $item['id'],
             'thumbnail' => (string)$item['snippet']['thumbnails']['medium']['url'],
-            'thumbnail_large' => $this->getLargestThumbnailForVideo($item)
+            'thumbnail_large' => $this->getLargestThumbnailForVideo($item),
         ];
     }
 

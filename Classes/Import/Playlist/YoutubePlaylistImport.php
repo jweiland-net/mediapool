@@ -50,7 +50,7 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
     protected $platformHosts = [
         'https://youtube.com',
         'https://www.youtube.com',
-        'https://youtu.be'
+        'https://youtu.be',
     ];
 
     /**
@@ -131,9 +131,9 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
                 'title' => (string)$information[0]['snippet']['title'],
                 'thumbnail' => (string)$information[0]['snippet']['thumbnails']['medium']['url'],
                 'thumbnail_large' => (string)$information[0]['snippet']['thumbnails']['standard']['url'],
-                'videos' => $recordUids
+                'videos' => $recordUids,
             ],
-            'dataHandler' => $data
+            'dataHandler' => $data,
         ];
 
         return $resultArray;

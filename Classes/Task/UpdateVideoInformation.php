@@ -65,7 +65,7 @@ class UpdateVideoInformation extends AbstractTask
         // to use the DataHandler Hook
         foreach ($videos as $video) {
             $data['tx_mediapool_domain_model_video'][$video['uid']] = [
-                'link' => $video['link']
+                'link' => $video['link'],
             ];
         }
 

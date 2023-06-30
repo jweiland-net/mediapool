@@ -30,10 +30,10 @@ class VideoRepository extends Repository
         $query->getQuerySettings()->setRespectStoragePage(false);
 
         $query->matching(
-            $query->logicalAnd([
+            $query->logicalAnd(
                 $query->equals('videoId', $videoId),
                 $query->equals('pid', $pid)
-            ])
+            )
         );
         return $query->execute();
     }
@@ -98,7 +98,7 @@ class VideoRepository extends Repository
                 $recentVideos[$categoryUid] = [
                     'category' => $category,
                     'playlist' => $recent['playlist'],
-                    'video' => $recent['video']
+                    'video' => $recent['video'],
                 ];
             }
         }
@@ -125,11 +125,12 @@ class VideoRepository extends Repository
                     $uploadDate = $video->getUploadDate();
                     $recentVideo = [
                         'playlist' => $playlist,
-                        'video' => $video
+                        'video' => $video,
                     ];
                 }
             }
         }
+
         return $recentVideo;
     }
 }

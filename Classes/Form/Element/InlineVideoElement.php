@@ -62,7 +62,7 @@ class InlineVideoElement extends AbstractFormElement
         $view->assignMultiple([
             'elementId' => $parameterArray['itemFormElID'],
             'videos' => $parameterArray['itemFormElValue'],
-            'amountOfVideos' => count($parameterArray['itemFormElValue'])
+            'amountOfVideos' => count($parameterArray['itemFormElValue']),
         ]);
 
         $resultArray['html'] = $view->render();
