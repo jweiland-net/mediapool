@@ -6,6 +6,9 @@ services:
 
   JWeiland\Mediapool\:
     resource: '../Classes/*'
+    exclude:
+      - '../Classes/Domain/Model/*'
+      - '../Classes/Form/Element/*'
 
   # Called by makeInstance in UpgradeWizardListCommand of EXT:install
   JWeiland\Mediapool\Updates\PlaylistSlugUpdate:
@@ -41,24 +44,4 @@ services:
 
   # Called by makeInstance in SchedulerModuleController
   JWeiland\Mediapool\Task\UpdateVideoInformationAdditionalFieldProvider:
-    public: true
-
-  # Called by makeInstance in NodeFactory
-  JWeiland\Mediapool\Form\Element\InlineVideoElement:
-    public: true
-
-  # Called by makeInstance in NodeFactory
-  JWeiland\Mediapool\Form\Element\VideoHeaderElement:
-    public: true
-
-  # Called by makeInstance in NodeFactory
-  JWeiland\Mediapool\Form\Element\VideoLinkElement:
-    public: true
-
-  # Called by makeInstance in NodeFactory
-  JWeiland\Mediapool\Form\Element\VideoPlayerElement:
-    public: true
-
-  # Called by makeInstance in NodeFactory
-  JWeiland\Mediapool\Form\Element\VideoTextElement:
     public: true
