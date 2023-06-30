@@ -11,9 +11,6 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool;
 
-use TYPO3\CMS\Core\Log\Logger;
-use TYPO3\CMS\Core\Log\LogLevel;
-use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
@@ -43,11 +40,6 @@ abstract class AbstractBase
      */
     protected $flashMessageQueue;
 
-    /**
-     * @var Logger
-     */
-    protected $logger;
-
     public function injectObjectManager(ObjectManager $objectManager): void
     {
         $this->objectManager = $objectManager;
@@ -55,25 +47,20 @@ abstract class AbstractBase
 
     public function initializeObject(): void
     {
-        $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
         $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
         $this->flashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
     }
 
     /**
-     * Add flash message and log entry
+     * Add flash message
+     *
      * Please notice: $title and $message are trans-unit ids and can not be used without language file.
      * You can override the language file with $this->errorMessagesFile = '<EXT:your_ext/...>'.
-     * A log entry only will be created if $logMessage is filled with text!
      */
     public function addFlashMessageAndLog(
         string $title,
         string $message,
-        array $messageArguments = [],
-        int $flashMessageSeverity = AbstractMessage::ERROR,
-        string $logLevel = LogLevel::ERROR,
-        string $logMessage = '',
-        array $logMessageArguments = []
+        array $messageArguments = []
     ): void {
         $title = LocalizationUtility::translate($this->errorMessagesFile . ':' . $title) ?? '[no-title]';
         $message = LocalizationUtility::translate($this->errorMessagesFile . ':' . $message, '', $messageArguments) ?? '[no-message]';
@@ -81,12 +68,8 @@ abstract class AbstractBase
             FlashMessage::class,
             $message,
             $title,
-            $flashMessageSeverity
+            AbstractMessage::ERROR
         );
         $this->flashMessageQueue->addMessage($flashMessage);
-
-        if ($logMessage) {
-            $this->logger->log($logLevel, $logMessage, $logMessageArguments);
-        }
     }
 }

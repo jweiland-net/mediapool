@@ -14,8 +14,8 @@ namespace JWeiland\Mediapool\Hooks;
 use JWeiland\Mediapool\Domain\Repository\PlaylistRepository;
 use JWeiland\Mediapool\Service\PlaylistService;
 use JWeiland\Mediapool\Service\VideoService;
-use TYPO3\CMS\Core\Log\Logger;
-use TYPO3\CMS\Core\Log\LogManager;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
@@ -29,8 +29,10 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  * Class to get VideoData from a external video service
  * e.g. YouTube
  */
-class DataHandler
+class DataHandler implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     public const TABLE_VIDEO = 'tx_mediapool_domain_model_video';
     public const TABLE_PLAYLIST = 'tx_mediapool_domain_model_playlist';
 
@@ -48,16 +50,6 @@ class DataHandler
      * @var FlashMessageQueue
      */
     protected $flashMessageQueue;
-
-    /**
-     * @var Logger
-     */
-    protected $logger;
-
-    public function __construct()
-    {
-        $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
-    }
 
     /**
      * Using DataHandler hook to fetch and insert video information
