@@ -4,18 +4,24 @@ if (!defined('TYPO3')) {
 }
 
 call_user_func(static function () {
-    // Hook into DataHandler to get video information into fieldArray and abort if a wrong
-    // video url was submitted
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['mediapool'] =
-        \JWeiland\Mediapool\Hooks\DataHandler::class;
+    // Configure main plugin
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'Mediapool',
+        'Mediapool',
+        [
+            \JWeiland\Mediapool\Controller\VideoController::class => 'show,listRecommended',
+            \JWeiland\Mediapool\Controller\PlaylistController::class => 'listByCategory,listLatestVideos,listVideos',
+        ]
+    );
 
-    // Register YouTubeVideoImport
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['videoImport']['YouTube'] =
-        \JWeiland\Mediapool\Import\Video\YouTubeVideoImport::class;
-
-    // Register YouTubePlaylistImport
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['playlistImport']['YouTube'] =
-        \JWeiland\Mediapool\Import\Playlist\YoutubePlaylistImport::class;
+    // Configure gallery plugin
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'Mediapool',
+        'Gallery',
+        [
+            \JWeiland\Mediapool\Controller\GalleryController::class => 'preview',
+        ]
+    );
 
     // Add renderType to display video importers
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1507799836] = [
@@ -51,41 +57,7 @@ call_user_func(static function () {
         'class' => \JWeiland\Mediapool\Form\Element\VideoPlayerElement::class,
     ];
 
-    // Register task for updating video information
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\JWeiland\Mediapool\Task\UpdateVideoInformation::class] = [
-        'extension' => 'mediapool',
-        'title' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:scheduler.update_video_information.title',
-        'description' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:scheduler.update_video_information.description',
-        'additionalFields' => \JWeiland\Mediapool\Task\UpdateVideoInformationAdditionalFieldProvider::class,
-    ];
-
-    // Register task for updating video information
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\JWeiland\Mediapool\Task\UpdatePlaylistInformation::class] = [
-        'extension' => 'mediapool',
-        'title' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:scheduler.update_playlist_information.title',
-        'description' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:scheduler.update_playlist_information.description',
-        'additionalFields' => \JWeiland\Mediapool\Task\UpdatePlaylistInformationAdditionalFieldProvider::class,
-    ];
-
-    // Configure main plugin
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'Mediapool',
-        'Mediapool',
-        [
-            \JWeiland\Mediapool\Controller\VideoController::class => 'show,listRecommended',
-            \JWeiland\Mediapool\Controller\PlaylistController::class => 'listByCategory,listLatestVideos,listVideos',
-        ]
-    );
-
-    // Configure gallery plugin
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'Mediapool',
-        'Gallery',
-        [
-            \JWeiland\Mediapool\Controller\GalleryController::class => 'preview',
-        ]
-    );
-
+    // Register icons. ToDo: Migrate to Icons.php when removing TYPO3 10 compatibility
     $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
     $iconRegistry->registerIcon(
         'mediapool-mediapool',
@@ -103,8 +75,39 @@ call_user_func(static function () {
         '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:mediapool/Configuration/TSconfig/ContentElementWizard.tsconfig">'
     );
 
+    // Hooks
+
+    // Register UpdateWizards
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['mediapoolVideoSlug']
         = \JWeiland\Mediapool\Updates\VideoSlugUpdate::class;
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['mediapoolPlaylistSlug']
         = \JWeiland\Mediapool\Updates\PlaylistSlugUpdate::class;
+
+    // Hook into DataHandler to get video information into fieldArray and abort if a wrong video url was submitted
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['mediapool'] =
+        \JWeiland\Mediapool\Hooks\DataHandler::class;
+
+    // Register YouTubeVideoImport
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['videoImport']['YouTube'] =
+        \JWeiland\Mediapool\Import\Video\YouTubeVideoImport::class;
+
+    // Register YouTubePlaylistImport
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['playlistImport']['YouTube'] =
+        \JWeiland\Mediapool\Import\Playlist\YoutubePlaylistImport::class;
+
+    // Register task for updating video information
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\JWeiland\Mediapool\Task\UpdateVideoInformation::class] = [
+        'extension' => 'mediapool',
+        'title' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:scheduler.update_video_information.title',
+        'description' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:scheduler.update_video_information.description',
+        'additionalFields' => \JWeiland\Mediapool\Task\UpdateVideoInformationAdditionalFieldProvider::class,
+    ];
+
+    // Register task for updating video information
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\JWeiland\Mediapool\Task\UpdatePlaylistInformation::class] = [
+        'extension' => 'mediapool',
+        'title' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:scheduler.update_playlist_information.title',
+        'description' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:scheduler.update_playlist_information.description',
+        'additionalFields' => \JWeiland\Mediapool\Task\UpdatePlaylistInformationAdditionalFieldProvider::class,
+    ];
 });
