@@ -23,3 +23,7 @@ mod {
     show = *
   }
 }
+
+# Add CType Preview
+mod.web_layout.tt_content.preview.list.mediapool_mediapool = EXT:mediapool/Resources/Private/Templates/PluginPreview/Mediapool.html
+mod.web_layout.tt_content.preview.list.mediapool_gallery = EXT:mediapool/Resources/Private/Templates/PluginPreview/Gallery.html
