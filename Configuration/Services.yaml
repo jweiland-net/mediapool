@@ -1,0 +1,64 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  JWeiland\Mediapool\:
+    resource: '../Classes/*'
+
+  # Called by makeInstance in UpgradeWizardListCommand of EXT:install
+  JWeiland\Mediapool\Updates\PlaylistSlugUpdate:
+    public: true
+
+  # Called by makeInstance in UpgradeWizardListCommand of EXT:install
+  JWeiland\Mediapool\Updates\VideoSlugUpdate:
+    public: true
+
+  # Called by makeInstance in DataHandler
+  JWeiland\Mediapool\Hooks\DataHandlerHook:
+    public: true
+
+  # Called by makeInstance in VideoPlatformUtility
+  JWeiland\Mediapool\Import\Playlist\YoutubePlaylistImport:
+    public: true
+
+  # Called by makeInstance in VideoPlatformUtility
+  JWeiland\Mediapool\Import\Video\YouTubeVideoImport:
+    public: true
+
+  # Called by makeInstance in SchedulerModuleController
+  JWeiland\Mediapool\Task\UpdatePlaylistInformation:
+    public: true
+
+  # Called by makeInstance in SchedulerModuleController
+  JWeiland\Mediapool\Task\UpdateVideoInformation:
+    public: true
+
+  # Called by makeInstance in SchedulerModuleController
+  JWeiland\Mediapool\Task\UpdatePlaylistInformationAdditionalFieldProvider:
+    public: true
+
+  # Called by makeInstance in SchedulerModuleController
+  JWeiland\Mediapool\Task\UpdateVideoInformationAdditionalFieldProvider:
+    public: true
+
+  # Called by makeInstance in NodeFactory
+  JWeiland\Mediapool\Form\Element\InlineVideoElement:
+    public: true
+
+  # Called by makeInstance in NodeFactory
+  JWeiland\Mediapool\Form\Element\VideoHeaderElement:
+    public: true
+
+  # Called by makeInstance in NodeFactory
+  JWeiland\Mediapool\Form\Element\VideoLinkElement:
+    public: true
+
+  # Called by makeInstance in NodeFactory
+  JWeiland\Mediapool\Form\Element\VideoPlayerElement:
+    public: true
+
+  # Called by makeInstance in NodeFactory
+  JWeiland\Mediapool\Form\Element\VideoTextElement:
+    public: true
