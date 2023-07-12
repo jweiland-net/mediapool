@@ -20,15 +20,6 @@ For the full copyright and license information, please read the
 LICENSE file that was distributed with this source code.
 COMMENT;
 
-<<<<<<<< HEAD:Build/php-cs-fixer/php-cs-fixer.php
-$finder = PhpCsFixer\Finder::create()
-    ->name('*.php')
-    ->exclude('.build')
-    ->in(__DIR__);
-
-return (new \PhpCsFixer\Config())
-    ->setFinder($finder)
-========
 return (new \PhpCsFixer\Config())
     ->setFinder(
         (new PhpCsFixer\Finder())
@@ -40,19 +31,15 @@ return (new \PhpCsFixer\Config())
             ])
     )
     ->setUsingCache(false)
->>>>>>>> 2a926cb (Add missing trailing commas to multi arrays):Build/php-cs-fixer/config.php
     ->setRiskyAllowed(true)
     ->setRules([
         '@DoctrineAnnotation' => true,
         '@PER' => true,
         'header_comment' => [
             'header' => $headerComment,
-<<<<<<<< HEAD:Build/php-cs-fixer/php-cs-fixer.php
-========
             'comment_type' => 'comment',
             'separate' => 'both',
             'location' => 'after_declare_strict',
->>>>>>>> 2a926cb (Add missing trailing commas to multi arrays):Build/php-cs-fixer/config.php
         ],
         'array_syntax' => ['syntax' => 'short'],
         'blank_line_after_opening_tag' => true,
@@ -100,10 +87,7 @@ return (new \PhpCsFixer\Config())
         'phpdoc_types_order' => ['null_adjustment' => 'always_last', 'sort_algorithm' => 'none'],
         'return_type_declaration' => ['space_before' => 'none'],
         'single_quote' => true,
-<<<<<<<< HEAD:Build/php-cs-fixer/php-cs-fixer.php
-========
         'single_space_after_construct' => true,
->>>>>>>> 2a926cb (Add missing trailing commas to multi arrays):Build/php-cs-fixer/config.php
         'single_line_comment_style' => ['comment_types' => ['hash']],
         'single_trait_insert_per_statement' => true,
         'trailing_comma_in_multiline' => ['elements' => ['arrays']],
