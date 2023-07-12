@@ -139,7 +139,7 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
             return [];
         }
 
-        $resultArray = [
+        return [
             'fieldArray' => [
                 'pid' => $pid,
                 'link' => $playlistLink,
@@ -151,8 +151,6 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
             ],
             'dataHandler' => $data,
         ];
-
-        return $resultArray;
     }
 
     /**

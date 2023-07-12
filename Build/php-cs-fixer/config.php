@@ -20,27 +20,34 @@ For the full copyright and license information, please read the
 LICENSE file that was distributed with this source code.
 COMMENT;
 
-$finder = PhpCsFixer\Finder::create()
-    ->name('*.php')
-    ->exclude('.build')
-    ->in(__DIR__);
-
 return (new \PhpCsFixer\Config())
-    ->setFinder($finder)
+    ->setFinder(
+        (new PhpCsFixer\Finder())
+            ->ignoreVCSIgnored(true)
+            ->in([
+                __DIR__ . '/../../Build/',
+                __DIR__ . '/../../Classes/',
+                __DIR__ . '/../../Configuration/',
+            ])
+    )
+    ->setUsingCache(false)
     ->setRiskyAllowed(true)
     ->setRules([
         '@DoctrineAnnotation' => true,
         '@PER' => true,
         'header_comment' => [
             'header' => $headerComment,
+            'comment_type' => 'comment',
+            'separate' => 'both',
+            'location' => 'after_declare_strict',
         ],
         'array_syntax' => ['syntax' => 'short'],
         'blank_line_after_opening_tag' => true,
-        'braces' => ['allow_single_line_closure' => true],
         'cast_spaces' => ['space' => 'none'],
         'compact_nullable_typehint' => true,
         'concat_space' => ['spacing' => 'one'],
         'declare_equal_normalize' => ['space' => 'none'],
+        'declare_parentheses' => true,
         'dir_constant' => true,
         'function_to_constant' => ['functions' => ['get_called_class', 'get_class', 'get_class_this', 'php_sapi_name', 'phpversion', 'pi']],
         'function_typehint_space' => true,
@@ -80,6 +87,7 @@ return (new \PhpCsFixer\Config())
         'phpdoc_types_order' => ['null_adjustment' => 'always_last', 'sort_algorithm' => 'none'],
         'return_type_declaration' => ['space_before' => 'none'],
         'single_quote' => true,
+        'single_space_after_construct' => true,
         'single_line_comment_style' => ['comment_types' => ['hash']],
         'single_trait_insert_per_statement' => true,
         'trailing_comma_in_multiline' => ['elements' => ['arrays']],

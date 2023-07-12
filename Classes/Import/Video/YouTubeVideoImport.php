@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace JWeiland\Mediapool\Import\Video;
 
 use JWeiland\Mediapool\Configuration\ExtConf;
-use JWeiland\Mediapool\Constants;
 use JWeiland\Mediapool\Domain\Model\Video;
 use JWeiland\Mediapool\Traits\GetVideoRepositoryTrait;
 use TYPO3\CMS\Core\Error\Http\StatusException;
@@ -24,6 +23,11 @@ use TYPO3\CMS\Core\Http\RequestFactory;
 class YouTubeVideoImport extends AbstractVideoImport
 {
     use GetVideoRepositoryTrait;
+
+    /**
+     * Platform prefix. Used for YouTube video id
+     */
+    private const YOUTUBE_PLATFORM_PREFIX = 'yt_';
 
     /**
      * @var RequestFactory
@@ -96,8 +100,8 @@ class YouTubeVideoImport extends AbstractVideoImport
             if (strpos($video['video'], 'http') === 0) {
                 // ToDo: add error if getVideoId returns empty string
                 $video['video'] = $this->getVideoId($video['video']);
-            } elseif (strpos(Constants::YOUTUBE_PLATFORM_PREFIX, $video['video']) === 0) {
-                $video['video'] = substr($video['video'], strlen(Constants::YOUTUBE_PLATFORM_PREFIX));
+            } elseif (strpos(self::YOUTUBE_PLATFORM_PREFIX, $video['video']) === 0) {
+                $video['video'] = substr($video['video'], strlen(self::YOUTUBE_PLATFORM_PREFIX));
             }
             $videoIds[] = $video['video'];
         }
@@ -155,7 +159,7 @@ class YouTubeVideoImport extends AbstractVideoImport
                 // creating a new one
                 if ($checkExistingVideos) {
                     $queryResult = $videoRepository->findByVideoId(
-                        Constants::YOUTUBE_PLATFORM_PREFIX . $videoId,
+                        self::YOUTUBE_PLATFORM_PREFIX . $videoId,
                         $pid
                     );
                     $existingVideo = $queryResult->getFirst();
@@ -334,7 +338,7 @@ class YouTubeVideoImport extends AbstractVideoImport
             'description' => nl2br((string)$item['snippet']['description']),
             'upload_date' => $uploadDate->getTimestamp(),
             'player_html' => (string)$item['player']['embedHtml'],
-            'video_id' => Constants::YOUTUBE_PLATFORM_PREFIX . $item['id'],
+            'video_id' => self::YOUTUBE_PLATFORM_PREFIX . $item['id'],
             'thumbnail' => (string)$item['snippet']['thumbnails']['medium']['url'],
             'thumbnail_large' => $this->getLargestThumbnailForVideo($item),
         ];

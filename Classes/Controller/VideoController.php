@@ -73,6 +73,8 @@ class VideoController extends ActionController
 
     /**
      * List recent videos sorted by selected categories
+     *
+     * ToDo: This method is not registered in ext_localconf.php. It will be called by SCA of FlexForm. This method must be migrated into its own plugin while upgrading to TYPO3 12.
      */
     public function listRecentByCategoryAction(): void
     {

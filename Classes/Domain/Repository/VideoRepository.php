@@ -35,6 +35,7 @@ class VideoRepository extends Repository
                 $query->equals('pid', $pid)
             )
         );
+
         return $query->execute();
     }
 
@@ -91,7 +92,7 @@ class VideoRepository extends Repository
     {
         $categoryRepository = $this->getObjectManager()->get(CategoryRepository::class);
         $recentVideos = [];
-        foreach (explode(',', $categoryUids) as $categoryUid) {
+        foreach (GeneralUtility::intExplode(',', $categoryUids) as $categoryUid) {
             $category = $categoryRepository->findByUid($categoryUid);
             $recent = $this->findRecentByCategory($categoryUid);
             if ($recent) {
