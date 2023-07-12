@@ -35,6 +35,7 @@ class VideoRepository extends Repository
                 $query->equals('pid', $pid)
             )
         );
+
         return $query->execute();
     }
 

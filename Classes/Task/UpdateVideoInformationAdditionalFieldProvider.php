@@ -96,8 +96,10 @@ class UpdateVideoInformationAdditionalFieldProvider extends AbstractAdditionalFi
                 LocalizationUtility::translate($this->ll . 'scheduler.update_video_information.unknown_mode'),
                 AbstractMessage::ERROR
             );
+
             return false;
         }
+
         return true;
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_playlist',
@@ -13,10 +14,10 @@ return [
         'enablecolumns' => [
             'disabled' => 'hidden',
             'starttime' => 'starttime',
-            'endtime' => 'endtime'
+            'endtime' => 'endtime',
         ],
         'searchFields' => 'title',
-        'iconfile' => 'EXT:mediapool/Resources/Public/Icons/tx_mediapool_domain_model_playlist.svg'
+        'iconfile' => 'EXT:mediapool/Resources/Public/Icons/tx_mediapool_domain_model_playlist.svg',
     ],
     'types' => [
         '0' => [
@@ -29,16 +30,16 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'max' => 30
-            ]
+                'max' => 30,
+            ],
         ],
         'hidden' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
             'config' => [
                 'type' => 'check',
-                'default' => 0
-            ]
+                'default' => 0,
+            ],
         ],
         'starttime' => [
             'exclude' => true,
@@ -48,7 +49,7 @@ return [
                 'renderType' => 'inputDateTime',
                 'eval' => 'date',
                 'default' => 0,
-            ]
+            ],
         ],
         'endtime' => [
             'exclude' => true,
@@ -60,13 +61,13 @@ return [
                 'default' => 0,
                 'range' => [
                     'upper' => mktime(0, 0, 0, 1, 1, 2038),
-                ]
-            ]
+                ],
+            ],
         ],
         'pid' => [
             'config' => [
                 'type' => 'passthrough',
-            ]
+            ],
         ],
         'title' => [
             'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_playlist.title',
@@ -74,7 +75,7 @@ return [
                 'type' => 'input',
                 'eval' => 'trim',
                 'renderType' => 'videoHeader',
-            ]
+            ],
         ],
         'slug' => [
             'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:slug',
@@ -85,12 +86,12 @@ return [
                     'fieldSeparator' => '/',
                     'prefixParentPageSlug' => false,
                     'replacements' => [
-                        '/' => ''
+                        '/' => '',
                     ],
                     'fallbackCharacter' => '-',
                     'eval' => 'uniqueInSite',
-                    'default' => ''
-                ]
+                    'default' => '',
+                ],
             ],
         ],
         'link' => [
@@ -102,7 +103,7 @@ return [
                 'placeholder' => 'https://www.youtube.com/playlist?list=PLbDO1duet8JWl9BJeCxM5z4Zi3nMcwEIE',
                 'renderType' => 'videoLink',
                 'importType' => 'playlist',
-            ]
+            ],
         ],
         'videos' => [
             'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_playlist.videos',
@@ -116,7 +117,7 @@ return [
                 'MM' => 'tx_mediapool_playlist_video_mm',
                 'minitems' => 0,
                 'maxitems' => 1000,
-            ]
+            ],
         ],
         'categories' => [
             'exclude' => true,
@@ -150,13 +151,13 @@ return [
         ],
         'playlist_id' => [
             'config' => [
-                'type' => 'passthrough'
-            ]
+                'type' => 'passthrough',
+            ],
         ],
         'thumbnail' => [
             'config' => [
-                'type' => 'passthrough'
-            ]
+                'type' => 'passthrough',
+            ],
         ],
     ],
 ];
