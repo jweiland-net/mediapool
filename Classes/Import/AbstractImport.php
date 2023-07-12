@@ -11,12 +11,10 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Import;
 
-use JWeiland\Mediapool\AbstractBase;
-
 /**
  * Class AbstractImport
  */
-class AbstractImport extends AbstractBase
+class AbstractImport
 {
     /**
      * Name of the video platform

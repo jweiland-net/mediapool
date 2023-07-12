@@ -11,16 +11,18 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Service;
 
-use JWeiland\Mediapool\AbstractBase;
 use JWeiland\Mediapool\Import\Video\AbstractVideoImport;
+use JWeiland\Mediapool\Traits\AddFlashMessageTrait;
 use JWeiland\Mediapool\Utility\VideoPlatformUtility;
 use TYPO3\CMS\Core\SingletonInterface;
 
 /**
  * Class VideoService
  */
-class VideoService extends AbstractBase implements SingletonInterface
+class VideoService implements SingletonInterface
 {
+    use AddFlashMessageTrait;
+
     /**
      * Get video data
      * $videos array must have to following structure:
