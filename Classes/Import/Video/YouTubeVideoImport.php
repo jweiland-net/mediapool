@@ -13,6 +13,7 @@ namespace JWeiland\Mediapool\Import\Video;
 
 use JWeiland\Mediapool\Configuration\ExtConf;
 use JWeiland\Mediapool\Domain\Model\Video;
+use JWeiland\Mediapool\Traits\AddFlashMessageTrait;
 use JWeiland\Mediapool\Traits\GetVideoRepositoryTrait;
 use TYPO3\CMS\Core\Error\Http\StatusException;
 use TYPO3\CMS\Core\Http\RequestFactory;
@@ -22,6 +23,7 @@ use TYPO3\CMS\Core\Http\RequestFactory;
  */
 class YouTubeVideoImport extends AbstractVideoImport
 {
+    use AddFlashMessageTrait;
     use GetVideoRepositoryTrait;
 
     /**

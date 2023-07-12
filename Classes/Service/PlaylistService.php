@@ -11,15 +11,17 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Service;
 
-use JWeiland\Mediapool\AbstractBase;
 use JWeiland\Mediapool\Import\Playlist\AbstractPlaylistImport;
+use JWeiland\Mediapool\Traits\AddFlashMessageTrait;
 use JWeiland\Mediapool\Utility\VideoPlatformUtility;
 
 /**
  * Class PlaylistService
  */
-class PlaylistService extends AbstractBase
+class PlaylistService
 {
+    use AddFlashMessageTrait;
+
     /**
      * Returns an array that includes a prepared fieldArray for DataHandler
      * as an array with new records for DataHandler

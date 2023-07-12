@@ -9,19 +9,17 @@ declare(strict_types=1);
  * LICENSE file that was distributed with this source code.
  */
 
-namespace JWeiland\Mediapool;
+namespace JWeiland\Mediapool\Traits;
 
-use JWeiland\Mediapool\Traits\GetFlashMessageQueueTrait;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * Class AbstractBase
- * Base class for AbstractImport, VideoService and PlaylistService
+ * Trait to provide method to add FlashMessages to queue
  */
-abstract class AbstractBase
+trait AddFlashMessageTrait
 {
     use GetFlashMessageQueueTrait;
 

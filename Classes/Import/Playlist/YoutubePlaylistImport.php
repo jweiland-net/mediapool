@@ -13,6 +13,7 @@ namespace JWeiland\Mediapool\Import\Playlist;
 
 use JWeiland\Mediapool\Configuration\ExtConf;
 use JWeiland\Mediapool\Import\Video\YouTubeVideoImport;
+use JWeiland\Mediapool\Traits\AddFlashMessageTrait;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Error\Http\StatusException;
 use TYPO3\CMS\Core\Http\RequestFactory;
@@ -22,6 +23,8 @@ use TYPO3\CMS\Core\Http\RequestFactory;
  */
 class YoutubePlaylistImport extends AbstractPlaylistImport
 {
+    use AddFlashMessageTrait;
+
     /**
      * URL to fetch playlist items via GET request
      */
