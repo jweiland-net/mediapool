@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Hooks;
 
+use JWeiland\Mediapool\Configuration\Exception\MissingYouTubeApiKeyException;
 use JWeiland\Mediapool\Service\PlaylistService;
 use JWeiland\Mediapool\Service\VideoService;
 use JWeiland\Mediapool\Traits\GetFlashMessageQueueTrait;
@@ -20,6 +21,8 @@ use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\SysLog\Action\Database as SystemLogDatabaseAction;
+use TYPO3\CMS\Core\SysLog\Error as SystemLogErrorClassification;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -72,18 +75,43 @@ class DataHandlerHook implements LoggerAwareInterface
         }
 
         try {
+            $uid = 0;
+            $table = '';
+
             if (
                 array_key_exists(self::TABLE_VIDEO, $dataHandler->datamap) &&
                 !array_key_exists(self::TABLE_PLAYLIST, $dataHandler->datamap)
             ) {
                 // save single video
+                $table = self::TABLE_VIDEO;
                 $this->processVideos($dataHandler->datamap[self::TABLE_VIDEO]);
             } elseif (array_key_exists(self::TABLE_PLAYLIST, $dataHandler->datamap)) {
                 // save playlist
+                $table = self::TABLE_PLAYLIST;
                 foreach ($dataHandler->datamap[self::TABLE_PLAYLIST] as $uid => &$fields) {
                     $this->processPlaylist($uid, $fields);
                 }
             }
+        } catch (MissingYouTubeApiKeyException $missingYouTubeApiKeyException) {
+            $this->dataHandler->log(
+                $table,
+                $uid,
+                SystemLogDatabaseAction::UPDATE,
+                0,
+                SystemLogErrorClassification::USER_ERROR,
+                $missingYouTubeApiKeyException->getMessage(),
+                -1
+            );
+
+            $flashMessage = GeneralUtility::makeInstance(
+                FlashMessage::class,
+                $missingYouTubeApiKeyException->getMessage(),
+                'Missing YouTube API key',
+                AbstractMessage::ERROR,
+                true
+            );
+
+            $this->getFlashMessageQueue()->addMessage($flashMessage);
         } catch (\Exception $e) {
             $flashMessage = GeneralUtility::makeInstance(
                 FlashMessage::class,
@@ -96,7 +124,7 @@ class DataHandlerHook implements LoggerAwareInterface
                     'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:data_handler.exception.title'
                 ),
                 AbstractMessage::ERROR,
-                [$e->getCode()]
+                true
             );
 
             $this->getFlashMessageQueue()->addMessage($flashMessage);
@@ -143,13 +171,14 @@ class DataHandlerHook implements LoggerAwareInterface
      */
     protected function processPlaylist($uid, array &$fieldArray): void
     {
-        if (!($pid = $fieldArray['pid'])) {
+        $pid = (int)($fieldArray['pid'] ?? 0);
+        if ($pid === 0) {
             $pid = $this->getPlaylistRepository()->findPidByUid($uid);
         }
 
-        $data = $this->playlistService->getPlaylistData($fieldArray['link'], (int)$pid);
+        $data = $this->playlistService->getPlaylistData($fieldArray['link'] ?? '', $pid);
 
-        if ($data) {
+        if ($data !== []) {
             ArrayUtility::mergeRecursiveWithOverrule($fieldArray, $data['fieldArray']);
             ArrayUtility::mergeRecursiveWithOverrule($this->dataHandler->datamap, $data['dataHandler']);
         } else {

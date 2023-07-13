@@ -199,7 +199,6 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
         }
 
         $response = $this->requestFactory->request(
-            'GET',
             sprintf(
                 self::CHANNELS_LIST_API_URL,
                 $this->apiKey,
@@ -263,7 +262,6 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
     protected function fetchPlaylistItems(array $items = [], string $additionalRequestParams = ''): array
     {
         $response = $this->requestFactory->request(
-            'GET',
             sprintf(
                 self::PLAYLIST_ITEMS_API_URL . $additionalRequestParams,
                 $this->playlistId,
@@ -298,7 +296,6 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
     protected function fetchPlaylistInformation(): array
     {
         $response = $this->requestFactory->request(
-            'GET',
             sprintf(
                 self::PLAYLIST_API_URL,
                 $this->playlistId,

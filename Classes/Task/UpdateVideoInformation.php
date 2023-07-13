@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Task;
 
+use JWeiland\Mediapool\Traits\AddFlashMessageTrait;
 use JWeiland\Mediapool\Traits\GetVideoRepositoryTrait;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -21,6 +22,7 @@ use TYPO3\CMS\Scheduler\Task\AbstractTask;
  */
 class UpdateVideoInformation extends AbstractTask
 {
+    use AddFlashMessageTrait;
     use GetVideoRepositoryTrait;
 
     /**
@@ -59,6 +61,11 @@ class UpdateVideoInformation extends AbstractTask
             $videos = $this->getVideoRepository()->findLinksAndUidsByPid($this->pageSelection);
         }
 
+        // Early return, if there are no videos to process
+        if ($videos === []) {
+            return true;
+        }
+
         $data = [];
 
         // create data array for data handler
@@ -72,6 +79,17 @@ class UpdateVideoInformation extends AbstractTask
         $dataHandler = $this->getDataHandler();
         $dataHandler->start($data, []);
         $dataHandler->process_datamap();
+
+        if ($dataHandler->errorLog !== []) {
+            foreach ($dataHandler->errorLog as $errorLog) {
+                $this->addFlashMessage(
+                    'Error',
+                    $errorLog
+                );
+            }
+
+            return false;
+        }
 
         return true;
     }

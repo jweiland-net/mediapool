@@ -32,19 +32,16 @@ class PlaylistService
      */
     public function getPlaylistData(string $playlistLink, int $pid): array
     {
-        try {
-            foreach (VideoPlatformUtility::getRegisteredPlaylistImporters() as $registeredPlaylistImporter) {
-                if ($this->isPlaylistOfVideoImport($playlistLink, $registeredPlaylistImporter)) {
-                    return $registeredPlaylistImporter->getPlaylistInformation($playlistLink, $pid);
-                }
+        foreach (VideoPlatformUtility::getRegisteredPlaylistImporters() as $registeredPlaylistImporter) {
+            if ($this->isPlaylistOfVideoImport($playlistLink, $registeredPlaylistImporter)) {
+                return $registeredPlaylistImporter->getPlaylistInformation($playlistLink, $pid);
             }
-
-            $this->addFlashMessage(
-                'playlist_service.no_match.title',
-                'playlist_service.no_match.message'
-            );
-        } catch (\Exception $e) {
         }
+
+        $this->addFlashMessage(
+            'playlist_service.no_match.title',
+            'playlist_service.no_match.message'
+        );
 
         return [];
     }
