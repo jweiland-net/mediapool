@@ -275,7 +275,6 @@ class YouTubeVideoImport extends AbstractVideoImport
     protected function doRequest(string $videoIds, array $items = [], string $additionalRequestParams = ''): array
     {
         $response = $this->requestFactory->request(
-            'GET',
             sprintf(
                 self::VIDEO_API_URL . $additionalRequestParams,
                 $videoIds,
