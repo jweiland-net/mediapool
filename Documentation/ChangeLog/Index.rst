@@ -20,3 +20,4 @@ Version 3.0.0
 *   Use TYPO3 RequestFactory instead of Guzzle Client directly
 *   Update VideoPlatformUtility. It returns the target classes now.
 *   Use Dependency Injection where possible. Services.yaml
+*   Implement better error handling. Missing YouTube API key
