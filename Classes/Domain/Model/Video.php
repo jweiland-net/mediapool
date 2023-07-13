@@ -107,7 +107,7 @@ class Video extends AbstractEntity
         $this->description = $description;
     }
 
-    public function getUploadDate(): \DateTime
+    public function getUploadDate(): ?\DateTime
     {
         return $this->uploadDate;
     }
