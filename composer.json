@@ -31,6 +31,9 @@
 		"friendsofphp/php-cs-fixer": "^3.10",
 		"nimut/testing-framework": "^6.0"
 	},
+	"replace": {
+		"typo3-ter/mediapool": "self.version"
+	},
 	"autoload": {
 		"psr-4": {
 			"JWeiland\\Mediapool\\": "Classes"
