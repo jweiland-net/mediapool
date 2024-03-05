@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z" product-name="mediapool" target-language="es-ES">
+    <header/>
+    <body>
+      <trans-unit id="video_service.import_mismatch.title">
+        <source>Import mismatch</source>
+        <target state="needs-translation">Import mismatch</target>
+      </trans-unit>
+      <trans-unit id="video_service.import_mismatch.message">
+        <source>There was an mismatch while importing videos. %d of %d videos were imported!</source>
+        <target state="needs-translation">There was an mismatch while importing videos. %d of %d videos were imported!</target>
+      </trans-unit>
+      <trans-unit id="video_service.no_match.title">
+        <source>No video platform match</source>
+        <target state="needs-translation">No video platform match</target>
+      </trans-unit>
+      <trans-unit id="video_service.no_match.message">
+        <source>I could not find a matching video platform for your video. Please check your link.</source>
+        <target state="needs-translation">I could not find a matching video platform for your video. Please check your link.</target>
+      </trans-unit>
+      <trans-unit id="playlist_service.no_match.title">
+        <source>No video platform match</source>
+        <target state="needs-translation">No video platform match</target>
+      </trans-unit>
+      <trans-unit id="playlist_service.no_match.message">
+        <source>I could not find a matching video platform for your playlist. Please check your link.</source>
+        <target state="needs-translation">I could not find a matching video platform for your playlist. Please check your link.</target>
+      </trans-unit>
+      <trans-unit id="data_handler.exception.title">
+        <source>Could not finish your request</source>
+        <target state="needs-translation">Could not finish your request</target>
+      </trans-unit>
+      <trans-unit id="data_handler.exception.message">
+        <source>There was an error while processing your request. Please contact your administrator. Error code %d</source>
+        <target state="needs-translation">There was an error while processing your request. Please contact your administrator. Error code %d</target>
+      </trans-unit>
+      <trans-unit id="youTubeVideoImport.missing_video_information.title">
+        <source>Missing video information</source>
+        <target state="needs-translation">Missing video information</target>
+      </trans-unit>
+      <trans-unit id="youTubeVideoImport.missing_video_information.message">
+        <source>The video information for %s is missing. Please check if the is video private or deleted.</source>
+        <target state="needs-translation">The video information for %s is missing. Please check if the is video private or deleted.</target>
+      </trans-unit>
+      <trans-unit id="youTubeVideoImport.missing_youtube_permission.title">
+        <source>Missing YouTube permission</source>
+        <target state="needs-translation">Missing YouTube permission</target>
+      </trans-unit>
+      <trans-unit id="youTubeVideoImport.missing_youtube_permission.message">
+        <source>Can not fetch information for video %s. Maybe it is marked as private or not embeddable by his owner.</source>
+        <target state="needs-translation">Can not fetch information for video %s. Maybe it is marked as private or not embeddable by his owner.</target>
+      </trans-unit>
+      <trans-unit id="youTubePlaylistImport.invalid_id.title">
+        <source>Invalid playlist id</source>
+        <target state="needs-translation">Invalid playlist id</target>
+      </trans-unit>
+      <trans-unit id="youTubePlaylistImport.invalid_id.message">
+        <source>Could not extract playlist id from playlist link %s. Please check your link!</source>
+        <target state="needs-translation">Could not extract playlist id from playlist link %s. Please check your link!</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
