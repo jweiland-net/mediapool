@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z" product-name="mediapool" target-language="uk">
+    <header/>
+    <body>
+      <trans-unit id="scheduler.update_video_information.title">
+        <source>Update video information</source>
+        <target state="needs-translation">Update video information</target>
+      </trans-unit>
+      <trans-unit id="scheduler.update_video_information.description">
+        <source>This task updates the video information by using the DataHandler Hook.</source>
+        <target state="needs-translation">This task updates the video information by using the DataHandler Hook.</target>
+      </trans-unit>
+      <trans-unit id="scheduler.update_video_information.mode">
+        <source>Select which videos should be updated</source>
+        <target state="needs-translation">Select which videos should be updated</target>
+      </trans-unit>
+      <trans-unit id="scheduler.update_video_information.unknown_mode">
+        <source>You selected an unknown mode.</source>
+        <target state="needs-translation">You selected an unknown mode.</target>
+      </trans-unit>
+      <trans-unit id="scheduler.update_video_information.page_selection">
+        <source>
+					Comma separated list of pages/folders where video records should be updated. (Depends on your choice above)
+				</source>
+        <target state="needs-translation">
+					Comma separated list of pages/folders where video records should be updated. (Depends on your choice above)
+				</target>
+      </trans-unit>
+      <trans-unit id="scheduler.update_video_information.page_selection.0">
+        <source>Update all video records</source>
+        <target state="needs-translation">Update all video records</target>
+      </trans-unit>
+      <trans-unit id="scheduler.update_video_information.page_selection.1">
+        <source>Update video records from selected pages/folders</source>
+        <target state="needs-translation">Update video records from selected pages/folders</target>
+      </trans-unit>
+      <trans-unit id="scheduler.update_playlist_information.title">
+        <source>Update playlist information</source>
+        <target state="needs-translation">Update playlist information</target>
+      </trans-unit>
+      <trans-unit id="scheduler.update_playlist_information.description">
+        <source>This task updates the playlist information by using the DataHandler Hook.</source>
+        <target state="needs-translation">This task updates the playlist information by using the DataHandler Hook.</target>
+      </trans-unit>
+      <trans-unit id="scheduler.update_playlist_information.mode">
+        <source>Select which playlists should be updated</source>
+        <target state="needs-translation">Select which playlists should be updated</target>
+      </trans-unit>
+      <trans-unit id="scheduler.update_playlist_information.unknown_mode">
+        <source>You selected an unknown mode.</source>
+        <target state="needs-translation">You selected an unknown mode.</target>
+      </trans-unit>
+      <trans-unit id="scheduler.update_playlist_information.page_selection">
+        <source>
+					Comma separated list of pages/folders where playlist records should be updated. (Depends on your choice above)
+				</source>
+        <target state="needs-translation">
+					Comma separated list of pages/folders where playlist records should be updated. (Depends on your choice above)
+				</target>
+      </trans-unit>
+      <trans-unit id="scheduler.update_playlist_information.page_selection.0">
+        <source>Update all playlist records</source>
+        <target state="needs-translation">Update all playlist records</target>
+      </trans-unit>
+      <trans-unit id="scheduler.update_playlist_information.page_selection.1">
+        <source>Update playlist records from selected pages/folders</source>
+        <target state="needs-translation">Update playlist records from selected pages/folders</target>
+      </trans-unit>
+      <trans-unit id="video.upload_date">
+        <source>Upload date</source>
+        <target state="needs-translation">Upload date</target>
+      </trans-unit>
+      <trans-unit id="flex_forms.mediapool.view">
+        <source>Select view</source>
+        <target state="needs-translation">Select view</target>
+      </trans-unit>
+      <trans-unit id="flex_forms.mediapool.recommended_videos">
+        <source>List recommended videos</source>
+        <target state="needs-translation">List recommended videos</target>
+      </trans-unit>
+      <trans-unit id="flex_forms.mediapool.detail_view">
+        <source>Detail view (Video, Playlist)</source>
+        <target state="needs-translation">Detail view (Video, Playlist)</target>
+      </trans-unit>
+      <trans-unit id="flex_forms.mediapool.detail_page">
+        <source>Select page for detail view</source>
+        <target state="needs-translation">Select page for detail view</target>
+      </trans-unit>
+      <trans-unit id="flex_forms.mediapool.list_page">
+        <source>Select page for list view</source>
+        <target state="needs-translation">Select page for list view</target>
+      </trans-unit>
+      <trans-unit id="flex_forms.mediapool.recommended_video_selection">
+        <source>Select 3 recommended videos</source>
+        <target state="needs-translation">Select 3 recommended videos</target>
+      </trans-unit>
+      <trans-unit id="flex_forms.mediapool.categories">
+        <source>Display a recent video per selected categorie</source>
+        <target state="needs-translation">Display a recent video per selected categorie</target>
+      </trans-unit>
+      <trans-unit id="flex_forms.mediapool.list_recent_by_category">
+        <source>List recent video of playlist (category)</source>
+        <target state="needs-translation">List recent video of playlist (category)</target>
+      </trans-unit>
+      <trans-unit id="flex_forms.mediapool.list_latest_videos">
+        <source>List latest videos by playlist</source>
+        <target state="needs-translation">List latest videos by playlist</target>
+      </trans-unit>
+      <trans-unit id="flex_forms.mediapool.list_videos">
+        <source>List all videos by playlist</source>
+        <target state="needs-translation">List all videos by playlist</target>
+      </trans-unit>
+      <trans-unit id="flex_forms.mediapool.playlist_selection">
+        <source>Select a playlist</source>
+        <target state="needs-translation">Select a playlist</target>
+      </trans-unit>
+      <trans-unit id="flex_forms.mediapool.preview_view">
+        <source>Show clickable previews of galleries</source>
+        <target state="needs-translation">Show clickable previews of galleries</target>
+      </trans-unit>
+      <trans-unit id="flex_forms.mediapool.teaser_view">
+        <source>Show clickable previews of galleries with more button</source>
+        <target state="needs-translation">Show clickable previews of galleries with more button</target>
+      </trans-unit>
+      <trans-unit id="flex_forms.mediapool.videos_per_page">
+        <source>Videos per page</source>
+        <target state="needs-translation">Videos per page</target>
+      </trans-unit>
+      <trans-unit id="frontend.list_by_category.no_playlists">
+        <source>No playlists found!</source>
+        <target state="needs-translation">No playlists found!</target>
+      </trans-unit>
+      <trans-unit id="flex_forms.gallery.title">
+        <source>Image gallery</source>
+        <target state="needs-translation">Image gallery</target>
+      </trans-unit>
+      <trans-unit id="flex_forms.gallery.file_collections">
+        <source>File collection(s)</source>
+        <target state="needs-translation">File collection(s)</target>
+      </trans-unit>
+      <trans-unit id="flex_forms.gallery.list_page">
+        <source>Page to the list view</source>
+        <target state="needs-translation">Page to the list view</target>
+      </trans-unit>
+      <trans-unit id="frontend.gallery.counter">
+        <source>%d images</source>
+        <target state="needs-translation">%d images</target>
+      </trans-unit>
+      <trans-unit id="frontend.button.more">
+        <source>More</source>
+        <target state="needs-translation">More</target>
+      </trans-unit>
+      <trans-unit id="frontend.button.gallery.more">
+        <source>Show more image galleries</source>
+        <target state="needs-translation">Show more image galleries</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
