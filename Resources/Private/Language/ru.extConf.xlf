@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z" product-name="mediapool" target-language="ru">
+    <header/>
+    <body>
+      <trans-unit id="youtubeDataApiKey">
+        <source>Enter your Youtube Data API v3 Key:You can receive a key from https://console.developers.google.com/</source>
+        <target state="needs-translation">Enter your Youtube Data API v3 Key:You can receive a key from https://console.developers.google.com/</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
