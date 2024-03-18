@@ -3,9 +3,9 @@
   <file source-language="en" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z" product-name="mediapool" target-language="de">
     <header/>
     <body>
-      <trans-unit id="youtubeDataApiKey">
+      <trans-unit id="youtubeDataApiKey" approved="yes">
         <source>Enter your Youtube Data API v3 Key:You can receive a key from https://console.developers.google.com/</source>
-        <target state="needs-translation">Enter your Youtube Data API v3 Key:You can receive a key from https://console.developers.google.com/</target>
+        <target state="final">Youtube data API V3 key eingeben: Ein API-Key kann von https://console.developers.google.com/ bezogen werden</target>
       </trans-unit>
     </body>
   </file>
