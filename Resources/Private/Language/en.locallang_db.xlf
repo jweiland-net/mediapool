@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z" product-name="mediapool" target-language="en">
+    <header/>
+    <body>
+      <trans-unit id="tx_mediapool_domain_model_video">
+        <source>Video</source>
+        <target state="needs-translation">Video</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_video.title">
+        <source>Title</source>
+        <target state="needs-translation">Title</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_video.description">
+        <source>Description</source>
+        <target state="needs-translation">Description</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_video.upload_date">
+        <source>Upload date</source>
+        <target state="needs-translation">Upload date</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_video.link">
+        <source>Video URL</source>
+        <target state="needs-translation">Video URL</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_video.player_html">
+        <source>Preview</source>
+        <target state="needs-translation">Preview</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_video.empty_field">
+        <source>This field will be filled automatically after first successful save.</source>
+        <target state="needs-translation">This field will be filled automatically after first successful save.</target>
+      </trans-unit>
+      <trans-unit id="render_type.video_link_element.supported_video_platforms">
+        <source>Supported video platforms:</source>
+        <target state="needs-translation">Supported video platforms:</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_playlist">
+        <source>Playlist</source>
+        <target state="needs-translation">Playlist</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_playlist.title">
+        <source>Title</source>
+        <target state="needs-translation">Title</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_playlist.link">
+        <source>Playlist URL or Channel URL</source>
+        <target state="needs-translation">Playlist URL or Channel URL</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_playlist.videos">
+        <source>Videos</source>
+        <target state="needs-translation">Videos</target>
+      </trans-unit>
+      <trans-unit id="plugin.mediapool.title">
+        <source>Mediapool</source>
+        <target state="needs-translation">Mediapool</target>
+      </trans-unit>
+      <trans-unit id="plugin.gallery.title">
+        <source>Gallery</source>
+        <target state="needs-translation">Gallery</target>
+      </trans-unit>
+      <trans-unit id="plugin.mediapool.description">
+        <source>This plugin adds a media center to your website.</source>
+        <target state="needs-translation">This plugin adds a media center to your website.</target>
+      </trans-unit>
+      <trans-unit id="plugin.gallery.description">
+        <source>This plugins adds a gallery using file collections to your website.</source>
+        <target state="needs-translation">This plugins adds a gallery using file collections to your website.</target>
+      </trans-unit>
+      <trans-unit id="slug">
+        <source>Path segment</source>
+        <target state="needs-translation">Path segment</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
