@@ -3,73 +3,73 @@
   <file source-language="en" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z" product-name="mediapool" target-language="de">
     <header/>
     <body>
-      <trans-unit id="tx_mediapool_domain_model_video">
+      <trans-unit id="tx_mediapool_domain_model_video" approved="yes">
         <source>Video</source>
-        <target state="needs-translation">Video</target>
+        <target state="final">Video</target>
       </trans-unit>
-      <trans-unit id="tx_mediapool_domain_model_video.title">
+      <trans-unit id="tx_mediapool_domain_model_video.title" approved="yes">
         <source>Title</source>
-        <target state="translated">Titel</target>
+        <target state="final">Titel</target>
       </trans-unit>
-      <trans-unit id="tx_mediapool_domain_model_video.description">
+      <trans-unit id="tx_mediapool_domain_model_video.description" approved="yes">
         <source>Description</source>
-        <target state="translated">Beschreibung</target>
+        <target state="final">Beschreibung</target>
       </trans-unit>
-      <trans-unit id="tx_mediapool_domain_model_video.upload_date">
+      <trans-unit id="tx_mediapool_domain_model_video.upload_date" approved="yes">
         <source>Upload date</source>
-        <target state="translated">Hochgeladen am</target>
+        <target state="final">Hochgeladen am</target>
       </trans-unit>
-      <trans-unit id="tx_mediapool_domain_model_video.link">
+      <trans-unit id="tx_mediapool_domain_model_video.link" approved="yes">
         <source>Video URL</source>
-        <target state="needs-translation">Video URL</target>
+        <target state="final">Video URL</target>
       </trans-unit>
-      <trans-unit id="tx_mediapool_domain_model_video.player_html">
+      <trans-unit id="tx_mediapool_domain_model_video.player_html" approved="yes">
         <source>Preview</source>
-        <target state="translated">Vorschau</target>
+        <target state="final">Vorschau</target>
       </trans-unit>
-      <trans-unit id="tx_mediapool_domain_model_video.empty_field">
+      <trans-unit id="tx_mediapool_domain_model_video.empty_field" approved="yes">
         <source>This field will be filled automatically after first successful save.</source>
-        <target state="translated">Dieses Feld wird nach erfolgreichen Speichern automatisch gefüllt.</target>
+        <target state="final">Dieses Feld wird nach erfolgreichen Speichern automatisch gefüllt.</target>
       </trans-unit>
-      <trans-unit id="render_type.video_link_element.supported_video_platforms">
+      <trans-unit id="render_type.video_link_element.supported_video_platforms" approved="yes">
         <source>Supported video platforms:</source>
-        <target state="translated">Unterstützte Videoplattformen</target>
+        <target state="final">Unterstützte Videoplattformen:</target>
       </trans-unit>
-      <trans-unit id="tx_mediapool_domain_model_playlist">
+      <trans-unit id="tx_mediapool_domain_model_playlist" approved="yes">
         <source>Playlist</source>
-        <target state="translated">Playliste</target>
+        <target state="final">Playliste</target>
       </trans-unit>
-      <trans-unit id="tx_mediapool_domain_model_playlist.title">
+      <trans-unit id="tx_mediapool_domain_model_playlist.title" approved="yes">
         <source>Title</source>
-        <target state="translated">Titel</target>
+        <target state="final">Titel</target>
       </trans-unit>
-      <trans-unit id="tx_mediapool_domain_model_playlist.link">
+      <trans-unit id="tx_mediapool_domain_model_playlist.link" approved="yes">
         <source>Playlist URL or Channel URL</source>
-        <target state="translated">Playlisten URL oder Kanal URL</target>
+        <target state="final">Playlisten URL oder Kanal URL</target>
       </trans-unit>
-      <trans-unit id="tx_mediapool_domain_model_playlist.videos">
+      <trans-unit id="tx_mediapool_domain_model_playlist.videos" approved="yes">
         <source>Videos</source>
-        <target state="needs-translation">Videos</target>
+        <target state="final">Videos</target>
       </trans-unit>
-      <trans-unit id="plugin.mediapool.title">
+      <trans-unit id="plugin.mediapool.title" approved="yes">
         <source>Mediapool</source>
-        <target state="translated">Mediathek</target>
+        <target state="final">Mediathek</target>
       </trans-unit>
-      <trans-unit id="plugin.gallery.title">
+      <trans-unit id="plugin.gallery.title" approved="yes">
         <source>Gallery</source>
-        <target state="translated">Galerie</target>
+        <target state="final">Galerie</target>
       </trans-unit>
-      <trans-unit id="plugin.mediapool.description">
+      <trans-unit id="plugin.mediapool.description" approved="yes">
         <source>This plugin adds a media center to your website.</source>
-        <target state="translated">Dieses Plugin ermöglicht es, eine Mediathek auf Ihrer Webseite einzubinden.</target>
+        <target state="final">Dieses Plugin ermöglicht es, eine Mediathek auf Ihrer Webseite einzubinden.</target>
       </trans-unit>
-      <trans-unit id="plugin.gallery.description">
+      <trans-unit id="plugin.gallery.description" approved="yes">
         <source>This plugins adds a gallery using file collections to your website.</source>
-        <target state="translated">Dieses Plugin ermöglicht es, eine Galerie aus einer Dateisammlung einzubinden.</target>
+        <target state="final">Dieses Plugin ermöglicht es, eine Galerie aus einer Dateisammlung einzubinden.</target>
       </trans-unit>
-      <trans-unit id="slug">
+      <trans-unit id="slug" approved="yes">
         <source>Path segment</source>
-        <target state="translated">Segment für Sprechende URL</target>
+        <target state="final">Pfadsegment</target>
       </trans-unit>
     </body>
   </file>
