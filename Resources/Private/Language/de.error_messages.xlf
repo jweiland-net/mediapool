@@ -3,62 +3,61 @@
   <file source-language="en" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z" product-name="mediapool" target-language="de">
     <header/>
     <body>
-      <trans-unit id="video_service.import_mismatch.title">
+      <trans-unit id="video_service.import_mismatch.title" approved="yes">
         <source>Import mismatch</source>
-        <target state="translated">Import Unstimmigkeiten</target>
+        <target state="final">Import Unstimmigkeiten</target>
       </trans-unit>
-      <trans-unit id="video_service.import_mismatch.message">
+      <trans-unit id="video_service.import_mismatch.message" approved="yes">
         <source>There was an mismatch while importing videos. %d of %d videos were imported!</source>
-        <target state="translated">Es traten unstimmigkeiten während des Imports auf. %d von %d Videos konnten importiert werden.</target>
+        <target state="final">Es traten Unstimmigkeiten während des Imports auf. %d von %d Videos konnten importiert werden!</target>
       </trans-unit>
-      <trans-unit id="video_service.no_match.title">
+      <trans-unit id="video_service.no_match.title" approved="yes">
         <source>No video platform match</source>
-        <target state="translated">Keine Videoplatformübereinstimmung</target>
+        <target state="final">Keine passende Videoplattform</target>
       </trans-unit>
-      <trans-unit id="video_service.no_match.message">
+      <trans-unit id="video_service.no_match.message" approved="yes">
         <source>I could not find a matching video platform for your video. Please check your link.</source>
-        <target state="translated">Ich konnte keine passende Videoplattform für Ihr Video finden. Bitte überprüfen Sie Ihren Link.</target>
+        <target state="final">Ich konnte keine passende Videoplattform für Ihr Video finden. Bitte überprüfen Sie Ihren Link.</target>
       </trans-unit>
-      <trans-unit id="playlist_service.no_match.title">
+      <trans-unit id="playlist_service.no_match.title" approved="yes">
         <source>No video platform match</source>
-        <target state="translated">Keine Videoplatformübereinstimmung</target>
+        <target state="final">Keine passende Videoplattform</target>
       </trans-unit>
-      <trans-unit id="playlist_service.no_match.message">
+      <trans-unit id="playlist_service.no_match.message" approved="yes">
         <source>I could not find a matching video platform for your playlist. Please check your link.</source>
-        <target state="translated">Ich konnte keine passende Videoplattform für Ihr Video finden. Bitte überprüfen Sie Ihren Link.</target>
+        <target state="final">Ich konnte keine passende Videoplattform für Ihr Video finden. Bitte überprüfen Sie Ihren Link.</target>
       </trans-unit>
-      <trans-unit id="data_handler.exception.title">
+      <trans-unit id="data_handler.exception.title" approved="yes">
         <source>Could not finish your request</source>
-        <target state="translated">Die Anfrage konnte nicht bearbeitet werden</target>
+        <target state="final">Die Anfrage konnte nicht bearbeitet werden</target>
       </trans-unit>
-      <trans-unit id="data_handler.exception.message">
+      <trans-unit id="data_handler.exception.message" approved="yes">
         <source>There was an error while processing your request. Please contact your administrator. Error code %d</source>
-        <target state="translated">Es ist ein Fehler bei der Bearbeitung Ihrer Anfrage aufgetreten. Bitte wenden Sie sich an Ihren Administrator. Fehlercode %d</target>
+        <target state="final">Es ist ein Fehler bei der Bearbeitung Ihrer Anfrage aufgetreten. Bitte wenden Sie sich an Ihren Administrator. Fehlercode %d</target>
       </trans-unit>
-      <trans-unit id="youTubeVideoImport.missing_video_information.title">
+      <trans-unit id="youTubeVideoImport.missing_video_information.title" approved="yes">
         <source>Missing video information</source>
-        <target state="translated">Videoinformationen fehlen</target>
+        <target state="final">Videoinformationen fehlen</target>
       </trans-unit>
-      <trans-unit id="youTubeVideoImport.missing_video_information.message">
+      <trans-unit id="youTubeVideoImport.missing_video_information.message" approved="yes">
         <source>The video information for %s is missing. Please check if the is video private or deleted.</source>
-        <target state="translated">Die Informationen für das Video %s fehlen. Bitte überprüfen, ob das Video als Privat markiert oder gelöscht wurde.
-				</target>
+        <target state="final">Die Informationen für das Video %s fehlen. Bitte überprüfen, ob das Video als Privat markiert oder gelöscht wurde.</target>
       </trans-unit>
-      <trans-unit id="youTubeVideoImport.missing_youtube_permission.title">
+      <trans-unit id="youTubeVideoImport.missing_youtube_permission.title" approved="yes">
         <source>Missing YouTube permission</source>
-        <target state="translated">Fehlende YouTube-Rechte</target>
+        <target state="final">Fehlende YouTube-Rechte</target>
       </trans-unit>
-      <trans-unit id="youTubeVideoImport.missing_youtube_permission.message">
+      <trans-unit id="youTubeVideoImport.missing_youtube_permission.message" approved="yes">
         <source>Can not fetch information for video %s. Maybe it is marked as private or not embeddable by his owner.</source>
-        <target state="translated">Es können keine Informationen für das Video %s abgerufen werden. Vielleicht ist es von seinem Besitzer als privat oder nicht einbettbar markiert.</target>
+        <target state="final">Es können keine Informationen für das Video %s abgerufen werden. Vielleicht ist es von seinem Besitzer als privat oder nicht einbettbar markiert.</target>
       </trans-unit>
-      <trans-unit id="youTubePlaylistImport.invalid_id.title">
+      <trans-unit id="youTubePlaylistImport.invalid_id.title" approved="yes">
         <source>Invalid playlist id</source>
-        <target state="translated">Ungültige Playlist ID</target>
+        <target state="final">Ungültige Playlisten ID</target>
       </trans-unit>
-      <trans-unit id="youTubePlaylistImport.invalid_id.message">
+      <trans-unit id="youTubePlaylistImport.invalid_id.message" approved="yes">
         <source>Could not extract playlist id from playlist link %s. Please check your link!</source>
-        <target state="translated">Konnte keine ID aus dem Playlistenlink %s extrahieren. Bitte Link überprüfen.</target>
+        <target state="final">Konnte keine ID aus dem Playlisten-Link %s extrahieren. Bitte Link überprüfen!</target>
       </trans-unit>
     </body>
   </file>
