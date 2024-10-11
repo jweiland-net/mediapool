@@ -37,7 +37,7 @@
       </trans-unit>
       <trans-unit id="youTubeVideoImport.missing_video_information.title">
         <source>Missing video information</source>
-        <target state="needs-translation">Missing video information</target>
+        <target state="translated">Ontbrekende video informatie</target>
       </trans-unit>
       <trans-unit id="youTubeVideoImport.missing_video_information.message">
         <source>The video information for %s is missing. Please check if the is video private or deleted.</source>
