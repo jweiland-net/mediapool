@@ -29,7 +29,7 @@ class UpdateVideoInformationCommand extends Command
 
     public function __construct(
         VideoRecordService $videoRecordService,
-        LoggerInterface $logger,
+        LoggerInterface $logger
     ) {
         parent::__construct();
 

@@ -49,7 +49,7 @@ class DataHandlerHook implements LoggerAwareInterface
     public function __construct(
         PlaylistService $playlistService,
         PlaylistRecordService $playlistRecordService,
-        VideoService $videoService,
+        VideoService $videoService
     ) {
         $this->playlistService = $playlistService;
         $this->playlistRecordService = $playlistRecordService;

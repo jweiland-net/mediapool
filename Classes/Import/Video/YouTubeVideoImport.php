@@ -128,7 +128,7 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
         array $videos,
         int $pid,
         string &$recordUids = '',
-        bool $checkExistingVideos = false,
+        bool $checkExistingVideos = false
     ): array {
         $this->videoIds = $this->implodeVideoIdsAndUnifyArray($videos);
         $fetchedVideoInformation = $this->fetchVideoInformation();

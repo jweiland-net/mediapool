@@ -26,11 +26,6 @@ class PlaylistController extends ActionController
         $this->playlistRepository = $playlistRepository;
     }
 
-    /**
-     * List playlists by category
-     *
-     * @param Category $category
-     */
     public function listByCategoryAction(Category $category): ResponseInterface
     {
         $playlists = $this->playlistRepository->findByCategory($category->getUid());
@@ -42,9 +37,6 @@ class PlaylistController extends ActionController
         return $this->htmlResponse();
     }
 
-    /**
-     * List latest videos of a playlist
-     */
     public function listLatestVideosAction(): ResponseInterface
     {
         $this->view->assign('playlist', $this->playlistRepository->findByUid($this->settings['playlist']));
@@ -53,11 +45,9 @@ class PlaylistController extends ActionController
     }
 
     /**
-     * List all videos of a playlist
-     *
      * @param Playlist|null $playlist either pass a playlist or use the given from $this->settings
      */
-    public function listVideosAction(Playlist $playlist = null): ResponseInterface
+    public function listVideosAction(?Playlist $playlist = null): ResponseInterface
     {
         if ($playlist === null) {
             $playlist = $this->playlistRepository->findByUid($this->settings['playlist']);

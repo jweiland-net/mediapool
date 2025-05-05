@@ -29,7 +29,7 @@ class UpdatePlaylistInformationCommand extends Command
 
     public function __construct(
         PlaylistRecordService $playlistRecordService,
-        LoggerInterface $logger,
+        LoggerInterface $logger
     ) {
         parent::__construct();
 

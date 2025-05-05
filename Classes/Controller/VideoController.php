@@ -30,7 +30,7 @@ class VideoController extends ActionController
     /**
      * Shows a single video and additionally a playlist if $playlist is set
      */
-    public function showAction(Video $video, Playlist $playlist = null): ResponseInterface
+    public function showAction(Video $video, ?Playlist $playlist = null): ResponseInterface
     {
         if ($playlist !== null && !$playlist->getVideos()->contains($video)) {
             throw new \InvalidArgumentException(

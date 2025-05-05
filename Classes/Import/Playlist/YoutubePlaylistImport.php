@@ -65,7 +65,7 @@ class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInte
     public function __construct(
         YouTubeVideoImport $youTubeVideoImport,
         RequestFactory $requestFactory,
-        ExtConf $extConf,
+        ExtConf $extConf
     ) {
         $this->youTubeVideoImport = $youTubeVideoImport;
         $this->requestFactory = $requestFactory;

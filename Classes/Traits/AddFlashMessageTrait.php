@@ -37,7 +37,7 @@ trait AddFlashMessageTrait
     public function addFlashMessage(
         string $title,
         string $message,
-        array $messageArguments = [],
+        array $messageArguments = []
     ): void {
         $title = LocalizationUtility::translate($this->errorMessagesFile . ':' . $title);
         $message = LocalizationUtility::translate(

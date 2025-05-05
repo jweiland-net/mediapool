@@ -49,7 +49,7 @@ interface VideoImportInterface
         array $videos,
         int $pid,
         string &$recordUids = '',
-        bool $checkExistingVideos = false,
+        bool $checkExistingVideos = false
     ): array;
 
     /**
