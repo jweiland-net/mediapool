@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the package jweiland/glossary2.
+ * This file is part of the package jweiland/mediapool.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
@@ -24,29 +24,13 @@ use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
  */
 abstract class AbstractSlugUpdate implements UpgradeWizardInterface
 {
-    /**
-     * @var string
-     */
-    protected $table;
+    protected string $table;
 
-    /**
-     * @var string
-     */
-    protected $fieldName = 'slug';
+    protected string $fieldName = 'slug';
 
     public function updateNecessary(): bool
     {
         return $this->checkIfWizardIsRequired();
-    }
-
-    /**
-     * @return string[] All new fields and tables must exist
-     */
-    public function getPrerequisites(): array
-    {
-        return [
-            DatabaseUpdatedPrerequisite::class,
-        ];
     }
 
     public function executeUpdate(): bool
@@ -60,7 +44,7 @@ abstract class AbstractSlugUpdate implements UpgradeWizardInterface
      * Fills the database table "pages" with slugs based on the page title and its configuration.
      * But also checks "legacy" functionality.
      */
-    protected function populateSlugs()
+    protected function populateSlugs(): void
     {
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($this->table);
         $queryBuilder = $connection->createQueryBuilder();
@@ -93,7 +77,7 @@ abstract class AbstractSlugUpdate implements UpgradeWizardInterface
     }
 
     /**
-     * Check if there are record within "pages" database table with an empty "slug" field.
+     * Check if there are records within the "pages" database table with an empty "slug" field.
      *
      * @throws \InvalidArgumentException
      * @throws Exception
@@ -114,9 +98,19 @@ abstract class AbstractSlugUpdate implements UpgradeWizardInterface
                     $queryBuilder->expr()->isNull($this->fieldName),
                 ),
             )
-            ->execute()
+            ->executeQuery()
             ->fetchOne();
 
         return $numberOfEntries > 0;
+    }
+
+    /**
+     * @return string[] All new fields and tables must exist
+     */
+    public function getPrerequisites(): array
+    {
+        return [
+            DatabaseUpdatedPrerequisite::class,
+        ];
     }
 }

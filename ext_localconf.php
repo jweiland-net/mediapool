@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the package jweiland/glossary2.
+ * This file is part of the package jweiland/mediapool.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
@@ -76,8 +76,6 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1643272486] = [
     'priority' => 70,
     'class' => VideoPlayerElement::class,
 ];
-
-// Hooks
 
 // Register UpdateWizards
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['mediapoolPlaylistSlug']
