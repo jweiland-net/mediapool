@@ -1,11 +1,15 @@
 <?php
+
 if (!defined('TYPO3')) {
     die('Access denied.');
 }
 
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+
 call_user_func(static function () {
     // Register main plugin
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+    ExtensionUtility::registerPlugin(
         'Mediapool',
         'Mediapool',
         'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.mediapool.title',
@@ -13,7 +17,7 @@ call_user_func(static function () {
     );
 
     // Register gallery plugin
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+    ExtensionUtility::registerPlugin(
         'Mediapool',
         'Gallery',
         'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.gallery.title',
@@ -24,7 +28,7 @@ call_user_func(static function () {
     $pluginSignature = 'mediapool_mediapool';
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature] = 'select_key,pages,recursive';
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+    ExtensionManagementUtility::addPiFlexFormValue(
         $pluginSignature,
         'FILE:EXT:mediapool/Configuration/FlexForms/Mediapool.xml'
     );
@@ -33,7 +37,7 @@ call_user_func(static function () {
     $pluginSignature = 'mediapool_gallery';
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature] = 'select_key,pages,recursive';
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+    ExtensionManagementUtility::addPiFlexFormValue(
         $pluginSignature,
         'FILE:EXT:mediapool/Configuration/FlexForms/Gallery.xml'
     );

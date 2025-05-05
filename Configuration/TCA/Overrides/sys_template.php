@@ -1,14 +1,17 @@
 <?php
+
 if (!defined('TYPO3')) {
     die('Access denied.');
 }
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+
+ExtensionManagementUtility::addStaticFile(
     'mediapool',
     'Configuration/TypoScript/Mediapool',
     'Mediapool Video/Playlist'
 );
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
+ExtensionManagementUtility::addStaticFile(
     'mediapool',
     'Configuration/TypoScript/Gallery',
     'Mediapool Gallery'
