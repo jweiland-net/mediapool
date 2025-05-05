@@ -30,10 +30,7 @@ class VideoRepository extends Repository
         $query->getQuerySettings()->setRespectStoragePage(false);
 
         $query->matching(
-            $query->logicalAnd(
-                $query->equals('videoId', $videoId),
-                $query->equals('pid', $pid)
-            )
+            $query->logicalAnd([$query->equals('videoId', $videoId), $query->equals('pid', $pid)])
         );
 
         return $query->execute();

@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Controller;
 
+use Psr\Http\Message\ResponseInterface;
 use JWeiland\Mediapool\Domain\Model\Playlist;
 use JWeiland\Mediapool\Domain\Model\Video;
 use JWeiland\Mediapool\Domain\Repository\VideoRepository;
@@ -34,7 +35,7 @@ class VideoController extends ActionController
     /**
      * Shows a single video and additionally a playlist if $playlist is set
      */
-    public function showAction(Video $video, Playlist $playlist = null): void
+    public function showAction(Video $video, Playlist $playlist = null): ResponseInterface
     {
         if ($playlist !== null && !$playlist->getVideos()->contains($video)) {
             throw new \InvalidArgumentException(
@@ -44,6 +45,7 @@ class VideoController extends ActionController
         }
         $this->view->assign('video', $video);
         $this->view->assign('playlist', $playlist);
+        return $this->htmlResponse();
     }
 
     /**
@@ -51,7 +53,7 @@ class VideoController extends ActionController
      *
      * @throws \InvalidArgumentException if a selected recommended video could not be found
      */
-    public function listRecommendedAction(): void
+    public function listRecommendedAction(): ResponseInterface
     {
         $recommendedVideos = [];
         foreach (explode(',', $this->settings['recommendedVideos']) as $recommendedVideoUid) {
@@ -69,6 +71,7 @@ class VideoController extends ActionController
         }
         $this->view->assign('detailPage', $this->settings['detailPage']);
         $this->view->assign('recommendedVideos', $recommendedVideos);
+        return $this->htmlResponse();
     }
 
     /**
@@ -76,11 +79,12 @@ class VideoController extends ActionController
      *
      * ToDo: This method is not registered in ext_localconf.php. It will be called by SCA of FlexForm. This method must be migrated into its own plugin while upgrading to TYPO3 12.
      */
-    public function listRecentByCategoryAction(): void
+    public function listRecentByCategoryAction(): ResponseInterface
     {
         $this->view->assign(
             'recentVideos',
             $this->videoRepository->findRecentByCategories($this->settings['categories'])
         );
+        return $this->htmlResponse();
     }
 }

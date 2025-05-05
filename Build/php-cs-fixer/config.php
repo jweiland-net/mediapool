@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
+
 /*
  * This file is part of the package jweiland/mediapool.
  *
@@ -20,9 +23,9 @@ For the full copyright and license information, please read the
 LICENSE file that was distributed with this source code.
 COMMENT;
 
-return (new \PhpCsFixer\Config())
+return (new Config())
     ->setFinder(
-        (new PhpCsFixer\Finder())
+        (new Finder())
             ->ignoreVCSIgnored(true)
             ->in([
                 __DIR__ . '/../../Build/',

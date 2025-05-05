@@ -6,7 +6,6 @@ plugin.tx_mediapool_mediapool {
     partialRootPaths.100 = {$plugin.tx_mediapool_mediapool.view.partialRootPath}
     layoutRootPaths.100 = {$plugin.tx_mediapool_mediapool.view.layoutRootPath}
   }
-
   persistence {
     storagePid = {$plugin.tx_mediapool_mediapool.persistence.storagePid}
   }

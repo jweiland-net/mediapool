@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Updates;
 
+use Doctrine\DBAL\Driver\Exception;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
@@ -95,7 +96,7 @@ abstract class AbstractSlugUpdate implements UpgradeWizardInterface
      * Check if there are record within "pages" database table with an empty "slug" field.
      *
      * @throws \InvalidArgumentException
-     * @throws \Doctrine\DBAL\Driver\Exception
+     * @throws Exception
      */
     protected function checkIfWizardIsRequired(): bool
     {

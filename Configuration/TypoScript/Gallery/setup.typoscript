@@ -7,11 +7,9 @@ plugin.tx_mediapool_gallery {
     partialRootPaths.100 = {$plugin.tx_mediapool_gallery.view.partialRootPath}
     layoutRootPath.100 = {$plugin.tx_mediapool_gallery.view.layoutRootPath}
   }
-
   persistence {
     storagePid = {$plugin.tx_mediapool_gallery.persistence.storagePid}
   }
-
   settings {
     height = {$plugin.tx_mediapool_gallery.settings.height}
     width = {$plugin.tx_mediapool_gallery.settings.width}

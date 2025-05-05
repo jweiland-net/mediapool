@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Controller;
 
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Resource\Collection\AbstractFileCollection;
 use TYPO3\CMS\Core\Resource\FileCollectionRepository;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -34,9 +35,10 @@ class GalleryController extends ActionController
      * Gallery preview action
      * displays a preview image that contains a fancybox3 gallery
      */
-    public function previewAction(): void
+    public function previewAction(): ResponseInterface
     {
         $this->view->assign('fileCollections', $this->getFileCollections());
+        return $this->htmlResponse();
     }
 
     /**
@@ -44,9 +46,10 @@ class GalleryController extends ActionController
      * displays three galleries and a more button with configurable
      * target page
      */
-    public function teaserAction(): void
+    public function teaserAction(): ResponseInterface
     {
         $this->view->assign('fileCollections', $this->getFileCollections());
+        return $this->htmlResponse();
     }
 
     /**
