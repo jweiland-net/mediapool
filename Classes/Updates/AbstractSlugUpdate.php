@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the package jweiland/mediapool.
+ * This file is part of the package jweiland/glossary2.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
@@ -71,8 +71,8 @@ abstract class AbstractSlugUpdate implements UpgradeWizardInterface
             ->where(
                 $queryBuilder->expr()->orX(
                     $queryBuilder->expr()->eq($this->fieldName, $queryBuilder->createNamedParameter('')),
-                    $queryBuilder->expr()->isNull($this->fieldName)
-                )
+                    $queryBuilder->expr()->isNull($this->fieldName),
+                ),
             )
             ->execute();
 
@@ -87,7 +87,7 @@ abstract class AbstractSlugUpdate implements UpgradeWizardInterface
             $connection->update(
                 $this->table,
                 [$this->fieldName => $slugHelper->generate($record, (int)$record['pid'])],
-                ['uid' => (int)$record['uid']]
+                ['uid' => (int)$record['uid']],
             );
         }
     }
@@ -111,8 +111,8 @@ abstract class AbstractSlugUpdate implements UpgradeWizardInterface
             ->where(
                 $queryBuilder->expr()->orX(
                     $queryBuilder->expr()->eq($this->fieldName, $queryBuilder->createNamedParameter('')),
-                    $queryBuilder->expr()->isNull($this->fieldName)
-                )
+                    $queryBuilder->expr()->isNull($this->fieldName),
+                ),
             )
             ->execute()
             ->fetchOne();

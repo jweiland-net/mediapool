@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the package jweiland/mediapool.
+ * This file is part of the package jweiland/glossary2.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
@@ -30,7 +30,7 @@ class PlaylistRepository extends Repository
         $query = $this->createQuery();
         $query->getQuerySettings()->setRespectStoragePage(false);
         $query->matching(
-            $query->contains('categories', $categoryUid)
+            $query->contains('categories', $categoryUid),
         );
 
         return $query->execute();

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the package jweiland/mediapool.
+ * This file is part of the package jweiland/glossary2.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
@@ -35,7 +35,7 @@ class VideoLinkElement extends InputTextElement
         $size = MathUtility::forceIntegerInRange(
             $this->config['size'] ?? $this->defaultInputWidth,
             $this->minimumInputWidth,
-            $this->maxInputWidth
+            $this->maxInputWidth,
         );
         $width = $this->formMaxWidth($size);
         $videoPlatformsHTML = [];
@@ -59,7 +59,7 @@ class VideoLinkElement extends InputTextElement
     {
         $html = LocalizationUtility::translate(
             'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:render_type.' .
-            'video_link_element.supported_video_platforms'
+            'video_link_element.supported_video_platforms',
         ) . '<br />';
 
         try {
@@ -73,7 +73,7 @@ class VideoLinkElement extends InputTextElement
             foreach ($registeredImporters as $registeredImporter) {
                 $html .= sprintf(
                     '<span class="label label-primary">%s</span>',
-                    $registeredImporter->getPlatformName()
+                    $registeredImporter->getPlatformName(),
                 );
             }
         } catch (\Exception $e) {

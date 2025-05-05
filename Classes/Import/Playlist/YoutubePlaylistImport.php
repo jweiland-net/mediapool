@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the package jweiland/mediapool.
+ * This file is part of the package jweiland/glossary2.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
@@ -65,7 +65,7 @@ class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInte
     public function __construct(
         YouTubeVideoImport $youTubeVideoImport,
         RequestFactory $requestFactory,
-        ExtConf $extConf
+        ExtConf $extConf,
     ) {
         $this->youTubeVideoImport = $youTubeVideoImport;
         $this->requestFactory = $requestFactory;
@@ -93,7 +93,7 @@ class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInte
             $this->addFlashMessage(
                 'youTubePlaylistImport.invalid_id.title',
                 'youTubePlaylistImport.invalid_id.message',
-                [$playlistLink]
+                [$playlistLink],
             );
             return [];
         }
@@ -111,7 +111,7 @@ class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInte
             }
             $videoIds['NEW' . $i] = [
                 'pid' => $pid,
-                'video' => trim($item['contentDetails']['videoId'])
+                'video' => trim($item['contentDetails']['videoId']),
             ];
             $i++;
         }
@@ -184,8 +184,8 @@ class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInte
             sprintf(
                 self::CHANNELS_LIST_API_URL,
                 $this->apiKey,
-                $channelParam
-            )
+                $channelParam,
+            ),
         );
 
         if ($response->getStatusCode() === 200) {
@@ -214,9 +214,9 @@ class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInte
                     'Fetching playlist information for %s failed! Got the following response from YouTube: %s.' .
                     ' Please check your API-key.',
                     $this->playlistId,
-                    $response->getBody()
+                    $response->getBody(),
                 ),
-                1508146718
+                1508146718,
             );
             // other problems
         }
@@ -227,9 +227,9 @@ class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInte
                 ' following response: %s',
                 $this->playlistId,
                 $response->getStatusCode(),
-                $response->getBody()
+                $response->getBody(),
             ),
-            1508146719
+            1508146719,
         );
     }
 
@@ -247,8 +247,8 @@ class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInte
             sprintf(
                 self::PLAYLIST_ITEMS_API_URL . $additionalRequestParams,
                 $this->playlistId,
-                $this->apiKey
-            )
+                $this->apiKey,
+            ),
         );
 
         if ($response->getStatusCode() === 200) {
@@ -282,8 +282,8 @@ class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInte
             sprintf(
                 self::PLAYLIST_API_URL,
                 $this->playlistId,
-                $this->apiKey
-            )
+                $this->apiKey,
+            ),
         );
 
         if ($response->getStatusCode() === 200) {

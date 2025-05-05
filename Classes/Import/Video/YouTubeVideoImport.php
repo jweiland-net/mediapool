@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the package jweiland/mediapool.
+ * This file is part of the package jweiland/glossary2.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
@@ -84,10 +84,10 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
     {
         $videoIds = [];
         foreach ($videos as &$video) {
-            if (strpos($video['video'], 'http') === 0) {
+            if (str_starts_with($video['video'], 'http')) {
                 // ToDo: add error if getVideoId returns empty string
                 $video['video'] = $this->getVideoId($video['video']);
-            } elseif (strpos(self::YOUTUBE_PLATFORM_PREFIX, $video['video']) === 0) {
+            } elseif (str_starts_with(self::YOUTUBE_PLATFORM_PREFIX, $video['video'])) {
                 $video['video'] = substr($video['video'], strlen(self::YOUTUBE_PLATFORM_PREFIX));
             }
             $videoIds[] = $video['video'];
@@ -128,7 +128,7 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
         array $videos,
         int $pid,
         string &$recordUids = '',
-        bool $checkExistingVideos = false
+        bool $checkExistingVideos = false,
     ): array {
         $this->videoIds = $this->implodeVideoIdsAndUnifyArray($videos);
         $fetchedVideoInformation = $this->fetchVideoInformation();
@@ -148,7 +148,7 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
                 if ($checkExistingVideos) {
                     $queryResult = $this->videoRepository->findByVideoId(
                         self::YOUTUBE_PLATFORM_PREFIX . $videoId,
-                        $pid
+                        $pid,
                     );
                     $existingVideo = $queryResult->getFirst();
                 }
@@ -159,7 +159,7 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
                 $data['tx_mediapool_domain_model_video'][$recordUid] = $videoInformation;
 
                 // add pid on new records
-                if (is_string($recordUid) && strpos($recordUid, 'NEW') === 0) {
+                if (is_string($recordUid) && str_starts_with($recordUid, 'NEW')) {
                     $data['tx_mediapool_domain_model_video'][$recordUid]['pid'] = $pid;
                 }
             } elseif ($fetchedVideoInformation[$videoId] === 'noPermission') {
@@ -167,14 +167,14 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
                 $this->addFlashMessage(
                     'youTubeVideoImport.missing_youtube_permission.title',
                     'youTubeVideoImport.missing_youtube_permission.message',
-                    [$videoId]
+                    [$videoId],
                 );
             } else {
                 // never fetched it ?
                 $this->addFlashMessage(
                     'youTubeVideoImport.missing_video_information.title',
                     'youTubeVideoImport.missing_video_information.message',
-                    [$videoId]
+                    [$videoId],
                 );
                 $this->hasError = true;
             }
@@ -266,8 +266,8 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
             sprintf(
                 self::VIDEO_API_URL . $additionalRequestParams,
                 $videoIds,
-                $this->apiKey
-            )
+                $this->apiKey,
+            ),
         );
 
         if ($response->getStatusCode() === 200) {
@@ -297,9 +297,9 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
                     'Fetching video information for %s failed! Got the following response from YouTube: %s.' .
                     ' Please check your API-key.',
                     $this->video->getLink(),
-                    $response->getBody()
+                    $response->getBody(),
                 ),
-                1507792488
+                1507792488,
             );
         }
 
@@ -308,9 +308,9 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
                 'Fetching video information for %s failed! Got status code %d and the following response: %s',
                 $this->video->getLink(),
                 $response->getStatusCode(),
-                $response->getBody()
+                $response->getBody(),
             ),
-            1507794777
+            1507794777,
         );
     }
 

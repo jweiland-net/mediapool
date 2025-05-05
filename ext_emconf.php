@@ -1,9 +1,10 @@
 <?php
 
-/**
- * The source of icons used in this extension is
- * https://www.google.com/design/icons/ (License: https://github.com/google/material-design-icons/blob/master/LICENSE)
- * https://icomoon.io Pack IcoMoon - Free (License: https://creativecommons.org/licenses/by/4.0/)
+/*
+ * This file is part of the package jweiland/glossary2.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
  */
 
 $EM_CONF[$_EXTKEY] = [

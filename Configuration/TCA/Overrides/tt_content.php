@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the package jweiland/glossary2.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 if (!defined('TYPO3')) {
     die('Access denied.');
 }
@@ -13,7 +20,7 @@ call_user_func(static function () {
         'Mediapool',
         'Mediapool',
         'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.mediapool.title',
-        'EXT:mediapool/Resources/Public/Icons/video_play.svg'
+        'EXT:mediapool/Resources/Public/Icons/video_play.svg',
     );
 
     // Register gallery plugin
@@ -21,7 +28,7 @@ call_user_func(static function () {
         'Mediapool',
         'Gallery',
         'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.gallery.title',
-        'EXT:mediapool/Resources/Public/Icons/gallery.svg'
+        'EXT:mediapool/Resources/Public/Icons/gallery.svg',
     );
 
     // Add flexform for Mediapool plugin
@@ -30,7 +37,7 @@ call_user_func(static function () {
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
     ExtensionManagementUtility::addPiFlexFormValue(
         $pluginSignature,
-        'FILE:EXT:mediapool/Configuration/FlexForms/Mediapool.xml'
+        'FILE:EXT:mediapool/Configuration/FlexForms/Mediapool.xml',
     );
 
     // Add flexform for gallery plugin
@@ -39,6 +46,6 @@ call_user_func(static function () {
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
     ExtensionManagementUtility::addPiFlexFormValue(
         $pluginSignature,
-        'FILE:EXT:mediapool/Configuration/FlexForms/Gallery.xml'
+        'FILE:EXT:mediapool/Configuration/FlexForms/Gallery.xml',
     );
 });

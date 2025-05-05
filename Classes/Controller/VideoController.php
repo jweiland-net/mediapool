@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the package jweiland/mediapool.
+ * This file is part of the package jweiland/glossary2.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
@@ -11,10 +11,10 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Controller;
 
-use Psr\Http\Message\ResponseInterface;
 use JWeiland\Mediapool\Domain\Model\Playlist;
 use JWeiland\Mediapool\Domain\Model\Video;
 use JWeiland\Mediapool\Domain\Repository\VideoRepository;
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
@@ -35,7 +35,7 @@ class VideoController extends ActionController
         if ($playlist !== null && !$playlist->getVideos()->contains($video)) {
             throw new \InvalidArgumentException(
                 'Passed video is not inside passed playlist! Please check your arguments.',
-                1508316980
+                1508316980,
             );
         }
 
@@ -60,9 +60,9 @@ class VideoController extends ActionController
                 throw new \InvalidArgumentException(
                     sprintf(
                         'The selected recommended video %d could not be found.',
-                        $recommendedVideoUid
+                        $recommendedVideoUid,
                     ),
-                    1508316983
+                    1508316983,
                 );
             }
 
@@ -84,7 +84,7 @@ class VideoController extends ActionController
     {
         $this->view->assign(
             'recentVideos',
-            $this->videoRepository->findRecentByCategories($this->settings['categories'])
+            $this->videoRepository->findRecentByCategories($this->settings['categories']),
         );
 
         return $this->htmlResponse();

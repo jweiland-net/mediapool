@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the package jweiland/mediapool.
+ * This file is part of the package jweiland/glossary2.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
@@ -50,8 +50,8 @@ class VideoRepository extends Repository
         $query->matching(
             $query->logicalAnd(
                 $query->equals('videoId', $videoId),
-                $query->equals('pid', $pid)
-            )
+                $query->equals('pid', $pid),
+            ),
         );
 
         return $query->execute();

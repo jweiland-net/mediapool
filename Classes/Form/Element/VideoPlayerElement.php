@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the package jweiland/mediapool.
+ * This file is part of the package jweiland/glossary2.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
@@ -36,7 +36,7 @@ class VideoPlayerElement extends AbstractFormElement
             $resultArray['html'] .= '<div class="alert alert-info" role="alert" style="max-width: ' . $width . 'px">' .
                 LocalizationUtility::translate(
                     'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:' .
-                    'tx_mediapool_domain_model_video.empty_field'
+                    'tx_mediapool_domain_model_video.empty_field',
                 ) .
                 '</div>';
         }

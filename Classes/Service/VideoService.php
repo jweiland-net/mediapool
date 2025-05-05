@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the package jweiland/mediapool.
+ * This file is part of the package jweiland/glossary2.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
@@ -70,13 +70,13 @@ class VideoService
             if (!$videoPlatformMatch) {
                 $this->addFlashMessage(
                     'video_service.no_match.title',
-                    'video_service.no_match.message'
+                    'video_service.no_match.message',
                 );
             } elseif ($imported !== $total) {
                 $this->addFlashMessage(
                     'video_service.import_mismatch.title',
                     'video_service.import_mismatch.message',
-                    [$imported, $total]
+                    [$imported, $total],
                 );
             }
         } catch (\Exception $e) {
@@ -91,7 +91,7 @@ class VideoService
     protected function isVideoFromVideoPlatform(string $videoLink, VideoImportInterface $videoPlatform): bool
     {
         foreach ($videoPlatform->getPlatformHosts() as $host) {
-            if (strpos($videoLink, $host) === 0) {
+            if (str_starts_with($videoLink, $host)) {
                 return true;
             }
         }

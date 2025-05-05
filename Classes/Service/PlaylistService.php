@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the package jweiland/mediapool.
+ * This file is part of the package jweiland/glossary2.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
@@ -29,7 +29,6 @@ class PlaylistService
         }
     }
 
-
     /**
      * Returns an array that includes a prepared fieldArray for DataHandler
      * as an array with new records for DataHandler
@@ -51,7 +50,7 @@ class PlaylistService
 
         $this->addFlashMessage(
             'playlist_service.no_match.title',
-            'playlist_service.no_match.message'
+            'playlist_service.no_match.message',
         );
 
         return [];
@@ -63,7 +62,7 @@ class PlaylistService
     protected function isPlaylistOfVideoImport(string $playlistLink, PlaylistImportInterface $playlistImport): bool
     {
         foreach ($playlistImport->getPlatformHosts() as $host) {
-            if (strpos($playlistLink, $host) === 0) {
+            if (str_starts_with($playlistLink, $host)) {
                 return true;
             }
         }

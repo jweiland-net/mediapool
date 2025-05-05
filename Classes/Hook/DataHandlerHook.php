@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the package jweiland/mediapool.
+ * This file is part of the package jweiland/glossary2.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
@@ -49,7 +49,7 @@ class DataHandlerHook implements LoggerAwareInterface
     public function __construct(
         PlaylistService $playlistService,
         PlaylistRecordService $playlistRecordService,
-        VideoService $videoService
+        VideoService $videoService,
     ) {
         $this->playlistService = $playlistService;
         $this->playlistRecordService = $playlistRecordService;
@@ -75,7 +75,7 @@ class DataHandlerHook implements LoggerAwareInterface
             // Save a single video
             if (array_key_exists(self::TABLE_VIDEO, $dataHandler->datamap)) {
                 $table = self::TABLE_VIDEO;
-                $this->processVideos($dataHandler->datamap[self::TABLE_VIDEO], $dataHandler);;
+                $this->processVideos($dataHandler->datamap[self::TABLE_VIDEO], $dataHandler);
             }
 
             // Save playlist
@@ -93,7 +93,7 @@ class DataHandlerHook implements LoggerAwareInterface
                 0,
                 SystemLogErrorClassification::USER_ERROR,
                 $missingYouTubeApiKeyException->getMessage(),
-                -1
+                -1,
             );
 
             $flashMessage = GeneralUtility::makeInstance(
@@ -101,7 +101,7 @@ class DataHandlerHook implements LoggerAwareInterface
                 $missingYouTubeApiKeyException->getMessage(),
                 'Missing YouTube API key',
                 AbstractMessage::ERROR,
-                true
+                true,
             );
 
             $this->getFlashMessageQueue()->addMessage($flashMessage);
@@ -111,20 +111,20 @@ class DataHandlerHook implements LoggerAwareInterface
                 LocalizationUtility::translate(
                     'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:data_handler.exception.message',
                     null,
-                    [$e->getCode()]
+                    [$e->getCode()],
                 ),
                 LocalizationUtility::translate(
-                    'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:data_handler.exception.title'
+                    'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:data_handler.exception.title',
                 ),
                 AbstractMessage::ERROR,
-                true
+                true,
             );
 
             $this->getFlashMessageQueue()->addMessage($flashMessage);
 
             $this->logger->error(
                 'Exception while running DataHandler hook from ext:mediapool: ' . $e->getMessage() .
-                '(' . $e->getCode() . ') ' . $e->getFile() . ' Line: ' . $e->getLine()
+                '(' . $e->getCode() . ') ' . $e->getFile() . ' Line: ' . $e->getLine(),
             );
 
             // Prevent DataHandler from saving

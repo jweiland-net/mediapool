@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the package jweiland/mediapool.
+ * This file is part of the package jweiland/glossary2.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
@@ -33,7 +33,7 @@ class InlineVideoElement extends AbstractFormElement
         $size = MathUtility::forceIntegerInRange(
             $config['size'] ?? $this->defaultInputWidth,
             $this->minimumInputWidth,
-            $this->maxInputWidth
+            $this->maxInputWidth,
         );
         $width = $this->formMaxWidth($size);
 
@@ -42,7 +42,7 @@ class InlineVideoElement extends AbstractFormElement
             $html[] = '<div class="alert alert-info" role="alert" style="max-width: ' . $width . 'px">';
             $html[] = LocalizationUtility::translate(
                 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:' .
-                'tx_mediapool_domain_model_video.empty_field'
+                'tx_mediapool_domain_model_video.empty_field',
             );
             $html[] = '</div>';
 
@@ -54,7 +54,7 @@ class InlineVideoElement extends AbstractFormElement
         $view = $this->getStandaloneView();
         $view->setTemplatePathAndFilename(
             ExtensionManagementUtility::extPath('mediapool') .
-            'Resources/Private/Templates/InlineVideoElement/InlineVideoElement.html'
+            'Resources/Private/Templates/InlineVideoElement/InlineVideoElement.html',
         );
         $view->assignMultiple([
             'elementId' => $parameterArray['itemFormElID'],

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the package jweiland/mediapool.
+ * This file is part of the package jweiland/glossary2.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
@@ -31,7 +31,7 @@ class PlaylistTest extends UnitTestCase
     protected function tearDown(): void
     {
         unset(
-            $this->subject
+            $this->subject,
         );
 
         parent::tearDown();
@@ -44,7 +44,7 @@ class PlaylistTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getTitle()
+            $this->subject->getTitle(),
         );
     }
 
@@ -57,7 +57,7 @@ class PlaylistTest extends UnitTestCase
 
         self::assertSame(
             'Jochen Weiland',
-            $this->subject->getTitle()
+            $this->subject->getTitle(),
         );
     }
 
@@ -68,7 +68,7 @@ class PlaylistTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getLink()
+            $this->subject->getLink(),
         );
     }
 
@@ -81,7 +81,7 @@ class PlaylistTest extends UnitTestCase
 
         self::assertSame(
             'https://jweiland.net',
-            $this->subject->getLink()
+            $this->subject->getLink(),
         );
     }
 
@@ -92,7 +92,7 @@ class PlaylistTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getPlaylistId()
+            $this->subject->getPlaylistId(),
         );
     }
 
@@ -105,7 +105,7 @@ class PlaylistTest extends UnitTestCase
 
         self::assertSame(
             'ctmh83279cgmh5428',
-            $this->subject->getPlaylistId()
+            $this->subject->getPlaylistId(),
         );
     }
 
@@ -116,7 +116,7 @@ class PlaylistTest extends UnitTestCase
     {
         self::assertEquals(
             new ObjectStorage(),
-            $this->subject->getVideos()
+            $this->subject->getVideos(),
         );
     }
 
@@ -130,7 +130,7 @@ class PlaylistTest extends UnitTestCase
 
         self::assertSame(
             $videos,
-            $this->subject->getVideos()
+            $this->subject->getVideos(),
         );
     }
 
@@ -144,7 +144,7 @@ class PlaylistTest extends UnitTestCase
 
         self::assertSame(
             $video,
-            $this->subject->getVideos()->current()
+            $this->subject->getVideos()->current(),
         );
     }
 
@@ -162,7 +162,7 @@ class PlaylistTest extends UnitTestCase
 
         self::assertCount(
             0,
-            $this->subject->getVideos()
+            $this->subject->getVideos(),
         );
     }
 
@@ -173,7 +173,7 @@ class PlaylistTest extends UnitTestCase
     {
         self::assertEquals(
             new ObjectStorage(),
-            $this->subject->getCategories()
+            $this->subject->getCategories(),
         );
     }
 
@@ -187,7 +187,7 @@ class PlaylistTest extends UnitTestCase
 
         self::assertSame(
             $categories,
-            $this->subject->getCategories()
+            $this->subject->getCategories(),
         );
     }
 
@@ -198,7 +198,7 @@ class PlaylistTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getThumbnail()
+            $this->subject->getThumbnail(),
         );
     }
 
@@ -211,7 +211,7 @@ class PlaylistTest extends UnitTestCase
 
         self::assertSame(
             'thumbnail.png',
-            $this->subject->getThumbnail()
+            $this->subject->getThumbnail(),
         );
     }
 
@@ -222,7 +222,7 @@ class PlaylistTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getSlug()
+            $this->subject->getSlug(),
         );
     }
 
@@ -235,7 +235,7 @@ class PlaylistTest extends UnitTestCase
 
         self::assertSame(
             '/video/super-mario',
-            $this->subject->getSlug()
+            $this->subject->getSlug(),
         );
     }
 }

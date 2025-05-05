@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the package jweiland/mediapool.
+ * This file is part of the package jweiland/glossary2.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
@@ -29,7 +29,7 @@ class UpdatePlaylistInformationCommand extends Command
 
     public function __construct(
         PlaylistRecordService $playlistRecordService,
-        LoggerInterface $logger
+        LoggerInterface $logger,
     ) {
         parent::__construct();
 

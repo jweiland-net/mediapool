@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the package jweiland/mediapool.
+ * This file is part of the package jweiland/glossary2.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
@@ -37,20 +37,20 @@ trait AddFlashMessageTrait
     public function addFlashMessage(
         string $title,
         string $message,
-        array $messageArguments = []
+        array $messageArguments = [],
     ): void {
         $title = LocalizationUtility::translate($this->errorMessagesFile . ':' . $title);
         $message = LocalizationUtility::translate(
             $this->errorMessagesFile . ':' . $message,
             '',
-            $messageArguments
+            $messageArguments,
         );
 
         $this->getFlashMessageQueue()->addMessage(GeneralUtility::makeInstance(
             FlashMessage::class,
             $message ?? '[no-message]',
             $title ?? '[no-title]',
-            AbstractMessage::ERROR
+            AbstractMessage::ERROR,
         ));
     }
 }

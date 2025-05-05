@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the package jweiland/mediapool.
+ * This file is part of the package jweiland/glossary2.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
@@ -71,8 +71,8 @@ class PlaylistRecordService
                 ->where(
                     $queryBuilder->expr()->in(
                         'pid',
-                        $queryBuilder->createNamedParameter($pages, Connection::PARAM_INT_ARRAY)
-                    )
+                        $queryBuilder->createNamedParameter($pages, Connection::PARAM_INT_ARRAY),
+                    ),
                 )
                 ->executeQuery()
                 ->fetchAllAssociative();
@@ -96,8 +96,8 @@ class PlaylistRecordService
                 ->where(
                     $queryBuilder->expr()->eq(
                         'uid',
-                        $queryBuilder->createNamedParameter($playlistUid)
-                    )
+                        $queryBuilder->createNamedParameter($playlistUid),
+                    ),
                 )
                 ->executeQuery()
                 ->fetchAssociative();

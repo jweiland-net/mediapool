@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the package jweiland/glossary2.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 if (!defined('TYPO3')) {
     die('Access denied.');
 }
@@ -24,7 +31,7 @@ ExtensionUtility::configurePlugin(
     [
         VideoController::class => 'show,listRecommended',
         PlaylistController::class => 'listByCategory,listLatestVideos,listVideos',
-    ]
+    ],
 );
 
 // Configure gallery plugin
@@ -33,7 +40,7 @@ ExtensionUtility::configurePlugin(
     'Gallery',
     [
         GalleryController::class => 'preview',
-    ]
+    ],
 );
 
 // Add renderType to display video importers

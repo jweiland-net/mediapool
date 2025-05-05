@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the package jweiland/mediapool.
+ * This file is part of the package jweiland/glossary2.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
@@ -29,7 +29,7 @@ class CategoryTest extends UnitTestCase
     protected function tearDown(): void
     {
         unset(
-            $this->subject
+            $this->subject,
         );
 
         parent::tearDown();
@@ -42,7 +42,7 @@ class CategoryTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getTitle()
+            $this->subject->getTitle(),
         );
     }
 
@@ -55,7 +55,7 @@ class CategoryTest extends UnitTestCase
 
         self::assertSame(
             'Jochen Weiland',
-            $this->subject->getTitle()
+            $this->subject->getTitle(),
         );
     }
 }
