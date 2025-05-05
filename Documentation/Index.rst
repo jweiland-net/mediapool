@@ -55,4 +55,3 @@ and more by just pasting the YouTube link.
     :hidden:
 
     Sitemap
-    genindex
