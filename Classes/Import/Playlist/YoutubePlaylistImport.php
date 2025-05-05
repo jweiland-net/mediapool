@@ -12,16 +12,14 @@ declare(strict_types=1);
 namespace JWeiland\Mediapool\Import\Playlist;
 
 use JWeiland\Mediapool\Configuration\ExtConf;
+use JWeiland\Mediapool\Import\AbstractImport;
 use JWeiland\Mediapool\Import\Video\YouTubeVideoImport;
 use JWeiland\Mediapool\Traits\AddFlashMessageTrait;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Error\Http\StatusException;
 use TYPO3\CMS\Core\Http\RequestFactory;
 
-/**
- * Class YoutubePlaylistImport
- */
-class YoutubePlaylistImport extends AbstractPlaylistImport
+class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInterface
 {
     use AddFlashMessageTrait;
 
@@ -42,15 +40,10 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
 
     /**
      * Name of the video platform
-     *
-     * @var string
      */
-    protected $platformName = 'YouTube';
+    protected string $platformName = 'YouTube';
 
-    /**
-     * @var array
-     */
-    protected $platformHosts = [
+    protected array $platformHosts = [
         'https://youtube.com',
         'https://www.youtube.com',
         'https://youtu.be',
@@ -58,30 +51,16 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
 
     /**
      * Youtube Data API v3 key
-     *
-     * @var string
      */
-    protected $apiKey = '';
+    protected string $apiKey = '';
 
-    /**
-     * @var string
-     */
-    protected $playlistId = '';
+    protected string $playlistId = '';
 
-    /**
-     * @var YouTubeVideoImport
-     */
-    protected $youTubeVideoImport;
+    protected YouTubeVideoImport $youTubeVideoImport;
 
-    /**
-     * @var RequestFactory
-     */
-    protected $requestFactory;
+    protected RequestFactory $requestFactory;
 
-    /**
-     * @var ExtConf
-     */
-    protected $extConf;
+    protected ExtConf $extConf;
 
     public function __construct(
         YouTubeVideoImport $youTubeVideoImport,
@@ -130,14 +109,17 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
                 // skip private videos
                 continue;
             }
-            $videoIds['NEW' . $i] = ['pid' => $pid, 'video' => trim($item['contentDetails']['videoId'])];
+            $videoIds['NEW' . $i] = [
+                'pid' => $pid,
+                'video' => trim($item['contentDetails']['videoId'])
+            ];
             $i++;
         }
 
         $recordUids = '';
         $data = $this->youTubeVideoImport->processDataArray($videoIds, $pid, $recordUids, true);
 
-        // return empty array on error
+        // return an empty array on error
         if ($this->youTubeVideoImport->hasError()) {
             return [];
         }
@@ -157,7 +139,7 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
     }
 
     /**
-     * Returns the id of playlist link.
+     * Returns the id of a playlist link.
      * Otherwise, returns false
      */
     protected function getPlaylistId(string $playlistLink): string
@@ -253,7 +235,7 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
 
     /**
      * Fetches playlist items from YouTube Data v3 API
-     * returns merged item array from YouTube Data v3 API
+     * returns a merged item array from YouTube Data v3 API
      *
      * @param array $items leave it empty
      * @param string $additionalRequestParams additional request parameters
@@ -284,6 +266,7 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
         } else {
             $this->checkResponseStatusCode($response);
         }
+
         return [];
     }
 
@@ -311,6 +294,7 @@ class YoutubePlaylistImport extends AbstractPlaylistImport
         } else {
             $this->checkResponseStatusCode($response);
         }
+
         return [];
     }
 }

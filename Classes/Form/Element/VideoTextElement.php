@@ -16,9 +16,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
-/**
- * Class VideoTextElement
- */
 class VideoTextElement extends AbstractFormElement
 {
     /**

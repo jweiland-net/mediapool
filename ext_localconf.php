@@ -12,13 +12,7 @@ use JWeiland\Mediapool\Form\Element\VideoHeaderElement;
 use JWeiland\Mediapool\Form\Element\VideoLinkElement;
 use JWeiland\Mediapool\Form\Element\VideoPlayerElement;
 use JWeiland\Mediapool\Form\Element\VideoTextElement;
-use JWeiland\Mediapool\Hooks\DataHandlerHook;
-use JWeiland\Mediapool\Import\Playlist\YoutubePlaylistImport;
-use JWeiland\Mediapool\Import\Video\YouTubeVideoImport;
-use JWeiland\Mediapool\Task\UpdatePlaylistInformation;
-use JWeiland\Mediapool\Task\UpdatePlaylistInformationAdditionalFieldProvider;
-use JWeiland\Mediapool\Task\UpdateVideoInformation;
-use JWeiland\Mediapool\Task\UpdateVideoInformationAdditionalFieldProvider;
+use JWeiland\Mediapool\Hook\DataHandlerHook;
 use JWeiland\Mediapool\Updates\PlaylistSlugUpdate;
 use JWeiland\Mediapool\Updates\VideoSlugUpdate;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
@@ -81,33 +75,10 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1643272486] = [
 // Register UpdateWizards
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['mediapoolPlaylistSlug']
     = PlaylistSlugUpdate::class;
+
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['mediapoolVideoSlug']
     = VideoSlugUpdate::class;
 
 // Hook into DataHandler to get video information into fieldArray and abort if a wrong video url was submitted
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['mediapool'] =
-    DataHandlerHook::class;
-
-// Register YouTubePlaylistImport
-$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['playlistImport']['YouTube'] =
-    YoutubePlaylistImport::class;
-
-// Register YouTubeVideoImport
-$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['videoImport']['YouTube'] =
-    YouTubeVideoImport::class;
-
-// Register task for updating video information
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][UpdateVideoInformation::class] = [
-    'extension' => 'mediapool',
-    'title' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:scheduler.update_video_information.title',
-    'description' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:scheduler.update_video_information.description',
-    'additionalFields' => UpdateVideoInformationAdditionalFieldProvider::class,
-];
-
-// Register task for updating video information
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][UpdatePlaylistInformation::class] = [
-    'extension' => 'mediapool',
-    'title' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:scheduler.update_playlist_information.title',
-    'description' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang.xlf:scheduler.update_playlist_information.description',
-    'additionalFields' => UpdatePlaylistInformationAdditionalFieldProvider::class,
-];
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['mediapool']
+    = DataHandlerHook::class;

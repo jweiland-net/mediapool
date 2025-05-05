@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace JWeiland\Mediapool\Tests\Unit\Domain\Model;
 
 use JWeiland\Mediapool\Domain\Model\Category;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * Test case.

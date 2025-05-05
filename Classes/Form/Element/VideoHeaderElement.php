@@ -15,13 +15,10 @@ use TYPO3\CMS\Backend\Form\Element\AbstractFormElement;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
-/**
- * Class VideoHeaderElement
- */
 class VideoHeaderElement extends AbstractFormElement
 {
     /**
-     * This will render a h4 header with item value as text.
+     * This will render a <h4> header with item value as text.
      *
      * @return array As defined in initializeResultArray() of AbstractNode
      */

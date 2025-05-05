@@ -11,9 +11,4 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Import;
 
-/**
- * Class NoApiKeyException
- */
-class NoApiKeyException extends \Exception
-{
-}
+class NoApiKeyException extends \Exception {}

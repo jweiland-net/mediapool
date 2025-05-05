@@ -12,8 +12,6 @@ declare(strict_types=1);
 namespace JWeiland\Mediapool\Configuration\Exception;
 
 /**
- * This exception will be thrown, if you/admin/someone has forgotten to set the YouTube API key in extension settings
+ * This exception will be thrown if you/admin/someone has forgotten to set the YouTube API key in extension settings
  */
-class MissingYouTubeApiKeyException extends \InvalidArgumentException
-{
-}
+class MissingYouTubeApiKeyException extends \InvalidArgumentException {}

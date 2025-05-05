@@ -4,52 +4,16 @@
 				product-name="mediapool">
 		<header/>
 		<body>
-			<trans-unit id="scheduler.update_video_information.title">
-				<source>Update video information</source>
-			</trans-unit>
-			<trans-unit id="scheduler.update_video_information.description">
-				<source>This task updates the video information by using the DataHandler Hook.</source>
-			</trans-unit>
-			<trans-unit id="scheduler.update_video_information.mode">
-				<source>Select which videos should be updated</source>
-			</trans-unit>
-			<trans-unit id="scheduler.update_video_information.unknown_mode">
-				<source>You selected an unknown mode.</source>
-			</trans-unit>
 			<trans-unit id="scheduler.update_video_information.page_selection">
 				<source>
-					Comma separated list of pages/folders where video records should be updated. (Depends on your choice above)
+					Comma separated list of pages/folders where video records should be updated
 				</source>
-			</trans-unit>
-			<trans-unit id="scheduler.update_video_information.page_selection.0">
-				<source>Update all video records</source>
-			</trans-unit>
-			<trans-unit id="scheduler.update_video_information.page_selection.1">
-				<source>Update video records from selected pages/folders</source>
 			</trans-unit>
 
-			<trans-unit id="scheduler.update_playlist_information.title">
-				<source>Update playlist information</source>
-			</trans-unit>
-			<trans-unit id="scheduler.update_playlist_information.description">
-				<source>This task updates the playlist information by using the DataHandler Hook.</source>
-			</trans-unit>
-			<trans-unit id="scheduler.update_playlist_information.mode">
-				<source>Select which playlists should be updated</source>
-			</trans-unit>
-			<trans-unit id="scheduler.update_playlist_information.unknown_mode">
-				<source>You selected an unknown mode.</source>
-			</trans-unit>
 			<trans-unit id="scheduler.update_playlist_information.page_selection">
 				<source>
-					Comma separated list of pages/folders where playlist records should be updated. (Depends on your choice above)
+					Comma separated list of pages/folders where playlist records should be updated
 				</source>
-			</trans-unit>
-			<trans-unit id="scheduler.update_playlist_information.page_selection.0">
-				<source>Update all playlist records</source>
-			</trans-unit>
-			<trans-unit id="scheduler.update_playlist_information.page_selection.1">
-				<source>Update playlist records from selected pages/folders</source>
 			</trans-unit>
 
 			<trans-unit id="video.upload_date">

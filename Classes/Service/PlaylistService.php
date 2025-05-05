@@ -11,16 +11,24 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Service;
 
-use JWeiland\Mediapool\Import\Playlist\AbstractPlaylistImport;
+use JWeiland\Mediapool\Import\Playlist\PlaylistImportInterface;
 use JWeiland\Mediapool\Traits\AddFlashMessageTrait;
-use JWeiland\Mediapool\Utility\VideoPlatformUtility;
 
-/**
- * Class PlaylistService
- */
 class PlaylistService
 {
     use AddFlashMessageTrait;
+
+    protected array $importers = [];
+
+    public function __construct(iterable $importers)
+    {
+        foreach ($importers as $importer) {
+            if ($importer instanceof PlaylistImportInterface) {
+                $this->importers[] = $importer;
+            }
+        }
+    }
+
 
     /**
      * Returns an array that includes a prepared fieldArray for DataHandler
@@ -32,10 +40,13 @@ class PlaylistService
      */
     public function getPlaylistData(string $playlistLink, int $pid): array
     {
-        foreach (VideoPlatformUtility::getRegisteredPlaylistImporters() as $registeredPlaylistImporter) {
-            if ($this->isPlaylistOfVideoImport($playlistLink, $registeredPlaylistImporter)) {
-                return $registeredPlaylistImporter->getPlaylistInformation($playlistLink, $pid);
+        try {
+            foreach ($this->importers as $registeredPlaylistImporter) {
+                if ($this->isPlaylistOfVideoImport($playlistLink, $registeredPlaylistImporter)) {
+                    return $registeredPlaylistImporter->getPlaylistInformation($playlistLink, $pid);
+                }
             }
+        } catch (\Exception $e) {
         }
 
         $this->addFlashMessage(
@@ -47,10 +58,9 @@ class PlaylistService
     }
 
     /**
-     * Checks if one of the hosts from $playlistImport matches with
-     * $playlistLink.
+     * Checks if one of the hosts from $playlistImport matches with $playlistLink.
      */
-    protected function isPlaylistOfVideoImport(string $playlistLink, AbstractPlaylistImport $playlistImport): bool
+    protected function isPlaylistOfVideoImport(string $playlistLink, PlaylistImportInterface $playlistImport): bool
     {
         foreach ($playlistImport->getPlatformHosts() as $host) {
             if (strpos($playlistLink, $host) === 0) {

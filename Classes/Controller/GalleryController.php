@@ -16,15 +16,9 @@ use TYPO3\CMS\Core\Resource\Collection\AbstractFileCollection;
 use TYPO3\CMS\Core\Resource\FileCollectionRepository;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
-/**
- * Class GalleryController
- */
 class GalleryController extends ActionController
 {
-    /**
-     * @var FileCollectionRepository
-     */
-    protected $fileCollectionRepository;
+    protected FileCollectionRepository $fileCollectionRepository;
 
     public function injectFileCollectionRepository(FileCollectionRepository $fileCollectionRepository): void
     {
@@ -38,6 +32,7 @@ class GalleryController extends ActionController
     public function previewAction(): ResponseInterface
     {
         $this->view->assign('fileCollections', $this->getFileCollections());
+
         return $this->htmlResponse();
     }
 
@@ -49,6 +44,7 @@ class GalleryController extends ActionController
     public function teaserAction(): ResponseInterface
     {
         $this->view->assign('fileCollections', $this->getFileCollections());
+
         return $this->htmlResponse();
     }
 
@@ -58,6 +54,7 @@ class GalleryController extends ActionController
     protected function getFileCollections(): array
     {
         $fileCollections = [];
+
         if ($this->settings['file_collections']) {
             foreach (explode(',', $this->settings['file_collections']) as $uid) {
                 $fileCollection = $this->fileCollectionRepository->findByUid((int)$uid);

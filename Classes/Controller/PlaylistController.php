@@ -17,15 +17,9 @@ use JWeiland\Mediapool\Domain\Repository\PlaylistRepository;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
-/**
- * Class PlaylistController
- */
 class PlaylistController extends ActionController
 {
-    /**
-     * @var PlaylistRepository
-     */
-    protected $playlistRepository;
+    protected PlaylistRepository $playlistRepository;
 
     public function injectPlaylistRepository(PlaylistRepository $playlistRepository): void
     {
@@ -40,9 +34,11 @@ class PlaylistController extends ActionController
     public function listByCategoryAction(Category $category): ResponseInterface
     {
         $playlists = $this->playlistRepository->findByCategory($category->getUid());
+
         $this->view->assign('detailPage', $this->settings['detailPage']);
         $this->view->assign('category', $category);
         $this->view->assign('playlists', $playlists);
+
         return $this->htmlResponse();
     }
 
@@ -52,6 +48,7 @@ class PlaylistController extends ActionController
     public function listLatestVideosAction(): ResponseInterface
     {
         $this->view->assign('playlist', $this->playlistRepository->findByUid($this->settings['playlist']));
+
         return $this->htmlResponse();
     }
 
@@ -65,7 +62,9 @@ class PlaylistController extends ActionController
         if ($playlist === null) {
             $playlist = $this->playlistRepository->findByUid($this->settings['playlist']);
         }
+
         $this->view->assign('playlist', $playlist);
+
         return $this->htmlResponse();
     }
 }

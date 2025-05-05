@@ -15,24 +15,17 @@ use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
-/**
- * Class Playlist
- */
 class Playlist extends AbstractEntity
 {
     /**
      * Title imported from video platform
-     *
-     * @var string
      */
-    protected $title = '';
+    protected string $title = '';
 
     /**
      * Playlist link imported from video platform
-     *
-     * @var string
      */
-    protected $link = '';
+    protected string $link = '';
 
     /**
      * Video Identifier
@@ -40,38 +33,31 @@ class Playlist extends AbstractEntity
      * Please use a prefix for a video platform
      * like <prefix>_<videoIdFromPlatform>
      * e.g. yt_tNtENjljxVo
-     *
-     * @var string
      */
-    protected $playlist_id = '';
+    protected string $playlist_id = '';
 
     /**
      * Videos of this playlist imported from video platform
      *
      * @var ObjectStorage<Video>
      */
-    protected $videos;
+    protected ObjectStorage $videos;
 
     /**
      * @var ObjectStorage<Category>
      * @Extbase\ORM\Lazy
      */
-    protected $categories;
+    protected ObjectStorage $categories;
 
     /**
      * Path to Thumbnail
      * this can be local AND external
      * like: /fileadmin/playlists/playlist.jpg
      * or: https://domain.tld/thumbs/playlist.jpg
-     *
-     * @var string
      */
-    protected $thumbnail = '';
+    protected string $thumbnail = '';
 
-    /**
-     * @var string
-     */
-    protected $slug = '';
+    protected string $slug = '';
 
     public function __construct()
     {

@@ -15,17 +15,12 @@ use Psr\Http\Message\ResponseInterface;
 use JWeiland\Mediapool\Domain\Model\Playlist;
 use JWeiland\Mediapool\Domain\Model\Video;
 use JWeiland\Mediapool\Domain\Repository\VideoRepository;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
-/**
- * Class VideoController
- */
 class VideoController extends ActionController
 {
-    /**
-     * @var VideoRepository
-     */
-    protected $videoRepository;
+    protected VideoRepository $videoRepository;
 
     public function injectVideoRepository(VideoRepository $videoRepository): void
     {
@@ -43,8 +38,10 @@ class VideoController extends ActionController
                 1508316980
             );
         }
+
         $this->view->assign('video', $video);
         $this->view->assign('playlist', $playlist);
+
         return $this->htmlResponse();
     }
 
@@ -56,7 +53,8 @@ class VideoController extends ActionController
     public function listRecommendedAction(): ResponseInterface
     {
         $recommendedVideos = [];
-        foreach (explode(',', $this->settings['recommendedVideos']) as $recommendedVideoUid) {
+
+        foreach (GeneralUtility::trimExplode(',', $this->settings['recommendedVideos'], true) as $recommendedVideoUid) {
             $recommendedVideo = $this->videoRepository->findByUid($recommendedVideoUid);
             if ($recommendedVideo === null) {
                 throw new \InvalidArgumentException(
@@ -67,10 +65,13 @@ class VideoController extends ActionController
                     1508316983
                 );
             }
+
             $recommendedVideos[] = $recommendedVideo;
         }
+
         $this->view->assign('detailPage', $this->settings['detailPage']);
         $this->view->assign('recommendedVideos', $recommendedVideos);
+
         return $this->htmlResponse();
     }
 
@@ -85,6 +86,7 @@ class VideoController extends ActionController
             'recentVideos',
             $this->videoRepository->findRecentByCategories($this->settings['categories'])
         );
+
         return $this->htmlResponse();
     }
 }

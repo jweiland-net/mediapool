@@ -13,8 +13,8 @@ namespace JWeiland\Mediapool\Tests\Unit\Domain\Model;
 
 use JWeiland\Mediapool\Domain\Model\Playlist;
 use JWeiland\Mediapool\Domain\Model\Video;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * Test case.

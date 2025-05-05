@@ -17,7 +17,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * Trait to provide method to add FlashMessages to queue
+ * Trait to provide a method to add FlashMessages to queue
  */
 trait AddFlashMessageTrait
 {

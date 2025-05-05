@@ -18,9 +18,6 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
-/**
- * Class InlineVideoElement
- */
 class InlineVideoElement extends AbstractFormElement
 {
     /**

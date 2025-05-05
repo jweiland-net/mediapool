@@ -11,9 +11,4 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Import;
 
-/**
- * Class MissingImporterException
- */
-class MissingImporterException extends \Exception
-{
-}
+class MissingImporterException extends \Exception {}

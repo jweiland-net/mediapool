@@ -13,79 +13,57 @@ namespace JWeiland\Mediapool\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
-/**
- * Class Video
- */
 class Video extends AbstractEntity
 {
     /**
      * Video title imported from video platform
-     *
-     * @var string
      */
-    protected $title = '';
+    protected string $title = '';
 
     /**
      * Video description imported from video platform
-     *
-     * @var string
      */
-    protected $description = '';
+    protected string $description = '';
 
     /**
      * Upload date imported from video platform
-     *
-     * @var \DateTime
      */
-    protected $uploadDate;
+    protected \DateTime $uploadDate;
 
     /**
      * Link to the video (e.g. YouTube)
-     *
-     * @var string
      */
-    protected $link = '';
+    protected string $link = '';
 
     /**
-     * Code to embed the e.g. YouTube-Player
-     *
-     * @var string
+     * Code to embed the e.g., YouTube-Player
      */
-    protected $playerHtml = '';
+    protected string $playerHtml = '';
 
     /**
      * Video Identifier
      *
      * Please use a prefix for a video platform
      * like <prefix>_<videoIdFromPlatform>
-     * e.g. yt_tNtENjljxVo
-     *
-     * @var string
+     * e.g., yt_tNtENjljxVo
      */
-    protected $videoId = '';
+    protected string $videoId = '';
 
     /**
      * Path to Thumbnail
      * this can be local AND external
      * like: /fileadmin/videos/video.jpg
      * or: https://domain.tld/thumbs/video.jpg
-     *
-     * @var string
      */
-    protected $thumbnail = '';
+    protected string $thumbnail = '';
 
     /**
      * Path to the large Thumbnail
      * same than $thumbnail but larger
-     *
-     * @var string
      */
-    protected $thumbnailLarge = '';
+    protected string $thumbnailLarge = '';
 
-    /**
-     * @var string
-     */
-    protected $slug = '';
+    protected string $slug = '';
 
     public function getTitle(): string
     {
@@ -148,8 +126,6 @@ class Video extends AbstractEntity
      * Please use a prefix for a video platform
      * like <prefix>_<videoIdFromPlatform>
      * e.g. yt_tNtENjljxVo
-     *
-     * @param string $videoId
      */
     public function setVideoId(string $videoId): void
     {

@@ -11,27 +11,21 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Form\Element;
 
-use JWeiland\Mediapool\Utility\VideoPlatformUtility;
+use JWeiland\Mediapool\Service\ImportService;
 use TYPO3\CMS\Backend\Form\Element\InputTextElement;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
-/**
- * Class VideoLinkElement
- */
 class VideoLinkElement extends InputTextElement
 {
     /**
      * TCA field config
-     *
-     * @var array
      */
-    protected $config;
+    protected array $config;
 
     /**
      * Render input field
-     *
-     * @return array
      */
     public function render(): array
     {
@@ -69,10 +63,11 @@ class VideoLinkElement extends InputTextElement
         ) . '<br />';
 
         try {
+            $importService = $this->getImportService();
             if ($this->config['importType'] === 'playlist') {
-                $registeredImporters = VideoPlatformUtility::getRegisteredPlaylistImporters();
+                $registeredImporters = $importService->getPlaylistImporters();
             } else {
-                $registeredImporters = VideoPlatformUtility::getRegisteredVideoImporters();
+                $registeredImporters = $importService->getVideoImporters();
             }
 
             foreach ($registeredImporters as $registeredImporter) {
@@ -85,5 +80,10 @@ class VideoLinkElement extends InputTextElement
         }
 
         return $html;
+    }
+
+    protected function getImportService(): ImportService
+    {
+        return GeneralUtility::makeInstance(ImportService::class);
     }
 }
