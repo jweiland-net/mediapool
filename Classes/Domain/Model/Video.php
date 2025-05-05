@@ -28,7 +28,7 @@ class Video extends AbstractEntity
     /**
      * Upload date imported from video platform
      */
-    protected \DateTime $uploadDate;
+    protected ?\DateTime $uploadDate = null;
 
     /**
      * Link to the video (e.g. YouTube)
