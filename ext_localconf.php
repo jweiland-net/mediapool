@@ -24,7 +24,6 @@ use JWeiland\Mediapool\Updates\PlaylistSlugUpdate;
 use JWeiland\Mediapool\Updates\VideoSlugUpdate;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
-// Configure main plugin
 ExtensionUtility::configurePlugin(
     'Mediapool',
     'Mediapool',
@@ -34,7 +33,6 @@ ExtensionUtility::configurePlugin(
     ],
 );
 
-// Configure gallery plugin
 ExtensionUtility::configurePlugin(
     'Mediapool',
     'Gallery',
@@ -76,13 +74,6 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1643272486] = [
     'priority' => 70,
     'class' => VideoPlayerElement::class,
 ];
-
-// Register UpdateWizards
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['mediapoolPlaylistSlug']
-    = PlaylistSlugUpdate::class;
-
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['mediapoolVideoSlug']
-    = VideoSlugUpdate::class;
 
 // Hook into DataHandler to get video information into fieldArray and abort if a wrong video url was submitted
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['mediapool']
