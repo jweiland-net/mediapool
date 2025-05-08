@@ -13,7 +13,9 @@ namespace JWeiland\Mediapool\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Resource\Collection\AbstractFileCollection;
+use TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException;
 use TYPO3\CMS\Core\Resource\FileCollectionRepository;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 class GalleryController extends ActionController
@@ -38,7 +40,7 @@ class GalleryController extends ActionController
 
     /**
      * Gallery teaser action
-     * displays three galleries and a more button with configurable
+     * displays three galleries and a more button with a configurable
      * target page
      */
     public function teaserAction(): ResponseInterface
@@ -49,15 +51,20 @@ class GalleryController extends ActionController
     }
 
     /**
-     * Get file collections from settings
+     * @return AbstractFileCollection[]
      */
     protected function getFileCollections(): array
     {
         $fileCollections = [];
 
-        if ($this->settings['file_collections']) {
-            foreach (explode(',', $this->settings['file_collections']) as $uid) {
-                $fileCollection = $this->fileCollectionRepository->findByUid((int)$uid);
+        if ($this->settings['fileCollections']) {
+            foreach (GeneralUtility::intExplode(',', $this->settings['fileCollections'], true) as $uid) {
+                try {
+                    $fileCollection = $this->fileCollectionRepository->findByUid($uid);
+                } catch (ResourceDoesNotExistException $e) {
+                    continue;
+                }
+
                 if ($fileCollection instanceof AbstractFileCollection) {
                     $fileCollection->loadContents();
                     $fileCollections[] = $fileCollection;

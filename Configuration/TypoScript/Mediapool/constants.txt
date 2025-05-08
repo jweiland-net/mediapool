@@ -1,2 +1,0 @@
-# Important: This file is deprecated and will be removed with next major version of EXT:mediapool
-@import 'EXT:mediapool/Configuration/TypoScript/Mediapool/constants.typoscript'

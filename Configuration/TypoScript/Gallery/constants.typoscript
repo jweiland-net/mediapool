@@ -1,4 +1,4 @@
-
+# Therse settings will be used for plugin gallerypreview as well as galleryteaser
 plugin.tx_mediapool_gallery {
   view {
     # cat=plugin.tx_mediapool_gallery/file; type=string; label=Path to template root (FE)
@@ -10,7 +10,7 @@ plugin.tx_mediapool_gallery {
   }
   persistence {
     # cat=plugin.tx_mediapool_gallery//a; type=string; label=Default storage PID
-    storagePid = 
+    storagePid =
   }
   settings {
     # cat=plugin.tx_mediapool_gallery/dims/a; type=string; label=Height of the preview image (e.g. 600 or 600c to crop the image)

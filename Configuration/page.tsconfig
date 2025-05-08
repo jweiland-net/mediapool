@@ -10,13 +10,20 @@ mod {
           list_type = mediapool_mediapool
         }
       }
-      mediapool_gallery {
+      mediapool_gallerypreview {
         iconIdentifier = mediapool-gallery
-        title = LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.gallery.title
-        description = LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.gallery.description
+        title = LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.gallery.preview.title
+        description = LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.gallery.preview.description
         tt_content_defValues {
-          CType = list
-          list_type = mediapool_gallery
+          CType = mediapool_gallerypreview
+        }
+      }
+      mediapool_galleryteaser {
+        iconIdentifier = mediapool-gallery
+        title = LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.gallery.teaser.title
+        description = LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.gallery.teaser.description
+        tt_content_defValues {
+          CType = mediapool_galleryteaser
         }
       }
     }
@@ -25,5 +32,6 @@ mod {
 }
 
 # Add CType Preview
-mod.web_layout.tt_content.preview.list.mediapool_mediapool = EXT:mediapool/Resources/Private/Templates/PluginPreview/Mediapool.html
-mod.web_layout.tt_content.preview.list.mediapool_gallery = EXT:mediapool/Resources/Private/Templates/PluginPreview/Gallery.html
+mod.web_layout.tt_content.preview.mediapool_mediapool = EXT:mediapool/Resources/Private/Templates/PluginPreview/Mediapool.html
+mod.web_layout.tt_content.preview.mediapool_gallerypreview = EXT:mediapool/Resources/Private/Templates/PluginPreview/Gallery.html
+mod.web_layout.tt_content.preview.mediapool_galleryteaser = EXT:mediapool/Resources/Private/Templates/PluginPreview/Gallery.html

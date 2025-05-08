@@ -1,9 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z"
-				product-name="mediapool">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z" product-name="mediapool">
 		<header/>
 		<body>
+			<trans-unit id="plugin.mediapool.title">
+				<source>Mediapool</source>
+			</trans-unit>
+			<trans-unit id="plugin.mediapool.description">
+				<source>This plugin adds a media center to your website.</source>
+			</trans-unit>
+
+			<trans-unit id="plugin.gallery.preview.title">
+				<source>Gallery Preview</source>
+			</trans-unit>
+			<trans-unit id="plugin.gallery.preview.description">
+				<source>Displays a preview image for each selected file collection, which starts the gallery as a picture gallery when clicked.</source>
+			</trans-unit>
+
+			<trans-unit id="plugin.gallery.teaser.title">
+				<source>Gallery Teaser</source>
+			</trans-unit>
+			<trans-unit id="plugin.gallery.teaser.description">
+				<source>Use this plugin to display a reduced selection of file collections. You can use a link to refer to a page for the complete display with the Gallery: Preview plugin.</source>
+			</trans-unit>
+
+			<trans-unit id="tx_mediapool_domain_model_playlist">
+				<source>Playlist</source>
+			</trans-unit>
+			<trans-unit id="tx_mediapool_domain_model_playlist.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_mediapool_domain_model_playlist.link">
+				<source>Playlist URL or Channel URL</source>
+			</trans-unit>
+			<trans-unit id="tx_mediapool_domain_model_playlist.videos">
+				<source>Videos</source>
+			</trans-unit>
+
 			<trans-unit id="tx_mediapool_domain_model_video">
 				<source>Video</source>
 			</trans-unit>
@@ -26,39 +59,12 @@
 				<source>This field will be filled automatically after first successful save.</source>
 			</trans-unit>
 
-			<trans-unit id="render_type.video_link_element.supported_video_platforms">
-				<source>Supported video platforms:</source>
-			</trans-unit>
-
-			<trans-unit id="tx_mediapool_domain_model_playlist">
-				<source>Playlist</source>
-			</trans-unit>
-			<trans-unit id="tx_mediapool_domain_model_playlist.title">
-				<source>Title</source>
-			</trans-unit>
-			<trans-unit id="tx_mediapool_domain_model_playlist.link">
-				<source>Playlist URL or Channel URL</source>
-			</trans-unit>
-			<trans-unit id="tx_mediapool_domain_model_playlist.videos">
-				<source>Videos</source>
-			</trans-unit>
-
-			<trans-unit id="plugin.mediapool.title">
-				<source>Mediapool</source>
-			</trans-unit>
-			<trans-unit id="plugin.gallery.title">
-				<source>Gallery</source>
-			</trans-unit>
-
-			<trans-unit id="plugin.mediapool.description">
-				<source>This plugin adds a media center to your website.</source>
-			</trans-unit>
-			<trans-unit id="plugin.gallery.description">
-				<source>This plugins adds a gallery using file collections to your website.</source>
-			</trans-unit>
-
 			<trans-unit id="slug">
 				<source>Path segment</source>
+			</trans-unit>
+
+			<trans-unit id="render_type.video_link_element.supported_video_platforms">
+				<source>Supported video platforms:</source>
 			</trans-unit>
 		</body>
 	</file>

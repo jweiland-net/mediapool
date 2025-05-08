@@ -20,25 +20,35 @@ use JWeiland\Mediapool\Form\Element\VideoLinkElement;
 use JWeiland\Mediapool\Form\Element\VideoPlayerElement;
 use JWeiland\Mediapool\Form\Element\VideoTextElement;
 use JWeiland\Mediapool\Hook\DataHandlerHook;
-use JWeiland\Mediapool\Updates\PlaylistSlugUpdate;
-use JWeiland\Mediapool\Updates\VideoSlugUpdate;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 ExtensionUtility::configurePlugin(
     'Mediapool',
     'Mediapool',
     [
-        VideoController::class => 'show,listRecommended',
-        PlaylistController::class => 'listByCategory,listLatestVideos,listVideos',
+        VideoController::class => 'show, listRecommended',
+        PlaylistController::class => 'listByCategory, listLatestVideos, listVideos',
     ],
 );
 
 ExtensionUtility::configurePlugin(
     'Mediapool',
-    'Gallery',
+    'GalleryPreview',
     [
         GalleryController::class => 'preview',
     ],
+    [],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
+);
+
+ExtensionUtility::configurePlugin(
+    'Mediapool',
+    'GalleryTeaser',
+    [
+        GalleryController::class => 'teaser',
+    ],
+    [],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
 );
 
 // Add renderType to display video importers

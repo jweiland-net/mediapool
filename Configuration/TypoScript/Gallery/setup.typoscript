@@ -1,7 +1,4 @@
-page.includeCSS.tx_mediapool_fancybox = EXT:mediapool/Resources/Public/Css/jquery.fancybox.min.css
-page.includeJSFooter.tx_mediapool_fancybox = EXT:mediapool/Resources/Public/JavaScript/jquery.fancybox.min.js
-
-plugin.tx_mediapool_gallery {
+plugin.tx_mediapool_gallerypreview {
   view {
     templateRootPaths.100 = {$plugin.tx_mediapool_gallery.view.templateRootPath}
     partialRootPaths.100 = {$plugin.tx_mediapool_gallery.view.partialRootPath}
@@ -15,3 +12,5 @@ plugin.tx_mediapool_gallery {
     width = {$plugin.tx_mediapool_gallery.settings.width}
   }
 }
+
+plugin.tx_mediapool_galleryteaser < plugin.tx_mediapool_gallerypreview

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z" product-name="mediapool">
+		<header/>
+		<body>
+			<trans-unit id="mediapool.view">
+				<source>Select view</source>
+			</trans-unit>
+			<trans-unit id="mediapool.recommended_videos">
+				<source>List recommended videos</source>
+			</trans-unit>
+			<trans-unit id="mediapool.detail_view">
+				<source>Detail view (Video, Playlist)</source>
+			</trans-unit>
+			<trans-unit id="mediapool.detail_page">
+				<source>Select page for detail view</source>
+			</trans-unit>
+			<trans-unit id="mediapool.list_page">
+				<source>Select page for list view</source>
+			</trans-unit>
+			<trans-unit id="mediapool.recommended_video_selection">
+				<source>Select 3 recommended videos</source>
+			</trans-unit>
+			<trans-unit id="mediapool.categories">
+				<source>Display a recent video per selected category</source>
+			</trans-unit>
+			<trans-unit id="mediapool.list_recent_by_category">
+				<source>List recent video of playlist (category)</source>
+			</trans-unit>
+			<trans-unit id="mediapool.list_latest_videos">
+				<source>List latest videos by playlist</source>
+			</trans-unit>
+			<trans-unit id="mediapool.list_videos">
+				<source>List all videos by playlist</source>
+			</trans-unit>
+			<trans-unit id="mediapool.playlist_selection">
+				<source>Select a playlist</source>
+			</trans-unit>
+			<trans-unit id="mediapool.videos_per_page">
+				<source>Videos per page</source>
+			</trans-unit>
+
+			<trans-unit id="gallery.preview.title">
+				<source>Image gallery: Preview</source>
+			</trans-unit>
+			<trans-unit id="gallery.teaser.title">
+				<source>Image gallery: Teaser</source>
+			</trans-unit>
+			<trans-unit id="gallery.file_collections">
+				<source>File collection(s)</source>
+			</trans-unit>
+			<trans-unit id="gallery.teaser.list_page">
+				<source>Page to the list view</source>
+			</trans-unit>
+			<trans-unit id="gallery.teaser.list_page.description">
+				<source>Select a page with the Gallery: Preview plugin</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
