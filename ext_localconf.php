@@ -24,11 +24,53 @@ use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 ExtensionUtility::configurePlugin(
     'Mediapool',
-    'Mediapool',
+    'Recommended',
     [
-        VideoController::class => 'show, listRecommended',
-        PlaylistController::class => 'listByCategory, listLatestVideos, listVideos',
+        VideoController::class => 'listRecommended',
     ],
+    [],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
+);
+
+ExtensionUtility::configurePlugin(
+    'Mediapool',
+    'Detail',
+    [
+        VideoController::class => 'show',
+        PlaylistController::class => 'listByCategory',
+    ],
+    [],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
+);
+
+ExtensionUtility::configurePlugin(
+    'Mediapool',
+    'RecentByCategory',
+    [
+        VideoController::class => 'listRecentByCategory',
+    ],
+    [],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
+);
+
+ExtensionUtility::configurePlugin(
+    'Mediapool',
+    'Latest',
+    [
+        PlaylistController::class => 'listLatestVideos, listVideos',
+    ],
+    [],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
+);
+
+ExtensionUtility::configurePlugin(
+    'Mediapool',
+    'List',
+    [
+        PlaylistController::class => 'listVideos',
+    ],
+    [],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
 );
 
 ExtensionUtility::configurePlugin(
