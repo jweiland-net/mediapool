@@ -8,8 +8,8 @@
 				<target>Empfohlene Videos</target>
 			</trans-unit>
 			<trans-unit id="plugin.mediapool.recommended.description">
-				<source>Replace me</source>
-				<target>[Ersetzen]</target>
+				<source>Shows a list of selected recommended videos.</source>
+				<target>Zeigt eine Liste von selektiert empfohlenden Videos.</target>
 			</trans-unit>
 
 			<trans-unit id="plugin.mediapool.detail.title">
@@ -17,8 +17,8 @@
 				<target>Detailansicht (Video, Playliste)</target>
 			</trans-unit>
 			<trans-unit id="plugin.mediapool.detail.description">
-				<source>Replace me</source>
-				<target>[Ersetzen]</target>
+				<source>Shows the detailed view of a video or a playlist.</source>
+				<target>Zeigt die Detailansicht eines Videos oder einer Playlist.</target>
 			</trans-unit>
 
 			<trans-unit id="plugin.mediapool.recentbycategory.title">
@@ -26,8 +26,8 @@
 				<target>Zeige das neuste Video einer Playliste (Kategorie)</target>
 			</trans-unit>
 			<trans-unit id="plugin.mediapool.recentbycategory.description">
-				<source>Replace me</source>
-				<target>[Ersetzen]</target>
+				<source>Displays a list of recently added videos.</source>
+				<target>Zeigt eine Liste kürzlich hinzugefügter Videos an.</target>
 			</trans-unit>
 
 			<trans-unit id="plugin.mediapool.latest.title">
@@ -35,8 +35,8 @@
 				<target>Zeige neuste Videos einer Playliste</target>
 			</trans-unit>
 			<trans-unit id="plugin.mediapool.latest.description">
-				<source>Replace me</source>
-				<target>[Ersetzen]</target>
+				<source>Displays a list of the most recently uploaded playlists.</source>
+				<target>Zeigt eine Liste der zuletzt hochgeladenen Playlists an.</target>
 			</trans-unit>
 
 			<trans-unit id="plugin.mediapool.list.title">
@@ -44,8 +44,8 @@
 				<target>Zeige alle Videos einer Playliste</target>
 			</trans-unit>
 			<trans-unit id="plugin.mediapool.list.description">
-				<source>Replace me</source>
-				<target>[Ersetzen]</target>
+				<source>Displays a list of all available playlists.</source>
+				<target>Zeigt eine Liste aller verfügbaren Playlists an.</target>
 			</trans-unit>
 
 			<trans-unit id="plugin.gallery.preview.title">
