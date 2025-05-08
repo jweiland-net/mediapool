@@ -59,4 +59,3 @@ ExtensionManagementUtility::addPiFlexFormValue(
     'FILE:EXT:mediapool/Configuration/FlexForms/GalleryTeaser.xml',
     'mediapool_galleryteaser',
 );
-
