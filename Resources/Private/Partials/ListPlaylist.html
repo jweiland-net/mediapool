@@ -1,30 +1,34 @@
 <html lang="en"
-			xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-			data-namespace-typo3-fluid="true">
+      xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
 
 <f:comment>
-	<!-- To use this partial: pass your playlist object named playlist and your video object named video.-->
+    <!-- To use this partial: pass your playlist object named playlist and your video object named video.-->
 </f:comment>
 
 <div class="mediapool-playlist">
-	<div class="mediapool-playlist-header">
-		<h4>{playlist.title}</h4>
-	</div>
-	<div class="mediapool-playlist-items">
-		<f:for each="{playlist.videos}" as="playlistVideo" iteration="iterator">
-			<div class="playlist-item">
-				<f:link.action controller="Video" action="show" arguments="{video: playlistVideo.uid, playlist: playlist.uid}">
-					<div class="playlist-item-inner{f:if(condition: '{video.uid} == {playlistVideo.uid}', then: ' playlist-item-active')} grid col-12">
-						<div class="playlist-item-thumbnail grid col-4">
-							<div class="col-12"><img src="{playlistVideo.thumbnail}" alt="{playlistVideo.title}" title="{playlistVideo.title}"/></div>
-						</div>
-						<div class="playlist-item-title grid col-8">
-							<div class="col-12"><p><f:format.crop maxCharacters="45">{playlistVideo.title}</f:format.crop></p></div>
-						</div>
-					</div>
-				</f:link.action>
-			</div>
-		</f:for>
-	</div>
+    <div class="mediapool-playlist-header">
+        <h4>{playlist.title}</h4>
+    </div>
+    <div class="mediapool-playlist-items">
+        <f:for each="{playlist.videos}" as="playlistVideo" iteration="iterator">
+            <div class="playlist-item">
+                <f:link.action controller="Video" action="show" arguments="{video: playlistVideo.uid, playlist: playlist.uid}">
+                    <div class="playlist-item-inner{f:if(condition: '{video.uid} == {playlistVideo.uid}', then: ' playlist-item-active')} grid col-12">
+                        <div class="playlist-item-thumbnail grid col-4">
+                            <div class="col-12"><img src="{playlistVideo.thumbnail}" alt="{playlistVideo.title}" title="{playlistVideo.title}"/></div>
+                        </div>
+                        <div class="playlist-item-title grid col-8">
+                            <div class="col-12">
+                                <p>
+                                    <f:format.crop maxCharacters="45">{playlistVideo.title}</f:format.crop>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </f:link.action>
+            </div>
+        </f:for>
+    </div>
 </div>
 </html>
