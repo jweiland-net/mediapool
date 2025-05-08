@@ -2,6 +2,10 @@
       xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
+<f:asset.script identifier="tx_mediapool"
+                src="EXT:mediapool/Resources/Public/JavaScript/mediapool.js"
+                useNonce="1"/>
+
 <h2>{video.title}</h2>
 
 <div class="grid col-12{f:if(condition: '{playlist}', then: ' mediapool-video-wrap')} ">
@@ -14,11 +18,11 @@
         </div>
     </f:if>
 </div>
+
 <div class="grid col-8_md-12">
+    <p><f:format.raw>{video.description}</f:format.raw></p>
     <p>
-        <f:format.raw>{video.description}</f:format.raw>
-    </p>
-    <p><f:translate key="video.upload_date"/>:
+        {f:translate(key: 'video.upload_date')}:
         <f:format.date>{video.uploadDate}</f:format.date>
     </p>
     <div class="news-backlink-wrap">

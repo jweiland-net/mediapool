@@ -14,6 +14,8 @@ namespace JWeiland\Mediapool\Controller;
 use JWeiland\Mediapool\Domain\Model\Playlist;
 use JWeiland\Mediapool\Domain\Repository\PlaylistRepository;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Pagination\ArrayPaginator;
+use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
@@ -47,13 +49,22 @@ class PlaylistController extends ActionController
     /**
      * @param Playlist|null $playlist either pass a playlist or use the given from $this->settings
      */
-    public function listVideosAction(?Playlist $playlist = null): ResponseInterface
+    public function listVideosAction(?Playlist $playlist = null, int $currentPageNumber = 1): ResponseInterface
     {
         if ($playlist === null) {
             $playlist = $this->playlistRepository->findByUid($this->settings['playlist']);
         }
 
-        $this->view->assign('playlist', $playlist);
+        $paginator = new ArrayPaginator(
+            $playlist->getVideos()->toArray(),
+            $currentPageNumber,
+            15
+        );
+
+        $this->view->assignMultiple([
+            'paginator' => $paginator,
+            'pagination' => new SimplePagination($paginator),
+        ]);
 
         return $this->htmlResponse();
     }

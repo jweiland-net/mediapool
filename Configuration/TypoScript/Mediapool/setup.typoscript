@@ -1,6 +1,4 @@
-page.includeJSFooter.tx_mediapool = EXT:mediapool/Resources/Public/JavaScript/mediapool.js
-
-plugin.tx_mediapool_mediapool {
+plugin.tx_mediapool_recommended {
   view {
     templateRootPaths.100 = {$plugin.tx_mediapool_mediapool.view.templateRootPath}
     partialRootPaths.100 = {$plugin.tx_mediapool_mediapool.view.partialRootPath}
@@ -10,6 +8,11 @@ plugin.tx_mediapool_mediapool {
     storagePid = {$plugin.tx_mediapool_mediapool.persistence.storagePid}
   }
 }
+
+plugin.tx_mediapool_detail < plugin.tx_mediapool_recommended
+plugin.tx_mediapool_recentbycategory < plugin.tx_mediapool_recommended
+plugin.tx_mediapool_latest < plugin.tx_mediapool_recommended
+plugin.tx_mediapool_list < plugin.tx_mediapool_recommended
 
 plugin.tx_mediapool._CSS_DEFAULT_STYLE (
   .preview-icon {

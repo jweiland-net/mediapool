@@ -2,6 +2,10 @@
       xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
+<f:asset.script identifier="tx_mediapool"
+                src="EXT:mediapool/Resources/Public/JavaScript/mediapool.js"
+                useNonce="1"/>
+
 <div class="grid">
     <div class="col-8_sm-12">
         <f:render partial="VideoPreview" arguments="{video: playlist.videos.0, detailPage: settings.detailPage}"/>
@@ -9,7 +13,9 @@
     <div class="col-4_sm-12">
         <f:render partial="VideoPreview" arguments="{video: playlist.videos.1, detailPage: settings.detailPage}"/>
         <f:render partial="VideoPreview" arguments="{video: playlist.videos.2, detailPage: settings.detailPage}"/>
-        <f:link.action class="btn btn-primary" action="listVideos" pageUid="{settings.listPage}"><f:translate key="frontend.button.more"/></f:link.action>
+        <f:link.action class="btn btn-primary" action="listVideos" pageUid="{settings.listPage}">
+            {f:translate(key: 'frontend.button.more')}
+        </f:link.action>
     </div>
 </div>
 </html>
