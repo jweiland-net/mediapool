@@ -1,15 +1,23 @@
 <html lang="en"
-			xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-			data-namespace-typo3-fluid="true">
+      xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:asset.script identifier="tx_mediapool_jquery"
+                src="EXT:mediapool/Resources/Public/JavaScript/jquery-3.7.1.min.js"
+                priority="1"
+                useNonce="1"/>
+<f:asset.script identifier="tx_mediapool"
+                src="EXT:mediapool/Resources/Public/JavaScript/mediapool.js"
+                useNonce="1"/>
 
 <div class="grid">
-	<div class="col-8_sm-12">
-		<f:render partial="VideoPreview" arguments="{video: recommendedVideos.0, detailPage: detailPage}" />
-	</div>
-	<div class="col-4_sm-12">
-		<f:render partial="VideoPreview" arguments="{video: recommendedVideos.1, detailPage: detailPage}" />
-		<f:render partial="VideoPreview" arguments="{video: recommendedVideos.2, detailPage: detailPage}" />
-	</div>
-	<f:comment><!-- todo: add category list ! --></f:comment>
+    <div class="col-8_sm-12">
+        <f:render partial="VideoPreview" arguments="{video: recommendedVideos.0, detailPage: detailPage}"/>
+    </div>
+    <div class="col-4_sm-12">
+        <f:render partial="VideoPreview" arguments="{video: recommendedVideos.1, detailPage: detailPage}"/>
+        <f:render partial="VideoPreview" arguments="{video: recommendedVideos.2, detailPage: detailPage}"/>
+    </div>
+    <f:comment><!-- todo: add category list ! --></f:comment>
 </div>
 </html>

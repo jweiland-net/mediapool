@@ -17,7 +17,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * Trait to provide method to add FlashMessages to queue
+ * Trait to provide a method to add FlashMessages to queue
  */
 trait AddFlashMessageTrait
 {
@@ -43,14 +43,14 @@ trait AddFlashMessageTrait
         $message = LocalizationUtility::translate(
             $this->errorMessagesFile . ':' . $message,
             '',
-            $messageArguments
+            $messageArguments,
         );
 
         $this->getFlashMessageQueue()->addMessage(GeneralUtility::makeInstance(
             FlashMessage::class,
             $message ?? '[no-message]',
             $title ?? '[no-title]',
-            AbstractMessage::ERROR
+            AbstractMessage::ERROR,
         ));
     }
 }

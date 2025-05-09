@@ -11,18 +11,36 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Domain\Repository;
 
-use JWeiland\Mediapool\Traits\GetObjectManagerTrait;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
- * Repository to get records from table: tx_mediapool_domain_model_video
+ * Repository to get records from the table: tx_mediapool_domain_model_video
  */
 class VideoRepository extends Repository
 {
-    use GetObjectManagerTrait;
+    protected ConnectionPool $connectionPool;
+
+    protected CategoryRepository $categoryRepository;
+
+    protected PlaylistRepository $playlistRepository;
+
+    public function injectConnectionPool(ConnectionPool $connectionPool): void
+    {
+        $this->connectionPool = $connectionPool;
+    }
+
+    public function injectCategoryRepository(CategoryRepository $categoryRepository): void
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
+
+    public function injectPlaylistRepository(PlaylistRepository $playlistRepository): void
+    {
+        $this->playlistRepository = $playlistRepository;
+    }
 
     public function findByVideoId(string $videoId, int $pid): QueryResultInterface
     {
@@ -32,46 +50,11 @@ class VideoRepository extends Repository
         $query->matching(
             $query->logicalAnd(
                 $query->equals('videoId', $videoId),
-                $query->equals('pid', $pid)
-            )
+                $query->equals('pid', $pid),
+            ),
         );
 
         return $query->execute();
-    }
-
-    /**
-     * Find all links and uids without respecting pid
-     *
-     * @return array records with fields: uid, link
-     */
-    public function findAllLinksAndUids(): array
-    {
-        $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable(
-            'tx_mediapool_domain_model_video'
-        );
-
-        return $connection->select(['uid', 'link'], 'tx_mediapool_domain_model_video')->fetchAll();
-    }
-
-    /**
-     * Find link and uid of records by pid
-     *
-     * @param string $pids comma separated list of pids
-     * @return array records with fields: uid, link
-     */
-    public function findLinksAndUidsByPid(string $pids): array
-    {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(
-            'tx_mediapool_domain_model_video'
-        );
-        $query = $queryBuilder
-            ->select('uid', 'link')
-            ->from('tx_mediapool_domain_model_video')
-            ->where(
-                $queryBuilder->expr()->in('pid', $pids)
-            );
-
-        return $query->execute()->fetchAll();
     }
 
     /**
@@ -90,10 +73,10 @@ class VideoRepository extends Repository
      */
     public function findRecentByCategories(string $categoryUids): array
     {
-        $categoryRepository = $this->getObjectManager()->get(CategoryRepository::class);
         $recentVideos = [];
-        foreach (GeneralUtility::intExplode(',', $categoryUids) as $categoryUid) {
-            $category = $categoryRepository->findByUid($categoryUid);
+
+        foreach (GeneralUtility::intExplode(',', $categoryUids, true) as $categoryUid) {
+            $category = $this->categoryRepository->findByUid($categoryUid);
             $recent = $this->findRecentByCategory($categoryUid);
             if ($recent) {
                 $recentVideos[$categoryUid] = [
@@ -103,6 +86,7 @@ class VideoRepository extends Repository
                 ];
             }
         }
+
         return $recentVideos;
     }
 
@@ -116,10 +100,10 @@ class VideoRepository extends Repository
      */
     public function findRecentByCategory(int $categoryUid): array
     {
-        $playlistRepository = $this->getObjectManager()->get(PlaylistRepository::class);
-        $playlists = $playlistRepository->findByCategory($categoryUid);
+        $playlists = $this->playlistRepository->findByCategory($categoryUid);
         $uploadDate = 0;
         $recentVideo = [];
+
         foreach ($playlists as $playlist) {
             foreach ($playlist->getVideos() as $video) {
                 if ($video->getUploadDate() > $uploadDate) {

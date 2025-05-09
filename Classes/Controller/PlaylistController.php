@@ -13,55 +13,59 @@ namespace JWeiland\Mediapool\Controller;
 
 use JWeiland\Mediapool\Domain\Model\Playlist;
 use JWeiland\Mediapool\Domain\Repository\PlaylistRepository;
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Pagination\ArrayPaginator;
+use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
-/**
- * Class PlaylistController
- */
 class PlaylistController extends ActionController
 {
-    /**
-     * @var PlaylistRepository
-     */
-    protected $playlistRepository;
+    protected PlaylistRepository $playlistRepository;
 
     public function injectPlaylistRepository(PlaylistRepository $playlistRepository): void
     {
         $this->playlistRepository = $playlistRepository;
     }
 
-    /**
-     * List playlists by category
-     *
-     * @param Category $category
-     */
-    public function listByCategoryAction(Category $category): void
+    public function listByCategoryAction(Category $category): ResponseInterface
     {
         $playlists = $this->playlistRepository->findByCategory($category->getUid());
+
         $this->view->assign('detailPage', $this->settings['detailPage']);
         $this->view->assign('category', $category);
         $this->view->assign('playlists', $playlists);
+
+        return $this->htmlResponse();
     }
 
-    /**
-     * List latest videos of a playlist
-     */
-    public function listLatestVideosAction(): void
+    public function listLatestVideosAction(): ResponseInterface
     {
         $this->view->assign('playlist', $this->playlistRepository->findByUid($this->settings['playlist']));
+
+        return $this->htmlResponse();
     }
 
     /**
-     * List all videos of a playlist
-     *
      * @param Playlist|null $playlist either pass a playlist or use the given from $this->settings
      */
-    public function listVideosAction(Playlist $playlist = null): void
+    public function listVideosAction(?Playlist $playlist = null, int $currentPageNumber = 1): ResponseInterface
     {
         if ($playlist === null) {
             $playlist = $this->playlistRepository->findByUid($this->settings['playlist']);
         }
-        $this->view->assign('playlist', $playlist);
+
+        $paginator = new ArrayPaginator(
+            $playlist->getVideos()->toArray(),
+            $currentPageNumber,
+            15
+        );
+
+        $this->view->assignMultiple([
+            'paginator' => $paginator,
+            'pagination' => new SimplePagination($paginator),
+        ]);
+
+        return $this->htmlResponse();
     }
 }

@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace JWeiland\Mediapool\Tests\Unit\Domain\Model;
 
 use JWeiland\Mediapool\Domain\Model\Video;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * Test case.
@@ -29,7 +29,7 @@ class VideoTest extends UnitTestCase
     protected function tearDown(): void
     {
         unset(
-            $this->subject
+            $this->subject,
         );
 
         parent::tearDown();
@@ -42,7 +42,7 @@ class VideoTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getTitle()
+            $this->subject->getTitle(),
         );
     }
 
@@ -55,7 +55,7 @@ class VideoTest extends UnitTestCase
 
         self::assertSame(
             'Jochen Weiland',
-            $this->subject->getTitle()
+            $this->subject->getTitle(),
         );
     }
 
@@ -66,7 +66,7 @@ class VideoTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getDescription()
+            $this->subject->getDescription(),
         );
     }
 
@@ -79,7 +79,7 @@ class VideoTest extends UnitTestCase
 
         self::assertSame(
             'Please, listen to me...',
-            $this->subject->getDescription()
+            $this->subject->getDescription(),
         );
     }
 
@@ -89,7 +89,7 @@ class VideoTest extends UnitTestCase
     public function getUploadDateWillInitiallyReturnNull(): void
     {
         self::assertNull(
-            $this->subject->getUploadDate()
+            $this->subject->getUploadDate(),
         );
     }
 
@@ -104,7 +104,7 @@ class VideoTest extends UnitTestCase
 
         self::assertSame(
             $date,
-            $this->subject->getUploadDate()
+            $this->subject->getUploadDate(),
         );
     }
 
@@ -115,7 +115,7 @@ class VideoTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getLink()
+            $this->subject->getLink(),
         );
     }
 
@@ -128,7 +128,7 @@ class VideoTest extends UnitTestCase
 
         self::assertSame(
             'https://jweiland.net',
-            $this->subject->getLink()
+            $this->subject->getLink(),
         );
     }
 
@@ -139,7 +139,7 @@ class VideoTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getPlayerHtml()
+            $this->subject->getPlayerHtml(),
         );
     }
 
@@ -152,7 +152,7 @@ class VideoTest extends UnitTestCase
 
         self::assertSame(
             '<strong>Hello world</strong>',
-            $this->subject->getPlayerHtml()
+            $this->subject->getPlayerHtml(),
         );
     }
 
@@ -163,7 +163,7 @@ class VideoTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getVideoId()
+            $this->subject->getVideoId(),
         );
     }
 
@@ -176,7 +176,7 @@ class VideoTest extends UnitTestCase
 
         self::assertSame(
             'cgmh34829xghwo8g8h5og',
-            $this->subject->getVideoId()
+            $this->subject->getVideoId(),
         );
     }
 
@@ -187,7 +187,7 @@ class VideoTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getThumbnail()
+            $this->subject->getThumbnail(),
         );
     }
 
@@ -200,7 +200,7 @@ class VideoTest extends UnitTestCase
 
         self::assertSame(
             'thumbnail.jpg',
-            $this->subject->getThumbnail()
+            $this->subject->getThumbnail(),
         );
     }
 
@@ -211,7 +211,7 @@ class VideoTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getThumbnailLarge()
+            $this->subject->getThumbnailLarge(),
         );
     }
 
@@ -224,7 +224,7 @@ class VideoTest extends UnitTestCase
 
         self::assertSame(
             'thumbnail-large.jpg',
-            $this->subject->getThumbnailLarge()
+            $this->subject->getThumbnailLarge(),
         );
     }
 
@@ -235,7 +235,7 @@ class VideoTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getSlug()
+            $this->subject->getSlug(),
         );
     }
 
@@ -248,7 +248,7 @@ class VideoTest extends UnitTestCase
 
         self::assertSame(
             '/video/super-mario',
-            $this->subject->getSlug()
+            $this->subject->getSlug(),
         );
     }
 }

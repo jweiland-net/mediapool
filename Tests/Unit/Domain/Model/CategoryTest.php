@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace JWeiland\Mediapool\Tests\Unit\Domain\Model;
 
 use JWeiland\Mediapool\Domain\Model\Category;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * Test case.
@@ -29,7 +29,7 @@ class CategoryTest extends UnitTestCase
     protected function tearDown(): void
     {
         unset(
-            $this->subject
+            $this->subject,
         );
 
         parent::tearDown();
@@ -42,7 +42,7 @@ class CategoryTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getTitle()
+            $this->subject->getTitle(),
         );
     }
 
@@ -55,7 +55,7 @@ class CategoryTest extends UnitTestCase
 
         self::assertSame(
             'Jochen Weiland',
-            $this->subject->getTitle()
+            $this->subject->getTitle(),
         );
     }
 }

@@ -1,31 +1,36 @@
 <html lang="en"
-			xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-			data-namespace-typo3-fluid="true">
+      xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
 
 <f:if condition="{record.originalFile}">
-	<f:then>
-		<f:variable name="isReference">true</f:variable>
-	</f:then>
-	<f:else>
-		<f:variable name="isReference">false</f:variable>
-	</f:else>
+    <f:then>
+        <f:variable name="isReference">true</f:variable>
+    </f:then>
+    <f:else>
+        <f:variable name="isReference">false</f:variable>
+    </f:else>
 </f:if>
+
 <figure class="mediapool-gallery-item">
-	<a href="{f:uri.image(src: '{record.uid}', treatIdAsReference: '{isReference}')}"
-		 data-fancybox="{galleryId}"
-		 data-caption="<h2>{record.properties.title}</h2><p>{record.properties.description}</p>">
-		<f:image image="{record}" title="{record.properties.title}" alt="{record.properties.title}"
-						 height="{settings.height}" width="{settings.width}"/>
-		<f:if condition="{iterator.isFirst}">
-			<span class="fa-stack fa-lg">
-				<i class="fa fa-picture-o fa-stack-2x"></i>
-				<i class="fa fa-picture-o fa-stack-2x"></i>
-			</span>
-			<figcaption>{fileCollection.title}</figcaption>
-		</f:if>
-	</a>
+    <a href="{f:uri.image(src: '{record.uid}', treatIdAsReference: '{isReference}')}"
+       data-fancybox="{galleryId}"
+       data-caption="<h2>{record.properties.title}</h2><p>{record.properties.description}</p>">
+        <f:image image="{record}"
+                 title="{record.properties.title}"
+                 alt="{record.properties.title}"
+                 height="{settings.height}"
+                 width="{settings.width}"/>
+        <f:if condition="{iterator.isFirst}">
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-picture-o fa-stack-2x"></i>
+                <i class="fa fa-picture-o fa-stack-2x"></i>
+            </span>
+            <figcaption>{fileCollection.title}</figcaption>
+        </f:if>
+    </a>
 </figure>
+
 <f:if condition="{fileCollection.description} && {hideDescription} !== 'true'">
-	<div class="mediapool-gallery-description">{fileCollection.description}</div>
+    <div class="mediapool-gallery-description">{fileCollection.description}</div>
 </f:if>
 </html>

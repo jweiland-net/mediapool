@@ -11,26 +11,20 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Import;
 
-/**
- * Class AbstractImport
- */
 class AbstractImport
 {
     /**
      * Name of the video platform
-     * e.g. YouTube
-     *
-     * @var string
+     * e.g., YouTube
      */
-    protected $platformName = '';
+    protected string $platformName = '';
 
     /**
      * Array filled with hosts of this video importer
      * e.g. ['https://youtube.com', 'https://youtu.be']
-     * this hosts are needed to identify the passed link
-     *
-     * @var array     */
-    protected $platformHosts = [];
+     * these hosts are needed to identify the passed link
+     */
+    protected array $platformHosts = [];
 
     /**
      * This property is used by VideoService and PlaylistService.
@@ -38,7 +32,7 @@ class AbstractImport
      * to add your own error messages with $this->addFlashMessage()
      * or your own error method.
      */
-    protected $hasError = false;
+    protected bool $hasError = false;
 
     /**
      * Returns PlatformName

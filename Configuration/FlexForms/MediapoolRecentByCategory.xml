@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<T3DataStructure>
+    <sheets>
+        <sDEF>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:mediapool/Resources/Private/Language/FlexForm.xlf:mediapool.title</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <settings.detailPage>
+                        <TCEforms>
+                            <label>LLL:EXT:mediapool/Resources/Private/Language/FlexForm.xlf:mediapool.detail_page</label>
+                            <config>
+                                <type>group</type>
+                                <internal_type>db</internal_type>
+                                <allowed>pages</allowed>
+                                <size>1</size>
+                                <maxitems>1</maxitems>
+                                <minitems>1</minitems>
+                            </config>
+                        </TCEforms>
+                    </settings.detailPage>
+                    <settings.categories>
+                        <label>LLL:EXT:mediapool/Resources/Private/Language/FlexForm.xlf:mediapool.categories</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectTree</renderType>
+                            <foreign_table>sys_category</foreign_table>
+                            <foreign_table_where> AND sys_category.sys_language_uid IN (-1, 0) ORDER BY sys_category.sorting ASC</foreign_table_where>
+                            <size>10</size>
+                            <treeConfig>
+                                <parentField>parent</parentField>
+                                <appearance>
+                                    <expandAll>true</expandAll>
+                                    <showHeader>true</showHeader>
+                                </appearance>
+                            </treeConfig>
+                        </config>
+                    </settings.categories>
+                </el>
+            </ROOT>
+        </sDEF>
+    </sheets>
+</T3DataStructure>

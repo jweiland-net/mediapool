@@ -36,7 +36,7 @@ class VideoPlayerElement extends AbstractFormElement
             $resultArray['html'] .= '<div class="alert alert-info" role="alert" style="max-width: ' . $width . 'px">' .
                 LocalizationUtility::translate(
                     'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:' .
-                    'tx_mediapool_domain_model_video.empty_field'
+                    'tx_mediapool_domain_model_video.empty_field',
                 ) .
                 '</div>';
         }

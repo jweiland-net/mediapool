@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
+
 /*
  * This file is part of the package jweiland/mediapool.
  *
@@ -20,40 +23,35 @@ For the full copyright and license information, please read the
 LICENSE file that was distributed with this source code.
 COMMENT;
 
-return (new \PhpCsFixer\Config())
+return (new Config())
     ->setFinder(
-        (new PhpCsFixer\Finder())
-            ->ignoreVCSIgnored(true)
-            ->in([
-                __DIR__ . '/../../Build/',
-                __DIR__ . '/../../Classes/',
-                __DIR__ . '/../../Configuration/',
-            ])
+        (new Finder())
+            ->in(__DIR__ . '/../../')
+            ->exclude(__DIR__ . '/../../.Build')
+            ->exclude(__DIR__ . '/../../var')
     )
-    ->setUsingCache(false)
     ->setRiskyAllowed(true)
     ->setRules([
         '@DoctrineAnnotation' => true,
-        '@PER' => true,
-        'header_comment' => [
-            'header' => $headerComment,
-            'comment_type' => 'comment',
-            'separate' => 'both',
-            'location' => 'after_declare_strict',
-        ],
+        // @todo: Switch to @PER-CS2.0 once php-cs-fixer's todo list is done: https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues/7247
+        '@PER-CS1.0' => true,
+        'array_indentation' => true,
         'array_syntax' => ['syntax' => 'short'],
         'blank_line_after_opening_tag' => true,
+        'braces' => ['allow_single_line_closure' => true],
         'cast_spaces' => ['space' => 'none'],
         'compact_nullable_typehint' => true,
+        // @todo: Can be dropped once we enable @PER-CS2.0
         'concat_space' => ['spacing' => 'one'],
         'declare_equal_normalize' => ['space' => 'none'],
-        'declare_parentheses' => true,
         'dir_constant' => true,
-        'function_to_constant' => ['functions' => ['get_called_class', 'get_class', 'get_class_this', 'php_sapi_name', 'phpversion', 'pi']],
+        // @todo: Can be dropped once we enable @PER-CS2.0
+        'function_declaration' => [
+            'closure_fn_spacing' => 'none',
+        ],
         'function_typehint_space' => true,
         'lowercase_cast' => true,
         'method_argument_space' => ['on_multiline' => 'ensure_fully_multiline'],
-        'modernize_strpos' => false,
         'modernize_types_casting' => true,
         'native_function_casing' => true,
         'new_with_braces' => true,
@@ -74,6 +72,10 @@ return (new \PhpCsFixer\Config())
         'no_useless_else' => true,
         'no_useless_nullsafe_operator' => true,
         'no_whitespace_in_blank_line' => true,
+        'nullable_type_declaration' => [
+            'syntax' => 'question_mark',
+        ],
+        'nullable_type_declaration_for_default_null_value' => true,
         'ordered_imports' => true,
         'php_unit_construct' => ['assertions' => ['assertEquals', 'assertSame', 'assertNotEquals', 'assertNotSame']],
         'php_unit_mock_short_will_return' => true,
@@ -87,8 +89,9 @@ return (new \PhpCsFixer\Config())
         'phpdoc_types_order' => ['null_adjustment' => 'always_last', 'sort_algorithm' => 'none'],
         'return_type_declaration' => ['space_before' => 'none'],
         'single_quote' => true,
-        'single_space_after_construct' => true,
         'single_line_comment_style' => ['comment_types' => ['hash']],
+        // @todo: Can be dropped once we enable @PER-CS2.0
+        'single_line_empty_body' => true,
         'single_trait_insert_per_statement' => true,
         'trailing_comma_in_multiline' => ['elements' => ['arrays']],
         'whitespace_after_comma_in_array' => ['ensure_single_space' => true],

@@ -11,17 +11,11 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Import\Playlist;
 
-use JWeiland\Mediapool\Import\AbstractImport;
-
 /**
- * Class AbstractPlaylistImport
- * for use to add video platforms to this extension
- * like YouTubeVideoPlatform
- * To add a new playlist import you must declare your class
- * inside your extensions ext_localconf.php for the playlist import hook
- * $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mediapool']['playlistImport'][<PlatformName>] = ...
+ * For use to add video platforms to this extension like YouTubeVideoPlatform
+ * To add a new playlist import, your class must implement interface PlaylistImportInterface
  */
-abstract class AbstractPlaylistImport extends AbstractImport
+interface PlaylistImportInterface
 {
     /**
      * This method must return an array with the following structure
@@ -37,5 +31,20 @@ abstract class AbstractPlaylistImport extends AbstractImport
      * @param int $pid to store video records created with PlaylistImport
      * @return array as showed above
      */
-    abstract public function getPlaylistInformation(string $playlistLink, int $pid): array;
+    public function getPlaylistInformation(string $playlistLink, int $pid): array;
+
+    /**
+     * Returns PlatformName
+     */
+    public function getPlatformName(): string;
+
+    /**
+     * Returns PlatformHosts
+     */
+    public function getPlatformHosts(): array;
+
+    /**
+     * Will return true if at least one error occurred.
+     */
+    public function hasError(): bool;
 }

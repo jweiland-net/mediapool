@@ -1,14 +1,20 @@
 <html lang="en"
-			xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-			data-namespace-typo3-fluid="true">
+      xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
 
 <div class="grid">
-	<f:widget.paginate objects="{playlist.videos}" as="videos" configuration="{itemsPerPage: settings.videosPerPage, insertAbove: 1, insertBelow: 1, maximumNumberOfLinks: 10}">
-		<div class="mediapool-playlist-list">
-			<f:for each="{videos}" as="video">
-				<f:render partial="VideoPreview" arguments="{video: video, playlist: playlist, detailPage: settings.detailPage}"/>
-			</f:for>
-		</div>
-	</f:widget.paginate>
+    <div class="mediapool-playlist-list">
+        <f:for each="{paginator.paginatedItems}" as="video">
+            <f:render partial="VideoPreview" arguments="{video: video, playlist: playlist, detailPage: settings.detailPage}"/>
+        </f:for>
+    </div>
+
+    <ul class="pagination">
+        <f:for each="{pagination.allPageNumbers}" as="page">
+            <li class="page-item">
+                <f:link.action class="page-link" arguments="{currentPageNumber: page}">{page}</f:link.action>
+            </li>
+        </f:for>
+    </ul>
 </div>
 </html>

@@ -1,4 +1,4 @@
-
+# Therse settings will be used for plugin gallerypreview as well as galleryteaser
 plugin.tx_mediapool_gallery {
   view {
     # cat=plugin.tx_mediapool_gallery/file; type=string; label=Path to template root (FE)

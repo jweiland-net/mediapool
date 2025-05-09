@@ -11,21 +11,27 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Service;
 
-use JWeiland\Mediapool\Import\Video\AbstractVideoImport;
+use JWeiland\Mediapool\Import\Video\VideoImportInterface;
 use JWeiland\Mediapool\Traits\AddFlashMessageTrait;
-use JWeiland\Mediapool\Utility\VideoPlatformUtility;
-use TYPO3\CMS\Core\SingletonInterface;
 
-/**
- * Class VideoService
- */
-class VideoService implements SingletonInterface
+class VideoService
 {
     use AddFlashMessageTrait;
 
+    protected array $importers = [];
+
+    public function __construct(iterable $importers)
+    {
+        foreach ($importers as $importer) {
+            if ($importer instanceof VideoImportInterface) {
+                $this->importers[] = $importer;
+            }
+        }
+    }
+
     /**
      * Get video data
-     * $videos array must have to following structure:
+     * $videos array must have to the following structure:
      *
      * pid is not mandatory
      * e.g.
@@ -44,7 +50,7 @@ class VideoService implements SingletonInterface
         $videoPlatformMatch = 0;
 
         try {
-            foreach (VideoPlatformUtility::getRegisteredVideoImporters() as $registeredVideoImporter) {
+            foreach ($this->importers as $registeredVideoImporter) {
                 $videosOfVideoPlatform = [];
                 foreach ($videos as $uid => $video) {
                     if ($this->isVideoFromVideoPlatform($video['video'], $registeredVideoImporter)) {
@@ -64,13 +70,13 @@ class VideoService implements SingletonInterface
             if (!$videoPlatformMatch) {
                 $this->addFlashMessage(
                     'video_service.no_match.title',
-                    'video_service.no_match.message'
+                    'video_service.no_match.message',
                 );
             } elseif ($imported !== $total) {
                 $this->addFlashMessage(
                     'video_service.import_mismatch.title',
                     'video_service.import_mismatch.message',
-                    [$imported, $total]
+                    [$imported, $total],
                 );
             }
         } catch (\Exception $e) {
@@ -82,10 +88,10 @@ class VideoService implements SingletonInterface
     /**
      * Checks if one of the hosts from $videoPlatform matches with the video link.
      */
-    protected function isVideoFromVideoPlatform(string $videoLink, AbstractVideoImport $videoPlatform): bool
+    protected function isVideoFromVideoPlatform(string $videoLink, VideoImportInterface $videoPlatform): bool
     {
         foreach ($videoPlatform->getPlatformHosts() as $host) {
-            if (strpos($videoLink, $host) === 0) {
+            if (str_starts_with($videoLink, $host)) {
                 return true;
             }
         }

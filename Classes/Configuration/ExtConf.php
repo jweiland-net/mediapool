@@ -15,24 +15,19 @@ use JWeiland\Mediapool\Configuration\Exception\MissingYouTubeApiKeyException;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * This class streamlines all settings from extension manager
+ * This class streamlines all settings from the extension manager
  */
-class ExtConf implements SingletonInterface
+class ExtConf
 {
-    /**
-     * @var string
-     */
-    protected $youtubeDataApiKey = '';
+    protected string $youtubeDataApiKey = '';
 
-    public function __construct()
+    public function __construct(ExtensionConfiguration $extensionConfiguration)
     {
         // get global configuration
         try {
-            $extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('mediapool') ?? [];
+            $extConf = $extensionConfiguration->get('mediapool') ?? [];
             // call setter method foreach configuration entry
             foreach ($extConf as $key => $value) {
                 $methodName = 'set' . ucfirst($key);
@@ -48,7 +43,7 @@ class ExtConf implements SingletonInterface
     {
         if ($this->youtubeDataApiKey === '') {
             throw new MissingYouTubeApiKeyException(
-                'Missing YouTube API key in extension settings of extension: mediapool'
+                'Missing YouTube API key in extension settings of extension: mediapool',
             );
         }
 

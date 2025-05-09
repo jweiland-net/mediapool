@@ -1,0 +1,72 @@
+mod {
+  wizards.newContentElement.wizardItems.plugins {
+    elements {
+      mediapool_recommended {
+        iconIdentifier = mediapool-mediapool
+        title = LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.mediapool.recommended.title
+        description = LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.mediapool.recommended.description
+        tt_content_defValues {
+          CType = mediapool_recommended
+        }
+      }
+      mediapool_detail {
+        iconIdentifier = mediapool-mediapool
+        title = LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.mediapool.detail.title
+        description = LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.mediapool.detail.description
+        tt_content_defValues {
+          CType = mediapool_detail
+        }
+      }
+      mediapool_recentbycategory {
+        iconIdentifier = mediapool-mediapool
+        title = LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.mediapool.recentbycategory.title
+        description = LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.mediapool.recentbycategory.description
+        tt_content_defValues {
+          CType = mediapool_recentbycategory
+        }
+      }
+      mediapool_latest {
+        iconIdentifier = mediapool-mediapool
+        title = LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.mediapool.latest.title
+        description = LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.mediapool.latest.description
+        tt_content_defValues {
+          CType = mediapool_latest
+        }
+      }
+      mediapool_list {
+        iconIdentifier = mediapool-mediapool
+        title = LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.mediapool.list.title
+        description = LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.mediapool.list.description
+        tt_content_defValues {
+          CType = mediapool_list
+        }
+      }
+      mediapool_gallerypreview {
+        iconIdentifier = mediapool-gallery
+        title = LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.gallery.preview.title
+        description = LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.gallery.preview.description
+        tt_content_defValues {
+          CType = mediapool_gallerypreview
+        }
+      }
+      mediapool_galleryteaser {
+        iconIdentifier = mediapool-gallery
+        title = LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.gallery.teaser.title
+        description = LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.gallery.teaser.description
+        tt_content_defValues {
+          CType = mediapool_galleryteaser
+        }
+      }
+    }
+    show = *
+  }
+}
+
+# Add CType Preview
+mod.web_layout.tt_content.preview.mediapool_recommended = EXT:mediapool/Resources/Private/Templates/PluginPreview/Mediapool.html
+mod.web_layout.tt_content.preview.mediapool_detail = EXT:mediapool/Resources/Private/Templates/PluginPreview/Mediapool.html
+mod.web_layout.tt_content.preview.mediapool_recentbycategory = EXT:mediapool/Resources/Private/Templates/PluginPreview/Mediapool.html
+mod.web_layout.tt_content.preview.mediapool_latest = EXT:mediapool/Resources/Private/Templates/PluginPreview/Mediapool.html
+mod.web_layout.tt_content.preview.mediapool_list = EXT:mediapool/Resources/Private/Templates/PluginPreview/Mediapool.html
+mod.web_layout.tt_content.preview.mediapool_gallerypreview = EXT:mediapool/Resources/Private/Templates/PluginPreview/Gallery.html
+mod.web_layout.tt_content.preview.mediapool_galleryteaser = EXT:mediapool/Resources/Private/Templates/PluginPreview/Gallery.html

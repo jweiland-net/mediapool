@@ -1,117 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z"
-				product-name="mediapool">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z" product-name="mediapool">
 		<header/>
 		<body>
-			<trans-unit id="scheduler.update_video_information.title">
-				<source>Update video information</source>
-			</trans-unit>
-			<trans-unit id="scheduler.update_video_information.description">
-				<source>This task updates the video information by using the DataHandler Hook.</source>
-			</trans-unit>
-			<trans-unit id="scheduler.update_video_information.mode">
-				<source>Select which videos should be updated</source>
-			</trans-unit>
-			<trans-unit id="scheduler.update_video_information.unknown_mode">
-				<source>You selected an unknown mode.</source>
-			</trans-unit>
 			<trans-unit id="scheduler.update_video_information.page_selection">
-				<source>
-					Comma separated list of pages/folders where video records should be updated. (Depends on your choice above)
-				</source>
-			</trans-unit>
-			<trans-unit id="scheduler.update_video_information.page_selection.0">
-				<source>Update all video records</source>
-			</trans-unit>
-			<trans-unit id="scheduler.update_video_information.page_selection.1">
-				<source>Update video records from selected pages/folders</source>
+				<source>Comma separated list of pages/folders where video records should be updated</source>
 			</trans-unit>
 
-			<trans-unit id="scheduler.update_playlist_information.title">
-				<source>Update playlist information</source>
-			</trans-unit>
-			<trans-unit id="scheduler.update_playlist_information.description">
-				<source>This task updates the playlist information by using the DataHandler Hook.</source>
-			</trans-unit>
-			<trans-unit id="scheduler.update_playlist_information.mode">
-				<source>Select which playlists should be updated</source>
-			</trans-unit>
-			<trans-unit id="scheduler.update_playlist_information.unknown_mode">
-				<source>You selected an unknown mode.</source>
-			</trans-unit>
 			<trans-unit id="scheduler.update_playlist_information.page_selection">
-				<source>
-					Comma separated list of pages/folders where playlist records should be updated. (Depends on your choice above)
-				</source>
-			</trans-unit>
-			<trans-unit id="scheduler.update_playlist_information.page_selection.0">
-				<source>Update all playlist records</source>
-			</trans-unit>
-			<trans-unit id="scheduler.update_playlist_information.page_selection.1">
-				<source>Update playlist records from selected pages/folders</source>
+				<source>Comma separated list of pages/folders where playlist records should be updated</source>
 			</trans-unit>
 
 			<trans-unit id="video.upload_date">
 				<source>Upload date</source>
 			</trans-unit>
 
-			<trans-unit id="flex_forms.mediapool.view">
-				<source>Select view</source>
-			</trans-unit>
-			<trans-unit id="flex_forms.mediapool.recommended_videos">
-				<source>List recommended videos</source>
-			</trans-unit>
-			<trans-unit id="flex_forms.mediapool.detail_view">
-				<source>Detail view (Video, Playlist)</source>
-			</trans-unit>
-			<trans-unit id="flex_forms.mediapool.detail_page">
-				<source>Select page for detail view</source>
-			</trans-unit>
-			<trans-unit id="flex_forms.mediapool.list_page">
-				<source>Select page for list view</source>
-			</trans-unit>
-			<trans-unit id="flex_forms.mediapool.recommended_video_selection">
-				<source>Select 3 recommended videos</source>
-			</trans-unit>
-			<trans-unit id="flex_forms.mediapool.categories">
-				<source>Display a recent video per selected categorie</source>
-			</trans-unit>
-			<trans-unit id="flex_forms.mediapool.list_recent_by_category">
-				<source>List recent video of playlist (category)</source>
-			</trans-unit>
-			<trans-unit id="flex_forms.mediapool.list_latest_videos">
-				<source>List latest videos by playlist</source>
-			</trans-unit>
-			<trans-unit id="flex_forms.mediapool.list_videos">
-				<source>List all videos by playlist</source>
-			</trans-unit>
-			<trans-unit id="flex_forms.mediapool.playlist_selection">
-				<source>Select a playlist</source>
-			</trans-unit>
-			<trans-unit id="flex_forms.mediapool.preview_view">
-				<source>Show clickable previews of galleries</source>
-			</trans-unit>
-			<trans-unit id="flex_forms.mediapool.teaser_view">
-				<source>Show clickable previews of galleries with more button</source>
-			</trans-unit>
-			<trans-unit id="flex_forms.mediapool.videos_per_page">
-				<source>Videos per page</source>
-			</trans-unit>
-
 			<trans-unit id="frontend.list_by_category.no_playlists">
 				<source>No playlists found!</source>
 			</trans-unit>
 
-			<trans-unit id="flex_forms.gallery.title">
-				<source>Image gallery</source>
-			</trans-unit>
-			<trans-unit id="flex_forms.gallery.file_collections">
-				<source>File collection(s)</source>
-			</trans-unit>
-			<trans-unit id="flex_forms.gallery.list_page">
-				<source>Page to the list view</source>
-			</trans-unit>
 			<trans-unit id="frontend.gallery.counter">
 				<source>%d images</source>
 			</trans-unit>

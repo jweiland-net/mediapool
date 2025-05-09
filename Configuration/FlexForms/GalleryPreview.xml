@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<T3DataStructure>
+    <sheets>
+        <sDEF>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:mediapool/Resources/Private/Language/FlexForm.xlf:gallery.preview.title</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <settings.fileCollections>
+                        <TCEforms>
+                            <label>LLL:EXT:mediapool/Resources/Private/Language/FlexForm.xlf:gallery.file_collections</label>
+                            <config>
+                                <type>group</type>
+                                <internal_type>db</internal_type>
+                                <allowed>sys_file_collection</allowed>
+                            </config>
+                        </TCEforms>
+                    </settings.fileCollections>
+                </el>
+            </ROOT>
+        </sDEF>
+    </sheets>
+</T3DataStructure>

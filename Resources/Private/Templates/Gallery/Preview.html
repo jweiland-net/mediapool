@@ -1,25 +1,45 @@
 <html lang="en"
-			xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-			data-namespace-typo3-fluid="true">
+      xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:asset.css identifier="tx_mediapool_fancybox"
+             href="EXT:mediapool/Resources/Public/Css/jquery.fancybox.min.css"
+             useNonce="1"
+             priority="1" />
+
+<f:asset.script identifier="tx_mediapool_jquery"
+                src="EXT:mediapool/Resources/Public/JavaScript/jquery-3.7.1.min.js"
+                priority="1"
+                useNonce="1"/>
+<f:asset.script identifier="tx_mediapool_fancybox"
+                src="EXT:mediapool/Resources/Public/JavaScript/jquery.fancybox.min.js"
+                useNonce="1"/>
 
 <div class="mediapool-gallery-container" data-ce-columns="{fileCollections -> f:count()}">
-	<f:for each="{fileCollections}" as="fileCollection">
-		<f:variable name="galleryId" value="mediapool_gallery_{fileCollection.uid}" />
-			<f:for each="{fileCollection}" as="record" iteration="iterator">
-				<f:comment><!-- Render image --></f:comment>
-				<f:if condition="{f:format.case(mode: 'lower', value: '{record.properties.extension}')} == 'jpg' || {f:format.case(mode: 'lower', value: '{record.properties.extension}')} == 'jpeg' || {f:format.case(mode: 'lower', value: '{record.properties.extension}')} == 'png' || {f:format.case(mode: 'lower', value: '{record.properties.extension}')} == 'gif'">
-					<f:render partial="Gallery/Item" arguments="{record: record, galleryId: galleryId, iterator: iterator, fileCollection: fileCollection}" />
-				</f:if>
+    <f:for each="{fileCollections}" as="fileCollection">
+        <f:variable name="galleryId" value="mediapool_gallery_{fileCollection.uid}"/>
 
-				<f:if condition="{iterator.isFirst}">
-					<f:comment><!-- open gallery items div --></f:comment>
-					<div style="display:none">
-				</f:if>
-				<f:if condition="{iterator.isLast}">
-					<f:comment><!-- close gallery items div --></f:comment>
-					</div>
-				</f:if>
-			</f:for>
-	</f:for>
+        <f:comment><!-- Render just the first visible image --></f:comment>
+        <f:for each="{fileCollection}" as="record" iteration="iterator">
+            <f:if condition="{iterator.isFirst}">
+                <f:render section="renderGalleryImage" arguments="{_all}"/>
+            </f:if>
+        </f:for>
+
+        <f:comment><!-- Render and wrap the following images in a hidden <div>-container for fancybox --></f:comment>
+        <div style="display:none">
+            <f:for each="{fileCollection}" as="record" iteration="iterator">
+                <f:if condition="{iterator.isFirst} == 0">
+                    <f:render section="renderGalleryImage" arguments="{_all}"/>
+                </f:if>
+            </f:for>
+        </div>
+    </f:for>
 </div>
+
+<f:section name="renderGalleryImage">
+    <f:if condition="{f:format.case(mode: 'lower', value: '{record.properties.extension}')} == 'jpg' || {f:format.case(mode: 'lower', value: '{record.properties.extension}')} == 'jpeg' || {f:format.case(mode: 'lower', value: '{record.properties.extension}')} == 'png' || {f:format.case(mode: 'lower', value: '{record.properties.extension}')} == 'gif'">
+        <f:render partial="Gallery/Item" arguments="{record: record, galleryId: galleryId, iterator: iterator, fileCollection: fileCollection}"/>
+    </f:if>
+</f:section>
 </html>

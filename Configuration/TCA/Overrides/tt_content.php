@@ -1,40 +1,137 @@
 <?php
-if (!defined('TYPO3_MODE')) {
+
+/*
+ * This file is part of the package jweiland/mediapool.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
+if (!defined('TYPO3')) {
     die('Access denied.');
 }
 
-call_user_func(static function () {
-    // Register main plugin
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-        'Mediapool',
-        'Mediapool',
-        'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.mediapool.title',
-        'EXT:mediapool/Resources/Public/Icons/video_play.svg'
-    );
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
-    // Register gallery plugin
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-        'Mediapool',
-        'Gallery',
-        'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.gallery.title',
-        'EXT:mediapool/Resources/Public/Icons/gallery.svg'
-    );
+// Register Playlist: recommended plugin
+ExtensionUtility::registerPlugin(
+    'Mediapool',
+    'Recommended',
+    'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.mediapool.recommended.title',
+    'EXT:mediapool/Resources/Public/Icons/video_play.svg',
+);
+ExtensionManagementUtility::addToAllTCAtypes(
+    'tt_content',
+    '--div--;Configuration,pi_flexform,',
+    'mediapool_recommended',
+    'after:subheader',
+);
+ExtensionManagementUtility::addPiFlexFormValue(
+    '*',
+    'FILE:EXT:mediapool/Configuration/FlexForms/MediapoolRecommended.xml',
+    'mediapool_recommended',
+);
 
-    // Add flexform for Mediapool plugin
-    $pluginSignature = 'mediapool_mediapool';
-    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature] = 'select_key,pages,recursive';
-    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
-        $pluginSignature,
-        'FILE:EXT:mediapool/Configuration/FlexForms/Mediapool.xml'
-    );
+// Register Playlist: detail plugin
+ExtensionUtility::registerPlugin(
+    'Mediapool',
+    'Detail',
+    'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.mediapool.detail.title',
+    'EXT:mediapool/Resources/Public/Icons/video_play.svg',
+);
 
-    // Add flexform for gallery plugin
-    $pluginSignature = 'mediapool_gallery';
-    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature] = 'select_key,pages,recursive';
-    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
-        $pluginSignature,
-        'FILE:EXT:mediapool/Configuration/FlexForms/Gallery.xml'
-    );
-});
+// Register Playlist: recent-by-category plugin
+ExtensionUtility::registerPlugin(
+    'Mediapool',
+    'RecentByCategory',
+    'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.mediapool.recentbycategory.title',
+    'EXT:mediapool/Resources/Public/Icons/video_play.svg',
+);
+ExtensionManagementUtility::addToAllTCAtypes(
+    'tt_content',
+    '--div--;Configuration,pi_flexform,',
+    'mediapool_recentbycategory',
+    'after:subheader',
+);
+ExtensionManagementUtility::addPiFlexFormValue(
+    '*',
+    'FILE:EXT:mediapool/Configuration/FlexForms/MediapoolRecentByCategory.xml',
+    'mediapool_recentbycategory',
+);
+
+// Register Playlist: latest plugin
+ExtensionUtility::registerPlugin(
+    'Mediapool',
+    'Latest',
+    'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.mediapool.latest.title',
+    'EXT:mediapool/Resources/Public/Icons/video_play.svg',
+);
+ExtensionManagementUtility::addToAllTCAtypes(
+    'tt_content',
+    '--div--;Configuration,pi_flexform,',
+    'mediapool_latest',
+    'after:subheader',
+);
+ExtensionManagementUtility::addPiFlexFormValue(
+    '*',
+    'FILE:EXT:mediapool/Configuration/FlexForms/MediapoolLatest.xml',
+    'mediapool_latest',
+);
+
+// Register Playlist: list plugin
+ExtensionUtility::registerPlugin(
+    'Mediapool',
+    'List',
+    'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.mediapool.list.title',
+    'EXT:mediapool/Resources/Public/Icons/video_play.svg',
+);
+ExtensionManagementUtility::addToAllTCAtypes(
+    'tt_content',
+    '--div--;Configuration,pi_flexform,',
+    'mediapool_list',
+    'after:subheader',
+);
+ExtensionManagementUtility::addPiFlexFormValue(
+    '*',
+    'FILE:EXT:mediapool/Configuration/FlexForms/MediapoolList.xml',
+    'mediapool_list',
+);
+
+// Register gallery preview CE
+ExtensionUtility::registerPlugin(
+    'Mediapool',
+    'GalleryPreview',
+    'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.gallery.preview.title',
+    'EXT:mediapool/Resources/Public/Icons/gallery.svg',
+);
+ExtensionManagementUtility::addToAllTCAtypes(
+    'tt_content',
+    '--div--;Configuration,pi_flexform,',
+    'mediapool_gallerypreview',
+    'after:subheader',
+);
+ExtensionManagementUtility::addPiFlexFormValue(
+    '*',
+    'FILE:EXT:mediapool/Configuration/FlexForms/GalleryPreview.xml',
+    'mediapool_gallerypreview',
+);
+
+// Register gallery teaser CE
+ExtensionUtility::registerPlugin(
+    'Mediapool',
+    'GalleryTeaser',
+    'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:plugin.gallery.teaser.title',
+    'EXT:mediapool/Resources/Public/Icons/gallery.svg',
+);
+ExtensionManagementUtility::addToAllTCAtypes(
+    'tt_content',
+    '--div--;Configuration,pi_flexform,',
+    'mediapool_galleryteaser',
+    'after:subheader',
+);
+ExtensionManagementUtility::addPiFlexFormValue(
+    '*',
+    'FILE:EXT:mediapool/Configuration/FlexForms/GalleryTeaser.xml',
+    'mediapool_galleryteaser',
+);

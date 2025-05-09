@@ -18,9 +18,6 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
-/**
- * Class InlineVideoElement
- */
 class InlineVideoElement extends AbstractFormElement
 {
     /**
@@ -36,7 +33,7 @@ class InlineVideoElement extends AbstractFormElement
         $size = MathUtility::forceIntegerInRange(
             $config['size'] ?? $this->defaultInputWidth,
             $this->minimumInputWidth,
-            $this->maxInputWidth
+            $this->maxInputWidth,
         );
         $width = $this->formMaxWidth($size);
 
@@ -45,7 +42,7 @@ class InlineVideoElement extends AbstractFormElement
             $html[] = '<div class="alert alert-info" role="alert" style="max-width: ' . $width . 'px">';
             $html[] = LocalizationUtility::translate(
                 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:' .
-                'tx_mediapool_domain_model_video.empty_field'
+                'tx_mediapool_domain_model_video.empty_field',
             );
             $html[] = '</div>';
 
@@ -57,7 +54,7 @@ class InlineVideoElement extends AbstractFormElement
         $view = $this->getStandaloneView();
         $view->setTemplatePathAndFilename(
             ExtensionManagementUtility::extPath('mediapool') .
-            'Resources/Private/Templates/InlineVideoElement/InlineVideoElement.html'
+            'Resources/Private/Templates/InlineVideoElement/InlineVideoElement.html',
         );
         $view->assignMultiple([
             'elementId' => $parameterArray['itemFormElID'],

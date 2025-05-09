@@ -7,6 +7,13 @@
 ChangeLog
 =========
 
+Version 4.0.0
+=============
+
+*   Remove TYPO3 10 compatibility
+*   Solve deprecations with TYPO3 11
+*   Add TYPO3 12 compatibility
+
 Version 3.0.0
 =============
 

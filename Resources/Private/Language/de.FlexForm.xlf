@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z" product-name="mediapool">
+		<header/>
+		<body>
+			<trans-unit id="mediapool.detail_page">
+				<source>Select page for detail view</source>
+				<target>Seite für Detailansicht auswählen</target>
+			</trans-unit>
+			<trans-unit id="mediapool.list_page">
+				<source>Select page for list view</source>
+				<target>Seite für Listenansicht auswählen</target>
+			</trans-unit>
+			<trans-unit id="mediapool.recommended_video_selection">
+				<source>Select 3 recommended videos</source>
+				<target>Auswahl von 3 empfohlenen Videos.</target>
+			</trans-unit>
+			<trans-unit id="mediapool.categories">
+				<source>Display a recent video per selected category</source>
+				<target>Zeige das neuste Video pro ausgewählter Kategorie</target>
+			</trans-unit>
+			<trans-unit id="mediapool.playlist_selection">
+				<source>Select a playlist</source>
+				<target>Wähle eine Playliste</target>
+			</trans-unit>
+			<trans-unit id="mediapool.videos_per_page">
+				<source>Videos per page</source>
+				<target>Videos pro Seite</target>
+			</trans-unit>
+
+			<trans-unit id="gallery.preview.title">
+				<source>Image gallery: Preview</source>
+				<target>Bilderstrecke: Vorschau</target>
+			</trans-unit>
+			<trans-unit id="gallery.teaser.title">
+				<source>Image gallery: Teaser</source>
+				<target>Bilderstrecke: Teaser</target>
+			</trans-unit>
+			<trans-unit id="gallery.file_collections">
+				<source>File collection(s)</source>
+				<target>Dateisammlung(en)</target>
+			</trans-unit>
+			<trans-unit id="gallery.teaser.list_page">
+				<source>Page to the list view</source>
+				<target>Seite für Listenansicht auswählen</target>
+			</trans-unit>
+			<trans-unit id="gallery.teaser.list_page.description">
+				<source>Select a page with the Gallery: Preview plugin</source>
+				<target>Wählen Sie eine Seite mit dem Galerie: Vorschau Plugin aus</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

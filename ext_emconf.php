@@ -1,9 +1,12 @@
 <?php
-/**
- * The source of icons used in this extension is
- * https://www.google.com/design/icons/ (License: https://github.com/google/material-design-icons/blob/master/LICENSE)
- * https://icomoon.io Pack IcoMoon - Free (License: https://creativecommons.org/licenses/by/4.0/)
+
+/*
+ * This file is part of the package jweiland/mediapool.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
  */
+
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Mediapool',
     'description' => 'Embed your favorite YouTube Videos and Playlists. Import description, title and more by just pasting the YouTube link.',
@@ -12,10 +15,10 @@ $EM_CONF[$_EXTKEY] = [
     'author' => 'Stefan Froemken',
     'author_email' => 'projects@jweiland.net',
     'author_company' => 'jweiland.net',
-    'version' => '3.0.0',
+    'version' => '4.0.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '10.4.36-11.5.23',
+            'typo3' => '11.5.40-12.4.99',
         ],
         'conflicts' => [],
         'suggests' => [],

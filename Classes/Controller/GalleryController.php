@@ -11,19 +11,16 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Controller;
 
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Resource\Collection\AbstractFileCollection;
+use TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException;
 use TYPO3\CMS\Core\Resource\FileCollectionRepository;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
-/**
- * Class GalleryController
- */
 class GalleryController extends ActionController
 {
-    /**
-     * @var FileCollectionRepository
-     */
-    protected $fileCollectionRepository;
+    protected FileCollectionRepository $fileCollectionRepository;
 
     public function injectFileCollectionRepository(FileCollectionRepository $fileCollectionRepository): void
     {
@@ -34,30 +31,40 @@ class GalleryController extends ActionController
      * Gallery preview action
      * displays a preview image that contains a fancybox3 gallery
      */
-    public function previewAction(): void
+    public function previewAction(): ResponseInterface
     {
         $this->view->assign('fileCollections', $this->getFileCollections());
+
+        return $this->htmlResponse();
     }
 
     /**
      * Gallery teaser action
-     * displays three galleries and a more button with configurable
+     * displays three galleries and a more button with a configurable
      * target page
      */
-    public function teaserAction(): void
+    public function teaserAction(): ResponseInterface
     {
         $this->view->assign('fileCollections', $this->getFileCollections());
+
+        return $this->htmlResponse();
     }
 
     /**
-     * Get file collections from settings
+     * @return AbstractFileCollection[]
      */
     protected function getFileCollections(): array
     {
         $fileCollections = [];
-        if ($this->settings['file_collections']) {
-            foreach (explode(',', $this->settings['file_collections']) as $uid) {
-                $fileCollection = $this->fileCollectionRepository->findByUid((int)$uid);
+
+        if ($this->settings['fileCollections']) {
+            foreach (GeneralUtility::intExplode(',', $this->settings['fileCollections'], true) as $uid) {
+                try {
+                    $fileCollection = $this->fileCollectionRepository->findByUid($uid);
+                } catch (ResourceDoesNotExistException $e) {
+                    continue;
+                }
+
                 if ($fileCollection instanceof AbstractFileCollection) {
                     $fileCollection->loadContents();
                     $fileCollections[] = $fileCollection;

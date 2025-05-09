@@ -9,13 +9,13 @@ declare(strict_types=1);
  * LICENSE file that was distributed with this source code.
  */
 
-namespace JWeiland\Mediapool\Hooks;
+namespace JWeiland\Mediapool\Hook;
 
 use JWeiland\Mediapool\Configuration\Exception\MissingYouTubeApiKeyException;
 use JWeiland\Mediapool\Service\PlaylistService;
+use JWeiland\Mediapool\Service\Record\PlaylistRecordService;
 use JWeiland\Mediapool\Service\VideoService;
 use JWeiland\Mediapool\Traits\GetFlashMessageQueueTrait;
-use JWeiland\Mediapool\Traits\GetPlaylistRepositoryTrait;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
@@ -25,82 +25,75 @@ use TYPO3\CMS\Core\SysLog\Action\Database as SystemLogDatabaseAction;
 use TYPO3\CMS\Core\SysLog\Error as SystemLogErrorClassification;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * Class to get VideoData from a external video service
- * e.g. YouTube
+ * Class to get VideoData from an external video service
+ * e.g., YouTube
  */
 class DataHandlerHook implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
     use GetFlashMessageQueueTrait;
-    use GetPlaylistRepositoryTrait;
 
     public const TABLE_VIDEO = 'tx_mediapool_domain_model_video';
     public const TABLE_PLAYLIST = 'tx_mediapool_domain_model_playlist';
 
-    /**
-     * @var DataHandler
-     */
-    protected $dataHandler;
+    private PlaylistService $playlistService;
 
-    /**
-     * @var PlaylistService
-     */
-    private $playlistService;
+    private PlaylistRecordService $playlistRecordService;
 
-    /**
-     * @var VideoService
-     */
-    private $videoService;
+    private VideoService $videoService;
 
-    public function __construct(PlaylistService $playlistService, VideoService $videoService)
-    {
+    public function __construct(
+        PlaylistService $playlistService,
+        PlaylistRecordService $playlistRecordService,
+        VideoService $videoService
+    ) {
         $this->playlistService = $playlistService;
+        $this->playlistRecordService = $playlistRecordService;
         $this->videoService = $videoService;
     }
 
     /**
-     * Using DataHandler hook to fetch and insert video information
+     * Using the DataHandler hook to fetch and insert video information
      * for tx_mediapool_domain_model_video
      */
     public function processDatamap_beforeStart(DataHandler $dataHandler): void
     {
-        if (
-            array_key_exists(self::TABLE_VIDEO, $dataHandler->datamap)
-            || array_key_exists(self::TABLE_PLAYLIST, $dataHandler->datamap)
+        if (!array_key_exists(self::TABLE_VIDEO, $dataHandler->datamap)
+            && !array_key_exists(self::TABLE_PLAYLIST, $dataHandler->datamap)
         ) {
-            $this->dataHandler = $dataHandler;
+            return;
         }
 
         try {
             $uid = 0;
             $table = '';
 
-            if (
-                array_key_exists(self::TABLE_VIDEO, $dataHandler->datamap) &&
-                !array_key_exists(self::TABLE_PLAYLIST, $dataHandler->datamap)
-            ) {
-                // save single video
+            // Save a single video
+            if (array_key_exists(self::TABLE_VIDEO, $dataHandler->datamap)) {
                 $table = self::TABLE_VIDEO;
-                $this->processVideos($dataHandler->datamap[self::TABLE_VIDEO]);
-            } elseif (array_key_exists(self::TABLE_PLAYLIST, $dataHandler->datamap)) {
-                // save playlist
+                $this->processVideos($dataHandler->datamap[self::TABLE_VIDEO], $dataHandler);
+            }
+
+            // Save playlist
+            if (array_key_exists(self::TABLE_PLAYLIST, $dataHandler->datamap)) {
                 $table = self::TABLE_PLAYLIST;
                 foreach ($dataHandler->datamap[self::TABLE_PLAYLIST] as $uid => &$fields) {
-                    $this->processPlaylist($uid, $fields);
+                    $this->processPlaylist($uid, $fields, $dataHandler);
                 }
             }
         } catch (MissingYouTubeApiKeyException $missingYouTubeApiKeyException) {
-            $this->dataHandler->log(
+            $dataHandler->log(
                 $table,
                 $uid,
                 SystemLogDatabaseAction::UPDATE,
                 0,
                 SystemLogErrorClassification::USER_ERROR,
                 $missingYouTubeApiKeyException->getMessage(),
-                -1
+                -1,
             );
 
             $flashMessage = GeneralUtility::makeInstance(
@@ -108,7 +101,7 @@ class DataHandlerHook implements LoggerAwareInterface
                 $missingYouTubeApiKeyException->getMessage(),
                 'Missing YouTube API key',
                 AbstractMessage::ERROR,
-                true
+                true,
             );
 
             $this->getFlashMessageQueue()->addMessage($flashMessage);
@@ -118,33 +111,33 @@ class DataHandlerHook implements LoggerAwareInterface
                 LocalizationUtility::translate(
                     'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:data_handler.exception.message',
                     null,
-                    [$e->getCode()]
+                    [$e->getCode()],
                 ),
                 LocalizationUtility::translate(
-                    'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:data_handler.exception.title'
+                    'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:data_handler.exception.title',
                 ),
                 AbstractMessage::ERROR,
-                true
+                true,
             );
 
             $this->getFlashMessageQueue()->addMessage($flashMessage);
 
             $this->logger->error(
                 'Exception while running DataHandler hook from ext:mediapool: ' . $e->getMessage() .
-                '(' . $e->getCode() . ') ' . $e->getFile() . ' Line: ' . $e->getLine()
+                '(' . $e->getCode() . ') ' . $e->getFile() . ' Line: ' . $e->getLine(),
             );
 
             // Prevent DataHandler from saving
-            $this->dataHandler->datamap = [];
+            $dataHandler->datamap = [];
         }
     }
 
-    protected function processVideos(array $dataHandlerVideoTable)
+    protected function processVideos(array $dataHandlerVideoTable, DataHandler $dataHandler): void
     {
         $videos = [];
         foreach ($dataHandlerVideoTable as $uid => $fields) {
             $videos[$uid] = ['video' => $fields['link']];
-            if ($fields['pid']) {
+            if (array_key_exists('pid', $fields)) {
                 $videos[$uid]['pid'] = (int)$fields['pid'];
             }
         }
@@ -153,37 +146,44 @@ class DataHandlerHook implements LoggerAwareInterface
         $data = $this->videoService->getVideoData($videos, (int)GeneralUtility::_POST('popViewId'));
         if ($data) {
             foreach ($data[self::TABLE_VIDEO] as $uid => &$fields) {
-                // override pid if declared in original field array
+                // override pid if declared in an original field array
                 if (isset($dataHandlerVideoTable[$uid]['pid'])) {
                     $fields['pid'] = (int)$dataHandlerVideoTable[$uid]['pid'];
                 }
             }
             unset($fields);
-            ArrayUtility::mergeRecursiveWithOverrule($this->dataHandler->datamap, $data);
+            ArrayUtility::mergeRecursiveWithOverrule($dataHandler->datamap, $data);
         } else {
-            // Prevent DataHandler from saving because we don´t have data to save :(
-            $this->dataHandler->datamap = [];
+            // Prevent DataHandler from saving because we don't have data to save :(
+            $dataHandler->datamap = [];
         }
     }
 
     /**
-     * @param int|string $uid of the playlist
+     * @param int|string $uid of the playlist. It's string if the record is NEW
      */
-    protected function processPlaylist($uid, array &$fieldArray): void
+    protected function processPlaylist($uid, array &$fieldArray, DataHandler $dataHandler): void
     {
         $pid = (int)($fieldArray['pid'] ?? 0);
         if ($pid === 0) {
-            $pid = $this->getPlaylistRepository()->findPidByUid($uid);
+            if (MathUtility::canBeInterpretedAsInteger($uid)) {
+                $pid = $this->playlistRecordService->getPidByPlaylistUid($uid);
+            }
+
+            if ($pid === 0) {
+                $this->logger->warning('PID of playlist can not be detected. Skipping UID: ' . $uid);
+                return;
+            }
         }
 
         $data = $this->playlistService->getPlaylistData($fieldArray['link'] ?? '', $pid);
 
         if ($data !== []) {
             ArrayUtility::mergeRecursiveWithOverrule($fieldArray, $data['fieldArray']);
-            ArrayUtility::mergeRecursiveWithOverrule($this->dataHandler->datamap, $data['dataHandler']);
+            ArrayUtility::mergeRecursiveWithOverrule($dataHandler->datamap, $data['dataHandler']);
         } else {
             // Prevent from saving because the video object has no video information
-            $this->dataHandler->datamap = [];
+            $dataHandler->datamap = [];
         }
     }
 }
