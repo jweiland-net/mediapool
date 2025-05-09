@@ -1,8 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.0">
-  <file source-language="en" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z" product-name="mediapool" target-language="es-ES">
+  <file source-language="en" target-language="es-ES" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z" product-name="mediapool">
     <header/>
     <body>
+      <trans-unit id="plugin.mediapool.recommended.title">
+        <source>List recommended videos</source>
+        <target state="needs-translation">List recommended videos</target>
+      </trans-unit>
+      <trans-unit id="plugin.mediapool.recommended.description">
+        <source>Shows a list of selected recommended videos.</source>
+        <target state="needs-translation">Shows a list of selected recommended videos.</target>
+      </trans-unit>
+      <trans-unit id="plugin.mediapool.detail.title">
+        <source>Detail view (Video, Playlist)</source>
+        <target state="needs-translation">Detail view (Video, Playlist)</target>
+      </trans-unit>
+      <trans-unit id="plugin.mediapool.detail.description">
+        <source>Shows the detailed view of a video or a playlist.</source>
+        <target state="needs-translation">Shows the detailed view of a video or a playlist.</target>
+      </trans-unit>
+      <trans-unit id="plugin.mediapool.recentbycategory.title">
+        <source>List recent video of playlist (category)</source>
+        <target state="needs-translation">List recent video of playlist (category)</target>
+      </trans-unit>
+      <trans-unit id="plugin.mediapool.recentbycategory.description">
+        <source>Displays a list of recently added videos.</source>
+        <target state="needs-translation">Displays a list of recently added videos.</target>
+      </trans-unit>
+      <trans-unit id="plugin.mediapool.latest.title">
+        <source>List latest videos by playlist</source>
+        <target state="needs-translation">List latest videos by playlist</target>
+      </trans-unit>
+      <trans-unit id="plugin.mediapool.latest.description">
+        <source>Displays a list of the most recently uploaded playlists.</source>
+        <target state="needs-translation">Displays a list of the most recently uploaded playlists.</target>
+      </trans-unit>
+      <trans-unit id="plugin.mediapool.list.title">
+        <source>List all videos by playlist</source>
+        <target state="needs-translation">List all videos by playlist</target>
+      </trans-unit>
+      <trans-unit id="plugin.mediapool.list.description">
+        <source>Displays a list of all available playlists.</source>
+        <target state="needs-translation">Displays a list of all available playlists.</target>
+      </trans-unit>
+      <trans-unit id="plugin.gallery.preview.title">
+        <source>Gallery Preview</source>
+        <target state="needs-translation">Gallery Preview</target>
+      </trans-unit>
+      <trans-unit id="plugin.gallery.preview.description">
+        <source>Displays a preview image for each selected file collection, which starts the gallery as a picture gallery when clicked.</source>
+        <target state="needs-translation">Displays a preview image for each selected file collection, which starts the gallery as a picture gallery when clicked.</target>
+      </trans-unit>
+      <trans-unit id="plugin.gallery.teaser.title">
+        <source>Gallery Teaser</source>
+        <target state="needs-translation">Gallery Teaser</target>
+      </trans-unit>
+      <trans-unit id="plugin.gallery.teaser.description">
+        <source>Use this plugin to display a reduced selection of file collections. You can use a link to refer to a page for the complete display with the Gallery: Preview plugin.</source>
+        <target state="needs-translation">Use this plugin to display a reduced selection of file collections. You can use a link to refer to a page for the complete display with the Gallery: Preview plugin.</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_playlist">
+        <source>Playlist</source>
+        <target state="needs-translation">Playlist</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_playlist.title">
+        <source>Title</source>
+        <target state="needs-translation">Title</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_playlist.link">
+        <source>Playlist URL or Channel URL</source>
+        <target state="needs-translation">Playlist URL or Channel URL</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_playlist.videos">
+        <source>Videos</source>
+        <target state="needs-translation">Videos</target>
+      </trans-unit>
       <trans-unit id="tx_mediapool_domain_model_video">
         <source>Video</source>
         <target state="needs-translation">Video</target>
@@ -31,45 +103,13 @@
         <source>This field will be filled automatically after first successful save.</source>
         <target state="needs-translation">This field will be filled automatically after first successful save.</target>
       </trans-unit>
-      <trans-unit id="render_type.video_link_element.supported_video_platforms">
-        <source>Supported video platforms:</source>
-        <target state="needs-translation">Supported video platforms:</target>
-      </trans-unit>
-      <trans-unit id="tx_mediapool_domain_model_playlist">
-        <source>Playlist</source>
-        <target state="needs-translation">Playlist</target>
-      </trans-unit>
-      <trans-unit id="tx_mediapool_domain_model_playlist.title">
-        <source>Title</source>
-        <target state="needs-translation">Title</target>
-      </trans-unit>
-      <trans-unit id="tx_mediapool_domain_model_playlist.link">
-        <source>Playlist URL or Channel URL</source>
-        <target state="needs-translation">Playlist URL or Channel URL</target>
-      </trans-unit>
-      <trans-unit id="tx_mediapool_domain_model_playlist.videos">
-        <source>Videos</source>
-        <target state="needs-translation">Videos</target>
-      </trans-unit>
-      <trans-unit id="plugin.mediapool.title">
-        <source>Mediapool</source>
-        <target state="needs-translation">Mediapool</target>
-      </trans-unit>
-      <trans-unit id="plugin.gallery.title">
-        <source>Gallery</source>
-        <target state="needs-translation">Gallery</target>
-      </trans-unit>
-      <trans-unit id="plugin.mediapool.description">
-        <source>This plugin adds a media center to your website.</source>
-        <target state="needs-translation">This plugin adds a media center to your website.</target>
-      </trans-unit>
-      <trans-unit id="plugin.gallery.description">
-        <source>This plugins adds a gallery using file collections to your website.</source>
-        <target state="needs-translation">This plugins adds a gallery using file collections to your website.</target>
-      </trans-unit>
       <trans-unit id="slug">
         <source>Path segment</source>
         <target state="needs-translation">Path segment</target>
+      </trans-unit>
+      <trans-unit id="render_type.video_link_element.supported_video_platforms">
+        <source>Supported video platforms:</source>
+        <target state="needs-translation">Supported video platforms:</target>
       </trans-unit>
     </body>
   </file>
