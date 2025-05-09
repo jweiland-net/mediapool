@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+  <file source-language="en" target-language="sv-SE" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z" product-name="mediapool">
+    <header/>
+    <body>
+      <trans-unit id="mediapool.detail_page">
+        <source>Select page for detail view</source>
+        <target state="needs-translation">Select page for detail view</target>
+      </trans-unit>
+      <trans-unit id="mediapool.list_page">
+        <source>Select page for list view</source>
+        <target state="needs-translation">Select page for list view</target>
+      </trans-unit>
+      <trans-unit id="mediapool.recommended_video_selection">
+        <source>Select 3 recommended videos</source>
+        <target state="needs-translation">Select 3 recommended videos</target>
+      </trans-unit>
+      <trans-unit id="mediapool.categories">
+        <source>Display a recent video per selected category</source>
+        <target state="needs-translation">Display a recent video per selected category</target>
+      </trans-unit>
+      <trans-unit id="mediapool.playlist_selection">
+        <source>Select a playlist</source>
+        <target state="needs-translation">Select a playlist</target>
+      </trans-unit>
+      <trans-unit id="mediapool.videos_per_page">
+        <source>Videos per page</source>
+        <target state="needs-translation">Videos per page</target>
+      </trans-unit>
+      <trans-unit id="gallery.preview.title">
+        <source>Image gallery: Preview</source>
+        <target state="needs-translation">Image gallery: Preview</target>
+      </trans-unit>
+      <trans-unit id="gallery.teaser.title">
+        <source>Image gallery: Teaser</source>
+        <target state="needs-translation">Image gallery: Teaser</target>
+      </trans-unit>
+      <trans-unit id="gallery.file_collections">
+        <source>File collection(s)</source>
+        <target state="needs-translation">File collection(s)</target>
+      </trans-unit>
+      <trans-unit id="gallery.teaser.list_page">
+        <source>Page to the list view</source>
+        <target state="needs-translation">Page to the list view</target>
+      </trans-unit>
+      <trans-unit id="gallery.teaser.list_page.description">
+        <source>Select a page with the Gallery: Preview plugin</source>
+        <target state="needs-translation">Select a page with the Gallery: Preview plugin</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
