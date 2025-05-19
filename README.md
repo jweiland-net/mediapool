@@ -1,5 +1,6 @@
 # TYPO3 Extension `mediapool`
 
+[![TYPO3 13.4][TYPO3-shield]][TYPO3-13-url]
 ![Build Status](https://github.com/jweiland-net/mediapool/workflows/CI/badge.svg)
 
 Embed your favorite YouTube Videos and Playlists. Import description, title and more by just pasting the YouTube link.
@@ -32,3 +33,9 @@ Download and install `mediapool` with the extension manager module.
 1) Include the static TypoScript of the extension.
 2) Create a playlist record. Attach YouTube playlist URI and save.
 3) Create a plugin on a page and select at least the sysfolder as startingpoint.
+
+<!-- MARKDOWN LINKS & IMAGES -->
+
+[TYPO3-13-url]: https://get.typo3.org/version/13
+
+[TYPO3-shield]: https://img.shields.io/badge/TYPO3-13.4-green.svg?style=for-the-badge&logo=typo3
