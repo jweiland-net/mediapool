@@ -23,18 +23,11 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class UpdatePlaylistInformationCommand extends Command
 {
-    protected PlaylistRecordService $playlistRecordService;
-
-    protected LoggerInterface $logger;
-
     public function __construct(
-        PlaylistRecordService $playlistRecordService,
-        LoggerInterface $logger
+        private readonly PlaylistRecordService $playlistRecordService,
+        private readonly LoggerInterface $logger,
     ) {
         parent::__construct();
-
-        $this->playlistRecordService = $playlistRecordService;
-        $this->logger = $logger;
     }
 
     public function configure(): void

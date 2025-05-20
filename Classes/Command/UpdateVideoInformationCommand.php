@@ -23,18 +23,11 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class UpdateVideoInformationCommand extends Command
 {
-    protected VideoRecordService $videoRecordService;
-
-    protected LoggerInterface $logger;
-
     public function __construct(
-        VideoRecordService $videoRecordService,
-        LoggerInterface $logger
+        private readonly VideoRecordService $videoRecordService,
+        private readonly LoggerInterface $logger
     ) {
         parent::__construct();
-
-        $this->videoRecordService = $videoRecordService;
-        $this->logger = $logger;
     }
 
     public function configure(): void

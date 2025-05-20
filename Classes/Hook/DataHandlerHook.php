@@ -40,21 +40,11 @@ class DataHandlerHook implements LoggerAwareInterface
     public const TABLE_VIDEO = 'tx_mediapool_domain_model_video';
     public const TABLE_PLAYLIST = 'tx_mediapool_domain_model_playlist';
 
-    private PlaylistService $playlistService;
-
-    private PlaylistRecordService $playlistRecordService;
-
-    private VideoService $videoService;
-
     public function __construct(
-        PlaylistService $playlistService,
-        PlaylistRecordService $playlistRecordService,
-        VideoService $videoService
-    ) {
-        $this->playlistService = $playlistService;
-        $this->playlistRecordService = $playlistRecordService;
-        $this->videoService = $videoService;
-    }
+        private readonly PlaylistService $playlistService,
+        private readonly PlaylistRecordService $playlistRecordService,
+        private readonly VideoService $videoService
+    ) {}
 
     /**
      * Using the DataHandler hook to fetch and insert video information

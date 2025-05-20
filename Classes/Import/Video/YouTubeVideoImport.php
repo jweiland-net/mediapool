@@ -28,10 +28,6 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
      */
     private const YOUTUBE_PLATFORM_PREFIX = 'yt_';
 
-    protected RequestFactory $requestFactory;
-
-    protected VideoRepository $videoRepository;
-
     /**
      * URL to fetch video information via GET request
      * player = embedHtml
@@ -57,18 +53,11 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
      */
     protected string $videoIds = '';
 
-    /**
-     * Youtube Data API v3 key
-     */
-    protected string $apiKey = '';
-
-    public function __construct(RequestFactory $requestFactory, VideoRepository $videoRepository, ExtConf $extConf)
-    {
-        $this->requestFactory = $requestFactory;
-        $this->videoRepository = $videoRepository;
-
-        $this->apiKey = $extConf->getYoutubeDataApiKey();
-    }
+    public function __construct(
+        private readonly RequestFactory $requestFactory,
+        private readonly VideoRepository $videoRepository,
+        private readonly ExtConf $extConf
+    ) {}
 
     /**
      * Implode video ids from videos array and unify the pased array
@@ -266,7 +255,7 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
             sprintf(
                 self::VIDEO_API_URL . $additionalRequestParams,
                 $videoIds,
-                $this->apiKey,
+                $this->extConf->getYoutubeDataApiKey(),
             ),
         );
 

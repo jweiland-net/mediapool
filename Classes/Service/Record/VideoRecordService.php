@@ -19,12 +19,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class VideoRecordService
 {
-    protected QueryBuilder $queryBuilder;
-
-    public function __construct(QueryBuilder $queryBuilder)
-    {
-        $this->queryBuilder = $queryBuilder;
-    }
+    public function __construct(
+        private readonly QueryBuilder $queryBuilder
+    ) {}
 
     /**
      * Find all links and uids without respecting pid
