@@ -32,6 +32,8 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
 
     protected VideoRepository $videoRepository;
 
+    protected ExtConf $extConf;
+
     /**
      * URL to fetch video information via GET request
      * player = embedHtml
@@ -57,17 +59,11 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
      */
     protected string $videoIds = '';
 
-    /**
-     * Youtube Data API v3 key
-     */
-    protected string $apiKey = '';
-
     public function __construct(RequestFactory $requestFactory, VideoRepository $videoRepository, ExtConf $extConf)
     {
         $this->requestFactory = $requestFactory;
         $this->videoRepository = $videoRepository;
-
-        $this->apiKey = $extConf->getYoutubeDataApiKey();
+        $this->extConf = $extConf;
     }
 
     /**
@@ -266,7 +262,7 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
             sprintf(
                 self::VIDEO_API_URL . $additionalRequestParams,
                 $videoIds,
-                $this->apiKey,
+                $this->extConf->getYoutubeDataApiKey(),
             ),
         );
 
