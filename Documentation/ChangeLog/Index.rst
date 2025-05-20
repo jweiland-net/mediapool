@@ -7,6 +7,11 @@
 ChangeLog
 =========
 
+Version 4.0.1
+=============
+
+*   Prevent checking API key on any kind of datahandler process
+
 Version 4.0.0
 =============
 
