@@ -11,51 +11,67 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Form\Element;
 
-use JWeiland\Mediapool\Service\ImportService;
-use TYPO3\CMS\Backend\Form\Element\InputTextElement;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use JWeiland\Mediapool\Import\Playlist\PlaylistImportInterface;
+use JWeiland\Mediapool\Import\Video\VideoImportInterface;
+use TYPO3\CMS\Backend\Form\Element\AbstractFormElement;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
-class VideoLinkElement extends InputTextElement
+class ShowSupportedVideoPlatforms extends AbstractFormElement
 {
-    /**
-     * TCA field config
-     */
-    protected array $config;
+    protected array $playlistImporters = [];
+
+    protected array $videoImporters = [];
+
+    public function __construct(iterable $playlistImporters, iterable $videoImporters)
+    {
+        foreach ($playlistImporters as $playlistImporter) {
+            if ($playlistImporter instanceof PlaylistImportInterface) {
+                $this->playlistImporters[] = $playlistImporter;
+            }
+        }
+
+        foreach ($videoImporters as $videoImporter) {
+            if ($videoImporter instanceof VideoImportInterface) {
+                $this->videoImporters[] = $videoImporter;
+            }
+        }
+    }
 
     /**
      * Render input field
      */
     public function render(): array
     {
-        // get HTML code from input field
-        $resultArray = parent::render();
-        $this->config = $this->data['parameterArray']['fieldConf']['config'];
+        $config = $this->data['parameterArray']['fieldConf']['config'];
+
         $size = MathUtility::forceIntegerInRange(
             $this->config['size'] ?? $this->defaultInputWidth,
             $this->minimumInputWidth,
             $this->maxInputWidth,
         );
+
         $width = $this->formMaxWidth($size);
+
         $videoPlatformsHTML = [];
         $videoPlatformsHTML[] = '<div class="form-control-wrap" style="max-width: ' . $width . 'px">';
         $videoPlatformsHTML[] = '<div class="form-wizards-wrap">';
         $videoPlatformsHTML[] = '<div class="form-wizards-element">';
-        $videoPlatformsHTML[] = $this->getSupportedVideoPlatformsHTML();
+        $videoPlatformsHTML[] = $this->getSupportedVideoPlatformsHTML($config);
         $videoPlatformsHTML[] = '</div>';
         $videoPlatformsHTML[] = '</div>';
         $videoPlatformsHTML[] = '</div>';
         $videoPlatformsHTML = implode(LF, $videoPlatformsHTML);
-        $resultArray['html'] .= $videoPlatformsHTML;
 
-        return $resultArray;
+        return [
+            'html' => $videoPlatformsHTML,
+        ];
     }
 
     /**
      * Get HTML for supported video platforms
      */
-    protected function getSupportedVideoPlatformsHTML(): string
+    protected function getSupportedVideoPlatformsHTML(array $config): string
     {
         $html = LocalizationUtility::translate(
             'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:render_type.' .
@@ -63,11 +79,10 @@ class VideoLinkElement extends InputTextElement
         ) . '<br />';
 
         try {
-            $importService = $this->getImportService();
-            if ($this->config['importType'] === 'playlist') {
-                $registeredImporters = $importService->getPlaylistImporters();
+            if ($config['importType'] === 'playlist') {
+                $registeredImporters = $this->playlistImporters;
             } else {
-                $registeredImporters = $importService->getVideoImporters();
+                $registeredImporters = $this->videoImporters;
             }
 
             foreach ($registeredImporters as $registeredImporter) {
@@ -80,10 +95,5 @@ class VideoLinkElement extends InputTextElement
         }
 
         return $html;
-    }
-
-    protected function getImportService(): ImportService
-    {
-        return GeneralUtility::makeInstance(ImportService::class);
     }
 }

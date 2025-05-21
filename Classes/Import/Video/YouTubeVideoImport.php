@@ -12,14 +12,13 @@ declare(strict_types=1);
 namespace JWeiland\Mediapool\Import\Video;
 
 use JWeiland\Mediapool\Configuration\ExtConf;
-use JWeiland\Mediapool\Domain\Model\Video;
 use JWeiland\Mediapool\Domain\Repository\VideoRepository;
 use JWeiland\Mediapool\Import\AbstractImport;
 use JWeiland\Mediapool\Traits\AddFlashMessageTrait;
 use TYPO3\CMS\Core\Error\Http\StatusException;
 use TYPO3\CMS\Core\Http\RequestFactory;
 
-class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
+readonly class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
 {
     use AddFlashMessageTrait;
 
@@ -28,47 +27,27 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
      */
     private const YOUTUBE_PLATFORM_PREFIX = 'yt_';
 
-    protected RequestFactory $requestFactory;
-
-    protected VideoRepository $videoRepository;
-
     /**
      * URL to fetch video information via GET request
      * player = embedHtml
      * snippet = channelId, title, description, tags and categoryId
      * status = uploadStatus, privacyStatus, ...
      */
-    public const VIDEO_API_URL = 'https://www.googleapis.com/youtube/v3/videos?id=%s&key=%s&part=player,snippet,status';
+    private const VIDEO_API_URL = 'https://www.googleapis.com/youtube/v3/videos?id=%s&key=%s&part=player,snippet,status';
 
-    protected string $platformName = 'YouTube';
+    protected const PLATFORM_NAME = 'YouTube';
 
-    protected array $platformHosts = [
+    protected const PLATFORM_HOSTS = [
         'https://youtube.com',
         'https://www.youtube.com',
         'https://youtu.be',
     ];
 
-    protected Video $video;
-
-    /**
-     * YouTube Video IDs
-     * single video: 'exi0iht_kLw'
-     * multiple videos: 'exi0iht_kLw,Vfw1pAmLlY,jzTVVocFaVE'
-     */
-    protected string $videoIds = '';
-
-    /**
-     * Youtube Data API v3 key
-     */
-    protected string $apiKey = '';
-
-    public function __construct(RequestFactory $requestFactory, VideoRepository $videoRepository, ExtConf $extConf)
-    {
-        $this->requestFactory = $requestFactory;
-        $this->videoRepository = $videoRepository;
-
-        $this->apiKey = $extConf->getYoutubeDataApiKey();
-    }
+    public function __construct(
+        private RequestFactory $requestFactory,
+        private VideoRepository $videoRepository,
+        private ExtConf $extConf
+    ) {}
 
     /**
      * Implode video ids from videos array and unify the pased array
@@ -80,7 +59,7 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
      * and a unified array:
      * [4 => 'exi0iht_kLw', 5 => 'Vfw1pAmLlY', 'NEW1234' => 'jzTVVocFaVE']
      */
-    protected function implodeVideoIdsAndUnifyArray(array &$videos): string
+    protected function implodeVideoIdsAndUnifyArray(array &$videos): array
     {
         $videoIds = [];
         foreach ($videos as &$video) {
@@ -93,7 +72,7 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
             $videoIds[] = $video['video'];
         }
 
-        return implode(',', $videoIds);
+        return $videoIds;
     }
 
     /**
@@ -121,17 +100,18 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
      * @param bool $checkExistingVideos if true the video id in combination with the pid will be checked and no
      *                                  new record will be created if a record with the same video id already exists.
      *                                  Existing videos will be added to $recordUids too!
-     * @return array the data array for DataHandler. This is a reference so it will be modified and can be used
-     *               after method call.
+     * @return array|null the data array for DataHandler. This is a reference, so it will be modified and can be used
+     *                    after method call.
      */
     public function processDataArray(
         array $videos,
         int $pid,
         string &$recordUids = '',
         bool $checkExistingVideos = false
-    ): array {
-        $this->videoIds = $this->implodeVideoIdsAndUnifyArray($videos);
-        $fetchedVideoInformation = $this->fetchVideoInformation();
+    ): ?array {
+        $fetchedVideoInformation = $this->fetchVideoInformation(
+            $this->implodeVideoIdsAndUnifyArray($videos)
+        );
         $data = [];
         $recordUidArray = [];
 
@@ -143,7 +123,7 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
             if (is_array($fetchedVideoInformation[$videoId])) {
                 $videoInformation = $fetchedVideoInformation[$videoId];
                 $existingVideo = null;
-                // if true check for a record with the same video id and use it instead of
+                // if true, check for a record with the same video id and use it instead of
                 // creating a new one
                 if ($checkExistingVideos) {
                     $queryResult = $this->videoRepository->findByVideoId(
@@ -169,14 +149,15 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
                     'youTubeVideoImport.missing_youtube_permission.message',
                     [$videoId],
                 );
+                return null;
             } else {
-                // never fetched it ?
+                // never fetched it
                 $this->addFlashMessage(
                     'youTubeVideoImport.missing_video_information.title',
                     'youTubeVideoImport.missing_video_information.message',
                     [$videoId],
                 );
-                $this->hasError = true;
+                return null;
             }
         }
 
@@ -225,29 +206,17 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
 
     /**
      * Fetches video information for $this->videoIds and returns fetched items
-     * as array with casted values
+     * as an array with casted values
      * from YouTube Data v3 API with parts snippet and player
      * Example on https://developers.google.com/youtube/v3/docs/videos/list
      *
      * @return array with fetched video information
      */
-    protected function fetchVideoInformation(): array
+    protected function fetchVideoInformation(array $videoIds): array
     {
-        $videoIds = explode(',', $this->videoIds);
-        $loops = [];
-        $offset = 0;
-        // limit the amount of items per request to 50 (api maximum)
-        while (count($videoIds)) {
-            if (count($videoIds) > 50) {
-                $loops[] = implode(',', array_splice($videoIds, $offset, 50));
-            } else {
-                $loops[] = implode(',', array_splice($videoIds, $offset));
-            }
-        }
-
         $items = [];
-        foreach ($loops as $videoIds) {
-            $items[] = $this->doRequest($videoIds);
+        foreach (array_chunk($videoIds, 50) as $chunkWithVideoIds) {
+            $items[] = $this->doRequest($chunkWithVideoIds);
         }
 
         return array_merge(...$items);
@@ -260,13 +229,13 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
      * @param array $items previous items for recursive call - leave it empty
      * @throws StatusException
      */
-    protected function doRequest(string $videoIds, array $items = [], string $additionalRequestParams = ''): array
+    protected function doRequest(array $videoIds, array $items = [], string $additionalRequestParams = ''): array
     {
         $response = $this->requestFactory->request(
             sprintf(
                 self::VIDEO_API_URL . $additionalRequestParams,
-                $videoIds,
-                $this->apiKey,
+                implode(',', $videoIds),
+                $this->extConf->getYoutubeDataApiKey(),
             ),
         );
 
@@ -281,9 +250,10 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
                         $items[(string)$item['id']] = 'noPermission';
                     }
                 }
+
                 // call recursive if nextPageToken is set
                 if (isset($result['nextPageToken'])) {
-                    $items = self::doRequest($videoIds, $items, '&pageToken=' . $result['nextPageToken']);
+                    $items = $this->doRequest($videoIds, $items, '&pageToken=' . $result['nextPageToken']);
                 }
             }
 
@@ -296,7 +266,7 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
                 sprintf(
                     'Fetching video information for %s failed! Got the following response from YouTube: %s.' .
                     ' Please check your API-key.',
-                    $this->video->getLink(),
+                    implode(',', $videoIds),
                     $response->getBody(),
                 ),
                 1507792488,
@@ -306,7 +276,7 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
         throw new StatusException(
             sprintf(
                 'Fetching video information for %s failed! Got status code %d and the following response: %s',
-                $this->video->getLink(),
+                implode(',', $videoIds),
                 $response->getStatusCode(),
                 $response->getBody(),
             ),
@@ -315,7 +285,7 @@ class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
     }
 
     /**
-     * Get array with casted values for $item
+     * Get an array with casted values for $item
      *
      * @param array $item from API
      * @return array with casted values for passed $item

@@ -17,14 +17,11 @@ use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class PlaylistRecordService
+readonly class PlaylistRecordService
 {
-    protected QueryBuilder $queryBuilder;
-
-    public function __construct(QueryBuilder $queryBuilder)
-    {
-        $this->queryBuilder = $queryBuilder;
-    }
+    public function __construct(
+        private QueryBuilder $queryBuilder
+    ) {}
 
     /**
      * Find all playlist links and uids without respecting pid

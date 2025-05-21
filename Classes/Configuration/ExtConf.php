@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace JWeiland\Mediapool\Configuration;
 
 use JWeiland\Mediapool\Configuration\Exception\MissingYouTubeApiKeyException;
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
@@ -19,24 +20,35 @@ use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 /**
  * This class streamlines all settings from the extension manager
  */
-class ExtConf
+#[Autoconfigure(constructor: 'create')]
+final readonly class ExtConf
 {
-    protected string $youtubeDataApiKey = '';
+    private const EXT_KEY = 'mediapool';
 
-    public function __construct(ExtensionConfiguration $extensionConfiguration)
+    private const DEFAULT_SETTINGS = [
+        'youtubeDataApiKey' => '',
+    ];
+
+    public function __construct(
+        private string $youtubeDataApiKey = self::DEFAULT_SETTINGS['youtubeDataApiKey'],
+    ) {}
+
+    public static function create(ExtensionConfiguration $extensionConfiguration): self
     {
-        // get global configuration
+        $extensionSettings = self::DEFAULT_SETTINGS;
+
+        // Overwrite default extension settings with values from EXT_CONF
         try {
-            $extConf = $extensionConfiguration->get('mediapool') ?? [];
-            // call setter method foreach configuration entry
-            foreach ($extConf as $key => $value) {
-                $methodName = 'set' . ucfirst($key);
-                if (method_exists($this, $methodName)) {
-                    $this->$methodName($value);
-                }
-            }
-        } catch (ExtensionConfigurationExtensionNotConfiguredException | ExtensionConfigurationPathDoesNotExistException $e) {
+            $extensionSettings = array_merge(
+                $extensionSettings,
+                $extensionConfiguration->get(self::EXT_KEY),
+            );
+        } catch (ExtensionConfigurationExtensionNotConfiguredException|ExtensionConfigurationPathDoesNotExistException) {
         }
+
+        return new self(
+            youtubeDataApiKey: (string)$extensionSettings['youtubeDataApiKey'],
+        );
     }
 
     public function getYoutubeDataApiKey(): string
@@ -44,14 +56,10 @@ class ExtConf
         if ($this->youtubeDataApiKey === '') {
             throw new MissingYouTubeApiKeyException(
                 'Missing YouTube API key in extension settings of extension: mediapool',
+                1343309942,
             );
         }
 
         return $this->youtubeDataApiKey;
-    }
-
-    public function setYoutubeDataApiKey(string $youtubeDataApiKey): void
-    {
-        $this->youtubeDataApiKey = $youtubeDataApiKey;
     }
 }

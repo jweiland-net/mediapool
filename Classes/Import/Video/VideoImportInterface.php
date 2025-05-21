@@ -42,15 +42,15 @@ interface VideoImportInterface
      * @param bool $checkExistingVideos if true, the video id in combination with the pid will be checked and no
      *                                  new record will be created if a record with the same video id already exists.
      *                                  Existing videos will be added to $recordUids too!
-     * @return array the data array for DataHandler. This is a reference, so it will be modified and can be used
-     *               after method call.
+     * @return array|null the data array for DataHandler. This is a reference, so it will be modified and can be used
+     *                    after method call.
      */
     public function processDataArray(
         array $videos,
         int $pid,
         string &$recordUids = '',
         bool $checkExistingVideos = false
-    ): array;
+    ): ?array;
 
     /**
      * Returns PlatformName
@@ -61,9 +61,4 @@ interface VideoImportInterface
      * Returns PlatformHosts
      */
     public function getPlatformHosts(): array;
-
-    /**
-     * Will return true if at least one error occurred.
-     */
-    public function hasError(): bool;
 }

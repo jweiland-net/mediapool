@@ -12,14 +12,17 @@ declare(strict_types=1);
 namespace JWeiland\Mediapool\Form\Element;
 
 use TYPO3\CMS\Backend\Form\Element\AbstractFormElement;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Core\Utility\StringUtility;
+use TYPO3\CMS\Core\View\ViewFactoryData;
+use TYPO3\CMS\Core\View\ViewFactoryInterface;
+use TYPO3\CMS\Core\View\ViewInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Fluid\View\StandaloneView;
 
 class InlineVideoElement extends AbstractFormElement
 {
+    public function __construct(private readonly ViewFactoryInterface $viewFactory) {}
+
     /**
      * Handler for single nodes
      *
@@ -51,13 +54,9 @@ class InlineVideoElement extends AbstractFormElement
             return $resultArray;
         }
 
-        $view = $this->getStandaloneView();
-        $view->setTemplatePathAndFilename(
-            ExtensionManagementUtility::extPath('mediapool') .
-            'Resources/Private/Templates/InlineVideoElement/InlineVideoElement.html',
-        );
+        $view = $this->getView();
         $view->assignMultiple([
-            'elementId' => $parameterArray['itemFormElID'],
+            'elementId' => StringUtility::getUniqueId(self::class . '-'),
             'videos' => $parameterArray['itemFormElValue'],
             'amountOfVideos' => count($parameterArray['itemFormElValue']),
         ]);
@@ -67,8 +66,13 @@ class InlineVideoElement extends AbstractFormElement
         return $resultArray;
     }
 
-    private function getStandaloneView(): StandaloneView
+    private function getView(): ViewInterface
     {
-        return GeneralUtility::makeInstance(StandaloneView::class);
+        $viewFactoryData = new ViewFactoryData(
+            templatePathAndFilename: 'EXT:mediapool/Resources/Private/Templates/InlineVideoElement/InlineVideoElement.html',
+            request: $this->data['request'],
+        );
+
+        return $this->viewFactory->create($viewFactoryData);
     }
 }

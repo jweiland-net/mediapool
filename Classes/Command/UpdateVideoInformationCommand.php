@@ -23,18 +23,11 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class UpdateVideoInformationCommand extends Command
 {
-    protected VideoRecordService $videoRecordService;
-
-    protected LoggerInterface $logger;
-
     public function __construct(
-        VideoRecordService $videoRecordService,
-        LoggerInterface $logger
+        private readonly VideoRecordService $videoRecordService,
+        private readonly LoggerInterface $logger
     ) {
         parent::__construct();
-
-        $this->videoRecordService = $videoRecordService;
-        $this->logger = $logger;
     }
 
     public function configure(): void
@@ -65,7 +58,7 @@ class UpdateVideoInformationCommand extends Command
         // Create a data array for DataHandler to use the DataHandler Hook
         $data = [];
 
-        // create data array for data handler
+        // create the data array for data handler
         // to use the DataHandler Hook
         foreach ($videos as $video) {
             $data['tx_mediapool_domain_model_video'][$video['uid']] = [

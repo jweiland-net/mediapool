@@ -14,11 +14,11 @@ namespace JWeiland\Mediapool\Service;
 use JWeiland\Mediapool\Import\Playlist\PlaylistImportInterface;
 use JWeiland\Mediapool\Traits\AddFlashMessageTrait;
 
-class PlaylistService
+readonly class PlaylistService
 {
     use AddFlashMessageTrait;
 
-    protected array $importers = [];
+    protected array $importers;
 
     public function __construct(iterable $importers)
     {

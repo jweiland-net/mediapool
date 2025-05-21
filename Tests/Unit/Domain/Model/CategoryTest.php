@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace JWeiland\Mediapool\Tests\Unit\Domain\Model;
 
 use JWeiland\Mediapool\Domain\Model\Category;
+use PHPUnit\Framework\Attributes\Test;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
@@ -23,6 +24,8 @@ class CategoryTest extends UnitTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->subject = new Category();
     }
 
@@ -35,9 +38,7 @@ class CategoryTest extends UnitTestCase
         parent::tearDown();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getTitleWillInitiallyReturnEmptyString(): void
     {
         self::assertSame(
@@ -46,9 +47,7 @@ class CategoryTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setTitleWillSetTitle(): void
     {
         $this->subject->setTitle('Jochen Weiland');

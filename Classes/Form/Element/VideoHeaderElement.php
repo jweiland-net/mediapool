@@ -31,7 +31,7 @@ class VideoHeaderElement extends AbstractFormElement
         $size = MathUtility::forceIntegerInRange($config['size'] ?? $this->defaultInputWidth, $this->minimumInputWidth, $this->maxInputWidth);
         $width = $this->formMaxWidth($size);
 
-        // display alert if item value is empty
+        // display alert if the item value is empty
         if (!$itemValue) {
             $html = [];
             $html[] = '<div class="alert alert-info" role="alert" style="max-width: ' . $width . 'px">';
@@ -57,6 +57,7 @@ class VideoHeaderElement extends AbstractFormElement
         $html[] =       '</div>';
         $html[] =   '</div>';
         $html[] = '</div>';
+
         $resultArray['html'] = implode(LF, $html);
 
         return $resultArray;

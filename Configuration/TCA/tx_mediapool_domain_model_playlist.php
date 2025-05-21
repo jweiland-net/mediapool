@@ -13,7 +13,6 @@ return [
         'label' => 'title',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
         'versioningWS' => true,
         'origUid' => 't3_origuid',
         'default_sortby' => 'crdate',
@@ -52,23 +51,21 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
-                'eval' => 'date',
+                'type' => 'datetime',
                 'default' => 0,
+                'format' => 'date',
             ],
         ],
         'endtime' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
-                'eval' => 'date',
+                'type' => 'datetime',
                 'default' => 0,
                 'range' => [
                     'upper' => mktime(0, 0, 0, 1, 1, 2038),
                 ],
+                'format' => 'date',
             ],
         ],
         'pid' => [
@@ -105,11 +102,16 @@ return [
             'label' => 'LLL:EXT:mediapool/Resources/Private/Language/locallang_db.xlf:tx_mediapool_domain_model_playlist.link',
             'config' => [
                 'type' => 'input',
-                'eval' => 'trim,required',
-                'default' => '',
+                'required' => true,
                 'placeholder' => 'https://www.youtube.com/playlist?list=PLbDO1duet8JWl9BJeCxM5z4Zi3nMcwEIE',
-                'renderType' => 'videoLink',
                 'importType' => 'playlist',
+                'eval' => 'trim',
+                'default' => '',
+                'fieldWizard' => [
+                    'showSupportedVideoPlatforms' => [
+                        'renderType' => 'showSupportedVideoPlatforms',
+                    ],
+                ],
             ],
         ],
         'videos' => [

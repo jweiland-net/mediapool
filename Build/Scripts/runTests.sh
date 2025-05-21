@@ -60,8 +60,8 @@ handleDbmsOptions() {
                 echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
                 exit 1
             fi
-            [ -z "${DBMS_VERSION}" ] && DBMS_VERSION="10.4"
-            if ! [[ ${DBMS_VERSION} =~ ^(10.4|10.5|10.6|10.7|10.8|10.9|10.10|10.11|11.0|11.1)$ ]]; then
+            [ -z "${DBMS_VERSION}" ] && DBMS_VERSION="10.11"
+            if ! [[ ${DBMS_VERSION} =~ ^(10.5|10.6|10.7|10.8|10.9|10.10|10.11|11.0|11.1)$ ]]; then
                 echo "Invalid combination -d ${DBMS} -i ${DBMS_VERSION}" >&2
                 echo >&2
                 echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
@@ -178,14 +178,13 @@ Options:
     -i version
         Specify a specific database version
         With "-d mariadb":
-            - 10.4   short-term, maintained until 2024-06-18 (default)
             - 10.5   short-term, maintained until 2025-06-24
             - 10.6   long-term, maintained until 2026-06
             - 10.7   short-term, no longer maintained
             - 10.8   short-term, maintained until 2023-05
             - 10.9   short-term, maintained until 2023-08
             - 10.10  short-term, maintained until 2023-11
-            - 10.11  long-term, maintained until 2028-02
+            - 10.11  long-term, maintained until 2028-02 (default)
             - 11.0   development series
             - 11.1   short-term development series
         With "-d mysql":
@@ -202,13 +201,14 @@ Options:
             - 15    maintained until 2027-11-11
             - 16    maintained until 2028-11-09
 
-    -p <7.4|8.0|8.1|8.2|8.3>
+    -p <8.0|8.1|8.2|8.3|8.4>
         Specifies the PHP minor version to be used
             - 7.4: use PHP 7.4
             - 8.0: use PHP 8.0
             - 8.1: use PHP 8.1
             - 8.2: use PHP 8.2
             - 8.3: use PHP 8.3
+            - 8.4: use PHP 8.4
 
     -x
         Only with -s functional|unit
@@ -293,7 +293,7 @@ while getopts "a:b:d:i:s:p:xy:nhu" OPT; do
             ;;
         p)
             PHP_VERSION=${OPTARG}
-            if ! [[ ${PHP_VERSION} =~ ^(7.4|8.0|8.1|8.2|8.3)$ ]]; then
+            if ! [[ ${PHP_VERSION} =~ ^(8.0|8.1|8.2|8.3|8.4)$ ]]; then
                 INVALID_OPTIONS+=("p ${OPTARG}")
             fi
             ;;

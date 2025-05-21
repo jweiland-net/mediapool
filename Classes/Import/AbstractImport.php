@@ -11,50 +11,28 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Import;
 
-class AbstractImport
+abstract readonly class AbstractImport
 {
     /**
      * Name of the video platform
      * e.g., YouTube
      */
-    protected string $platformName = '';
+    protected const PLATFORM_NAME = '';
 
     /**
      * Array filled with hosts of this video importer
      * e.g. ['https://youtube.com', 'https://youtu.be']
      * these hosts are needed to identify the passed link
      */
-    protected array $platformHosts = [];
+    protected const PLATFORM_HOSTS = [];
 
-    /**
-     * This property is used by VideoService and PlaylistService.
-     * They will only save data if this is false. Otherwise, you have
-     * to add your own error messages with $this->addFlashMessage()
-     * or your own error method.
-     */
-    protected bool $hasError = false;
-
-    /**
-     * Returns PlatformName
-     */
     public function getPlatformName(): string
     {
-        return $this->platformName;
+        return self::PLATFORM_NAME;
     }
 
-    /**
-     * Returns PlatformHosts
-     */
     public function getPlatformHosts(): array
     {
-        return $this->platformHosts;
-    }
-
-    /**
-     * Will return true if at least one error occurred.
-     */
-    public function hasError(): bool
-    {
-        return $this->hasError;
+        return self::PLATFORM_HOSTS;
     }
 }

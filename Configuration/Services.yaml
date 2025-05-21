@@ -34,6 +34,34 @@ services:
         description: 'This task updates the video information'
         schedulable: true
 
+  # Called by makeInstance in Form Engine
+  JWeiland\Mediapool\Form\Element\InlineVideoElement:
+    public: true
+    shared: false
+
+  # Called by makeInstance in Form Engine
+  JWeiland\Mediapool\Form\Element\ShowSupportedVideoPlatforms:
+    public: true
+    shared: false
+    arguments:
+      $playlistImporters: !tagged_iterator { tag: 'mediapool.importer.playlist' }
+      $videoImporters: !tagged_iterator { tag: 'mediapool.importer.video' }
+
+  # Called by makeInstance in Form Engine
+  JWeiland\Mediapool\Form\Element\VideoHeaderElement:
+    public: true
+    shared: false
+
+  # Called by makeInstance in Form Engine
+  JWeiland\Mediapool\Form\Element\VideoPlayerElement:
+    public: true
+    shared: false
+
+  # Called by makeInstance in Form Engine
+  JWeiland\Mediapool\Form\Element\VideoTextElement:
+    public: true
+    shared: false
+
   # Called by makeInstance in DataHandler
   JWeiland\Mediapool\Hook\DataHandlerHook:
     public: true
@@ -53,13 +81,6 @@ services:
   JWeiland\Mediapool\Service\Record\VideoRecordService:
     arguments:
       $queryBuilder: '@qb.video'
-
-  # Called by makeInstance in VideoLinkElement
-  JWeiland\Mediapool\Service\ImportService:
-    public: true
-    arguments:
-      $playlistImporters: !tagged_iterator { tag: 'mediapool.importer.playlist' }
-      $videoImporters: !tagged_iterator { tag: 'mediapool.importer.video' }
 
   JWeiland\Mediapool\Service\PlaylistService:
     arguments:

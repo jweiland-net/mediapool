@@ -21,12 +21,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 class PlaylistController extends ActionController
 {
-    protected PlaylistRepository $playlistRepository;
-
-    public function injectPlaylistRepository(PlaylistRepository $playlistRepository): void
-    {
-        $this->playlistRepository = $playlistRepository;
-    }
+    public function __construct(protected PlaylistRepository $playlistRepository) {}
 
     public function listByCategoryAction(Category $category): ResponseInterface
     {

@@ -19,10 +19,10 @@ use JWeiland\Mediapool\Traits\GetFlashMessageQueueTrait;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
-use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\SysLog\Action\Database as SystemLogDatabaseAction;
 use TYPO3\CMS\Core\SysLog\Error as SystemLogErrorClassification;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -40,21 +40,11 @@ class DataHandlerHook implements LoggerAwareInterface
     public const TABLE_VIDEO = 'tx_mediapool_domain_model_video';
     public const TABLE_PLAYLIST = 'tx_mediapool_domain_model_playlist';
 
-    private PlaylistService $playlistService;
-
-    private PlaylistRecordService $playlistRecordService;
-
-    private VideoService $videoService;
-
     public function __construct(
-        PlaylistService $playlistService,
-        PlaylistRecordService $playlistRecordService,
-        VideoService $videoService
-    ) {
-        $this->playlistService = $playlistService;
-        $this->playlistRecordService = $playlistRecordService;
-        $this->videoService = $videoService;
-    }
+        private readonly PlaylistService $playlistService,
+        private readonly PlaylistRecordService $playlistRecordService,
+        private readonly VideoService $videoService,
+    ) {}
 
     /**
      * Using the DataHandler hook to fetch and insert video information
@@ -100,7 +90,7 @@ class DataHandlerHook implements LoggerAwareInterface
                 FlashMessage::class,
                 $missingYouTubeApiKeyException->getMessage(),
                 'Missing YouTube API key',
-                AbstractMessage::ERROR,
+                ContextualFeedbackSeverity::ERROR,
                 true,
             );
 
@@ -116,7 +106,7 @@ class DataHandlerHook implements LoggerAwareInterface
                 LocalizationUtility::translate(
                     'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:data_handler.exception.title',
                 ),
-                AbstractMessage::ERROR,
+                ContextualFeedbackSeverity::ERROR,
                 true,
             );
 
@@ -143,7 +133,7 @@ class DataHandlerHook implements LoggerAwareInterface
         }
 
         // use current pid as video pid
-        $data = $this->videoService->getVideoData($videos, (int)GeneralUtility::_POST('popViewId'));
+        $data = $this->videoService->getVideoData($videos, (int)($GLOBALS['TYPO3_REQUEST']->getParsedBody()['popViewId'] ?? null));
         if ($data) {
             foreach ($data[self::TABLE_VIDEO] as $uid => &$fields) {
                 // override pid if declared in an original field array

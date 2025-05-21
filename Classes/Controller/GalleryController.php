@@ -20,12 +20,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 class GalleryController extends ActionController
 {
-    protected FileCollectionRepository $fileCollectionRepository;
-
-    public function injectFileCollectionRepository(FileCollectionRepository $fileCollectionRepository): void
-    {
-        $this->fileCollectionRepository = $fileCollectionRepository;
-    }
+    public function __construct(protected FileCollectionRepository $fileCollectionRepository) {}
 
     /**
      * Gallery preview action

@@ -3,35 +3,29 @@
     <sheets>
         <sDEF>
             <ROOT>
-                <TCEforms>
-                    <sheetTitle>LLL:EXT:mediapool/Resources/Private/Language/FlexForm.xlf:mediapool.title</sheetTitle>
-                </TCEforms>
+                <sheetTitle>LLL:EXT:mediapool/Resources/Private/Language/FlexForm.xlf:mediapool.title</sheetTitle>
                 <type>array</type>
                 <el>
                     <settings.detailPage>
-                        <TCEforms>
-                            <label>LLL:EXT:mediapool/Resources/Private/Language/FlexForm.xlf:mediapool.detail_page</label>
-                            <config>
-                                <type>group</type>
-                                <internal_type>db</internal_type>
-                                <allowed>pages</allowed>
-                                <size>1</size>
-                                <maxitems>1</maxitems>
-                                <minitems>1</minitems>
-                            </config>
-                        </TCEforms>
+                        <label>LLL:EXT:mediapool/Resources/Private/Language/FlexForm.xlf:mediapool.detail_page</label>
+                        <config>
+                            <type>group</type>
+                            <internal_type>db</internal_type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                            <minitems>1</minitems>
+                        </config>
                     </settings.detailPage>
                     <settings.recommendedVideos>
-                        <TCEforms>
-                            <label>LLL:EXT:mediapool/Resources/Private/Language/FlexForm.xlf:mediapool.recommended_video_selection</label>
-                            <config>
-                                <type>group</type>
-                                <internal_type>db</internal_type>
-                                <allowed>tx_mediapool_domain_model_video</allowed>
-                                <minitems>3</minitems>
-                                <maxitems>3</maxitems>
-                            </config>
-                        </TCEforms>
+                        <label>LLL:EXT:mediapool/Resources/Private/Language/FlexForm.xlf:mediapool.recommended_video_selection</label>
+                        <config>
+                            <type>group</type>
+                            <internal_type>db</internal_type>
+                            <allowed>tx_mediapool_domain_model_video</allowed>
+                            <minitems>3</minitems>
+                            <maxitems>3</maxitems>
+                        </config>
                     </settings.recommendedVideos>
                 </el>
             </ROOT>

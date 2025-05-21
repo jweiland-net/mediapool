@@ -59,7 +59,7 @@ class VideoRepository extends Repository
 
     /**
      * Find recent videos of playlists by category uids
-     * will return an multidimensional array like
+     * will return a multidimensional array like
      * $arr = [
      *     <categoryUid> => [
      *         'category' => <instance of category>,
