@@ -13,6 +13,7 @@ namespace JWeiland\Mediapool\Tests\Unit\Domain\Model;
 
 use JWeiland\Mediapool\Domain\Model\Playlist;
 use JWeiland\Mediapool\Domain\Model\Video;
+use PHPUnit\Framework\Attributes\Test;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
@@ -37,9 +38,7 @@ class PlaylistTest extends UnitTestCase
         parent::tearDown();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getTitleWillInitiallyReturnEmptyString(): void
     {
         self::assertSame(
@@ -48,9 +47,7 @@ class PlaylistTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setTitleWillSetTitle(): void
     {
         $this->subject->setTitle('Jochen Weiland');
@@ -61,9 +58,7 @@ class PlaylistTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getLinkWillInitiallyReturnEmptyString(): void
     {
         self::assertSame(
@@ -72,9 +67,7 @@ class PlaylistTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setLinkWillSetLink(): void
     {
         $this->subject->setLink('https://jweiland.net');
@@ -85,9 +78,7 @@ class PlaylistTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getPlaylistIdWillInitiallyReturnEmptyString(): void
     {
         self::assertSame(
@@ -96,9 +87,7 @@ class PlaylistTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setPlaylistIdWillSetPlaylistId(): void
     {
         $this->subject->setPlaylistId('ctmh83279cgmh5428');
@@ -109,9 +98,7 @@ class PlaylistTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getVideosWillInitiallyReturnEmptyObjectStorage(): void
     {
         self::assertEquals(
@@ -120,9 +107,7 @@ class PlaylistTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setVideosWillSetVideos(): void
     {
         $videos = new ObjectStorage();
@@ -134,9 +119,7 @@ class PlaylistTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function addVideoWillAddVideoToObjectStorage(): void
     {
         $video = new Video();
@@ -148,9 +131,7 @@ class PlaylistTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function removeVideoWillRemoveVideoFromObjectStorage(): void
     {
         $video = new Video();
@@ -166,9 +147,7 @@ class PlaylistTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getCategoriesWillInitiallyReturnEmptyObjectStorage(): void
     {
         self::assertEquals(
@@ -177,9 +156,7 @@ class PlaylistTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setCategoriesWillSetCategories(): void
     {
         $categories = new ObjectStorage();
@@ -191,9 +168,7 @@ class PlaylistTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getThumbnailWillInitiallyReturnEmptyString(): void
     {
         self::assertSame(
@@ -202,9 +177,7 @@ class PlaylistTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setThumbnailWillSetThumbnail(): void
     {
         $this->subject->setThumbnail('thumbnail.png');
@@ -215,9 +188,7 @@ class PlaylistTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getSlugWillInitiallyReturnEmptyString(): void
     {
         self::assertSame(
@@ -226,9 +197,7 @@ class PlaylistTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setSlugWillSetSlug(): void
     {
         $this->subject->setSlug('/video/super-mario');

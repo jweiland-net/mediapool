@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace JWeiland\Mediapool\Tests\Unit\Domain\Model;
 
 use JWeiland\Mediapool\Domain\Model\Video;
+use PHPUnit\Framework\Attributes\Test;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
@@ -35,9 +36,7 @@ class VideoTest extends UnitTestCase
         parent::tearDown();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getTitleWillInitiallyReturnEmptyString(): void
     {
         self::assertSame(
@@ -46,9 +45,7 @@ class VideoTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setTitleWillSetTitle(): void
     {
         $this->subject->setTitle('Jochen Weiland');
@@ -59,9 +56,7 @@ class VideoTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getDescriptionWillInitiallyReturnEmptyString(): void
     {
         self::assertSame(
@@ -70,9 +65,7 @@ class VideoTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setDescriptionWillSetDescription(): void
     {
         $this->subject->setDescription('Please, listen to me...');
@@ -83,9 +76,7 @@ class VideoTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getUploadDateWillInitiallyReturnNull(): void
     {
         self::assertNull(
@@ -93,9 +84,7 @@ class VideoTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setUploadDateWillSetUploadDate(): void
     {
         $date = new \DateTime('now');
@@ -108,9 +97,7 @@ class VideoTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getLinkWillInitiallyReturnEmptyString(): void
     {
         self::assertSame(
@@ -119,9 +106,7 @@ class VideoTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setLinkWillSetLink(): void
     {
         $this->subject->setLink('https://jweiland.net');
@@ -132,9 +117,7 @@ class VideoTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getPlayerHtmlWillInitiallyReturnEmptyString(): void
     {
         self::assertSame(
@@ -143,9 +126,7 @@ class VideoTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setPlayerHtmlWillSetPlayerHtml(): void
     {
         $this->subject->setPlayerHtml('<strong>Hello world</strong>');
@@ -156,9 +137,7 @@ class VideoTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getVideoIdWillInitiallyReturnEmptyString(): void
     {
         self::assertSame(
@@ -167,9 +146,7 @@ class VideoTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setVideoIdWillSetVideoId(): void
     {
         $this->subject->setVideoId('cgmh34829xghwo8g8h5og');
@@ -180,9 +157,7 @@ class VideoTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getThumbnailWillInitiallyReturnEmptyString(): void
     {
         self::assertSame(
@@ -191,9 +166,7 @@ class VideoTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setThumbnailWillSetThumbnail(): void
     {
         $this->subject->setThumbnail('thumbnail.jpg');
@@ -204,9 +177,7 @@ class VideoTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getThumbnailLargeWillInitiallyReturnEmptyString(): void
     {
         self::assertSame(
@@ -215,9 +186,7 @@ class VideoTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setThumbnailLargeWillSetThumbnailLarge(): void
     {
         $this->subject->setThumbnailLarge('thumbnail-large.jpg');
@@ -228,9 +197,7 @@ class VideoTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getSlugWillInitiallyReturnEmptyString(): void
     {
         self::assertSame(
@@ -239,9 +206,7 @@ class VideoTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setSlugWillSetSlug(): void
     {
         $this->subject->setSlug('/video/super-mario');
