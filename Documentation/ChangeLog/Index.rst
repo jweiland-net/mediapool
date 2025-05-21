@@ -12,6 +12,15 @@ Version 5.0.0
 
 *   Add TYPO3 13 compatibility
 *   Remove TYPO3 11/12 compatibility
+*   Declare PHP classes readonly where possible
+*   Replace StandaloneView with ViewFactory
+*   Add PHP 8.4 to runScript.sh and test also with PHP 8.4
+*   Migrate to Site Sets
+
+Version 4.0.1
+=============
+
+*   Prevent checking API key on any kind of datahandler process
 
 Version 4.0.0
 =============
