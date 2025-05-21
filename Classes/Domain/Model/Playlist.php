@@ -45,8 +45,8 @@ class Playlist extends AbstractEntity
 
     /**
      * @var ObjectStorage<Category>
-     * @Extbase\ORM\Lazy
      */
+    #[Extbase\ORM\Lazy]
     protected ObjectStorage $categories;
 
     /**
@@ -68,7 +68,7 @@ class Playlist extends AbstractEntity
     /**
      * Called again with initialize object, as fetching an entity from the DB does not use the constructor
      */
-    public function initializeObject()
+    public function initializeObject(): void
     {
         $this->videos = $this->videos ?? new ObjectStorage();
         $this->categories = $this->categories ?? new ObjectStorage();

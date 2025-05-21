@@ -15,6 +15,7 @@ use TYPO3\CMS\Backend\Form\Element\AbstractFormElement;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Core\Utility\StringUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
@@ -52,12 +53,11 @@ class InlineVideoElement extends AbstractFormElement
         }
 
         $view = $this->getStandaloneView();
-        $view->setTemplatePathAndFilename(
-            ExtensionManagementUtility::extPath('mediapool') .
-            'Resources/Private/Templates/InlineVideoElement/InlineVideoElement.html',
+        $view->getRenderingContext()->getTemplatePaths()->setTemplatePathAndFilename(
+            ExtensionManagementUtility::extPath('mediapool') . 'Resources/Private/Templates/InlineVideoElement/InlineVideoElement.html'
         );
         $view->assignMultiple([
-            'elementId' => $parameterArray['itemFormElID'],
+            'elementId' => StringUtility::getUniqueId(self::class . '-'),
             'videos' => $parameterArray['itemFormElValue'],
             'amountOfVideos' => count($parameterArray['itemFormElValue']),
         ]);

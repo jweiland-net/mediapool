@@ -20,12 +20,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 class VideoController extends ActionController
 {
-    protected VideoRepository $videoRepository;
-
-    public function injectVideoRepository(VideoRepository $videoRepository): void
-    {
-        $this->videoRepository = $videoRepository;
-    }
+    public function __construct(protected VideoRepository $videoRepository) {}
 
     /**
      * Shows a single video and additionally a playlist if $playlist is set

@@ -33,7 +33,7 @@ class VideoTextElement extends AbstractFormElement
         $width = $this->formMaxWidth($size);
         $evalList = GeneralUtility::trimExplode(',', $config['eval'], true);
 
-        // display alert if item value is empty
+        // display alert if the item value is empty
         if (!$itemValue) {
             $html = [];
             $html[] = '<div class="alert alert-info" role="alert" style="max-width: ' . $width . 'px">';
@@ -65,6 +65,7 @@ class VideoTextElement extends AbstractFormElement
         $html[] =       '</div>';
         $html[] =   '</div>';
         $html[] = '</div>';
+
         $resultArray['html'] = implode(LF, $html);
 
         return $resultArray;

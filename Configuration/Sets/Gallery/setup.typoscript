@@ -1,0 +1,8 @@
+plugin.tx_mediapool {
+  settings {
+    height = {$mediapool.image.height}
+    width = {$mediapool.image.width}
+  }
+}
+
+plugin.tx_mediapool_galleryteaser < plugin.tx_mediapool_gallerypreview

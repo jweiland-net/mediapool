@@ -1,0 +1,17 @@
+Mediapool.settings:
+  label: 'Settings'
+  parent: 'Mediapool'
+
+settings:
+  mediapool.image.height:
+    label: 'Image Height'
+    category: 'Mediapool.settings'
+    description: 'Height of the preview image (e.g. 600 or 600c to crop the image)'
+    type: string
+    default: '600c'
+  mediapool.image.width:
+    label: 'Image Width'
+    category: 'Mediapool.settings'
+    description: 'Width of the preview image (e.g. 600 or 600c to crop the image)'
+    type: string
+    default: '600'

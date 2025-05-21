@@ -56,6 +56,7 @@ final readonly class ExtConf
         if ($this->youtubeDataApiKey === '') {
             throw new MissingYouTubeApiKeyException(
                 'Missing YouTube API key in extension settings of extension: mediapool',
+                1343309942,
             );
         }
 

@@ -58,7 +58,7 @@ class UpdateVideoInformationCommand extends Command
         // Create a data array for DataHandler to use the DataHandler Hook
         $data = [];
 
-        // create data array for data handler
+        // create the data array for data handler
         // to use the DataHandler Hook
         foreach ($videos as $video) {
             $data['tx_mediapool_domain_model_video'][$video['uid']] = [

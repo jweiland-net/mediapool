@@ -1,0 +1,36 @@
+categories:
+  Mediapool:
+    label: 'Mediapool'
+  Mediapool.templates:
+    label: 'Templates'
+    parent: 'Mediapool'
+  Mediapool.pages:
+    label: 'Pages'
+    parent: 'Mediapool'
+
+settings:
+  mediapool.templateRootPath:
+    label: 'Templates'
+    category: 'Mediapool.templates'
+    description: 'Path to template root'
+    type: string
+    default: 'EXT:mediapool/Resources/Private/Templates/'
+  mediapool.partialRootPath:
+    label: 'Partials'
+    category: 'Mediapool.templates'
+    description: 'Path to partial root'
+    type: string
+    default: 'EXT:mediapool/Resources/Private/Partials/'
+  mediapool.layoutRootPath:
+    label: 'Layouts'
+    category: 'Mediapool.templates'
+    description: 'Path to layout root'
+    type: string
+    default: 'EXT:mediapool/Resources/Private/Layouts/'
+
+  mediapool.storagePid:
+    label: 'Default storage PID'
+    category: 'Mediapool.pages'
+    description: 'Folder that stores videos, playlists and/or file collections'
+    type: int
+    default: 0

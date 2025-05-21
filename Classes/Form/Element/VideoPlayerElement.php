@@ -21,7 +21,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 class VideoPlayerElement extends AbstractFormElement
 {
     /**
-     * Render player or a message if player html is not set
+     * Render a player or a message if player HTML is not set
      */
     public function render(): array
     {

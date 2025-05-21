@@ -34,6 +34,31 @@ services:
         description: 'This task updates the video information'
         schedulable: true
 
+  # Called by makeInstance in Form Engine
+  JWeiland\Mediapool\Form\Element\InlineVideoElement:
+    public: true
+    shared: false
+
+  # Called by makeInstance in Form Engine
+  JWeiland\Mediapool\Form\Element\ShowSupportedVideoPlatforms:
+    public: true
+    shared: false
+
+  # Called by makeInstance in Form Engine
+  JWeiland\Mediapool\Form\Element\VideoHeaderElement:
+    public: true
+    shared: false
+
+  # Called by makeInstance in Form Engine
+  JWeiland\Mediapool\Form\Element\VideoPlayerElement:
+    public: true
+    shared: false
+
+  # Called by makeInstance in Form Engine
+  JWeiland\Mediapool\Form\Element\VideoTextElement:
+    public: true
+    shared: false
+
   # Called by makeInstance in DataHandler
   JWeiland\Mediapool\Hook\DataHandlerHook:
     public: true

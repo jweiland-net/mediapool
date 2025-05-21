@@ -16,7 +16,7 @@ use JWeiland\Mediapool\Controller\PlaylistController;
 use JWeiland\Mediapool\Controller\VideoController;
 use JWeiland\Mediapool\Form\Element\InlineVideoElement;
 use JWeiland\Mediapool\Form\Element\VideoHeaderElement;
-use JWeiland\Mediapool\Form\Element\VideoLinkElement;
+use JWeiland\Mediapool\Form\Element\ShowSupportedVideoPlatforms;
 use JWeiland\Mediapool\Form\Element\VideoPlayerElement;
 use JWeiland\Mediapool\Form\Element\VideoTextElement;
 use JWeiland\Mediapool\Hook\DataHandlerHook;
@@ -93,11 +93,11 @@ ExtensionUtility::configurePlugin(
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
 );
 
-// Add renderType to display video importers
+// Add a field wizard to show supported video platforms
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1507799836] = [
-    'nodeName' => 'videoLink',
+    'nodeName' => 'showSupportedVideoPlatforms',
     'priority' => '70',
-    'class' => VideoLinkElement::class,
+    'class' => ShowSupportedVideoPlatforms::class,
 ];
 
 // Add renderType to display video title as header

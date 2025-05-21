@@ -19,10 +19,10 @@ use JWeiland\Mediapool\Traits\GetFlashMessageQueueTrait;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
-use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\SysLog\Action\Database as SystemLogDatabaseAction;
 use TYPO3\CMS\Core\SysLog\Error as SystemLogErrorClassification;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -90,7 +90,7 @@ class DataHandlerHook implements LoggerAwareInterface
                 FlashMessage::class,
                 $missingYouTubeApiKeyException->getMessage(),
                 'Missing YouTube API key',
-                AbstractMessage::ERROR,
+                ContextualFeedbackSeverity::ERROR,
                 true,
             );
 
@@ -106,7 +106,7 @@ class DataHandlerHook implements LoggerAwareInterface
                 LocalizationUtility::translate(
                     'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:data_handler.exception.title',
                 ),
-                AbstractMessage::ERROR,
+                ContextualFeedbackSeverity::ERROR,
                 true,
             );
 
@@ -133,7 +133,7 @@ class DataHandlerHook implements LoggerAwareInterface
         }
 
         // use current pid as video pid
-        $data = $this->videoService->getVideoData($videos, (int)GeneralUtility::_POST('popViewId'));
+        $data = $this->videoService->getVideoData($videos, (int)($GLOBALS['TYPO3_REQUEST']->getParsedBody()['popViewId'] ?? null));
         if ($data) {
             foreach ($data[self::TABLE_VIDEO] as $uid => &$fields) {
                 // override pid if declared in an original field array

@@ -1,11 +1,11 @@
-plugin.tx_mediapool_recommended {
+plugin.tx_mediapool {
   view {
-    templateRootPaths.100 = {$plugin.tx_mediapool_mediapool.view.templateRootPath}
-    partialRootPaths.100 = {$plugin.tx_mediapool_mediapool.view.partialRootPath}
-    layoutRootPaths.100 = {$plugin.tx_mediapool_mediapool.view.layoutRootPath}
+    templateRootPaths.100 = {$mediapool.templateRootPath}
+    partialRootPaths.100 = {$mediapool.partialRootPath}
+    layoutRootPaths.100 = {$mediapool.layoutRootPath}
   }
   persistence {
-    storagePid = {$plugin.tx_mediapool_mediapool.persistence.storagePid}
+    storagePid = {$mediapool.storagePid}
   }
 }
 
