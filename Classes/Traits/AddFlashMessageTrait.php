@@ -23,7 +23,7 @@ trait AddFlashMessageTrait
 {
     use GetFlashMessageQueueTrait;
 
-    protected string $errorMessagesFile = 'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf';
+    private const LANGUAGE_FILE = 'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf';
 
     /**
      * Add a flash message
@@ -36,9 +36,9 @@ trait AddFlashMessageTrait
         string $message,
         array $messageArguments = []
     ): void {
-        $title = LocalizationUtility::translate($this->errorMessagesFile . ':' . $title);
+        $title = LocalizationUtility::translate(self::LANGUAGE_FILE . ':' . $title);
         $message = LocalizationUtility::translate(
-            $this->errorMessagesFile . ':' . $message,
+            self::LANGUAGE_FILE . ':' . $message,
             '',
             $messageArguments,
         );

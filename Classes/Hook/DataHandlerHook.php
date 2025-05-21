@@ -43,7 +43,7 @@ class DataHandlerHook implements LoggerAwareInterface
     public function __construct(
         private readonly PlaylistService $playlistService,
         private readonly PlaylistRecordService $playlistRecordService,
-        private readonly VideoService $videoService
+        private readonly VideoService $videoService,
     ) {}
 
     /**

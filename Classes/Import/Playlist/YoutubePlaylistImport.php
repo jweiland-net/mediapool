@@ -19,42 +19,35 @@ use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Error\Http\StatusException;
 use TYPO3\CMS\Core\Http\RequestFactory;
 
-class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInterface
+readonly class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInterface
 {
     use AddFlashMessageTrait;
 
     /**
      * URL to fetch playlist items via GET request
      */
-    public const PLAYLIST_ITEMS_API_URL = 'https://www.googleapis.com/youtube/v3/playlistItems?playlistId=%s&key=%s&part=contentDetails,status&maxResults=50';
+    private const PLAYLIST_ITEMS_API_URL = 'https://www.googleapis.com/youtube/v3/playlistItems?playlistId=%s&key=%s&part=contentDetails,status&maxResults=50';
 
     /**
      * URL to fetch playlist title via GET request
      */
-    public const PLAYLIST_API_URL = 'https://www.googleapis.com/youtube/v3/playlists?id=%s&key=%s&part=snippet';
+    private const PLAYLIST_API_URL = 'https://www.googleapis.com/youtube/v3/playlists?id=%s&key=%s&part=snippet';
 
     /**
      * URL to fetch channel data (uploads playlist, ...) via GET request
      */
-    public const CHANNELS_LIST_API_URL = 'https://www.googleapis.com/youtube/v3/channels?key=%s&part=contentDetails&%s';
+    private const CHANNELS_LIST_API_URL = 'https://www.googleapis.com/youtube/v3/channels?key=%s&part=contentDetails&%s';
 
     /**
      * Name of the video platform
      */
-    protected string $platformName = 'YouTube';
+    protected const PLATFORM_NAME = 'YouTube';
 
-    protected array $platformHosts = [
+    protected const PLATFORM_HOSTS = [
         'https://youtube.com',
         'https://www.youtube.com',
         'https://youtu.be',
     ];
-
-    /**
-     * Youtube Data API v3 key
-     */
-    protected string $apiKey = '';
-
-    protected string $playlistId = '';
 
     public function __construct(
         private readonly YouTubeVideoImport $youTubeVideoImport,
@@ -77,8 +70,6 @@ class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInte
      */
     public function getPlaylistInformation(string $playlistLink, int $pid): array
     {
-        $this->apiKey = $this->extConf->getYoutubeDataApiKey();
-
         if (!($playlistId = $this->getPlaylistId($playlistLink))) {
             $this->addFlashMessage(
                 'youTubePlaylistImport.invalid_id.title',
@@ -88,9 +79,8 @@ class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInte
             return [];
         }
 
-        $this->playlistId = $playlistId;
-        $information = $this->fetchPlaylistInformation();
-        $videos = $this->fetchPlaylistItems();
+        $information = $this->fetchPlaylistInformation($playlistId);
+        $videos = $this->fetchPlaylistItems($playlistId);
         $videoIds = [];
 
         $i = 0;
@@ -109,8 +99,8 @@ class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInte
         $recordUids = '';
         $data = $this->youTubeVideoImport->processDataArray($videoIds, $pid, $recordUids, true);
 
-        // return an empty array on error
-        if ($this->youTubeVideoImport->hasError()) {
+        // On error return empty array
+        if ($data === null) {
             return [];
         }
 
@@ -173,7 +163,7 @@ class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInte
         $response = $this->requestFactory->request(
             sprintf(
                 self::CHANNELS_LIST_API_URL,
-                $this->apiKey,
+                $this->extConf->getYoutubeDataApiKey(),
                 $channelParam,
             ),
         );
@@ -184,7 +174,7 @@ class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInte
                 $playlistId = $result['items'][0]['contentDetails']['relatedPlaylists']['uploads'];
             }
         } else {
-            $this->checkResponseStatusCode($response);
+            $this->checkResponseStatusCode($response, $playlistId);
         }
 
         return $playlistId;
@@ -195,7 +185,7 @@ class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInte
      *
      * @throws StatusException
      */
-    protected function checkResponseStatusCode(ResponseInterface $response): void
+    protected function checkResponseStatusCode(ResponseInterface $response, string $playlistId): void
     {
         // invalid api key
         if ($response->getStatusCode() === 400) {
@@ -203,19 +193,18 @@ class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInte
                 sprintf(
                     'Fetching playlist information for %s failed! Got the following response from YouTube: %s.' .
                     ' Please check your API-key.',
-                    $this->playlistId,
+                    $playlistId,
                     $response->getBody(),
                 ),
                 1508146718,
             );
-            // other problems
         }
 
         throw new StatusException(
             sprintf(
                 'Fetching playlist information for %s failed! Got status code %d and the' .
                 ' following response: %s',
-                $this->playlistId,
+                $playlistId,
                 $response->getStatusCode(),
                 $response->getBody(),
             ),
@@ -231,13 +220,16 @@ class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInte
      * @param string $additionalRequestParams additional request parameters
      * @return array empty array on error
      */
-    protected function fetchPlaylistItems(array $items = [], string $additionalRequestParams = ''): array
-    {
+    protected function fetchPlaylistItems(
+        string $playlistId,
+        array $items = [],
+        string $additionalRequestParams = '',
+    ): array {
         $response = $this->requestFactory->request(
             sprintf(
                 self::PLAYLIST_ITEMS_API_URL . $additionalRequestParams,
-                $this->playlistId,
-                $this->apiKey,
+                $playlistId,
+                $this->extConf->getYoutubeDataApiKey(),
             ),
         );
 
@@ -249,12 +241,16 @@ class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInte
                 }
                 // call recursive if nextPageToken is set
                 if (isset($result['nextPageToken'])) {
-                    $items = self::fetchPlaylistItems($items, '&pageToken=' . $result['nextPageToken']);
+                    $items = self::fetchPlaylistItems(
+                        $playlistId,
+                        $items,
+                        '&pageToken=' . $result['nextPageToken']
+                    );
                 }
                 return $items;
             }
         } else {
-            $this->checkResponseStatusCode($response);
+            $this->checkResponseStatusCode($response, $playlistId);
         }
 
         return [];
@@ -266,13 +262,13 @@ class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInte
      *
      * @return array empty array on error
      */
-    protected function fetchPlaylistInformation(): array
+    protected function fetchPlaylistInformation(string $playlistId): array
     {
         $response = $this->requestFactory->request(
             sprintf(
                 self::PLAYLIST_API_URL,
-                $this->playlistId,
-                $this->apiKey,
+                $playlistId,
+                $this->extConf->getYoutubeDataApiKey(),
             ),
         );
 
@@ -282,7 +278,7 @@ class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInte
                 return $result['items'];
             }
         } else {
-            $this->checkResponseStatusCode($response);
+            $this->checkResponseStatusCode($response, $playlistId);
         }
 
         return [];

@@ -42,9 +42,4 @@ interface PlaylistImportInterface
      * Returns PlatformHosts
      */
     public function getPlatformHosts(): array;
-
-    /**
-     * Will return true if at least one error occurred.
-     */
-    public function hasError(): bool;
 }

@@ -43,6 +43,9 @@ services:
   JWeiland\Mediapool\Form\Element\ShowSupportedVideoPlatforms:
     public: true
     shared: false
+    arguments:
+      $playlistImporters: !tagged_iterator { tag: 'mediapool.importer.playlist' }
+      $videoImporters: !tagged_iterator { tag: 'mediapool.importer.video' }
 
   # Called by makeInstance in Form Engine
   JWeiland\Mediapool\Form\Element\VideoHeaderElement:
@@ -78,13 +81,6 @@ services:
   JWeiland\Mediapool\Service\Record\VideoRecordService:
     arguments:
       $queryBuilder: '@qb.video'
-
-  # Called by makeInstance in VideoLinkElement
-  JWeiland\Mediapool\Service\ImportService:
-    public: true
-    arguments:
-      $playlistImporters: !tagged_iterator { tag: 'mediapool.importer.playlist' }
-      $videoImporters: !tagged_iterator { tag: 'mediapool.importer.video' }
 
   JWeiland\Mediapool\Service\PlaylistService:
     arguments:

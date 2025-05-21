@@ -11,16 +11,32 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Form\Element;
 
-use JWeiland\Mediapool\Service\ImportService;
+use JWeiland\Mediapool\Import\Playlist\PlaylistImportInterface;
+use JWeiland\Mediapool\Import\Video\VideoImportInterface;
 use TYPO3\CMS\Backend\Form\Element\AbstractFormElement;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class ShowSupportedVideoPlatforms extends AbstractFormElement
 {
-    public function __construct(
-        private readonly ImportService $importService,
-    ) {}
+    protected array $playlistImporters = [];
+
+    protected array $videoImporters = [];
+
+    public function __construct(iterable $playlistImporters, iterable $videoImporters)
+    {
+        foreach ($playlistImporters as $playlistImporter) {
+            if ($playlistImporter instanceof PlaylistImportInterface) {
+                $this->playlistImporters[] = $playlistImporter;
+            }
+        }
+
+        foreach ($videoImporters as $videoImporter) {
+            if ($videoImporter instanceof VideoImportInterface) {
+                $this->videoImporters[] = $videoImporter;
+            }
+        }
+    }
 
     /**
      * Render input field
@@ -64,9 +80,9 @@ class ShowSupportedVideoPlatforms extends AbstractFormElement
 
         try {
             if ($config['importType'] === 'playlist') {
-                $registeredImporters = $this->importService->getPlaylistImporters();
+                $registeredImporters = $this->playlistImporters;
             } else {
-                $registeredImporters = $this->importService->getVideoImporters();
+                $registeredImporters = $this->videoImporters;
             }
 
             foreach ($registeredImporters as $registeredImporter) {
