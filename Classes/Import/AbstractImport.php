@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Import;
 
-readonly abstract class AbstractImport
+abstract readonly class AbstractImport
 {
     /**
      * Name of the video platform
