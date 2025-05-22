@@ -14,7 +14,7 @@ namespace JWeiland\Mediapool\Service;
 use JWeiland\Mediapool\Import\Playlist\PlaylistImportInterface;
 use JWeiland\Mediapool\Traits\AddFlashMessageTrait;
 
-readonly class PlaylistService
+class PlaylistService
 {
     use AddFlashMessageTrait;
 

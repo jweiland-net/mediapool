@@ -7,6 +7,11 @@
 ChangeLog
 =========
 
+Version 5.0.1
+=============
+
+*   Do not mark PlaylistService as readonly
+
 Version 5.0.0
 =============
 
