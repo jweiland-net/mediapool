@@ -7,6 +7,11 @@
 ChangeLog
 =========
 
+Version 5.0.2
+=============
+
+*   Add UpgradeWizard to apply `uid` column to `tx_mediapool_playlist_video_mm`
+
 Version 5.0.1
 =============
 
