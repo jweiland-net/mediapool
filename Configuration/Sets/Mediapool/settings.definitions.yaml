@@ -34,3 +34,15 @@ settings:
     description: 'Folder that stores videos, playlists and/or file collections'
     type: int
     default: 0
+  mediapool.listPage:
+    label: 'List Page'
+    category: 'Mediapool.pages'
+    description: 'Page UID with list plugin'
+    type: int
+    default: 0
+  mediapool.detailPid:
+    label: 'Detail Page'
+    category: 'Mediapool.pages'
+    description: 'Page UID with detail plugin'
+    type: int
+    default: 0

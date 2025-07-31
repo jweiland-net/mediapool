@@ -4,5 +4,3 @@ plugin.tx_mediapool {
     width = {$mediapool.image.width}
   }
 }
-
-plugin.tx_mediapool_galleryteaser < plugin.tx_mediapool_gallerypreview

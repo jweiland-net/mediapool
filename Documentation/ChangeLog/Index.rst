@@ -7,6 +7,11 @@
 ChangeLog
 =========
 
+Version 5.0.3
+=============
+
+*   Add UpgradeWizard to migrate from switchableControllerActions to CType
+
 Version 5.0.2
 =============
 
