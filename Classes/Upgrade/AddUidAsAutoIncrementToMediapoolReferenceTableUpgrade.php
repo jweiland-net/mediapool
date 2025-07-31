@@ -36,7 +36,7 @@ use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
  * Install Tool — and because this requirement can never be fulfilled while the table structure remains invalid — this
  * wizard is only executable from the CLI.
  */
-#[UpgradeWizard('addUidAsAutoIncrementToMediapoolReferenceTable')]
+#[UpgradeWizard('mediapool_addUidAsAutoIncrementToMediapoolReferenceTableUpgrade')]
 class AddUidAsAutoIncrementToMediapoolReferenceTableUpgrade implements UpgradeWizardInterface
 {
     public const TABLE = 'tx_mediapool_playlist_video_mm';

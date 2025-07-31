@@ -4,15 +4,16 @@ plugin.tx_mediapool {
     partialRootPaths.100 = {$mediapool.partialRootPath}
     layoutRootPaths.100 = {$mediapool.layoutRootPath}
   }
+
   persistence {
     storagePid = {$mediapool.storagePid}
   }
-}
 
-plugin.tx_mediapool_detail < plugin.tx_mediapool_recommended
-plugin.tx_mediapool_recentbycategory < plugin.tx_mediapool_recommended
-plugin.tx_mediapool_latest < plugin.tx_mediapool_recommended
-plugin.tx_mediapool_list < plugin.tx_mediapool_recommended
+  settings {
+    detailPage = {$mediapool.detailPage}
+    listPage = {$mediapool.listPage}
+  }
+}
 
 plugin.tx_mediapool._CSS_DEFAULT_STYLE (
   .preview-icon {
