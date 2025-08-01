@@ -13,7 +13,7 @@ namespace JWeiland\Mediapool\Tests\Functional\Import\Playlist;
 
 use JWeiland\Mediapool\Configuration\ExtConf;
 use JWeiland\Mediapool\Helper\MessageHelper;
-use JWeiland\Mediapool\Import\Playlist\YoutubePlaylistImport;
+use JWeiland\Mediapool\Import\Playlist\YouTubePlaylistImport;
 use JWeiland\Mediapool\Import\Video\YouTubeVideoImport;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -24,9 +24,9 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 /**
  * Test case.
  */
-class YoutubePlaylistImportTest extends FunctionalTestCase
+class YouTubePlaylistImportTest extends FunctionalTestCase
 {
-    public YoutubePlaylistImport $subject;
+    public YouTubePlaylistImport $subject;
 
     public MessageHelper|MockObject $messageHelperMock;
 
@@ -52,7 +52,7 @@ class YoutubePlaylistImportTest extends FunctionalTestCase
             youtubeDataApiKey: 'YouTubeApiKey',
         );
 
-        $this->subject = new YoutubePlaylistImport(
+        $this->subject = new YouTubePlaylistImport(
             $this->youTubeVideoImportMock,
             $this->requestFactoryMock,
             $this->messageHelperMock,

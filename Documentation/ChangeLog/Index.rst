@@ -7,6 +7,11 @@
 ChangeLog
 =========
 
+Version 5.0.8
+=============
+
+*   Add func tests for YouTubeVideoImporter
+
 Version 5.0.7
 =============
 

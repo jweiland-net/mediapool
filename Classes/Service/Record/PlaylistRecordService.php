@@ -13,14 +13,17 @@ namespace JWeiland\Mediapool\Service\Record;
 
 use Doctrine\DBAL\Exception;
 use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 readonly class PlaylistRecordService
 {
+    private const TABLE = 'tx_mediapool_domain_model_playlist';
+
     public function __construct(
-        private QueryBuilder $queryBuilder
+        private ConnectionPool $connectionPool,
     ) {}
 
     /**
@@ -30,11 +33,7 @@ readonly class PlaylistRecordService
      */
     public function findAllLinksAndUids(): array
     {
-        $queryBuilder = $this->queryBuilder;
-        $queryBuilder
-            ->getRestrictions()
-            ->removeAll()
-            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+        $queryBuilder = $this->getQueryBuilder();
 
         try {
             return $queryBuilder
@@ -42,7 +41,7 @@ readonly class PlaylistRecordService
                 ->from('tx_mediapool_domain_model_playlist')
                 ->executeQuery()
                 ->fetchAllAssociative();
-        } catch (Exception $e) {
+        } catch (Exception) {
             return [];
         }
     }
@@ -55,11 +54,7 @@ readonly class PlaylistRecordService
      */
     public function findLinksAndUidsByPages(array $pages): array
     {
-        $queryBuilder = $this->queryBuilder;
-        $queryBuilder
-            ->getRestrictions()
-            ->removeAll()
-            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+        $queryBuilder = $this->getQueryBuilder();
 
         try {
             return $queryBuilder
@@ -73,18 +68,14 @@ readonly class PlaylistRecordService
                 )
                 ->executeQuery()
                 ->fetchAllAssociative();
-        } catch (Exception $e) {
+        } catch (Exception) {
             return [];
         }
     }
 
     public function getPidByPlaylistUid(int $playlistUid): int
     {
-        $queryBuilder = $this->queryBuilder;
-        $queryBuilder
-            ->getRestrictions()
-            ->removeAll()
-            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+        $queryBuilder = $this->getQueryBuilder();
 
         try {
             $playlistRecord = $queryBuilder
@@ -98,7 +89,7 @@ readonly class PlaylistRecordService
                 )
                 ->executeQuery()
                 ->fetchAssociative();
-        } catch (Exception $e) {
+        } catch (Exception) {
             return 0;
         }
 
@@ -107,5 +98,16 @@ readonly class PlaylistRecordService
         }
 
         return $playlistRecord['pid'] ?? 0;
+    }
+
+    protected function getQueryBuilder(): QueryBuilder
+    {
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE);
+        $queryBuilder
+            ->getRestrictions()
+            ->removeAll()
+            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+
+        return $queryBuilder;
     }
 }

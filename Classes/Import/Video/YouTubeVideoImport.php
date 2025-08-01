@@ -51,32 +51,6 @@ readonly class YouTubeVideoImport extends AbstractImport implements VideoImportI
     ) {}
 
     /**
-     * Implode video ids from the video array and unify the passed array
-     * Can handle pure video ids, video ids with prefix and video urls
-     * e.g.
-     * [4 => 'exi0iht_kLw', 5 => 'yt_Vfw1pAmLlY', 'NEW1234' => 'https://youtu.be/jzTVVocFaVE']
-     * will result:
-     * 'exi0iht_kLw,Vfw1pAmLlY,jzTVVocFaVE'
-     * and a unified array:
-     * [4 => 'exi0iht_kLw', 5 => 'Vfw1pAmLlY', 'NEW1234' => 'jzTVVocFaVE']
-     */
-    protected function implodeVideoIdsAndUnifyArray(array &$videos): array
-    {
-        $videoIds = [];
-        foreach ($videos as &$video) {
-            if (str_starts_with($video['video'], 'http')) {
-                // ToDo: add error if getVideoId returns empty string
-                $video['video'] = $this->getVideoId($video['video']);
-            } elseif (str_starts_with(self::YOUTUBE_PLATFORM_PREFIX, $video['video'])) {
-                $video['video'] = substr($video['video'], strlen(self::YOUTUBE_PLATFORM_PREFIX));
-            }
-            $videoIds[] = $video['video'];
-        }
-
-        return $videoIds;
-    }
-
-    /**
      * Fetches information for all passed $videos and returns the information as a DataHandler
      * compatible array.
      *
@@ -121,7 +95,7 @@ readonly class YouTubeVideoImport extends AbstractImport implements VideoImportI
             $pid = (int)($video['pid'] ?? $pid);
 
             // check if video information for video is in the array
-            if (is_array($fetchedVideoInformation[$videoId])) {
+            if (is_array(($fetchedVideoInformation[$videoId] ?? false))) {
                 $videoInformation = $fetchedVideoInformation[$videoId];
                 $existingVideo = null;
                 // if true, check for a record with the same video id and use it instead of
@@ -143,7 +117,7 @@ readonly class YouTubeVideoImport extends AbstractImport implements VideoImportI
                 if (is_string($recordUid) && str_starts_with($recordUid, 'NEW')) {
                     $data['tx_mediapool_domain_model_video'][$recordUid]['pid'] = $pid;
                 }
-            } elseif ($fetchedVideoInformation[$videoId] === 'noPermission') {
+            } elseif (($fetchedVideoInformation[$videoId] ?? '') === 'noPermission') {
                 // if the video is private or set as not embeddable
                 $this->messageHelper->addFlashMessage(
                     LocalizationUtility::translate(
@@ -156,7 +130,6 @@ readonly class YouTubeVideoImport extends AbstractImport implements VideoImportI
                     ),
                     ContextualFeedbackSeverity::ERROR,
                 );
-                return null;
             } else {
                 // never fetched it
                 $this->messageHelper->addFlashMessage(
@@ -170,13 +143,38 @@ readonly class YouTubeVideoImport extends AbstractImport implements VideoImportI
                     ),
                     ContextualFeedbackSeverity::ERROR,
                 );
-                return null;
             }
         }
 
         $recordUids = implode(',', $recordUidArray);
 
         return $data;
+    }
+
+    /**
+     * Implode video ids from the video array and unify the passed array
+     * Can handle pure video ids, video ids with prefix and video urls
+     * e.g.
+     * [4 => 'exi0iht_kLw', 5 => 'yt_Vfw1pAmLlY', 'NEW1234' => 'https://youtu.be/jzTVVocFaVE']
+     * will result:
+     * 'exi0iht_kLw,Vfw1pAmLlY,jzTVVocFaVE'
+     * and a unified array:
+     * [4 => 'exi0iht_kLw', 5 => 'Vfw1pAmLlY', 'NEW1234' => 'jzTVVocFaVE']
+     */
+    protected function implodeVideoIdsAndUnifyArray(array &$videos): array
+    {
+        $videoIds = [];
+        foreach ($videos as &$video) {
+            if (str_starts_with($video['video'], 'http')) {
+                // ToDo: add error if getVideoId returns empty string
+                $video['video'] = $this->getVideoId($video['video']);
+            } elseif (str_starts_with(self::YOUTUBE_PLATFORM_PREFIX, $video['video'])) {
+                $video['video'] = substr($video['video'], strlen(self::YOUTUBE_PLATFORM_PREFIX));
+            }
+            $videoIds[] = $video['video'];
+        }
+
+        return $videoIds;
     }
 
     /**
@@ -190,8 +188,8 @@ readonly class YouTubeVideoImport extends AbstractImport implements VideoImportI
 
         // if we can't watch or embed the video, throw exception
         if (
-            $item['status']['privacyStatus'] === 'private'
-            || $item['status']['embeddable'] == false
+            (string)($item['status']['privacyStatus'] ?? '') === 'private'
+            || (bool)($item['status']['embeddable'] ?? false) === false
         ) {
             $hasPermission = false;
         }
@@ -256,6 +254,10 @@ readonly class YouTubeVideoImport extends AbstractImport implements VideoImportI
             $result = json_decode((string)$response->getBody(), true);
             if (is_array($result['items'])) {
                 foreach ($result['items'] as $item) {
+                    if (!isset($item['id'])) {
+                        continue;
+                    }
+
                     // only add video if permissions are ok
                     if ($this->checkVideoPermission($item)) {
                         $items[(string)$item['id']] = $this->getArrayForItem($item);

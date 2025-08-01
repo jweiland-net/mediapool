@@ -10,16 +10,6 @@ services:
       - '../Classes/Domain/Model/*'
       - '../Classes/Form/Element/*'
 
-  qb.playlist:
-    class: TYPO3\CMS\Core\Database\Query\QueryBuilder
-    factory: ['@TYPO3\CMS\Core\Database\ConnectionPool', 'getQueryBuilderForTable']
-    arguments: ['tx_mediapool_domain_model_playlist']
-
-  qb.video:
-    class: TYPO3\CMS\Core\Database\Query\QueryBuilder
-    factory: ['@TYPO3\CMS\Core\Database\ConnectionPool', 'getQueryBuilderForTable']
-    arguments: ['tx_mediapool_domain_model_video']
-
   JWeiland\Mediapool\Command\UpdatePlaylistInformationCommand:
     tags:
       - name: console.command
@@ -66,21 +56,13 @@ services:
   JWeiland\Mediapool\Hook\DataHandlerHook:
     public: true
 
-  JWeiland\Mediapool\Import\Playlist\YoutubePlaylistImport:
+  JWeiland\Mediapool\Import\Playlist\YouTubePlaylistImport:
     tags:
       - name: 'mediapool.importer.playlist'
 
   JWeiland\Mediapool\Import\Video\YouTubeVideoImport:
     tags:
       - name: 'mediapool.importer.video'
-
-  JWeiland\Mediapool\Service\Record\PlaylistRecordService:
-    arguments:
-      $queryBuilder: '@qb.playlist'
-
-  JWeiland\Mediapool\Service\Record\VideoRecordService:
-    arguments:
-      $queryBuilder: '@qb.video'
 
   JWeiland\Mediapool\Service\PlaylistService:
     arguments:
