@@ -10,7 +10,6 @@
                         <label>LLL:EXT:mediapool/Resources/Private/Language/FlexForm.xlf:gallery.file_collections</label>
                         <config>
                             <type>group</type>
-                            <internal_type>db</internal_type>
                             <allowed>sys_file_collection</allowed>
                         </config>
                     </settings.fileCollections>
@@ -19,7 +18,6 @@
                         <description>LLL:EXT:mediapool/Resources/Private/Language/FlexForm.xlf:gallery.teaser.list_page.description</description>
                         <config>
                             <type>group</type>
-                            <internal_type>db</internal_type>
                             <allowed>pages</allowed>
                             <size>1</size>
                             <maxitems>1</maxitems>
