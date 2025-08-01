@@ -7,6 +7,11 @@
 ChangeLog
 =========
 
+Version 5.0.6
+=============
+
+*   Test data array before array_merge
+
 Version 5.0.5
 =============
 
