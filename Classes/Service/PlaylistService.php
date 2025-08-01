@@ -47,7 +47,7 @@ class PlaylistService
                     return $registeredPlaylistImporter->getPlaylistInformation($playlistLink, $pid);
                 }
             }
-        } catch (\Exception $e) {
+        } catch (\Exception) {
         }
 
         $this->messageHelper->addFlashMessage(

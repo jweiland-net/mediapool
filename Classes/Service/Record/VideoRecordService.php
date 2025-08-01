@@ -20,6 +20,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 readonly class VideoRecordService
 {
+    private const TABLE = 'tx_mediapool_domain_model_video';
+
     public function __construct(
         private ConnectionPool $connectionPool,
     ) {}
