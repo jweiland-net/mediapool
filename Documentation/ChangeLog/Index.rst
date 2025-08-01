@@ -7,6 +7,11 @@
 ChangeLog
 =========
 
+Version 5.0.4
+=============
+
+*   Use static instead of self in AbstractImport"
+
 Version 5.0.3
 =============
 
