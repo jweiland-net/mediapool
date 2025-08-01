@@ -7,6 +7,11 @@
 ChangeLog
 =========
 
+Version 5.0.7
+=============
+
+*   Replace FlashMessageService with MessageHelper
+
 Version 5.0.6
 =============
 
