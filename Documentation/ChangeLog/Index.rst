@@ -7,6 +7,11 @@
 ChangeLog
 =========
 
+Version 5.0.9
+=============
+
+*   Add missing TABLE const to VideoRecordService
+
 Version 5.0.8
 =============
 
