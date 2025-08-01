@@ -17,6 +17,7 @@ use JWeiland\Mediapool\Import\AbstractImport;
 use JWeiland\Mediapool\Traits\AddFlashMessageTrait;
 use TYPO3\CMS\Core\Error\Http\StatusException;
 use TYPO3\CMS\Core\Http\RequestFactory;
+use TYPO3\CMS\Core\Messaging\FlashMessageService;
 
 readonly class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
 {
@@ -46,11 +47,12 @@ readonly class YouTubeVideoImport extends AbstractImport implements VideoImportI
     public function __construct(
         private RequestFactory $requestFactory,
         private VideoRepository $videoRepository,
+        private FlashMessageService $flashMessageService,
         private ExtConf $extConf
     ) {}
 
     /**
-     * Implode video ids from videos array and unify the pased array
+     * Implode video ids from the video array and unify the passed array
      * Can handle pure video ids, video ids with prefix and video urls
      * e.g.
      * [4 => 'exi0iht_kLw', 5 => 'yt_Vfw1pAmLlY', 'NEW1234' => 'https://youtu.be/jzTVVocFaVE']
