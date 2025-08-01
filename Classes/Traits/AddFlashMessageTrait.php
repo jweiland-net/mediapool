@@ -17,18 +17,15 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * Trait to provide a method to add FlashMessages to queue
+ * Trait to provide a method to add FlashMessages to the queue
  */
 trait AddFlashMessageTrait
 {
-    use GetFlashMessageQueueTrait;
-
     private const LANGUAGE_FILE = 'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf';
 
     /**
      * Add a flash message
-     *
-     * Please notice: $title and $message are trans-unit ids and can not be used without language file.
+     * Please notice: $title and $message are trans-unit ids and cannot be used without language file.
      * You can override the language file with $this->errorMessagesFile = '<EXT:your_ext/...>'.
      */
     public function addFlashMessage(
@@ -43,11 +40,15 @@ trait AddFlashMessageTrait
             $messageArguments,
         );
 
-        $this->getFlashMessageQueue()->addMessage(GeneralUtility::makeInstance(
-            FlashMessage::class,
-            $message ?? '[no-message]',
-            $title ?? '[no-title]',
-            ContextualFeedbackSeverity::ERROR,
-        ));
+        $this->flashMessageService
+            ->getMessageQueueByIdentifier()
+            ->addMessage(
+                GeneralUtility::makeInstance(
+                    FlashMessage::class,
+                    $message ?? '[no-message]',
+                    $title ?? '[no-title]',
+                    ContextualFeedbackSeverity::ERROR,
+                )
+            );
     }
 }

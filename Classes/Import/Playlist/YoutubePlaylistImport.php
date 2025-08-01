@@ -18,6 +18,7 @@ use JWeiland\Mediapool\Traits\AddFlashMessageTrait;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Error\Http\StatusException;
 use TYPO3\CMS\Core\Http\RequestFactory;
+use TYPO3\CMS\Core\Messaging\FlashMessageService;
 
 readonly class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInterface
 {
@@ -50,9 +51,10 @@ readonly class YoutubePlaylistImport extends AbstractImport implements PlaylistI
     ];
 
     public function __construct(
-        private readonly YouTubeVideoImport $youTubeVideoImport,
-        private readonly RequestFactory $requestFactory,
-        private readonly ExtConf $extConf
+        private YouTubeVideoImport $youTubeVideoImport,
+        private RequestFactory $requestFactory,
+        private FlashMessageService $flashMessageService,
+        private ExtConf $extConf
     ) {}
 
     /**
@@ -124,7 +126,12 @@ readonly class YoutubePlaylistImport extends AbstractImport implements PlaylistI
      */
     protected function getPlaylistId(string $playlistLink): string
     {
+        if ($playlistLink === '') {
+            return '';
+        }
+
         $playlistId = '';
+
         if (
             preg_match('@https://www\.youtube\.com/channel/(?<id>[^/]*)@', $playlistLink, $matches)
             && array_key_exists('id', $matches)
