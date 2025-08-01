@@ -12,18 +12,17 @@ declare(strict_types=1);
 namespace JWeiland\Mediapool\Import\Playlist;
 
 use JWeiland\Mediapool\Configuration\ExtConf;
+use JWeiland\Mediapool\Helper\MessageHelper;
 use JWeiland\Mediapool\Import\AbstractImport;
 use JWeiland\Mediapool\Import\Video\YouTubeVideoImport;
-use JWeiland\Mediapool\Traits\AddFlashMessageTrait;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Error\Http\StatusException;
 use TYPO3\CMS\Core\Http\RequestFactory;
-use TYPO3\CMS\Core\Messaging\FlashMessageService;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 readonly class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInterface
 {
-    use AddFlashMessageTrait;
-
     /**
      * URL to fetch playlist items via GET request
      */
@@ -53,7 +52,7 @@ readonly class YoutubePlaylistImport extends AbstractImport implements PlaylistI
     public function __construct(
         private YouTubeVideoImport $youTubeVideoImport,
         private RequestFactory $requestFactory,
-        private FlashMessageService $flashMessageService,
+        private MessageHelper $messageHelper,
         private ExtConf $extConf
     ) {}
 
@@ -73,10 +72,16 @@ readonly class YoutubePlaylistImport extends AbstractImport implements PlaylistI
     public function getPlaylistInformation(string $playlistLink, int $pid): array
     {
         if (!($playlistId = $this->getPlaylistId($playlistLink))) {
-            $this->addFlashMessage(
-                'youTubePlaylistImport.invalid_id.title',
-                'youTubePlaylistImport.invalid_id.message',
-                [$playlistLink],
+            $this->messageHelper->addFlashMessage(
+                LocalizationUtility::translate(
+                    'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:youTubePlaylistImport.invalid_id.message',
+                    null,
+                    [$playlistLink],
+                ),
+                LocalizationUtility::translate(
+                    'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:youTubePlaylistImport.invalid_id.title',
+                ),
+                ContextualFeedbackSeverity::ERROR,
             );
             return [];
         }

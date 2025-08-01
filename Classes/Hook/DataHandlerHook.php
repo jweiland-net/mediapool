@@ -12,19 +12,17 @@ declare(strict_types=1);
 namespace JWeiland\Mediapool\Hook;
 
 use JWeiland\Mediapool\Configuration\Exception\MissingYouTubeApiKeyException;
+use JWeiland\Mediapool\Helper\MessageHelper;
 use JWeiland\Mediapool\Service\PlaylistService;
 use JWeiland\Mediapool\Service\Record\PlaylistRecordService;
 use JWeiland\Mediapool\Service\VideoService;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\SysLog\Action\Database as SystemLogDatabaseAction;
 use TYPO3\CMS\Core\SysLog\Error as SystemLogErrorClassification;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
@@ -43,7 +41,7 @@ class DataHandlerHook implements LoggerAwareInterface
         private readonly PlaylistService $playlistService,
         private readonly PlaylistRecordService $playlistRecordService,
         private readonly VideoService $videoService,
-        private readonly FlashMessageService $flashMessageService,
+        private readonly MessageHelper $messageHelper,
     ) {}
 
     /**
@@ -86,20 +84,13 @@ class DataHandlerHook implements LoggerAwareInterface
                 -1,
             );
 
-            $flashMessage = GeneralUtility::makeInstance(
-                FlashMessage::class,
+            $this->messageHelper->addFlashMessage(
                 $missingYouTubeApiKeyException->getMessage(),
                 'Missing YouTube API key',
                 ContextualFeedbackSeverity::ERROR,
-                true,
             );
-
-            $this->flashMessageService
-                ->getMessageQueueByIdentifier()
-                ->addMessage($flashMessage);
         } catch (\Exception $e) {
-            $flashMessage = GeneralUtility::makeInstance(
-                FlashMessage::class,
+            $this->messageHelper->addFlashMessage(
                 LocalizationUtility::translate(
                     'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:data_handler.exception.message',
                     null,
@@ -109,12 +100,7 @@ class DataHandlerHook implements LoggerAwareInterface
                     'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:data_handler.exception.title',
                 ),
                 ContextualFeedbackSeverity::ERROR,
-                true,
             );
-
-            $this->flashMessageService
-                ->getMessageQueueByIdentifier()
-                ->addMessage($flashMessage);
 
             $this->logger->error(
                 'Exception while running DataHandler hook from ext:mediapool: ' . $e->getMessage() .

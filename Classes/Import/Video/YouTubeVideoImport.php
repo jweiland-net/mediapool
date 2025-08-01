@@ -13,16 +13,15 @@ namespace JWeiland\Mediapool\Import\Video;
 
 use JWeiland\Mediapool\Configuration\ExtConf;
 use JWeiland\Mediapool\Domain\Repository\VideoRepository;
+use JWeiland\Mediapool\Helper\MessageHelper;
 use JWeiland\Mediapool\Import\AbstractImport;
-use JWeiland\Mediapool\Traits\AddFlashMessageTrait;
 use TYPO3\CMS\Core\Error\Http\StatusException;
 use TYPO3\CMS\Core\Http\RequestFactory;
-use TYPO3\CMS\Core\Messaging\FlashMessageService;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 readonly class YouTubeVideoImport extends AbstractImport implements VideoImportInterface
 {
-    use AddFlashMessageTrait;
-
     /**
      * Platform prefix. Used for YouTube video id
      */
@@ -47,7 +46,7 @@ readonly class YouTubeVideoImport extends AbstractImport implements VideoImportI
     public function __construct(
         private RequestFactory $requestFactory,
         private VideoRepository $videoRepository,
-        private FlashMessageService $flashMessageService,
+        private MessageHelper $messageHelper,
         private ExtConf $extConf
     ) {}
 
@@ -121,7 +120,7 @@ readonly class YouTubeVideoImport extends AbstractImport implements VideoImportI
             $videoId = $video['video'];
             $pid = (int)($video['pid'] ?? $pid);
 
-            // check if video information for video is in array
+            // check if video information for video is in the array
             if (is_array($fetchedVideoInformation[$videoId])) {
                 $videoInformation = $fetchedVideoInformation[$videoId];
                 $existingVideo = null;
@@ -146,18 +145,30 @@ readonly class YouTubeVideoImport extends AbstractImport implements VideoImportI
                 }
             } elseif ($fetchedVideoInformation[$videoId] === 'noPermission') {
                 // if the video is private or set as not embeddable
-                $this->addFlashMessage(
-                    'youTubeVideoImport.missing_youtube_permission.title',
-                    'youTubeVideoImport.missing_youtube_permission.message',
-                    [$videoId],
+                $this->messageHelper->addFlashMessage(
+                    LocalizationUtility::translate(
+                        'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:youTubeVideoImport.missing_youtube_permission.message',
+                        null,
+                        [$videoId],
+                    ),
+                    LocalizationUtility::translate(
+                        'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:youTubeVideoImport.missing_youtube_permission.title',
+                    ),
+                    ContextualFeedbackSeverity::ERROR,
                 );
                 return null;
             } else {
                 // never fetched it
-                $this->addFlashMessage(
-                    'youTubeVideoImport.missing_video_information.title',
-                    'youTubeVideoImport.missing_video_information.message',
-                    [$videoId],
+                $this->messageHelper->addFlashMessage(
+                    LocalizationUtility::translate(
+                        'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:youTubeVideoImport.missing_video_information.message',
+                        null,
+                        [$videoId],
+                    ),
+                    LocalizationUtility::translate(
+                        'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:youTubeVideoImport.missing_video_information.title',
+                    ),
+                    ContextualFeedbackSeverity::ERROR,
                 );
                 return null;
             }

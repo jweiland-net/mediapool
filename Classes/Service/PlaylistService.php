@@ -11,17 +11,19 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Service;
 
+use JWeiland\Mediapool\Helper\MessageHelper;
 use JWeiland\Mediapool\Import\Playlist\PlaylistImportInterface;
-use JWeiland\Mediapool\Traits\AddFlashMessageTrait;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class PlaylistService
 {
-    use AddFlashMessageTrait;
-
     protected array $importers;
 
-    public function __construct(iterable $importers)
-    {
+    public function __construct(
+        iterable $importers,
+        protected MessageHelper $messageHelper,
+    ) {
         foreach ($importers as $importer) {
             if ($importer instanceof PlaylistImportInterface) {
                 $this->importers[] = $importer;
@@ -48,9 +50,14 @@ class PlaylistService
         } catch (\Exception $e) {
         }
 
-        $this->addFlashMessage(
-            'playlist_service.no_match.title',
-            'playlist_service.no_match.message',
+        $this->messageHelper->addFlashMessage(
+            LocalizationUtility::translate(
+                'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:playlist_service.no_match.message',
+            ),
+            LocalizationUtility::translate(
+                'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:playlist_service.no_match.title',
+            ),
+            ContextualFeedbackSeverity::ERROR,
         );
 
         return [];
