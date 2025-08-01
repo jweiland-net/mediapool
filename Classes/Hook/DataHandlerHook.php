@@ -15,11 +15,11 @@ use JWeiland\Mediapool\Configuration\Exception\MissingYouTubeApiKeyException;
 use JWeiland\Mediapool\Service\PlaylistService;
 use JWeiland\Mediapool\Service\Record\PlaylistRecordService;
 use JWeiland\Mediapool\Service\VideoService;
-use JWeiland\Mediapool\Traits\GetFlashMessageQueueTrait;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\SysLog\Action\Database as SystemLogDatabaseAction;
 use TYPO3\CMS\Core\SysLog\Error as SystemLogErrorClassification;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
@@ -35,7 +35,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 class DataHandlerHook implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
-    use GetFlashMessageQueueTrait;
 
     public const TABLE_VIDEO = 'tx_mediapool_domain_model_video';
     public const TABLE_PLAYLIST = 'tx_mediapool_domain_model_playlist';
@@ -44,6 +43,7 @@ class DataHandlerHook implements LoggerAwareInterface
         private readonly PlaylistService $playlistService,
         private readonly PlaylistRecordService $playlistRecordService,
         private readonly VideoService $videoService,
+        private readonly FlashMessageService $flashMessageService,
     ) {}
 
     /**
@@ -94,7 +94,9 @@ class DataHandlerHook implements LoggerAwareInterface
                 true,
             );
 
-            $this->getFlashMessageQueue()->addMessage($flashMessage);
+            $this->flashMessageService
+                ->getMessageQueueByIdentifier()
+                ->addMessage($flashMessage);
         } catch (\Exception $e) {
             $flashMessage = GeneralUtility::makeInstance(
                 FlashMessage::class,
@@ -110,7 +112,9 @@ class DataHandlerHook implements LoggerAwareInterface
                 true,
             );
 
-            $this->getFlashMessageQueue()->addMessage($flashMessage);
+            $this->flashMessageService
+                ->getMessageQueueByIdentifier()
+                ->addMessage($flashMessage);
 
             $this->logger->error(
                 'Exception while running DataHandler hook from ext:mediapool: ' . $e->getMessage() .

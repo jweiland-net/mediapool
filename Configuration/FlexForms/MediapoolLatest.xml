@@ -10,7 +10,6 @@
                         <label>LLL:EXT:mediapool/Resources/Private/Language/FlexForm.xlf:mediapool.detail_page</label>
                         <config>
                             <type>group</type>
-                            <internal_type>db</internal_type>
                             <allowed>pages</allowed>
                             <size>1</size>
                             <maxitems>1</maxitems>
@@ -21,7 +20,6 @@
                         <label>LLL:EXT:mediapool/Resources/Private/Language/FlexForm.xlf:mediapool.list_page</label>
                         <config>
                             <type>group</type>
-                            <internal_type>db</internal_type>
                             <allowed>pages</allowed>
                             <size>1</size>
                             <maxitems>1</maxitems>
@@ -32,7 +30,6 @@
                         <label>LLL:EXT:mediapool/Resources/Private/Language/FlexForm.xlf:mediapool.playlist_selection</label>
                         <config>
                             <type>group</type>
-                            <internal_type>db</internal_type>
                             <allowed>tx_mediapool_domain_model_playlist</allowed>
                             <size>1</size>
                             <minitems>1</minitems>
