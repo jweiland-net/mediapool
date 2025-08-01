@@ -13,6 +13,7 @@ namespace JWeiland\Mediapool\Service\Record;
 
 use Doctrine\DBAL\Exception;
 use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -20,7 +21,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 readonly class VideoRecordService
 {
     public function __construct(
-        private QueryBuilder $queryBuilder
+        private ConnectionPool $connectionPool,
     ) {}
 
     /**
@@ -30,11 +31,7 @@ readonly class VideoRecordService
      */
     public function findAllLinksAndUids(): array
     {
-        $queryBuilder = $this->queryBuilder;
-        $queryBuilder
-            ->getRestrictions()
-            ->removeAll()
-            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+        $queryBuilder = $this->getQueryBuilder();
 
         try {
             return $queryBuilder
@@ -42,24 +39,20 @@ readonly class VideoRecordService
                 ->from('tx_mediapool_domain_model_video')
                 ->executeQuery()
                 ->fetchAllAssociative();
-        } catch (Exception $e) {
+        } catch (Exception) {
             return [];
         }
     }
 
     /**
-     * Find link and uid of records by pid
+     * Find a link and uid of records by pid
      *
      * @param array $pages UIDs of page records
      * @return array records with fields: uid, link
      */
     public function findLinksAndUidsByPages(array $pages): array
     {
-        $queryBuilder = $this->queryBuilder;
-        $queryBuilder
-            ->getRestrictions()
-            ->removeAll()
-            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+        $queryBuilder = $this->getQueryBuilder();
 
         try {
             return $queryBuilder
@@ -73,8 +66,19 @@ readonly class VideoRecordService
                 )
                 ->executeQuery()
                 ->fetchAllAssociative();
-        } catch (Exception $e) {
+        } catch (Exception) {
             return [];
         }
+    }
+
+    protected function getQueryBuilder(): QueryBuilder
+    {
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE);
+        $queryBuilder
+            ->getRestrictions()
+            ->removeAll()
+            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+
+        return $queryBuilder;
     }
 }
