@@ -12,15 +12,13 @@ declare(strict_types=1);
 namespace JWeiland\Mediapool\Tests\Functional\Import\Playlist;
 
 use JWeiland\Mediapool\Configuration\ExtConf;
+use JWeiland\Mediapool\Helper\MessageHelper;
 use JWeiland\Mediapool\Import\Playlist\YoutubePlaylistImport;
 use JWeiland\Mediapool\Import\Video\YouTubeVideoImport;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\Http\RequestFactory;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
-use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 /**
@@ -30,7 +28,7 @@ class YoutubePlaylistImportTest extends FunctionalTestCase
 {
     public YoutubePlaylistImport $subject;
 
-    public FlashMessageService|MockObject $flashMessageServiceMock;
+    public MessageHelper|MockObject $messageHelperMock;
 
     public RequestFactory|MockObject $requestFactoryMock;
 
@@ -44,7 +42,7 @@ class YoutubePlaylistImportTest extends FunctionalTestCase
     {
         parent::setUp();
 
-        $this->flashMessageServiceMock = $this->createMock(FlashMessageService::class);
+        $this->messageHelperMock = $this->createMock(MessageHelper::class);
 
         $this->requestFactoryMock = $this->createMock(RequestFactory::class);
 
@@ -57,7 +55,7 @@ class YoutubePlaylistImportTest extends FunctionalTestCase
         $this->subject = new YoutubePlaylistImport(
             $this->youTubeVideoImportMock,
             $this->requestFactoryMock,
-            $this->flashMessageServiceMock,
+            $this->messageHelperMock,
             $extConf,
         );
     }
@@ -65,7 +63,7 @@ class YoutubePlaylistImportTest extends FunctionalTestCase
     protected function tearDown(): void
     {
         unset(
-            $this->flashMessageServiceMock,
+            $this->messageHelperMock,
             $this->requestFactoryMock,
             $this->youTubeVideoImportMock,
             $this->subject,
@@ -99,16 +97,13 @@ class YoutubePlaylistImportTest extends FunctionalTestCase
     #[Test]
     public function getPlaylistInformationWithEmptyPlaylistLinkWillReturnEmptyArray(): void
     {
-        $flashMessageQueue = $this->createMock(FlashMessageQueue::class);
-        $flashMessageQueue
+        $this->messageHelperMock
             ->expects(self::once())
-            ->method('addMessage')
-            ->with(self::isInstanceOf(FlashMessage::class));
-
-        $this->flashMessageServiceMock
-            ->expects(self::once())
-            ->method('getMessageQueueByIdentifier')
-            ->willReturn($flashMessageQueue);
+            ->method('addFlashMessage')
+            ->with(
+                self::stringStartsWith('Could not extract playlist id from playlist link'),
+                self::identicalTo('Invalid playlist id'),
+            );
 
         self::assertSame(
             [],
@@ -119,9 +114,9 @@ class YoutubePlaylistImportTest extends FunctionalTestCase
     #[Test]
     public function getPlaylistInformationWithPlaylistLinkWillReturnEmptyPlaylistInformation(): void
     {
-        $this->flashMessageServiceMock
+        $this->messageHelperMock
             ->expects(self::never())
-            ->method('getMessageQueueByIdentifier');
+            ->method('addFlashMessage');
 
         $playListIdUrl = sprintf(
             'https://www.googleapis.com/youtube/v3/channels?key=%s&part=contentDetails&%s',
@@ -229,9 +224,9 @@ class YoutubePlaylistImportTest extends FunctionalTestCase
     #[Test]
     public function getPlaylistInformationWithPlaylistLinkWillReturnPlaylistInformation(): void
     {
-        $this->flashMessageServiceMock
+        $this->messageHelperMock
             ->expects(self::never())
-            ->method('getMessageQueueByIdentifier');
+            ->method('addFlashMessage');
 
         $playListIdUrl = sprintf(
             'https://www.googleapis.com/youtube/v3/channels?key=%s&part=contentDetails&%s',

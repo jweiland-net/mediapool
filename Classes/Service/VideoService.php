@@ -11,20 +11,22 @@ declare(strict_types=1);
 
 namespace JWeiland\Mediapool\Service;
 
+use JWeiland\Mediapool\Helper\MessageHelper;
 use JWeiland\Mediapool\Import\Video\VideoImportInterface;
-use JWeiland\Mediapool\Traits\AddFlashMessageTrait;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class VideoService
 {
-    use AddFlashMessageTrait;
-
     /**
      * @var VideoImportInterface[]
      */
     protected array $importers = [];
 
-    public function __construct(iterable $importers)
-    {
+    public function __construct(
+        iterable $importers,
+        protected MessageHelper $messageHelper,
+    ) {
         foreach ($importers as $importer) {
             if ($importer instanceof VideoImportInterface) {
                 $this->importers[] = $importer;
@@ -36,7 +38,7 @@ class VideoService
      * Get video data
      * $videos array must have to the following structure:
      *
-     * pid is not mandatory
+     * Pid is not mandatory
      * e.g.
      * [
      *     5 => ['pid' => 3, 'video' => 'https://youtu.be/yt_Vfw1pAmLlY'],
@@ -69,22 +71,33 @@ class VideoService
             }
 
             $data = array_merge(...$data);
-            $imported = count($data['tx_mediapool_domain_model_video']);
+            $imported = count($data['tx_mediapool_domain_model_video'] ?? []);
             $total = count($videos);
 
             if (!$videoPlatformMatch) {
-                $this->addFlashMessage(
-                    'video_service.no_match.title',
-                    'video_service.no_match.message',
+                $this->messageHelper->addFlashMessage(
+                    LocalizationUtility::translate(
+                        'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:video_service.no_match.message',
+                    ),
+                    LocalizationUtility::translate(
+                        'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:video_service.no_match.title',
+                    ),
+                    ContextualFeedbackSeverity::ERROR,
                 );
             } elseif ($imported !== $total) {
-                $this->addFlashMessage(
-                    'video_service.import_mismatch.title',
-                    'video_service.import_mismatch.message',
-                    [$imported, $total],
+                $this->messageHelper->addFlashMessage(
+                    LocalizationUtility::translate(
+                        'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:video_service.import_mismatch.message',
+                        null,
+                        [$imported, $total],
+                    ),
+                    LocalizationUtility::translate(
+                        'LLL:EXT:mediapool/Resources/Private/Language/error_messages.xlf:video_service.import_mismatch.title',
+                    ),
+                    ContextualFeedbackSeverity::ERROR,
                 );
             }
-        } catch (\Exception $e) {
+        } catch (\Exception) {
         }
 
         return $data;
