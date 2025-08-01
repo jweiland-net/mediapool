@@ -18,6 +18,9 @@ class VideoService
 {
     use AddFlashMessageTrait;
 
+    /**
+     * @var VideoImportInterface[]
+     */
     protected array $importers = [];
 
     public function __construct(iterable $importers)
@@ -58,8 +61,10 @@ class VideoService
                         $videoPlatformMatch++;
                     }
                 }
-                if ($videosOfVideoPlatform) {
-                    $data[] = $registeredVideoImporter->processDataArray($videosOfVideoPlatform, $pid);
+                if ($videosOfVideoPlatform
+                    && $processedDataArray = $registeredVideoImporter->processDataArray($videosOfVideoPlatform, $pid)
+                ) {
+                    $data[] = $processedDataArray;
                 }
             }
 
