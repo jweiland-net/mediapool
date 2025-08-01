@@ -21,7 +21,7 @@ use TYPO3\CMS\Core\Http\RequestFactory;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
-readonly class YoutubePlaylistImport extends AbstractImport implements PlaylistImportInterface
+readonly class YouTubePlaylistImport extends AbstractImport implements PlaylistImportInterface
 {
     /**
      * URL to fetch playlist items via GET request
