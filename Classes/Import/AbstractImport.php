@@ -28,11 +28,11 @@ abstract readonly class AbstractImport
 
     public function getPlatformName(): string
     {
-        return self::PLATFORM_NAME;
+        return static::PLATFORM_NAME;
     }
 
     public function getPlatformHosts(): array
     {
-        return self::PLATFORM_HOSTS;
+        return static::PLATFORM_HOSTS;
     }
 }
