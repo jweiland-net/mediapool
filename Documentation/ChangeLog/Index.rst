@@ -7,6 +7,11 @@
 ChangeLog
 =========
 
+Version 5.0.5
+=============
+
+*   Add missing FlashMessageService
+
 Version 5.0.4
 =============
 
