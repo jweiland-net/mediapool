@@ -52,7 +52,7 @@ class GalleryController extends ActionController
     {
         $fileCollections = [];
 
-        if ($this->settings['fileCollections']) {
+        if (isset($this->settings['fileCollections']) && $this->settings['fileCollections']) {
             foreach (GeneralUtility::intExplode(',', $this->settings['fileCollections'], true) as $uid) {
                 try {
                     $fileCollection = $this->fileCollectionRepository->findByUid($uid);
