@@ -7,6 +7,11 @@
 ChangeLog
 =========
 
+Version 5.0.10
+=============
+
+*   Fixed error related to accessing invalid settings if it is not set
+
 Version 5.0.9
 =============
 
