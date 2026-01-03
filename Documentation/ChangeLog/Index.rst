@@ -7,6 +7,12 @@
 ChangeLog
 =========
 
+Version 5.1.0
+=============
+
+*   [TASK] New UpgradeWizard for converting old list_type plugins to CType
+*   [REFACTORING] Refactored path for upgrade wizard from Classes/Upgrade to Classes/Update
+
 Version 5.0.10
 =============
 
