@@ -9,7 +9,7 @@ declare(strict_types=1);
  * LICENSE file that was distributed with this source code.
  */
 
-namespace JWeiland\Mediapool\Upgrade;
+namespace JWeiland\Mediapool\Update;
 
 use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
 use TYPO3\CMS\Core\Database\Connection;
@@ -25,7 +25,7 @@ use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
  * Migrate switchableControllerActions to list_type
  */
 #[UpgradeWizard('mediapool_moveOldFlexFormSettingsUpgrade')]
-class MoveOldFlexFormSettingsUpgrade implements UpgradeWizardInterface
+class MoveOldFlexFormSettingsUpdate implements UpgradeWizardInterface
 {
     public function getTitle(): string
     {
