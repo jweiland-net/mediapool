@@ -9,7 +9,7 @@ declare(strict_types=1);
  * LICENSE file that was distributed with this source code.
  */
 
-namespace JWeiland\Mediapool\Upgrade;
+namespace JWeiland\Mediapool\Update;
 
 use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Platforms\MariaDBPlatform;
@@ -37,7 +37,7 @@ use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
  * wizard is only executable from the CLI.
  */
 #[UpgradeWizard('mediapool_addUidAsAutoIncrementToMediapoolReferenceTableUpgrade')]
-class AddUidAsAutoIncrementToMediapoolReferenceTableUpgrade implements UpgradeWizardInterface
+class AddUidAsAutoIncrementToMediapoolReferenceTableUpdate implements UpgradeWizardInterface
 {
     public const TABLE = 'tx_mediapool_playlist_video_mm';
 
