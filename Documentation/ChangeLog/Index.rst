@@ -7,6 +7,11 @@
 ChangeLog
 =========
 
+Version 5.1.1
+=============
+
+*   [BUGFIX] Add missing plugins to UpgradeWizard to migrate to CType
+
 Version 5.1.0
 =============
 
@@ -14,7 +19,7 @@ Version 5.1.0
 *   [REFACTORING] Refactored path for upgrade wizard from Classes/Upgrade to Classes/Update
 
 Version 5.0.10
-=============
+==============
 
 *   Fixed error related to accessing invalid settings if it is not set
 
