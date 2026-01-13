@@ -25,6 +25,11 @@ class PluginToContentElementUpdate extends AbstractListTypeToCTypeUpdate
         return [
             'mediapool_recommended' => 'mediapool_recommended',
             'mediapool_detail' => 'mediapool_detail',
+            'mediapool_recentbycategory' => 'mediapool_recentbycategory',
+            'mediapool_latest' => 'mediapool_latest',
+            'mediapool_list' => 'mediapool_list',
+            'mediapool_gallerypreview' => 'mediapool_gallerypreview',
+            'mediapool_galleryteaser' => 'mediapool_galleryteaser',
         ];
     }
 
