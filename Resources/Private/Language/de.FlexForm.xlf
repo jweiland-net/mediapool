@@ -3,49 +3,49 @@
   <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z" product-name="mediapool">
     <header/>
     <body>
-      <trans-unit id="mediapool.detail_page">
+      <trans-unit id="mediapool.detail_page" approved="yes">
         <source>Select page for detail view</source>
-        <target state="needs-translation">Select page for detail view</target>
+        <target state="final">Seite für Detailansicht auswählen</target>
       </trans-unit>
-      <trans-unit id="mediapool.list_page">
+      <trans-unit id="mediapool.list_page" approved="yes">
         <source>Select page for list view</source>
-        <target state="needs-translation">Select page for list view</target>
+        <target state="final">Seite für Listenansicht auswählen</target>
       </trans-unit>
-      <trans-unit id="mediapool.recommended_video_selection">
+      <trans-unit id="mediapool.recommended_video_selection" approved="yes">
         <source>Select 3 recommended videos</source>
-        <target state="needs-translation">Select 3 recommended videos</target>
+        <target state="final">Auswahl von 3 empfohlenen Videos</target>
       </trans-unit>
-      <trans-unit id="mediapool.categories">
+      <trans-unit id="mediapool.categories" approved="yes">
         <source>Display a recent video per selected category</source>
-        <target state="needs-translation">Display a recent video per selected category</target>
+        <target state="final">Zeige das neuste Video pro ausgewählter Kategorie</target>
       </trans-unit>
-      <trans-unit id="mediapool.playlist_selection">
+      <trans-unit id="mediapool.playlist_selection" approved="yes">
         <source>Select a playlist</source>
-        <target state="needs-translation">Select a playlist</target>
+        <target state="final">Wähle eine Playliste</target>
       </trans-unit>
-      <trans-unit id="mediapool.videos_per_page">
+      <trans-unit id="mediapool.videos_per_page" approved="yes">
         <source>Videos per page</source>
-        <target state="needs-translation">Videos per page</target>
+        <target state="final">Videos pro Seite</target>
       </trans-unit>
-      <trans-unit id="gallery.preview.title">
+      <trans-unit id="gallery.preview.title" approved="yes">
         <source>Image gallery: Preview</source>
-        <target state="needs-translation">Image gallery: Preview</target>
+        <target state="final">Bilderstrecke: Vorschau</target>
       </trans-unit>
-      <trans-unit id="gallery.teaser.title">
+      <trans-unit id="gallery.teaser.title" approved="yes">
         <source>Image gallery: Teaser</source>
-        <target state="needs-translation">Image gallery: Teaser</target>
+        <target state="final">Bilderstrecke: Teaser</target>
       </trans-unit>
-      <trans-unit id="gallery.file_collections">
+      <trans-unit id="gallery.file_collections" approved="yes">
         <source>File collection(s)</source>
-        <target state="needs-translation">File collection(s)</target>
+        <target state="final">Dateisammlung(en)</target>
       </trans-unit>
-      <trans-unit id="gallery.teaser.list_page">
+      <trans-unit id="gallery.teaser.list_page" approved="yes">
         <source>Page to the list view</source>
-        <target state="needs-translation">Page to the list view</target>
+        <target state="final">Seite für Listenansicht auswählen</target>
       </trans-unit>
-      <trans-unit id="gallery.teaser.list_page.description">
+      <trans-unit id="gallery.teaser.list_page.description" approved="yes">
         <source>Select a page with the Gallery: Preview plugin</source>
-        <target state="needs-translation">Select a page with the Gallery: Preview plugin</target>
+        <target state="final">Wählen Sie eine Seite mit dem Galerie: Vorschau Plugin aus</target>
       </trans-unit>
     </body>
   </file>
