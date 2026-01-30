@@ -188,7 +188,7 @@ class MoveOldFlexFormSettingsUpdate implements UpgradeWizardInterface
     protected function checkValue_flexArray2Xml(array $array): string
     {
         return GeneralUtility::makeInstance(FlexFormTools::class)
-            ->flexArray2Xml($array);
+            ?->flexArray2Xml($array);
     }
 
     protected function getConnectionPool(): ConnectionPool
