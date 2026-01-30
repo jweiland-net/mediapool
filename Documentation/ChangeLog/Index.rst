@@ -7,6 +7,13 @@
 ChangeLog
 =========
 
+Version 5.1.2
+=============
+
+*   [TASK] Add Upgrade Wizard to migrate FlexForm settings keys.
+*   [TASK] Remove redundant target-language attributes from XLF files
+*   [BUGFIX] Add null-safe operator to FlexFormTools instantiation.
+
 Version 5.1.1
 =============
 
