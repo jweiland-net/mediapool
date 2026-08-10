@@ -1,115 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.0">
-  <file source-language="en" target-language="hu" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z" product-name="mediapool">
+  <file source-language="en" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z" product-name="mediapool" target-language="hu">
     <header/>
     <body>
       <trans-unit id="plugin.mediapool.recommended.title">
         <source>List recommended videos</source>
-        <target state="needs-translation">List recommended videos</target>
+        <target state="translated">Ajánlott videók listázása</target>
       </trans-unit>
       <trans-unit id="plugin.mediapool.recommended.description">
         <source>Shows a list of selected recommended videos.</source>
-        <target state="needs-translation">Shows a list of selected recommended videos.</target>
+        <target state="translated">A kiválasztott ajánlott videók listáját jeleníti meg.</target>
       </trans-unit>
       <trans-unit id="plugin.mediapool.detail.title">
         <source>Detail view (Video, Playlist)</source>
-        <target state="needs-translation">Detail view (Video, Playlist)</target>
+        <target state="translated">Részletnézet (Videó, Lejátszási lista)</target>
       </trans-unit>
       <trans-unit id="plugin.mediapool.detail.description">
         <source>Shows the detailed view of a video or a playlist.</source>
-        <target state="needs-translation">Shows the detailed view of a video or a playlist.</target>
+        <target state="translated">Egy videó vagy lejátszási lista részletes nézetét jeleníti meg.</target>
       </trans-unit>
       <trans-unit id="plugin.mediapool.recentbycategory.title">
         <source>List recent video of playlist (category)</source>
-        <target state="needs-translation">List recent video of playlist (category)</target>
+        <target state="translated">A lejátszási lista (kategória) legutóbbi videójának listázása</target>
       </trans-unit>
       <trans-unit id="plugin.mediapool.recentbycategory.description">
         <source>Displays a list of recently added videos.</source>
-        <target state="needs-translation">Displays a list of recently added videos.</target>
+        <target state="translated">A legutóbb hozzáadott videók listáját jeleníti meg.</target>
       </trans-unit>
       <trans-unit id="plugin.mediapool.latest.title">
         <source>List latest videos by playlist</source>
-        <target state="needs-translation">List latest videos by playlist</target>
+        <target state="translated">Legújabb videók listázása lejátszási lista szerint</target>
       </trans-unit>
       <trans-unit id="plugin.mediapool.latest.description">
         <source>Displays a list of the most recently uploaded playlists.</source>
-        <target state="needs-translation">Displays a list of the most recently uploaded playlists.</target>
+        <target state="translated">A legutóbb feltöltött lejátszási listák listáját jeleníti meg.</target>
       </trans-unit>
       <trans-unit id="plugin.mediapool.list.title">
         <source>List all videos by playlist</source>
-        <target state="needs-translation">List all videos by playlist</target>
+        <target state="translated">Összes videó listázása lejátszási lista szerint</target>
       </trans-unit>
       <trans-unit id="plugin.mediapool.list.description">
         <source>Displays a list of all available playlists.</source>
-        <target state="needs-translation">Displays a list of all available playlists.</target>
+        <target state="translated">Az összes elérhető lejátszási lista listáját jeleníti meg.</target>
       </trans-unit>
       <trans-unit id="plugin.gallery.preview.title">
         <source>Gallery Preview</source>
-        <target state="needs-translation">Gallery Preview</target>
+        <target state="translated">Galéria Előnézet</target>
       </trans-unit>
       <trans-unit id="plugin.gallery.preview.description">
         <source>Displays a preview image for each selected file collection, which starts the gallery as a picture gallery when clicked.</source>
-        <target state="needs-translation">Displays a preview image for each selected file collection, which starts the gallery as a picture gallery when clicked.</target>
+        <target state="translated">Minden kiválasztott fájlgyűjteményhez előnézeti képet jelenít meg, amelyre kattintva a galéria képgalériaként indul el.</target>
       </trans-unit>
       <trans-unit id="plugin.gallery.teaser.title">
         <source>Gallery Teaser</source>
-        <target state="needs-translation">Gallery Teaser</target>
+        <target state="translated">Galéria Teaser</target>
       </trans-unit>
       <trans-unit id="plugin.gallery.teaser.description">
         <source>Use this plugin to display a reduced selection of file collections. You can use a link to refer to a page for the complete display with the Gallery: Preview plugin.</source>
-        <target state="needs-translation">Use this plugin to display a reduced selection of file collections. You can use a link to refer to a page for the complete display with the Gallery: Preview plugin.</target>
+        <target state="translated">Ezzel a pluginnal a fájlgyűjtemények csökkentett kínálatát jelenítheti meg. A teljes megjelenítéshez a Galéria: Előnézet pluginnal ellátott oldalra mutató hivatkozást használhat.</target>
       </trans-unit>
       <trans-unit id="tx_mediapool_domain_model_playlist">
         <source>Playlist</source>
-        <target state="needs-translation">Playlist</target>
+        <target state="translated">Lejátszási lista</target>
       </trans-unit>
       <trans-unit id="tx_mediapool_domain_model_playlist.title">
         <source>Title</source>
-        <target state="needs-translation">Title</target>
+        <target state="translated">Cím</target>
       </trans-unit>
       <trans-unit id="tx_mediapool_domain_model_playlist.link">
         <source>Playlist URL or Channel URL</source>
-        <target state="needs-translation">Playlist URL or Channel URL</target>
+        <target state="translated">Lejátszási lista URL vagy csatorna URL</target>
       </trans-unit>
       <trans-unit id="tx_mediapool_domain_model_playlist.videos">
         <source>Videos</source>
-        <target state="needs-translation">Videos</target>
+        <target state="translated">Videók</target>
       </trans-unit>
       <trans-unit id="tx_mediapool_domain_model_video">
         <source>Video</source>
-        <target state="needs-translation">Video</target>
+        <target state="translated">Videó</target>
       </trans-unit>
       <trans-unit id="tx_mediapool_domain_model_video.title">
         <source>Title</source>
-        <target state="needs-translation">Title</target>
+        <target state="translated">Cím</target>
       </trans-unit>
       <trans-unit id="tx_mediapool_domain_model_video.description">
         <source>Description</source>
-        <target state="needs-translation">Description</target>
+        <target state="translated">Leírás</target>
       </trans-unit>
       <trans-unit id="tx_mediapool_domain_model_video.upload_date">
         <source>Upload date</source>
-        <target state="needs-translation">Upload date</target>
+        <target state="translated">Feltöltés dátuma</target>
       </trans-unit>
       <trans-unit id="tx_mediapool_domain_model_video.link">
         <source>Video URL</source>
-        <target state="needs-translation">Video URL</target>
+        <target state="translated">Videó URL</target>
       </trans-unit>
       <trans-unit id="tx_mediapool_domain_model_video.player_html">
         <source>Preview</source>
-        <target state="needs-translation">Preview</target>
+        <target state="translated">Előnézet</target>
       </trans-unit>
       <trans-unit id="tx_mediapool_domain_model_video.empty_field">
         <source>This field will be filled automatically after first successful save.</source>
-        <target state="needs-translation">This field will be filled automatically after first successful save.</target>
+        <target state="translated">Ez a mező az első sikeres mentés után automatikusan kitöltésre kerül.</target>
       </trans-unit>
       <trans-unit id="slug">
         <source>Path segment</source>
-        <target state="needs-translation">Path segment</target>
+        <target state="translated">Útszegmens</target>
       </trans-unit>
       <trans-unit id="render_type.video_link_element.supported_video_platforms">
         <source>Supported video platforms:</source>
-        <target state="needs-translation">Supported video platforms:</target>
+        <target state="translated">Támogatott videóplatformok:</target>
       </trans-unit>
     </body>
   </file>
