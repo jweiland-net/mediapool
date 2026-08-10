@@ -5,59 +5,59 @@
     <body>
       <trans-unit id="video_service.import_mismatch.title">
         <source>Import mismatch</source>
-        <target state="needs-translation">Import mismatch</target>
+        <target state="translated">Import eltérés</target>
       </trans-unit>
       <trans-unit id="video_service.import_mismatch.message">
         <source>There was an mismatch while importing videos. %d of %d videos were imported!</source>
-        <target state="needs-translation">There was an mismatch while importing videos. %d of %d videos were imported!</target>
+        <target state="translated">Eltérés történt a videók importálása során. %d / %d videó lett importálva!</target>
       </trans-unit>
       <trans-unit id="video_service.no_match.title">
         <source>No video platform match</source>
-        <target state="needs-translation">No video platform match</target>
+        <target state="translated">Nincs egyező videóplatform</target>
       </trans-unit>
       <trans-unit id="video_service.no_match.message">
         <source>I could not find a matching video platform for your video. Please check your link.</source>
-        <target state="needs-translation">I could not find a matching video platform for your video. Please check your link.</target>
+        <target state="translated">Nem találtam a videódhoz illő videóplatformot. Kérjük, ellenőrizd a hivatkozást.</target>
       </trans-unit>
       <trans-unit id="playlist_service.no_match.title">
         <source>No video platform match</source>
-        <target state="needs-translation">No video platform match</target>
+        <target state="translated">Nincs egyező videóplatform</target>
       </trans-unit>
       <trans-unit id="playlist_service.no_match.message">
         <source>I could not find a matching video platform for your playlist. Please check your link.</source>
-        <target state="needs-translation">I could not find a matching video platform for your playlist. Please check your link.</target>
+        <target state="translated">Nem találtam a lejátszási listádhoz illő videóplatformot. Kérjük, ellenőrizd a hivatkozást.</target>
       </trans-unit>
       <trans-unit id="data_handler.exception.title">
         <source>Could not finish your request</source>
-        <target state="needs-translation">Could not finish your request</target>
+        <target state="translated">A kérés nem teljesíthető</target>
       </trans-unit>
       <trans-unit id="data_handler.exception.message">
         <source>There was an error while processing your request. Please contact your administrator. Error code %d</source>
-        <target state="needs-translation">There was an error while processing your request. Please contact your administrator. Error code %d</target>
+        <target state="translated">Hiba történt a kérés feldolgozása közben. Kérjük, vedd fel a kapcsolatot a rendszergazdával. Hibakód: %d</target>
       </trans-unit>
       <trans-unit id="youTubeVideoImport.missing_video_information.title">
         <source>Missing video information</source>
-        <target state="needs-translation">Missing video information</target>
+        <target state="translated">Hiányzó videóinformáció</target>
       </trans-unit>
       <trans-unit id="youTubeVideoImport.missing_video_information.message">
         <source>The video information for %s is missing. Please check if the is video private or deleted.</source>
-        <target state="needs-translation">The video information for %s is missing. Please check if the is video private or deleted.</target>
+        <target state="translated">A %s videó adatai hiányoznak. Kérjük, ellenőrizd, hogy a videó privát-e vagy törölték-e.</target>
       </trans-unit>
       <trans-unit id="youTubeVideoImport.missing_youtube_permission.title">
         <source>Missing YouTube permission</source>
-        <target state="needs-translation">Missing YouTube permission</target>
+        <target state="translated">Hiányzó YouTube-engedély</target>
       </trans-unit>
       <trans-unit id="youTubeVideoImport.missing_youtube_permission.message">
         <source>Can not fetch information for video %s. Maybe it is marked as private or not embeddable by his owner.</source>
-        <target state="needs-translation">Can not fetch information for video %s. Maybe it is marked as private or not embeddable by his owner.</target>
+        <target state="translated">Nem lehet lekérni a %s videó adatait. Lehet, hogy privát, vagy a tulajdonosa nem tette beágyazhatóvá.</target>
       </trans-unit>
       <trans-unit id="youTubePlaylistImport.invalid_id.title">
         <source>Invalid playlist id</source>
-        <target state="needs-translation">Invalid playlist id</target>
+        <target state="translated">Érvénytelen lejátszási lista azonosító</target>
       </trans-unit>
       <trans-unit id="youTubePlaylistImport.invalid_id.message">
         <source>Could not extract playlist id from playlist link %s. Please check your link!</source>
-        <target state="needs-translation">Could not extract playlist id from playlist link %s. Please check your link!</target>
+        <target state="translated">Nem sikerült kinyerni a lejátszási lista azonosítóját a %s hivatkozásból. Kérjük, ellenőrizd a hivatkozást!</target>
       </trans-unit>
     </body>
   </file>
