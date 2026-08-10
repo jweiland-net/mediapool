@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.0">
-  <file source-language="en" target-language="hu" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z" product-name="mediapool">
+  <file source-language="en" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z" product-name="mediapool" target-language="hu">
     <header/>
     <body>
       <trans-unit id="scheduler.update_video_information.page_selection">
         <source>Comma separated list of pages/folders where video records should be updated</source>
-        <target state="needs-translation">Comma separated list of pages/folders where video records should be updated</target>
+        <target state="translated">Vesszővel elválasztott oldalak/mappák listája, ahol a videórekordokat frissíteni kell</target>
       </trans-unit>
       <trans-unit id="scheduler.update_playlist_information.page_selection">
         <source>Comma separated list of pages/folders where playlist records should be updated</source>
-        <target state="needs-translation">Comma separated list of pages/folders where playlist records should be updated</target>
+        <target state="translated">Vesszővel elválasztott oldalak/mappák listája, ahol a lejátszási listák rekordjait frissíteni kell</target>
       </trans-unit>
       <trans-unit id="video.upload_date">
         <source>Upload date</source>
-        <target state="needs-translation">Upload date</target>
+        <target state="translated">Feltöltés dátuma</target>
       </trans-unit>
       <trans-unit id="frontend.list_by_category.no_playlists">
         <source>No playlists found!</source>
-        <target state="needs-translation">No playlists found!</target>
+        <target state="translated">Nem található lejátszási lista!</target>
       </trans-unit>
       <trans-unit id="frontend.gallery.counter">
         <source>%d images</source>
-        <target state="needs-translation">%d images</target>
+        <target state="translated">%d kép</target>
       </trans-unit>
       <trans-unit id="frontend.button.more">
         <source>More</source>
-        <target state="needs-translation">More</target>
+        <target state="translated">Továbbiak</target>
       </trans-unit>
       <trans-unit id="frontend.button.gallery.more">
         <source>Show more image galleries</source>
-        <target state="needs-translation">Show more image galleries</target>
+        <target state="translated">További képgalériák megjelenítése</target>
       </trans-unit>
     </body>
   </file>
