@@ -5,7 +5,7 @@
     <body>
       <trans-unit id="youtubeDataApiKey">
         <source>Enter your Youtube Data API v3 Key:You can receive a key from https://console.developers.google.com/</source>
-        <target state="needs-translation">Enter your Youtube Data API v3 Key:You can receive a key from https://console.developers.google.com/</target>
+        <target state="translated">Add meg a Youtube Data API v3 kulcsodat: A kulcsot a https://console.developers.google.com/ oldalon szerezheted be.</target>
       </trans-unit>
     </body>
   </file>
