@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z" product-name="mediapool" target-language="t3">
+    <header/>
+    <body>
+      <trans-unit id="scheduler.update_video_information.page_selection">
+        <source>Comma separated list of pages/folders where video records should be updated</source>
+        <target>crwdns370904:0crwdne370904:0</target>
+      </trans-unit>
+      <trans-unit id="scheduler.update_playlist_information.page_selection">
+        <source>Comma separated list of pages/folders where playlist records should be updated</source>
+        <target>crwdns370906:0crwdne370906:0</target>
+      </trans-unit>
+      <trans-unit id="video.upload_date">
+        <source>Upload date</source>
+        <target>crwdns308392:0crwdne308392:0</target>
+      </trans-unit>
+      <trans-unit id="frontend.list_by_category.no_playlists">
+        <source>No playlists found!</source>
+        <target>crwdns308422:0crwdne308422:0</target>
+      </trans-unit>
+      <trans-unit id="frontend.gallery.counter">
+        <source>%d images</source>
+        <target>crwdns308430:0%dcrwdne308430:0</target>
+      </trans-unit>
+      <trans-unit id="frontend.button.more">
+        <source>More</source>
+        <target>crwdns308432:0crwdne308432:0</target>
+      </trans-unit>
+      <trans-unit id="frontend.button.gallery.more">
+        <source>Show more image galleries</source>
+        <target>crwdns308434:0crwdne308434:0</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
