@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2017-10-11T09:12:34Z" product-name="mediapool" target-language="t3">
+    <header/>
+    <body>
+      <trans-unit id="plugin.mediapool.recommended.title">
+        <source>List recommended videos</source>
+        <target>crwdns370930:0crwdne370930:0</target>
+      </trans-unit>
+      <trans-unit id="plugin.mediapool.recommended.description">
+        <source>Shows a list of selected recommended videos.</source>
+        <target>crwdns370932:0crwdne370932:0</target>
+      </trans-unit>
+      <trans-unit id="plugin.mediapool.detail.title">
+        <source>Detail view (Video, Playlist)</source>
+        <target>crwdns370934:0crwdne370934:0</target>
+      </trans-unit>
+      <trans-unit id="plugin.mediapool.detail.description">
+        <source>Shows the detailed view of a video or a playlist.</source>
+        <target>crwdns370936:0crwdne370936:0</target>
+      </trans-unit>
+      <trans-unit id="plugin.mediapool.recentbycategory.title">
+        <source>List recent video of playlist (category)</source>
+        <target>crwdns370938:0crwdne370938:0</target>
+      </trans-unit>
+      <trans-unit id="plugin.mediapool.recentbycategory.description">
+        <source>Displays a list of recently added videos.</source>
+        <target>crwdns370940:0crwdne370940:0</target>
+      </trans-unit>
+      <trans-unit id="plugin.mediapool.latest.title">
+        <source>List latest videos by playlist</source>
+        <target>crwdns370942:0crwdne370942:0</target>
+      </trans-unit>
+      <trans-unit id="plugin.mediapool.latest.description">
+        <source>Displays a list of the most recently uploaded playlists.</source>
+        <target>crwdns370944:0crwdne370944:0</target>
+      </trans-unit>
+      <trans-unit id="plugin.mediapool.list.title">
+        <source>List all videos by playlist</source>
+        <target>crwdns370946:0crwdne370946:0</target>
+      </trans-unit>
+      <trans-unit id="plugin.mediapool.list.description">
+        <source>Displays a list of all available playlists.</source>
+        <target>crwdns370948:0crwdne370948:0</target>
+      </trans-unit>
+      <trans-unit id="plugin.gallery.preview.title">
+        <source>Gallery Preview</source>
+        <target>crwdns370950:0crwdne370950:0</target>
+      </trans-unit>
+      <trans-unit id="plugin.gallery.preview.description">
+        <source>Displays a preview image for each selected file collection, which starts the gallery as a picture gallery when clicked.</source>
+        <target>crwdns370952:0crwdne370952:0</target>
+      </trans-unit>
+      <trans-unit id="plugin.gallery.teaser.title">
+        <source>Gallery Teaser</source>
+        <target>crwdns370954:0crwdne370954:0</target>
+      </trans-unit>
+      <trans-unit id="plugin.gallery.teaser.description">
+        <source>Use this plugin to display a reduced selection of file collections. You can use a link to refer to a page for the complete display with the Gallery: Preview plugin.</source>
+        <target>crwdns370956:0crwdne370956:0</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_playlist">
+        <source>Playlist</source>
+        <target>crwdns308452:0crwdne308452:0</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_playlist.title">
+        <source>Title</source>
+        <target>crwdns308454:0crwdne308454:0</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_playlist.link">
+        <source>Playlist URL or Channel URL</source>
+        <target>crwdns308456:0crwdne308456:0</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_playlist.videos">
+        <source>Videos</source>
+        <target>crwdns308458:0crwdne308458:0</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_video">
+        <source>Video</source>
+        <target>crwdns308436:0crwdne308436:0</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_video.title">
+        <source>Title</source>
+        <target>crwdns308438:0crwdne308438:0</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_video.description">
+        <source>Description</source>
+        <target>crwdns308440:0crwdne308440:0</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_video.upload_date">
+        <source>Upload date</source>
+        <target>crwdns308442:0crwdne308442:0</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_video.link">
+        <source>Video URL</source>
+        <target>crwdns308444:0crwdne308444:0</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_video.player_html">
+        <source>Preview</source>
+        <target>crwdns308446:0crwdne308446:0</target>
+      </trans-unit>
+      <trans-unit id="tx_mediapool_domain_model_video.empty_field">
+        <source>This field will be filled automatically after first successful save.</source>
+        <target>crwdns308448:0crwdne308448:0</target>
+      </trans-unit>
+      <trans-unit id="slug">
+        <source>Path segment</source>
+        <target>crwdns308468:0crwdne308468:0</target>
+      </trans-unit>
+      <trans-unit id="render_type.video_link_element.supported_video_platforms">
+        <source>Supported video platforms:</source>
+        <target>crwdns308450:0crwdne308450:0</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
